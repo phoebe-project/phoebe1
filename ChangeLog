@@ -1,6 +1,10 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-11-01: - PHOEBE has been precompiled and packaged under Debian stable
+              (Woody). The deb package is at your disposal on PHOEBE's
+              homepage. The debian/ top-level directory was added to the
+              development source, but it won't be submitted to the CVS.
 2004-10-29: - PHOEBE crashed when LC was plotted, but the filter wasn't de-
               fined (i.e. set LCNO to 1 and plot the LC as is). The assumed
               values for bandpass-dependent variables are now defaults.
