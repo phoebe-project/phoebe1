@@ -588,6 +588,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			read_in_synthetic_rv_data (working_str, &synthetic_rv1_data, &params, INDEP, DEP);
 			if (synthetic_rv1_data.ptsno == 0) MODEL = 0;
 			}
+
 		if ( ( DEP == 4 ) || ( DEP == 6 ) || ( DEP == 8 ) )
 			{
 			read_in_synthetic_rv_data (working_str, &synthetic_rv2_data, &params, INDEP, DEP);
