@@ -46,6 +46,13 @@ void transform_absolute_error_to_weight (PHOEBE_data *data)
 	double minweight = 1.0/pow(data->weight[0],2);
 	double maxweight = 1.0/pow(data->weight[0],2);
 
+	if (maxweight - minweight < 1e-5)
+		{
+		/* This means that all individual weights are exactly the same.           */
+		for (i = 0; i < data->ptsno; i++) data->weight[i] = 1.0;
+		return;
+		}
+
 	for (i = 0; i < data->ptsno; i++)
 		{
 		data->weight[i] = 1.0/data->weight[i]/data->weight[i];

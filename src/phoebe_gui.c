@@ -69,9 +69,6 @@ create_PHOEBE (void)
   GtkWidget *data_rv_info_filter_label;
   GtkWidget *data_rv_file_structure_label;
   GtkWidget *data_separator_3;
-  GtkWidget *data_zero_magnitude_label;
-  GtkObject *data_zero_magnitude_value_adj;
-  GtkWidget *data_zero_magnitude_value;
   GtkWidget *data_lc_edit_data_entry_button;
   GtkWidget *data_lc_info_list_table;
   GtkWidget *data_lc_info_list;
@@ -96,6 +93,9 @@ create_PHOEBE (void)
   GtkWidget *data_spectra_no_label;
   GtkObject *data_spectra_no_value_adj;
   GtkWidget *data_spectra_no_value;
+  GtkObject *data_zero_magnitude_value_adj;
+  GtkWidget *data_zero_magnitude_value;
+  GtkWidget *data_zero_magnitude_label;
   GtkWidget *data_tab_label;
   GtkWidget *system_related_frame;
   GtkWidget *system_related_main_box;
@@ -1410,28 +1410,6 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
-  data_zero_magnitude_label = gtk_label_new ("Zero Magnitude for Flux Normalization:");
-  gtk_widget_ref (data_zero_magnitude_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_zero_magnitude_label", data_zero_magnitude_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (data_zero_magnitude_label);
-  gtk_table_attach (GTK_TABLE (data_table), data_zero_magnitude_label, 0, 2, 10, 11,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (data_zero_magnitude_label), 0, 0.5);
-
-  data_zero_magnitude_value_adj = gtk_adjustment_new (10, -50, 50, 0.01, 0.1, 1);
-  data_zero_magnitude_value = gtk_spin_button_new (GTK_ADJUSTMENT (data_zero_magnitude_value_adj), 0, 1);
-  gtk_widget_ref (data_zero_magnitude_value);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_zero_magnitude_value", data_zero_magnitude_value,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (data_zero_magnitude_value);
-  gtk_table_attach (GTK_TABLE (data_table), data_zero_magnitude_value, 2, 3, 10, 11,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 15, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_zero_magnitude_value), TRUE);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (data_zero_magnitude_value), GTK_UPDATE_IF_VALID);
-
   data_lc_edit_data_entry_button = gtk_button_new_with_label ("Edit Data Entry");
   gtk_widget_ref (data_lc_edit_data_entry_button);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_lc_edit_data_entry_button", data_lc_edit_data_entry_button,
@@ -1633,6 +1611,28 @@ create_PHOEBE (void)
   gtk_widget_set_sensitive (data_spectra_no_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_spectra_no_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (data_spectra_no_value), GTK_UPDATE_IF_VALID);
+
+  data_zero_magnitude_value_adj = gtk_adjustment_new (10, -50, 50, 0.01, 0.1, 1);
+  data_zero_magnitude_value = gtk_spin_button_new (GTK_ADJUSTMENT (data_zero_magnitude_value_adj), 0, 1);
+  gtk_widget_ref (data_zero_magnitude_value);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_zero_magnitude_value", data_zero_magnitude_value,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (data_zero_magnitude_value);
+  gtk_table_attach (GTK_TABLE (data_table), data_zero_magnitude_value, 3, 4, 10, 11,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 15, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_zero_magnitude_value), TRUE);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (data_zero_magnitude_value), GTK_UPDATE_IF_VALID);
+
+  data_zero_magnitude_label = gtk_label_new ("Zero Magnitude for Flux Normalization:");
+  gtk_widget_ref (data_zero_magnitude_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_zero_magnitude_label", data_zero_magnitude_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (data_zero_magnitude_label);
+  gtk_table_attach (GTK_TABLE (data_table), data_zero_magnitude_label, 0, 3, 10, 11,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (data_zero_magnitude_label), 0, 0.5);
 
   data_tab_label = gtk_label_new ("Data");
   gtk_widget_ref (data_tab_label);
@@ -9366,6 +9366,7 @@ create_PHOEBE_open_data_file (void)
   PHOEBE_open_data_file = gtk_file_selection_new ("Open Data File");
   gtk_object_set_data (GTK_OBJECT (PHOEBE_open_data_file), "PHOEBE_open_data_file", PHOEBE_open_data_file);
   gtk_container_set_border_width (GTK_CONTAINER (PHOEBE_open_data_file), 10);
+  GTK_WINDOW (PHOEBE_open_data_file)->type = GTK_WINDOW_DIALOG;
   gtk_window_set_position (GTK_WINDOW (PHOEBE_open_data_file), GTK_WIN_POS_CENTER);
 
   open_data_file_ok_button = GTK_FILE_SELECTION (PHOEBE_open_data_file)->ok_button;
@@ -9435,7 +9436,7 @@ create_PHOEBE_calculate_phsv (void)
   GtkWidget *calculate_phsv_ok_button;
   GtkWidget *calculate_phsv_circular_orbit;
 
-  PHOEBE_calculate_phsv = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  PHOEBE_calculate_phsv = gtk_window_new (GTK_WINDOW_DIALOG);
   gtk_object_set_data (GTK_OBJECT (PHOEBE_calculate_phsv), "PHOEBE_calculate_phsv", PHOEBE_calculate_phsv);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_calculate_phsv), "Calculate modified Kopal potential");
   gtk_window_set_position (GTK_WINDOW (PHOEBE_calculate_phsv), GTK_WIN_POS_CENTER);
@@ -9860,7 +9861,7 @@ create_PHOEBE_calculate_pcsv (void)
   GtkWidget *calculate_pcsv_ok_button;
   GtkWidget *calculate_pcsv_circular_orbit;
 
-  PHOEBE_calculate_pcsv = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  PHOEBE_calculate_pcsv = gtk_window_new (GTK_WINDOW_DIALOG);
   gtk_object_set_data (GTK_OBJECT (PHOEBE_calculate_pcsv), "PHOEBE_calculate_pcsv", PHOEBE_calculate_pcsv);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_calculate_pcsv), "Calculate modified Kopal potential");
   gtk_window_set_position (GTK_WINDOW (PHOEBE_calculate_pcsv), GTK_WIN_POS_CENTER);
@@ -10417,7 +10418,6 @@ create_PHOEBE_plot_lc (void)
   PHOEBE_plot_lc = gtk_dialog_new ();
   gtk_object_set_data (GTK_OBJECT (PHOEBE_plot_lc), "PHOEBE_plot_lc", PHOEBE_plot_lc);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_plot_lc), "Light Curve Plot:");
-  GTK_WINDOW (PHOEBE_plot_lc)->type = GTK_WINDOW_DIALOG;
   gtk_window_set_position (GTK_WINDOW (PHOEBE_plot_lc), GTK_WIN_POS_CENTER);
   gtk_window_set_policy (GTK_WINDOW (PHOEBE_plot_lc), TRUE, TRUE, TRUE);
 
@@ -12283,6 +12283,7 @@ create_PHOEBE_configuration_browse (void)
   PHOEBE_configuration_browse = gtk_file_selection_new ("Choose Apropriate Directory:");
   gtk_object_set_data (GTK_OBJECT (PHOEBE_configuration_browse), "PHOEBE_configuration_browse", PHOEBE_configuration_browse);
   gtk_container_set_border_width (GTK_CONTAINER (PHOEBE_configuration_browse), 10);
+  GTK_WINDOW (PHOEBE_configuration_browse)->type = GTK_WINDOW_DIALOG;
   gtk_window_set_position (GTK_WINDOW (PHOEBE_configuration_browse), GTK_WIN_POS_CENTER);
 
   configuration_browse_ok_button = GTK_FILE_SELECTION (PHOEBE_configuration_browse)->ok_button;
@@ -12442,7 +12443,6 @@ create_PHOEBE_plot_rv (void)
   PHOEBE_plot_rv = gtk_dialog_new ();
   gtk_object_set_data (GTK_OBJECT (PHOEBE_plot_rv), "PHOEBE_plot_rv", PHOEBE_plot_rv);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_plot_rv), "Radial Velocity Curve Plot:");
-  GTK_WINDOW (PHOEBE_plot_rv)->type = GTK_WINDOW_DIALOG;
   gtk_window_set_position (GTK_WINDOW (PHOEBE_plot_rv), GTK_WIN_POS_CENTER);
   gtk_window_set_policy (GTK_WINDOW (PHOEBE_plot_rv), TRUE, TRUE, FALSE);
 
@@ -14407,7 +14407,7 @@ create_PHOEBE_calculate_grid (void)
   GtkWidget *synthetic_grid_progress_bar;
   GtkWidget *synthetic_grid_edit_entry_button;
 
-  PHOEBE_calculate_grid = gtk_window_new (GTK_WINDOW_DIALOG);
+  PHOEBE_calculate_grid = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (PHOEBE_calculate_grid), "PHOEBE_calculate_grid", PHOEBE_calculate_grid);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_calculate_grid), "PHOEBE Synthetic Grid Calculator");
   gtk_window_set_position (GTK_WINDOW (PHOEBE_calculate_grid), GTK_WIN_POS_CENTER);
@@ -14849,7 +14849,7 @@ create_PHOEBE_assign_data_file (void)
   GtkWidget *data_file_ok_button;
   GtkWidget *data_file_cancel_button;
 
-  PHOEBE_assign_data_file = gtk_window_new (GTK_WINDOW_DIALOG);
+  PHOEBE_assign_data_file = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (PHOEBE_assign_data_file), "PHOEBE_assign_data_file", PHOEBE_assign_data_file);
   gtk_widget_set_usize (PHOEBE_assign_data_file, 620, -2);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_assign_data_file), "Data File Asignment");
@@ -15471,7 +15471,7 @@ create_PHOEBE_dc (void)
   GtkWidget *dc_update_corrections_button;
   GtkWidget *dc_cancel_button;
 
-  PHOEBE_dc = gtk_window_new (GTK_WINDOW_DIALOG);
+  PHOEBE_dc = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (PHOEBE_dc), "PHOEBE_dc", PHOEBE_dc);
   gtk_widget_set_usize (PHOEBE_dc, 640, 350);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_dc), "PHOEBE Differential Corrections Minimization");
@@ -17163,7 +17163,7 @@ create_PHOEBE_fitting_quickbar (void)
   GtkWidget *fitting_quickbar_parameter1_label;
   GtkWidget *fitting_quickbar_close_button;
 
-  PHOEBE_fitting_quickbar = gtk_window_new (GTK_WINDOW_DIALOG);
+  PHOEBE_fitting_quickbar = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (PHOEBE_fitting_quickbar), "PHOEBE_fitting_quickbar", PHOEBE_fitting_quickbar);
   gtk_widget_set_usize (PHOEBE_fitting_quickbar, 640, -2);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_fitting_quickbar), "Fitting QuickBar");
@@ -19886,7 +19886,7 @@ create_PHOEBE_dc_correlation_matrix (void)
   GtkWidget *dc_correlation_matrix_main_frame;
   GtkWidget *dc_correlation_matrix_close_button;
 
-  PHOEBE_dc_correlation_matrix = gtk_window_new (GTK_WINDOW_DIALOG);
+  PHOEBE_dc_correlation_matrix = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (PHOEBE_dc_correlation_matrix), "PHOEBE_dc_correlation_matrix", PHOEBE_dc_correlation_matrix);
   gtk_window_set_title (GTK_WINDOW (PHOEBE_dc_correlation_matrix), "Correlation Matrix");
   gtk_window_set_policy (GTK_WINDOW (PHOEBE_dc_correlation_matrix), TRUE, TRUE, FALSE);
