@@ -1349,6 +1349,9 @@ void plot_update_info (int DESTINATION, PHOEBE_calculated_parameters params)
 			readout_widget = lookup_widget (PHOEBE_plot_rv, rv_keywords[i]);
 
 		sprintf (working_str, "%.3lf", values[i]);
+		if (i > 11 && values[i] <= 0.0)
+			sprintf (working_str, "n/a");
+
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
 		}
 

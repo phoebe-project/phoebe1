@@ -1068,16 +1068,42 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 		/* Read in the third set of calculated parameters:                        */
 		if (strstr (working_str, "star    r pole     deriv     r point     deriv      r side      deriv     r back      deriv") != NULL)
 			{
-			fscanf (data_file, "\n");                              /* An empty line */
-			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p) != 5)
+			int pos;
+			char *ptr;
+
+			fgets (working_str, 250, data_file);                      /* Empty line */
+
+			/* If there are any asterisks '*' in the string, formatting problems    */
+			/* occured and we must handle them.                                     */
+
+			fgets (working_str, 250, data_file);
+			if ( (pos = sscanf (working_str, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p)) != 5)
 				{
-				phoebe_warning ("Error in read_in_synthetic_lc_data line 4!\n");
-				params->rpole_p = params->rpoint_p = params->rside_p = params->rback_p = -1.0;
+				phoebe_warning ("Formatting problems in lco file, radii, parameter %d.\n", pos);
+
+				ptr = &(working_str[4]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpole_p)) != 1) params->rpole_p = -1.0;
+				ptr = &(working_str[26]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpoint_p)) != 1) params->rpoint_p = -1.0;
+				ptr = &(working_str[48]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rside_p)) != 1) params->rside_p = -1.0;
+				ptr = &(working_str[70]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rback_p)) != 1) params->rback_p = -1.0;
 				}
-			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_s, &params->rpoint_s, &params->rside_s, &params->rback_s) != 5)
+
+			fgets (working_str, 250, data_file);
+			if ( (pos = sscanf (working_str, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_s, &params->rpoint_s, &params->rside_s, &params->rback_s)) != 5)
 				{
-				phoebe_warning ("Error in read_in_synthetic_lc_data line 5!\n");
-				params->rpole_s = params->rpoint_s = params->rside_s = params->rback_s = -1.0;
+				phoebe_warning ("Formatting problems in lco file, radii, parameter %d.\n", pos);
+
+				ptr = &(working_str[4]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpole_s)) != 1) params->rpole_s = -1.0;
+				ptr = &(working_str[26]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpoint_s)) != 1) params->rpoint_s = -1.0;
+				ptr = &(working_str[48]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rside_s)) != 1) params->rside_s = -1.0;
+				ptr = &(working_str[70]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rback_s)) != 1) params->rback_s = -1.0;
 				}
 			}
 		}
@@ -1179,9 +1205,43 @@ int read_in_synthetic_rv_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 		/* Read in the third set of calculated parameters:                        */
 		if (strstr (working_str, "star    r pole     deriv     r point     deriv      r side      deriv     r back      deriv") != NULL)
 			{
-			fscanf (data_file, "\n");                              /* An empty line */
-			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p) != 5) phoebe_warning ("Error in read_in_synthetic_rv_data line 4!\n");
-			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_s, &params->rpoint_s, &params->rside_s, &params->rback_s) != 5) phoebe_warning ("Error in read_in_synthetic_rv_data line 5!\n");
+			int pos;
+			char *ptr;
+
+			fgets (working_str, 250, data_file);                      /* Empty line */
+
+			/* If there are any asterisks '*' in the string, formatting problems    */
+			/* occured and we must handle them.                                     */
+
+			fgets (working_str, 250, data_file);
+			if ( (pos = sscanf (working_str, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p)) != 5)
+				{
+				phoebe_warning ("Formatting problems in lco file, radii, parameter %d.\n", pos);
+
+				ptr = &(working_str[4]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpole_p)) != 1) params->rpole_p = -1.0;
+				ptr = &(working_str[26]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpoint_p)) != 1) params->rpoint_p = -1.0;
+				ptr = &(working_str[48]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rside_p)) != 1) params->rside_p = -1.0;
+				ptr = &(working_str[70]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rback_p)) != 1) params->rback_p = -1.0;
+				}
+
+			fgets (working_str, 250, data_file);
+			if ( (pos = sscanf (working_str, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_s, &params->rpoint_s, &params->rside_s, &params->rback_s)) != 5)
+				{
+				phoebe_warning ("Formatting problems in lco file, radii, parameter %d.\n", pos);
+
+				ptr = &(working_str[4]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpole_s)) != 1) params->rpole_s = -1.0;
+				ptr = &(working_str[26]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rpoint_s)) != 1) params->rpoint_s = -1.0;
+				ptr = &(working_str[48]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rside_s)) != 1) params->rside_s = -1.0;
+				ptr = &(working_str[70]);
+				if ( (pos = sscanf (ptr, "%lf", &params->rback_s)) != 1) params->rback_s = -1.0;
+				}
 			}
 		}
 
