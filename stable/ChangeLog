@@ -1,6 +1,23 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-02-14: - If *all* individual weights in a data file were equal (e.g.
+              set to 1.0) and the type of weighting was set to Absolute
+              error, conversion to weights failed because of division-by-
+              zero error. The transformation function now checks whether
+              min and max values of individual weights are the same and if
+              they are, all weights are set to 1.0.
+2005-01-28: - Several PHOEBE window types were set to Dialog instead of
+              Top-level. This caused unsatisfactory behavior when windows
+              were overlapping: dialog windows are always kept on top of the
+              top-level windows. This shows when new gtk+1.2 libraries are
+              used, i.e. Debian Testing. Fixed.
+            - Default fonts on newer systems are substantially larger than
+              the ones used before. That's why PHOEBE appearence is really
+              bad on those systems. The crucial one on the Data tab is MZERO
+              setting, which is fixed and should be ok for both old and new
+              systems. Others will be fixed after the query on phoebe-discuss
+              mailing list.
 2005-01-24: - Added a stress to the top-level README file that SuperMongo
               depends on the netpbm package to convert between different
               image formats and that the user should have it installed.
