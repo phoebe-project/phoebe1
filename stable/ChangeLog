@@ -1,6 +1,14 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-09-06: - All tabs in phoebe_fortran_routines.f replaced with two spaces.
+              This removes the inconsistency with some older FORTRAN compilers.
+            - PHOEBE functions for creating LCI and DCI files updated to con-
+              form to the new layout of WD version 2004-06-09.
+            - PHOEBE now works with the newest WD version. There is still a
+              persistent bug present in WD that returns NANs for symmetrical
+              derivatives. 0.26 will thus be postponed until this issue is
+              resolved.
 2004-07-24: - Simplex values (step size, min & max values) for log g and [M/H]
               were completely off. Since they were disabled anyway, this
               doesn't influence PHOEBE at all, but when converting keyword
