@@ -28,7 +28,7 @@ void parse_startup_line (int argc, char *argv[])
 		     (strcmp (argv[i],  "-?"   ) == 0) ||
 				 (strcmp (argv[i], "--help") == 0) )
 			{
-			printf ("\nPHOEBE 0.25 command line arguments: [-hsv] [keyword_file]\n\n");
+			printf ("\nPHOEBE 0.26 command line arguments: [-hsv] [keyword_file]\n\n");
 			printf ("  -h, --help, -?      ..  this help screen\n");
 			printf ("  -s, --script        ..  execute PHOEBE script\n");
 			printf ("  -v, --version       ..  display PHOEBE version and exit\n");
@@ -38,7 +38,7 @@ void parse_startup_line (int argc, char *argv[])
 		if ( (strcmp (argv[i],  "-v"      ) == 0) ||
 				 (strcmp (argv[i], "--version") == 0) )
 			{
-			printf ("\nPHOEBE 0.25 (testing release), July 23rd, 2004 by Andrej Prsa\n");
+			printf ("\nPHOEBE 0.26 (beta release), October 21st, 2004 by Andrej Prsa\n");
 			printf ("  Send comments and/or requests to andrej.prsa@fmf.uni-lj.si\n\n");
 			exit (0);
 			}
@@ -90,8 +90,8 @@ void phoebe_init ()
 	PHOEBE_LOCALE = strdup (setlocale (LC_NUMERIC, NULL));
 	setlocale (LC_NUMERIC, "C");
 
-	sprintf (PHOEBE_VERSION_NUMBER, "0.25 (beta release)");
-	sprintf (PHOEBE_VERSION_DATE,   "July 23rd, 2004");
+	sprintf (PHOEBE_VERSION_NUMBER, "0.26 (beta release)");
+	sprintf (PHOEBE_VERSION_DATE,   "October 21st, 2004");
 
 	sprintf (PHOEBE_KEYWORD_FILENAME, "Undefined");
 

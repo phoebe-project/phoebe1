@@ -1049,8 +1049,16 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 		if (strstr (working_str, "star    r pole     deriv     r point     deriv      r side      deriv     r back      deriv") != NULL)
 			{
 			fscanf (data_file, "\n");                              /* An empty line */
-			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 4!\n");
-			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_s, &params->rpoint_s, &params->rside_s, &params->rback_s) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 5!\n");
+			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p) != 5)
+				{
+				phoebe_warning ("Error in read_in_synthetic_lc_data line 4!\n");
+				params->rpole_p = params->rpoint_p = params->rside_p = params->rback_p = -1.0;
+				}
+			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_s, &params->rpoint_s, &params->rside_s, &params->rback_s) != 5)
+				{
+				phoebe_warning ("Error in read_in_synthetic_lc_data line 5!\n");
+				params->rpole_s = params->rpoint_s = params->rside_s = params->rback_s = -1.0;
+				}
 			}
 		}
 

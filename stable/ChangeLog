@@ -1,6 +1,9 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-10-21: - Array sizes in WD have been changed to accomodate for Nmax=60
+              and 6000 observation points.
+            - PHOEBE 0.26 released!
 2004-10-12: - The underlaying WD version changed to 2004-09-17, which fixes
               a bug mentioned below. Things should now work well. After some
               testing, a new PHOEBE version will be released.
