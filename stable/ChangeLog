@@ -1,6 +1,9 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-10-29: - PHOEBE crashed when LC was plotted, but the filter wasn't de-
+              fined (i.e. set LCNO to 1 and plot the LC as is). The assumed
+              values for bandpass-dependent variables are now defaults.
 2004-10-28: - If .lco file readout fails on lines giving radii, uninitialized
               values were used in LC Plotting window. Now these values are
               initialized to -1.0 (so that the problem is obvious). Due to

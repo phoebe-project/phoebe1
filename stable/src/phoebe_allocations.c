@@ -634,7 +634,27 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 	if (match_lc == 0)
 		for (i = 0; i < rv_no; i++)
 			if (strcmp (filter, PHOEBE_rv_data[i].filter) == 0) { match_rv = 1; break; }
-	if ( (match_lc == 0) && (match_rv == 0) ) phoebe_fatal ("read_in_wl_dependent_parameters, match_lc and match_rv both 0.");
+	if ( (match_lc == 0) && (match_rv == 0) )
+		{
+		/* This happens when:                                                     */
+		/* 1) user left the filter setting to "Undefined",                        */
+		/* 2) user entered an invalid name of the filter in his keyword file.     */
+		/* Either way, set up the defaults, wrap it up and exit.                  */
+
+		phoebe_warning ("No filter selected: assuming default Johnson V (550nm) filter.\n");
+		mono.WLA   = 550.0;
+		mono.IBAND = 7;
+		mono.HLA   = 10.0;
+		mono.CLA   = 10.0;
+		mono.X1A   = 0.5;
+		mono.X2A   = 0.5;
+		mono.Y1A   = 0.5;
+		mono.Y2A   = 0.5;
+		mono.EL3   = 0.0;
+		mono.OPSF  = 0.0;
+		mono.SIGMA = 0.0;
+		return mono;
+		}
 
 	/* match_* now tells us what type of data file is analysed and i tells us   */
 	/* which filter we want. With that we read in wavelength-dependent parame-  */
