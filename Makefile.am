@@ -22,10 +22,8 @@
 
 SUBDIRS = data defaults pixmaps scripts src wd
 
-EXTRA_DIST = NEW_VERSION                             \
-             SPECS                                   \
+EXTRA_DIST = SPECS                                   \
              acconfig.h                              \
-             autogen.sh                              \
              phoebe.glade                            \
              autoconfig/config.guess                 \
              autoconfig/config.sub                   \
