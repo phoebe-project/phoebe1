@@ -1,6 +1,15 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-11-15: - Comparison against uninitialized strings in readout functions
+              has been fixed. This didn't influence the way PHOEBE was run-
+              ning, it's just tidier now.
+            - Bugfix: if the user used binning on a file with time as inde-
+              pendent variable but phase was selected (or if phases in a
+              file weren't on the [-0.5, 0.5] interval, PHOEBE segfaulted.
+              These values are now simply discarded.
+            - Temperature range limits were too strict - lower limit has
+              been reduced from 3500K to 500K.
 2004-11-01: - PHOEBE has been precompiled and packaged under Debian stable
               (Woody). The deb package is at your disposal on PHOEBE's
               homepage. The debian/ top-level directory was added to the
