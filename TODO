@@ -1,0 +1,118 @@
+IMPORTANT: THIS TODO FILE IS OBSOLETE, SINCE PHOEBE DEVELOPMENT IS MOVED
+           TO ANOTHER BRANCH SINCE VERSION 0.30. VERSIONS DEPENDING ON
+           GTK1.2 AND SUPERMONGO WILL UNDERGO ONLY AND EXCLUSIVELY CRITI-
+           CAL BUGFIXES, NO NEW FEATURES WILL BE ADDED. IF YOU WANT TO
+           CONTRIBUTE, PLEASE READ THE TODO FILE IN THE TOPLEVEL PHOEBE
+           VERSION 0.30 OR LATER.
+
+--------------------------------------------------------------------------------
+
+                            ----------------------
+                            | PHOEBE TO-DO LIST: |
+                            ----------------------
+
+configure.in, Makefile.am:
+--------------------------------------------------------------------------------
+* Add SM devices installation script to Makefile.am.
+
+Keyword Files:
+--------------------------------------------------------------------------------
+* Add simpler routines for value readouts from keyword files.
+
+Configuration:
+--------------------------------------------------------------------------------
+* Check whether chosen directories contain appropriate content.
+
+Data Tab:
+--------------------------------------------------------------------------------
+* Add file format check when LC/RV data files are inputed in Data tab.
+* Add experimental standard deviation calculation if possible.
+* Support RV data files that contain normalized RV points (to orbit).
+
+Basic Tab:
+--------------------------------------------------------------------------------
+* Fix PERIOD and HJD0 entries -> they must be in double precision and still
+  be inputed as spin buttons. At least add validity check for input values.
+
+Orbit Tab:
+--------------------------------------------------------------------------------
+* Fix DPERDT and DPDT entries -> they must be in double precision and still
+  be inputed as spin buttons. At least add validity check for input values.
+
+Luminosities Tab:
+--------------------------------------------------------------------------------
+* Add 3D animation of the binary.
+
+Plotting:
+--------------------------------------------------------------------------------
+* Zooming doesn't work with big numbers. Check out what's wrong.
+* Zooming and shifting is poorly done. Get rid of global variables and avoid lc
+  calculation.
+* Think how to enhance JD plots.
+* Think how to plot multiple curves on one plot. Scrolls?
+* Derivatives of r_pole ... r_back are still missing in plot info.
+* Add error-bars possibility for experimental values based on weight and sigma.
+
+Fitting:
+--------------------------------------------------------------------------------
+* Create a before/after picture so the user may compare the before/after
+  solution.
+* In case of DC divergence the output is poor. Enhance it.
+* Move populate_dc_parameters_info_list from callbacks.
+* DC info list should contain DC steps as well. Add them.
+* User might want to perform multiple DC iterations. Support that.
+
+MMS:
+--------------------------------------------------------------------------------
+* Fix the GUI. It looks and feels awful!
+
+Limb Darkening:
+--------------------------------------------------------------------------------
+* Finish "Update All" callback function in LD interpolation.
+* A long term plan could be to implement numerical integration of the monochro-
+  matic LD tables. That way it would be possible (and easy) to add any new fil-
+  ter with known bandpass properties; the only thing that would have to be sup-
+  plied is the transmission function.
+
+Synthetic grids:
+--------------------------------------------------------------------------------
+* Separate this part of code from callbacks to separate files and enhance their
+  implementation. For now they remain disabled within PHOEBE.
+
+Aliasing:
+--------------------------------------------------------------------------------
+* If the basic interval is different than [-0.5, 0.5], aliasing doesn't work
+  correctly.
+
+Chi2 Calculation:
+--------------------------------------------------------------------------------
+* Add extrapolation support for points that fall out of synthetic phases range.
+
+Chi2 Plotting:
+--------------------------------------------------------------------------------
+* Add RV chi2 plotting support.
+* Add a switch to make the plot transparent (e.g. use 2 instead of 3 in the
+  surface plotting function). Rethink the outlook of this GUI part.
+* Add the option of rotating the plot in all three dimensions quickly.
+* Add automatic boundary limits calculation (e.g. 10% +/- from the currently
+  adopted value or sth like that).
+* Add coloring of contour plots.
+
+Programming Enhancements:
+--------------------------------------------------------------------------------
+* Calculate optimal RV VUNIT and use it internally.
+* Optimize the numbering scheme for LCI/LCO files.
+* Add undo support.
+* Add debugging (mtrace, mcheck) and error-handling.
+
+Visual Enhancements:
+--------------------------------------------------------------------------------
+* Add icons to a button box and elsewhere.
+
+Physical questions:
+--------------------------------------------------------------------------------
+* How can we calculate L/Lsun from HLA, T, ...? Implement that.
+
+Tutorial:
+--------------------------------------------------------------------------------
+* WORK ON IT! :)

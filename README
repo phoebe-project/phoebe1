@@ -1,0 +1,278 @@
+PHOEBE-0.24 TOPLEVEL DOCUMENTATION                              MAY 3rd, 2004
+-----------------------------------------------------------------------------
+
+Hello and thank you for your interest in PHOEBE.
+
+THINGS YOU NEED TO KNOW
+-----------------------
+
+PHOEBE is currently in its testing phase, which means that you may download
+PHOEBE freely, but you are kindly asked to let the author know of you using
+this software. You may freely share PHOEBE with others as long as no changes
+are imposed on the code. For further information please read the GNU/GPL li-
+cence in PHOEBE documentation. If you do feel you need to change the code,
+be sure to distribute it only if the original version along with exact chan-
+ging policy is attached.
+
+Wilson-Devinney WD2003 code is distributed along with this version of PHOEBE
+for testing purposes only. If you are new to WD2003, please contact Robert E.
+Wilson, University of Florida, and let him know that you use his software.
+
+REQUIREMENTS
+------------
+
+To successfully set up PHOEBE, you need:
+
+- A Linux machine:
+
+  PHOEBE has been successfully tested on the following platforms:
+
+    * Debian Woody 3.0r1   no issues
+    * Debian Woody 3.0r2   no issues
+    * Debian Sarge         no issues    (development platform)
+    * Linux Redhat 7.2     no issues
+    * Linux Redhat 7.3     no issues
+    * Linux Redhat 8.0     no issues
+    * Linux Redhat 9.0     no issues
+    * Linux Fedora Core 1  no issues
+    * Linux Fedora Core 2  no issues
+    * Linux SUSE 8.2       no issues
+    * Linux SUSE 9.0       no issues
+    * Gentoo Linux 2004    no issues
+
+  If you ran PHOEBE successfully on a different platform, please inform the
+  author.
+
+- autoconf and automake suite for generic compiling (comes with every single
+  brand of Linux we're aware of and is installed by default).
+
+- ANSI C compliant compiler (gcc will do just fine),
+
+- FORTRAN F77 compliant compiler (g77 will do just fine),
+
+- Plotting package GnuPlot and/or SuperMongo:
+
+  For plotting, PHOEBE uses external programs. Currently, two such plotting
+  programs are supported: GnuPlot (the default) and SuperMongo (deprecated).
+  Until version 0.23 SuperMongo was the only supported package, but since
+  it is commercial, it doesn't suit PHOEBE licence, which is GPL. Usage of
+  GnuPlot is thus highly encouraged. GnuPlot functions are implemented by
+  Michael Bauer.
+
+  If you are set on using SuperMongo, please note that it *must* be installed
+  completely, along with libraries and header files. These usually reside in
+  /usr/local/lib and /usr/local/include:
+
+    Header files:              Libraries:
+      copyright.h                libdevices.a
+      options.h                  libplotsub.a
+      sm_declare.h               libutils.a
+
+  If you don't have them, please ask your local administrator to install them
+  for you. Usually you get along by compiling SM in ordinary fashion (there is
+  no need to install a callable parser) and copying header files to your inclu-
+  de directory (usually /usr/local/include).
+
+  Finally, a word of caution: if you compiled SuperMongo with default numerical
+  type float instead of double, PHOEBE compilation will report pointer incompa-
+  tibility warnings. This shouldn't prevent PHOEBE from working properly, but
+  strange issues have been reported with using float type and older SuperMongo
+  versions. So, to prevent SM issues, it is strongly encouraged to recompile it
+  with default numerical type double instead of float.
+
+- GTK+1.2 or higher graphical library. This is a standard component to
+  virtually all Linuxes of today.
+
+OPTIONAL
+--------
+
+- Van Hamme limb darkening tables may now be obtained from the PHOEBE CVS
+  and later put to PHOEBE shared directory. You may set it up in 
+  Settings->Configuration window.
+
+OBTAINING PHOEBE
+----------------
+
+PHOEBE may be obtained by two common ways:
+
+1. By downloading the stable release from PHOEBE homepage:
+
+     http://www.fiz.uni-lj.si/phoebe
+
+   This method is preferable for casual users. I will do my best to support
+   your work with stable releases.
+
+2. By checking out the daily version from anonymous CVS:
+
+   Login:
+
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs login
+
+   [ hit <ENTER> for password ]
+
+   The main program:
+
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
+                                                              checkout phoebe
+
+   The bleeding-edge development version:
+
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
+                                                          checkout phoebe-dev
+
+   Documentation (optional):
+
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
+                                                       checkout documentation
+
+   Van Hamme limb darkening tables (optional):
+
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
+                                                         checkout catalogs/ld
+
+   This method is preferable for testing users and contributors. Please note
+   that the development version might not work, it might not even compile.
+   If you want the latest updates that are considered for the stable
+   distribution, use the main program rather than the bleeding edge.
+
+INSTALLATION
+------------
+
+Install by following generic instructions in INSTALL; to make a long story
+short, this will work on all above mentioned platforms:
+
+	./configure
+	make
+	su
+	make install
+
+If the compilation fails with the following error:
+
+  ../autoconfig/depcomp: ../autoconfig/depcomp: No such file or directory
+  make[2]: *** [main.o] Error 127
+
+this means that you have newer autoutils suite. Please run:
+
+  autoreconf --force --install
+
+and then repeat the generic installation steps given above.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.24 USERS
+------------------------------------------
+
+SuperMongo plotting package is replaced by GNUPlot, which is now the default
+plotting package. Please consider switching to GNUPlot, since due to licence
+problems SuperMongo support might be discontinued in future PHOEBE versions.
+
+Due to future expansion possibility with other numerical models, 'wd98/' and
+'wd2003/' directories have been renamed to 'wd/'. Please fix the paths in
+your configuration file to accord to this change.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.22 USERS
+------------------------------------------
+
+The change of keyword file logic in 0.20 and 0.21 introduced a bug that arbi-
+trarily lacked parts of strings in keyword files. This was due to GTK+ readout
+inconsistency and is now fixed. Please update your keyword files!
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.20 USERS
+------------------------------------------
+
+If you are upgrading PHOEBE, please note that the keywords file format has
+changed. This was done to conform to ISO BASH standards of keyword assignment.
+This way the scripter may be called with much simpler keyword files. See the
+User Manual for details.
+
+When you open an old PHOEBE keyword file, a notice window will be displayed,
+telling you that you are opening a legacy PHOEBE keyword file. The only thing
+you should do to convert it to the new format is to save it (simply rewriting
+will do) in the new PHOEBE version.
+
+SETTING UP
+----------
+
+- If you want to use SuperMongo, you should add appropriate devices to the
+  Super Mongo plotting package device file. This file usually resides in:
+
+    /usr/local/lib/sm/graphcap.local
+
+  These lines don't get appended automatically, because there are many diffe-
+  rent policies regarding proprietary software, which SM definitely is; thus
+  you should manually add the following lines to that file:
+
+    aspectgif|aspectGIF|GIF via PPM (using ppmtogif), 512x256:\
+      :DV=raster:xr#512:yr#256:CL:\
+      :EP=\001:OW=P6 512 256 255\n:\
+      :SY=${BIN}/rasterise -r $0 $F - | ppmtogif > $1:\
+      :tc=ppm:
+
+    tinygif|tinyGIF|GIF via PPM (using ppmtogif), 256x192:\
+      :DV=raster:xr#256:yr#192:CL:\
+      :EP=\001:OW=P6 256 192 255\n:\
+      :SY=${BIN}/rasterise -r $0 $F - | ppmtogif > $1:\
+      :tc=ppm:
+
+    aspectxpm|aspectXPM|XPM via PPM (using ppmtoxpm), 512x256:\
+      :DV=raster:xr#512:yr#256:CL:\
+      :EP=\001:OW=P6 512 256 255\n:\
+      :SY=${BIN}/rasterise -r $0 $F - | ppmtoxpm > $1:\
+      :tc=ppm:
+
+    tinyxpm|tinyXPM|XPM via PPM (using ppmtoxpm), 256x192:\
+      :DV=raster:xr#256:yr#192:CL:\
+      :EP=\001:OW=P6 256 192 255\n:\
+      :SY=${BIN}/rasterise -r $0 $F - | ppmtoxpm > $1:\
+      :tc=ppm:
+
+    starxpm|starXPM|XPM via PPM (using ppmtoxpm), 320x192:\
+      :DV=raster:xr#320:yr#192:CL:\
+      :EP=\001:OW=P6 320 192 255\n:\
+      :SY=${BIN}/rasterise -r $0 $F - | ppmtoxpm > $1:\
+      :tc=ppm:
+
+  Maybe some day there will be a script within Makefile.am that will automate
+  this process, but it is a long term plan. (Want to contribute?)
+
+- When you first start PHOEBE, a configuration window appears. You may access
+  that window at any time by chosing Settings->Configuration menu. You have to
+  supply PHOEBE with information on where to find or expect certain files. De-
+  fault settings are usually OK for system-wide installation (most common and
+  preferable way), just be sure to have write permissions to the temporary di-
+  rectory and to the data directory. If you are installing PHOEBE just for a
+  single user, you might set up your directories like this:
+
+    *** For single-user access only ***
+
+    Base Directory:        /home/[your_name]/phoebe
+    Source Directory:      /home/[your_name]/phoebe/src
+    Share Directory:       /home/[your_name]/phoebe/share
+    Working Directory:     /tmp
+    Data Directory:        /home/[your_name]/phoebe/data
+    WD LC Directory:       /home/[your_name]/phoebe/bin
+    WD DC Directory:       /home/[your_name]/phoebe/bin
+
+- You may edit PHOEBE configuration files and keyword files by hand. Keywords
+  are not order-sensible, which means that there is no specific or even pre-
+  ferable order of appearence. If you enter an invalid keyword, it will simply
+  be ignored. Whitespaces and tabs are arbitrary too.
+
+FEEDBACK
+--------
+
+Please send as much feedback as possible to the author! What you like, what
+you don't like, what you'd like changed, what not to change under any cir-
+cumstances, ... 
+
+CONTACTING THE AUTHOR
+---------------------
+
+For comments, postcards, bugs, postcards, requests or postcards don't hesitate
+to contact the author:
+
+	Andrej Prsa
+	Jadranska 19
+	SI-1000 Ljubljana
+	Tel: +386-1-540-13-53
+	andrej.prsa@fmf.uni-lj.si
+
+For the list of contributors, please take a look at the top-level AUTHORS file.
