@@ -1,6 +1,10 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-07-24: - Simplex values (step size, min & max values) for log g and [M/H]
+              were completely off. Since they were disabled anyway, this
+              doesn't influence PHOEBE at all, but when converting keyword
+              files from 0.2x to 0.3x versions, mayhem happens. Fixed.
 2004-07-23: - After a successful CVS restauration, a new release is in order:
               PHOEBE 0.25 testing release is out!
 2004-06-29: - A fitting quickbar typo (Origin of time -> Argument of peri-

@@ -5337,11 +5337,11 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
-		<step>0.01</step>
-		<page>0.1</page>
+		<value>2</value>
+		<lower>2</lower>
+		<upper>10</upper>
+		<step>0.1</step>
+		<page>1</page>
 		<page_size>1</page_size>
 		<child>
 		  <left_attach>5</left_attach>
@@ -5370,11 +5370,11 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
-		<step>0.01</step>
-		<page>0.1</page>
+		<value>10</value>
+		<lower>2</lower>
+		<upper>10</upper>
+		<step>0.1</step>
+		<page>1</page>
 		<page_size>1</page_size>
 		<child>
 		  <left_attach>5</left_attach>
@@ -5403,9 +5403,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>0.01</value>
+		<lower>0</lower>
+		<upper>1</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -5659,11 +5659,11 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
-		<step>0.01</step>
-		<page>0.1</page>
+		<value>2</value>
+		<lower>2</lower>
+		<upper>10</upper>
+		<step>0.1</step>
+		<page>1</page>
 		<page_size>1</page_size>
 		<child>
 		  <left_attach>5</left_attach>
@@ -5692,11 +5692,11 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
-		<step>0.01</step>
-		<page>0.1</page>
+		<value>10</value>
+		<lower>2</lower>
+		<upper>10</upper>
+		<step>0.1</step>
+		<page>1</page>
 		<page_size>1</page_size>
 		<child>
 		  <left_attach>5</left_attach>
@@ -5725,9 +5725,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>0.01</value>
+		<lower>0</lower>
+		<upper>1</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -5981,9 +5981,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>-5</value>
+		<lower>-5</lower>
+		<upper>5</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -6014,9 +6014,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>5</value>
+		<lower>-5</lower>
+		<upper>5</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -6047,9 +6047,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>0.01</value>
+		<lower>0</lower>
+		<upper>1</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -6303,9 +6303,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>-5</value>
+		<lower>-5</lower>
+		<upper>5</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -6336,9 +6336,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>5</value>
+		<lower>-5</lower>
+		<upper>5</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -6369,9 +6369,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>-0.5</value>
-		<lower>-0.5</lower>
-		<upper>0.5</upper>
+		<value>0.01</value>
+		<lower>0</lower>
+		<upper>1</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
