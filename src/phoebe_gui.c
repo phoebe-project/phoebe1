@@ -2711,7 +2711,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_tavh_label_min, FALSE);
 
-  component_tavh_value_min_adj = gtk_adjustment_new (500, 500, 50000, 10, 100, 1000);
+  component_tavh_value_min_adj = gtk_adjustment_new (500, 500, 100000, 10, 100, 1000);
   component_tavh_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (component_tavh_value_min_adj), 0, 0);
   gtk_widget_ref (component_tavh_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_tavh_value_min", component_tavh_value_min,
@@ -2724,7 +2724,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_tavh_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_tavh_value_min), GTK_UPDATE_IF_VALID);
 
-  component_tavh_value_adj = gtk_adjustment_new (6000, 500, 50000, 10, 100, 1000);
+  component_tavh_value_adj = gtk_adjustment_new (6000, 500, 100000, 10, 100, 1000);
   component_tavh_value = gtk_spin_button_new (GTK_ADJUSTMENT (component_tavh_value_adj), 0, 0);
   gtk_widget_ref (component_tavh_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_tavh_value", component_tavh_value,
@@ -2767,7 +2767,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_tavh_label_max, FALSE);
 
-  component_tavh_value_max_adj = gtk_adjustment_new (50000, 3500, 50000, 10, 100, 1000);
+  component_tavh_value_max_adj = gtk_adjustment_new (100000, 3500, 100000, 10, 100, 1000);
   component_tavh_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (component_tavh_value_max_adj), 0, 0);
   gtk_widget_ref (component_tavh_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_tavh_value_max", component_tavh_value_max,
@@ -2825,7 +2825,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_tavc_label_min, FALSE);
 
-  component_tavc_value_min_adj = gtk_adjustment_new (500, 500, 50000, 10, 100, 1000);
+  component_tavc_value_min_adj = gtk_adjustment_new (500, 500, 100000, 10, 100, 1000);
   component_tavc_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (component_tavc_value_min_adj), 0, 0);
   gtk_widget_ref (component_tavc_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_tavc_value_min", component_tavc_value_min,
@@ -2838,7 +2838,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_tavc_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_tavc_value_min), GTK_UPDATE_IF_VALID);
 
-  component_tavc_value_adj = gtk_adjustment_new (6000, 500, 50000, 10, 100, 1000);
+  component_tavc_value_adj = gtk_adjustment_new (6000, 500, 100000, 10, 100, 1000);
   component_tavc_value = gtk_spin_button_new (GTK_ADJUSTMENT (component_tavc_value_adj), 0, 0);
   gtk_widget_ref (component_tavc_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_tavc_value", component_tavc_value,
@@ -2872,7 +2872,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_tavc_label_max, FALSE);
 
-  component_tavc_value_max_adj = gtk_adjustment_new (50000, 3500, 50000, 10, 100, 1000);
+  component_tavc_value_max_adj = gtk_adjustment_new (100000, 3500, 100000, 10, 100, 1000);
   component_tavc_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (component_tavc_value_max_adj), 0, 0);
   gtk_widget_ref (component_tavc_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_tavc_value_max", component_tavc_value_max,

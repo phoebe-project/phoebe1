@@ -3951,7 +3951,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>500</value>
 		<lower>500</lower>
-		<upper>50000</upper>
+		<upper>100000</upper>
 		<step>10</step>
 		<page>100</page>
 		<page_size>1000</page_size>
@@ -3983,7 +3983,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>6000</value>
 		<lower>500</lower>
-		<upper>50000</upper>
+		<upper>100000</upper>
 		<step>10</step>
 		<page>100</page>
 		<page_size>1000</page_size>
@@ -4111,9 +4111,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>50000</value>
+		<value>100000</value>
 		<lower>3500</lower>
-		<upper>50000</upper>
+		<upper>100000</upper>
 		<step>10</step>
 		<page>100</page>
 		<page_size>1000</page_size>
@@ -4249,7 +4249,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>500</value>
 		<lower>500</lower>
-		<upper>50000</upper>
+		<upper>100000</upper>
 		<step>10</step>
 		<page>100</page>
 		<page_size>1000</page_size>
@@ -4281,7 +4281,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>6000</value>
 		<lower>500</lower>
-		<upper>50000</upper>
+		<upper>100000</upper>
 		<step>10</step>
 		<page>100</page>
 		<page_size>1000</page_size>
@@ -4376,9 +4376,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>50000</value>
+		<value>100000</value>
 		<lower>3500</lower>
-		<upper>50000</upper>
+		<upper>100000</upper>
 		<step>10</step>
 		<page>100</page>
 		<page_size>1000</page_size>
