@@ -1019,18 +1019,18 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 			}
 
 		/* Read in the first set of calculated parameters:                        */
-		if (strstr (working_str, " Star     M/Msun   (Mean Radius)/Rsun   M Bol    Log g (cgs)") != NULL)
+		if (strstr (working_str, " Star         M/Msun   (Mean Radius)/Rsun     M Bol    Log g (cgs)") != NULL)
 			{
 			if (fscanf (data_file, "%d %lf %lf %lf %lf\n", &i, &params->mass_p, &params->radius_p, &params->mbol_p, &params->logg_p) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 1!\n");
 			if (fscanf (data_file, "%d %lf %lf %lf %lf\n", &i, &params->mass_s, &params->radius_s, &params->mbol_s, &params->logg_s) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 2!\n");
 			}
 
 		/* Read in the second set of calculated parameters:                       */
-		if (strstr (working_str, "GRID1/4    GRID2/4  POLAR SBR 1   POLAR SBR 2   SURF. AREA 1  SURF. AREA 2   PERI. PH.   CONJ. PH.") != NULL)
+		if (strstr (working_str, "grid1/4    grid2/4  polar sbr 1   polar sbr 2   surf. area 1  surf. area 2       phase        phase        phase") != NULL)
 			if (fscanf (data_file, "%d %d %lf %lf %lf %lf %*lf %*lf\n", &i, &i, &params->psb_p, &params->psb_s, &params->surface_p, &params->surface_s) != 6) phoebe_warning ("Error in read_in_synthetic_lc_data line 3!\n");
 
 		/* Read in synthetic data:                                                */
-		if (strstr (working_str, "(1+2+3)") != NULL)
+		if (strstr (working_str, "      JD                 Phase     light 1     light 2     (1+2+3)    norm lite   dist      mag+K") != NULL)
 			{
 			i = 0;
 			fgets (working_str, 250, data_file);
@@ -1046,7 +1046,7 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 			}
 
 		/* Read in the third set of calculated parameters:                        */
-		if (strcmp (working_str, "star    r pole     deriv     r point     deriv      r side      deriv     r back      deriv\n") == 0)
+		if (strstr (working_str, "star    r pole     deriv     r point     deriv      r side      deriv     r back      deriv") != NULL)
 			{
 			fscanf (data_file, "\n");                              /* An empty line */
 			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 4!\n");
@@ -1125,18 +1125,18 @@ int read_in_synthetic_rv_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 			}
 
 		/* Read in the first set of calculated parameters:                        */
-		if (strstr (working_str, " Star     M/Msun   (Mean Radius)/Rsun   M Bol    Log g (cgs)") != NULL)
+		if (strstr (working_str, " Star         M/Msun   (Mean Radius)/Rsun     M Bol    Log g (cgs)") != NULL)
 			{
 			if (fscanf (data_file, "%d %lf %lf %lf %lf\n", &i, &params->mass_p, &params->radius_p, &params->mbol_p, &params->logg_p) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 1!\n");
 			if (fscanf (data_file, "%d %lf %lf %lf %lf\n", &i, &params->mass_s, &params->radius_s, &params->mbol_s, &params->logg_s) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 2!\n");
 			}
 
 		/* Read in the second set of calculated parameters:                       */
-		if (strcmp (working_str, "GRID1/4    GRID2/4  POLAR SBR 1   POLAR SBR 2   SURF. AREA 1  SURF. AREA 2   PERI. PH.   CONJ. PH. \n") == 0)
+		if (strstr (working_str, "grid1/4    grid2/4  polar sbr 1   polar sbr 2   surf. area 1  surf. area 2       phase        phase        phase") != NULL)
 			if (fscanf (data_file, "%d %d %lf %lf %lf %lf %*lf %*lf\n", &i, &i, &params->psb_p, &params->psb_s, &params->surface_p, &params->surface_s) != 6) phoebe_warning ("Error in read_in_synthetic_lc_data line 3!\n");
 
 		/* Read in synthetic data:                                                */
-		if (strcmp (working_str, "JD              Phase     V Rad 1     V Rad 2      del V1      del V2   V1 km/s      V2 km/s\n") == 0)
+		if (strstr (working_str, "      JD              Phase     V Rad 1     V Rad 2      del V1      del V2   V1 km/s      V2 km/s") != NULL)
 			{
 			i = 0;
 			while (fscanf (data_file, "%lf %lf %lf %lf %lf %lf %lf %lf\n", &rv_output[i].hjd, &rv_output[i].phase, &rv_output[i].primary_norm_rv, &rv_output[i].secondary_norm_rv, &rv_output[i].primary_eclipse_corr, &rv_output[i].secondary_eclipse_corr, &rv_output[i].primary_rv, &rv_output[i].secondary_rv) == 8)
@@ -1149,7 +1149,7 @@ int read_in_synthetic_rv_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 			}
 
 		/* Read in the third set of calculated parameters:                        */
-		if (strcmp (working_str, "star    r pole     deriv     r point     deriv      r side      deriv     r back      deriv\n") == 0)
+		if (strstr (working_str, "star    r pole     deriv     r point     deriv      r side      deriv     r back      deriv") != NULL)
 			{
 			fscanf (data_file, "\n");                              /* An empty line */
 			if (fscanf (data_file, "%d %lf %*lf %lf %*lf %lf %*lf %lf %*lf\n", &i, &params->rpole_p, &params->rpoint_p, &params->rside_p, &params->rback_p) != 5) phoebe_warning ("Error in read_in_synthetic_rv_data line 4!\n");
