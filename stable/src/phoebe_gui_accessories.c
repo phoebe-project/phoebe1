@@ -251,7 +251,7 @@ void phoebe_init ()
 	  add_pixmap_directory ("../pixmaps/");
 
 		/* Temporary directory:                                                     */
-		add_pixmap_directory ("/tmp/");
+		add_pixmap_directory (PHOEBE_TEMP_DIR);
 		}
 
   PHOEBE = create_PHOEBE ();
