@@ -7,6 +7,15 @@ PHOEBE Project ChangeLog:
               string length checkup is done to see whether parsing should
               even be attempted or not. In other words, empty lines are now
               legitimate.
+            - Radii of overcontact binaries are always ill-formatted due to
+              incalculable derivatives for r_point. The readout from lco
+              files is now value-by-value, so that all properly calculated
+              radii are still printed out in the Plotting window.
+            - The above-mentioned fix along with the formerly fixed bug that
+              was reporting nonsense numbers for the radii in LC Plotting
+              window is now applied to the RV Plotting window as well.
+            - If the values for the radii aren't read out properly, the
+              number outputted becomes "n/a" instead of -1.0.
 2004-11-15: - Comparison against uninitialized strings in readout functions
               has been fixed. This didn't influence the way PHOEBE was run-
               ning, it's just tidier now.
