@@ -1127,10 +1127,19 @@ void add_filters_to_lc_plot_filter_list ()
 	int i;
 	int modified = 0;
 
-	if (lc_no == 0) return;
-
+	/* First let's clear the contents of the combo-box:                         */
   gtk_list_clear_items (GTK_LIST (GTK_COMBO (filter_box)->list), 0, -1);
 
+	/* Next, if there are no light-curves, put "None specified" to the combo:   */
+	if (lc_no == 0)
+		{
+		new_item = gtk_list_item_new_with_label ("None Specified");
+		gtk_widget_show (new_item);
+		gtk_container_add (GTK_CONTAINER (GTK_COMBO (filter_box)->list), new_item);
+		return;
+		}
+
+	/* Now we scan through all light curves and read out filters:               */
 	for (i = 0; i < lc_no; i++)
 		{
 		if (strcmp (PHOEBE_lc_data[i].filter, "Undefined") != 0)

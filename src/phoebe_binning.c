@@ -42,8 +42,13 @@ void bin_data (PHOEBE_data *data, int bin_no)
 	/* Binning of points: */
 	for (i = 0; i < src.ptsno; i++)
 		{
+		if (src.indep[i] < -0.5 || src.indep[i] > 0.5)
+			{
+			phoebe_warning ("phase %lf out of range [-0.5, 0.5], discarding.\n", src.indep[i]);
+			continue;
+			}
 		bin = (int) ((src.indep[i] - (-0.5)) * bin_no / (0.5 - (-0.5)));
-		if ( bin == bin_no ) bin = bin_no - 1;          /* This takes care of 0.50000 phase. */
+		if ( bin == bin_no ) bin = bin_no - 1; /* This takes care of 0.50000 phase. */
 		data->dep[bin] += src.dep[i];
 		data->weight[bin] += 1.0;           /* We are using .weight for counting. */
 		}

@@ -68,8 +68,8 @@ void on_data_lc_no_value_changed (GtkEditable *editable, gpointer user_data)
 	if (lc_no != 0) gtk_widget_set_sensitive (lookup_widget (PHOEBE, "fitting_chi2_plot_to_file_button"), TRUE);
 
 	allocate_memory_for_data_record (&PHOEBE_lc_data, lc_no);
-	add_filters_to_available_filter_lists ();
 	add_empty_record_to_all_lc_dependent_info_lists ();
+	add_filters_to_available_filter_lists ();
 	read_in_data_file_specifics ();
 	}
 
@@ -100,8 +100,8 @@ void on_data_rv_no_value_changed (GtkEditable *editable, gpointer user_data)
 	if (rv_no != 0) gtk_widget_set_sensitive (lookup_widget (PHOEBE, "system_vga_adjust"), TRUE);
 
 	allocate_memory_for_data_record (&PHOEBE_rv_data, rv_no);
-	add_filters_to_available_filter_lists ();
 	add_empty_record_to_all_rv_dependent_info_lists ();
+	add_filters_to_available_filter_lists ();
 	read_in_data_file_specifics ();
 	}
 

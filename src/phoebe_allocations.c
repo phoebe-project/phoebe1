@@ -1338,6 +1338,7 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 		}
 
 	/* If the data should be binned, bin it, but only if indep is phase:        */
+
 	if ( (switches.BINNING == 1) && (indep == 2) )
 		bin_data (data, switches.BINNO);
 
