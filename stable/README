@@ -73,6 +73,10 @@ To successfully set up PHOEBE, you need:
   no need to install a callable parser) and copying header files to your inclu-
   de directory (usually /usr/local/include).
 
+  SuperMongo uses netpbm utilities to convert between different image formats,
+  so please be sure to have netpbm package installed as well. If you have been
+  using SuperMongo to create gifs without problems, then netpbm is installed.
+
   Finally, a word of caution: if you compiled SuperMongo with default numerical
   type float instead of double, PHOEBE compilation will report pointer incompa-
   tibility warnings. This shouldn't prevent PHOEBE from working properly, but

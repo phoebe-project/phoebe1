@@ -1,6 +1,9 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-01-24: - Added a stress to the top-level README file that SuperMongo
+              depends on the netpbm package to convert between different
+              image formats and that the user should have it installed.
 2004-12-02: - If keyword files contained empty lines, PHOEBE messed up the
               readout, including if the empty line was at the end of file,
               because it somehow managed to overwrite strings. Now the
