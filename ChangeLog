@@ -1,6 +1,8 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-07-23: - After a successful CVS restauration, a new release is in order:
+              PHOEBE 0.25 testing release is out!
 2004-06-29: - A fitting quickbar typo (Origin of time -> Argument of peri-
               astron) fixed. Thanks to Dirk Terrell for pointing this out!
 2004-05-28: - PHOEBE successfully compiled under Fedora Core 2. Thanks to
