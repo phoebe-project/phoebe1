@@ -1,6 +1,11 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-04-04: - IBAND was left unassigned if synthetic RV curve was plotted
+              without any data files assigned, which caused ill-formatted
+	      WD input file and hence a failed plot. Fixed.
+2005-03-31: - Pixmaps were by default expected in /tmp instead of whatever
+              directory user set to be the temporary directory. Fixed.
 2005-02-14: - If *all* individual weights in a data file were equal (e.g.
               set to 1.0) and the type of weighting was set to Absolute
               error, conversion to weights failed because of division-by-

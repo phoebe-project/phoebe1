@@ -480,7 +480,8 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 	/* faults, else we read in filter-dependent parameters:                     */
 	if (chosen_filter == -1)
 		{
-		mono.WLA   = 500.0;
+		mono.WLA   = 550.0;
+		mono.IBAND = 7;
 		mono.HLA   = 10.0;
 		mono.CLA   = 10.0;
 		mono.X1A   = 0.5;
