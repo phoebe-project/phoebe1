@@ -1,6 +1,9 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-10-12: - The underlaying WD version changed to 2004-09-17, which fixes
+              a bug mentioned below. Things should now work well. After some
+              testing, a new PHOEBE version will be released.
 2004-09-06: - All tabs in phoebe_fortran_routines.f replaced with two spaces.
               This removes the inconsistency with some older FORTRAN compilers.
             - PHOEBE functions for creating LCI and DCI files updated to con-
