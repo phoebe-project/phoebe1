@@ -1,4 +1,4 @@
-PHOEBE-0.25 TOPLEVEL DOCUMENTATION                            JULY 23rd, 2004
+PHOEBE-0.26 TOPLEVEL DOCUMENTATION                         OCTOBER 21st, 2004
 -----------------------------------------------------------------------------
 
 Hello and thank you for your interest in PHOEBE.
@@ -156,6 +156,14 @@ this means that you have newer autoutils suite. Please run:
   autoreconf --force --install
 
 and then repeat the generic installation steps given above.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.26 USERS
+------------------------------------------
+
+This version removes the bug introduced in WD2003: when asymmetrical
+derivatives were used in conjunction with DC and both LC and RV data,
+the method kept diverging. Currently used is WD 2004-09-17 version, which
+corrects this problem.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.24 USERS
 ------------------------------------------
