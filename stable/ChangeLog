@@ -1,6 +1,12 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2004-12-02: - If keyword files contained empty lines, PHOEBE messed up the
+              readout, including if the empty line was at the end of file,
+              because it somehow managed to overwrite strings. Now the
+              string length checkup is done to see whether parsing should
+              even be attempted or not. In other words, empty lines are now
+              legitimate.
 2004-11-15: - Comparison against uninitialized strings in readout functions
               has been fixed. This didn't influence the way PHOEBE was run-
               ning, it's just tidier now.

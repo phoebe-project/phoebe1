@@ -431,6 +431,11 @@ void open_keyword_file (const char *filename)
 	while (feof (keyword_file) == 0)
 		{
 		fgets (readout_str, 255, keyword_file);
+		while (strlen (readout_str) <= 1)
+			{
+			fgets (readout_str, 255, keyword_file);
+			if (feof (keyword_file) != 0) break;
+			}
 		if (feof (keyword_file) != 0) break;
 
 		/* fgets reads a newline character, which we don't want really:           */
