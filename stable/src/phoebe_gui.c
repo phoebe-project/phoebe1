@@ -3235,7 +3235,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_logg1_max_label, FALSE);
 
-  component_logg1_value_min_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_logg1_value_min_adj = gtk_adjustment_new (2, 2, 10, 0.1, 1, 1);
   component_logg1_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (component_logg1_value_min_adj), 0, 5);
   gtk_widget_ref (component_logg1_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_logg1_value_min", component_logg1_value_min,
@@ -3248,7 +3248,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_logg1_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_logg1_value_min), GTK_UPDATE_IF_VALID);
 
-  component_logg1_value_max_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_logg1_value_max_adj = gtk_adjustment_new (10, 2, 10, 0.1, 1, 1);
   component_logg1_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (component_logg1_value_max_adj), 0, 5);
   gtk_widget_ref (component_logg1_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_logg1_value_max", component_logg1_value_max,
@@ -3261,7 +3261,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_logg1_value_max), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_logg1_value_max), GTK_UPDATE_IF_VALID);
 
-  component_logg1_step_value_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_logg1_step_value_adj = gtk_adjustment_new (0.01, 0, 1, 0.01, 0.1, 1);
   component_logg1_step_value = gtk_spin_button_new (GTK_ADJUSTMENT (component_logg1_step_value_adj), 0, 5);
   gtk_widget_ref (component_logg1_step_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_logg1_step_value", component_logg1_step_value,
@@ -3363,7 +3363,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_logg2_max_label, FALSE);
 
-  component_logg2_value_min_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_logg2_value_min_adj = gtk_adjustment_new (2, 2, 10, 0.1, 1, 1);
   component_logg2_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (component_logg2_value_min_adj), 0, 5);
   gtk_widget_ref (component_logg2_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_logg2_value_min", component_logg2_value_min,
@@ -3376,7 +3376,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_logg2_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_logg2_value_min), GTK_UPDATE_IF_VALID);
 
-  component_logg2_value_max_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_logg2_value_max_adj = gtk_adjustment_new (10, 2, 10, 0.1, 1, 1);
   component_logg2_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (component_logg2_value_max_adj), 0, 5);
   gtk_widget_ref (component_logg2_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_logg2_value_max", component_logg2_value_max,
@@ -3389,7 +3389,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_logg2_value_max), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_logg2_value_max), GTK_UPDATE_IF_VALID);
 
-  component_logg2_step_value_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_logg2_step_value_adj = gtk_adjustment_new (0.01, 0, 1, 0.01, 0.1, 1);
   component_logg2_step_value = gtk_spin_button_new (GTK_ADJUSTMENT (component_logg2_step_value_adj), 0, 5);
   gtk_widget_ref (component_logg2_step_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_logg2_step_value", component_logg2_step_value,
@@ -3491,7 +3491,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_met1_max_label, FALSE);
 
-  component_met1_value_min_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_met1_value_min_adj = gtk_adjustment_new (-5, -5, 5, 0.01, 0.1, 1);
   component_met1_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (component_met1_value_min_adj), 0, 5);
   gtk_widget_ref (component_met1_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_met1_value_min", component_met1_value_min,
@@ -3504,7 +3504,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_met1_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_met1_value_min), GTK_UPDATE_IF_VALID);
 
-  component_met1_value_max_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_met1_value_max_adj = gtk_adjustment_new (5, -5, 5, 0.01, 0.1, 1);
   component_met1_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (component_met1_value_max_adj), 0, 5);
   gtk_widget_ref (component_met1_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_met1_value_max", component_met1_value_max,
@@ -3517,7 +3517,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_met1_value_max), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_met1_value_max), GTK_UPDATE_IF_VALID);
 
-  component_met1_step_value_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_met1_step_value_adj = gtk_adjustment_new (0.01, 0, 1, 0.01, 0.1, 1);
   component_met1_step_value = gtk_spin_button_new (GTK_ADJUSTMENT (component_met1_step_value_adj), 0, 5);
   gtk_widget_ref (component_met1_step_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_met1_step_value", component_met1_step_value,
@@ -3619,7 +3619,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (component_met2_max_label, FALSE);
 
-  component_met2_value_min_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_met2_value_min_adj = gtk_adjustment_new (-5, -5, 5, 0.01, 0.1, 1);
   component_met2_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (component_met2_value_min_adj), 0, 5);
   gtk_widget_ref (component_met2_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_met2_value_min", component_met2_value_min,
@@ -3632,7 +3632,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_met2_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_met2_value_min), GTK_UPDATE_IF_VALID);
 
-  component_met2_value_max_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_met2_value_max_adj = gtk_adjustment_new (5, -5, 5, 0.01, 0.1, 1);
   component_met2_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (component_met2_value_max_adj), 0, 5);
   gtk_widget_ref (component_met2_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_met2_value_max", component_met2_value_max,
@@ -3645,7 +3645,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (component_met2_value_max), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (component_met2_value_max), GTK_UPDATE_IF_VALID);
 
-  component_met2_step_value_adj = gtk_adjustment_new (-0.5, -0.5, 0.5, 0.01, 0.1, 1);
+  component_met2_step_value_adj = gtk_adjustment_new (0.01, 0, 1, 0.01, 0.1, 1);
   component_met2_step_value = gtk_spin_button_new (GTK_ADJUSTMENT (component_met2_step_value_adj), 0, 5);
   gtk_widget_ref (component_met2_step_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "component_met2_step_value", component_met2_step_value,
