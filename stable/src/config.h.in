@@ -1,0 +1,47 @@
+/* src/config.h.in.  Generated automatically from configure.in by autoheader 2.13.  */
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* Define if you have Linux gcc compiler. */
+#define f2cFortran 1
+
+/* Define if you have the getcwd function.  */
+#undef HAVE_GETCWD
+
+/* Define if you have the mkdir function.  */
+#undef HAVE_MKDIR
+
+/* Define if you have the <errno.h> header file.  */
+#undef HAVE_ERRNO_H
+
+/* Define if you have the <malloc.h> header file.  */
+#undef HAVE_MALLOC_H
+
+/* Define if you have the <unistd.h> header file.  */
+#undef HAVE_UNISTD_H
+
+/* Define if you have the devices library (-ldevices).  */
+#undef HAVE_LIBDEVICES
+
+/* Define if you have the plotsub library (-lplotsub).  */
+#undef HAVE_LIBPLOTSUB
+
+/* Define if you have the utils library (-lutils).  */
+#undef HAVE_LIBUTILS
+
+/* Name of package */
+#undef PACKAGE
+
+/* Version number of package */
+#undef VERSION
+
+/* Define if SuperMongo is supported: */
+#undef PHOEBE_SM_SUPPORT
+
+/* Define if GNUPlot is supported: */
+#undef PHOEBE_GNUPLOT_SUPPORT
+
+/* Define if verbose debugging is required: */
+#undef PHOEBE_DEBUG_SUPPORT
+
