@@ -1,6 +1,9 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-04-12: - Another formatting problem in WD2004 has been discovered that
+              caused improper readout of inclinations larger than 100 degs.
+	      Many thanks to Petr Zasche for pointing this out!
 2005-04-04: - IBAND was left unassigned if synthetic RV curve was plotted
               without any data files assigned, which caused ill-formatted
 	      WD input file and hence a failed plot. Fixed.

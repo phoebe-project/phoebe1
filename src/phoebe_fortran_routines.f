@@ -46,7 +46,8 @@
       implicit none
       double precision E,SMA,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
       write(1,5) E,SMA,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
-    5 format(F6.5,F10.4,2F10.4,F10.4,F9.3,2F7.3,F7.2)
+c    5 format(F6.5,F10.4,2F10.4,F10.4,F9.3,2F7.3,F7.2)
+    5 format(F6.5,D13.6,2F10.4,F10.4,F9.3,2F7.3,F7.2)
       END
 
       SUBROUTINE CREATELCILINE6(TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,
