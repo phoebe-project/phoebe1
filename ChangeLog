@@ -1,9 +1,18 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-04-13: - GUI modified to encompass automatic LD interpolation! Testing
+              was successful! :)
 2005-04-12: - Another formatting problem in WD2004 has been discovered that
               caused improper readout of inclinations larger than 100 degs.
 	      Many thanks to Petr Zasche for pointing this out!
+            - Small (not really relevant) code cleaning was done.
+            - During my visit in Prague, Petr Harmanec suggested that the
+              LD coefficients should be dynamically interpolated whenever
+              fitting is initiated. This is now implemented and tested. The
+	      switch should still be incorporated in the GUI, but I don't
+	      have glade installed and I'm away from the internet at the
+              moment, so I'll be adding a button tomorrow.
 2005-04-04: - IBAND was left unassigned if synthetic RV curve was plotted
               without any data files assigned, which caused ill-formatted
 	      WD input file and hence a failed plot. Fixed.

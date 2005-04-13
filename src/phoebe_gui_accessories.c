@@ -1319,7 +1319,6 @@ GtkWidget *phoebe_widget (PHOEBE_keyword keyword)
 	if (keyword == INCL)     return lookup_widget (PHOEBE, "system_incl_value");
 	if (keyword == VGA)      return lookup_widget (PHOEBE, "system_vga_value");
 	if (keyword == TAVH)     return lookup_widget (PHOEBE, "component_tavh_value");
-	if (keyword == TAVH)     return lookup_widget (PHOEBE, "component_tavh_value");
 	if (keyword == TAVC)     return lookup_widget (PHOEBE, "component_tavc_value");
 	if (keyword == PHSV)     return lookup_widget (PHOEBE, "component_phsv_value");
 	if (keyword == PCSV)     return lookup_widget (PHOEBE, "component_pcsv_value");

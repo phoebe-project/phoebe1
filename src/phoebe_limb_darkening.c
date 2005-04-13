@@ -53,9 +53,6 @@ PHOEBE_vector read_in_ld_coeficients (char *input_filter, int T, double lg, doub
 	if (strncmp (input_filter, "700nm (R)", 9    ) == 0) sprintf (current_filter, "R"   );
 	if (strncmp (input_filter, "900nm (I)", 9    ) == 0) sprintf (current_filter, "I"   );
 	if (strncmp (input_filter, "1250nm (J)", 10  ) == 0) sprintf (current_filter, "J"   );
-        /* Johnson H is not implemented in the Van Hamme LD Tables
-	if (strncmp (input_filter, "1620nm (H)", 10  ) == 0) sprintf (current_filter, "H"   );
-        */
 	if (strncmp (input_filter, "2200nm (K)", 10  ) == 0) sprintf (current_filter, "K"   );
 	if (strncmp (input_filter, "3400nm (L)", 10  ) == 0) sprintf (current_filter, "L"   );
 	if (strncmp (input_filter, "5000nm (M)", 10  ) == 0) sprintf (current_filter, "M"   );
@@ -72,10 +69,9 @@ PHOEBE_vector read_in_ld_coeficients (char *input_filter, int T, double lg, doub
 	if (strncmp (input_filter, "419nm (Bt)", 10  ) == 0) sprintf (current_filter, "TyB" );
 	if (strncmp (input_filter, "523nm (Vt)", 10  ) == 0) sprintf (current_filter, "TyV" );
 
-        /* Cousins series:                                                          */
+  /* Cousins series:                                                          */
 	if (strncmp (input_filter, "647nm (Rc)", 9   ) == 0) sprintf (current_filter, "Rc"  );
 	if (strncmp (input_filter, "786nm (Ic)", 9   ) == 0) sprintf (current_filter, "Ic"  );
-
 
 	/* Radial velocities:                                                       */
 	if (strncmp (input_filter, "861nm (RVIJ)", 12) == 0) sprintf (current_filter, "858" );

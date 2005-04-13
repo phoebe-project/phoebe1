@@ -9952,6 +9952,33 @@ Square Root Law
 	  </widget>
 
 	  <widget>
+	    <class>GtkButton</class>
+	    <name>ld_vanhamme_interpolation</name>
+	    <can_focus>True</can_focus>
+	    <signal>
+	      <name>clicked</name>
+	      <handler>on_ld_interpolation_clicked</handler>
+	      <last_modification_time>Sun, 28 Apr 2002 09:45:58 GMT</last_modification_time>
+	    </signal>
+	    <label>Get Limb Darkening Coefficients from Van Hamme LD Tables</label>
+	    <relief>GTK_RELIEF_NORMAL</relief>
+	    <child>
+	      <left_attach>1</left_attach>
+	      <right_attach>5</right_attach>
+	      <top_attach>23</top_attach>
+	      <bottom_attach>24</bottom_attach>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	      <xexpand>False</xexpand>
+	      <yexpand>False</yexpand>
+	      <xshrink>False</xshrink>
+	      <yshrink>False</yshrink>
+	      <xfill>True</xfill>
+	      <yfill>False</yfill>
+	    </child>
+	  </widget>
+
+	  <widget>
 	    <class>GtkScrolledWindow</class>
 	    <name>ld_monochromatic_lc_info_list_table</name>
 	    <hscrollbar_policy>GTK_POLICY_AUTOMATIC</hscrollbar_policy>
@@ -9962,7 +9989,7 @@ Square Root Law
 	      <left_attach>0</left_attach>
 	      <right_attach>6</right_attach>
 	      <top_attach>7</top_attach>
-	      <bottom_attach>13</bottom_attach>
+	      <bottom_attach>12</bottom_attach>
 	      <xpad>0</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>False</xexpand>
@@ -10056,23 +10083,61 @@ Square Root Law
 	  </widget>
 
 	  <widget>
-	    <class>GtkButton</class>
-	    <name>ld_monochromatic_lc_edit_entry_button</name>
-	    <sensitive>False</sensitive>
+	    <class>GtkCheckButton</class>
+	    <name>ld_x1a_adjust</name>
 	    <can_focus>True</can_focus>
 	    <signal>
-	      <name>clicked</name>
-	      <handler>on_ld_monochromatic_lc_edit_entry_button_clicked</handler>
-	      <last_modification_time>Thu, 18 Jul 2002 12:13:18 GMT</last_modification_time>
+	      <name>toggled</name>
+	      <handler>on_adjust_switch_toggled_update_fitting_window</handler>
+	      <last_modification_time>Wed, 28 Aug 2002 12:55:35 GMT</last_modification_time>
 	    </signal>
-	    <label>Edit LD Entry</label>
-	    <relief>GTK_RELIEF_NORMAL</relief>
+	    <signal>
+	      <name>toggled</name>
+	      <handler>on_adjust_switch_toggled_update_fitting_quickbar</handler>
+	      <last_modification_time>Thu, 19 Sep 2002 07:52:36 GMT</last_modification_time>
+	    </signal>
+	    <label>Adjust primary monochromatic LD coefficient (X1)</label>
+	    <active>False</active>
+	    <draw_indicator>True</draw_indicator>
 	    <child>
-	      <left_attach>5</left_attach>
-	      <right_attach>6</right_attach>
+	      <left_attach>0</left_attach>
+	      <right_attach>3</right_attach>
+	      <top_attach>12</top_attach>
+	      <bottom_attach>13</bottom_attach>
+	      <xpad>15</xpad>
+	      <ypad>0</ypad>
+	      <xexpand>False</xexpand>
+	      <yexpand>False</yexpand>
+	      <xshrink>False</xshrink>
+	      <yshrink>False</yshrink>
+	      <xfill>True</xfill>
+	      <yfill>False</yfill>
+	    </child>
+	  </widget>
+
+	  <widget>
+	    <class>GtkCheckButton</class>
+	    <name>ld_x2a_adjust</name>
+	    <can_focus>True</can_focus>
+	    <signal>
+	      <name>toggled</name>
+	      <handler>on_adjust_switch_toggled_update_fitting_window</handler>
+	      <last_modification_time>Wed, 28 Aug 2002 12:55:41 GMT</last_modification_time>
+	    </signal>
+	    <signal>
+	      <name>toggled</name>
+	      <handler>on_adjust_switch_toggled_update_fitting_quickbar</handler>
+	      <last_modification_time>Thu, 19 Sep 2002 07:52:40 GMT</last_modification_time>
+	    </signal>
+	    <label>Adjust secondary monochromatic LD coefficient (X2)</label>
+	    <active>False</active>
+	    <draw_indicator>True</draw_indicator>
+	    <child>
+	      <left_attach>0</left_attach>
+	      <right_attach>3</right_attach>
 	      <top_attach>13</top_attach>
 	      <bottom_attach>14</bottom_attach>
-	      <xpad>0</xpad>
+	      <xpad>15</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>False</xexpand>
 	      <yexpand>False</yexpand>
@@ -10086,6 +10151,32 @@ Square Root Law
 	  <widget>
 	    <class>GtkLabel</class>
 	    <name>ld_x1a_del_label</name>
+	    <label>Step:</label>
+	    <justify>GTK_JUSTIFY_CENTER</justify>
+	    <wrap>False</wrap>
+	    <xalign>0</xalign>
+	    <yalign>0.5</yalign>
+	    <xpad>0</xpad>
+	    <ypad>0</ypad>
+	    <child>
+	      <left_attach>3</left_attach>
+	      <right_attach>4</right_attach>
+	      <top_attach>12</top_attach>
+	      <bottom_attach>13</bottom_attach>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	      <xexpand>True</xexpand>
+	      <yexpand>False</yexpand>
+	      <xshrink>False</xshrink>
+	      <yshrink>False</yshrink>
+	      <xfill>False</xfill>
+	      <yfill>False</yfill>
+	    </child>
+	  </widget>
+
+	  <widget>
+	    <class>GtkLabel</class>
+	    <name>ld_x2a_del_label</name>
 	    <label>Step:</label>
 	    <justify>GTK_JUSTIFY_CENTER</justify>
 	    <wrap>False</wrap>
@@ -10133,8 +10224,8 @@ Square Root Law
 	    <child>
 	      <left_attach>4</left_attach>
 	      <right_attach>5</right_attach>
-	      <top_attach>13</top_attach>
-	      <bottom_attach>14</bottom_attach>
+	      <top_attach>12</top_attach>
+	      <bottom_attach>13</bottom_attach>
 	      <xpad>5</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>True</xexpand>
@@ -10142,32 +10233,6 @@ Square Root Law
 	      <xshrink>False</xshrink>
 	      <yshrink>False</yshrink>
 	      <xfill>True</xfill>
-	      <yfill>False</yfill>
-	    </child>
-	  </widget>
-
-	  <widget>
-	    <class>GtkLabel</class>
-	    <name>ld_x2a_del_label</name>
-	    <label>Step:</label>
-	    <justify>GTK_JUSTIFY_CENTER</justify>
-	    <wrap>False</wrap>
-	    <xalign>0</xalign>
-	    <yalign>0.5</yalign>
-	    <xpad>0</xpad>
-	    <ypad>0</ypad>
-	    <child>
-	      <left_attach>3</left_attach>
-	      <right_attach>4</right_attach>
-	      <top_attach>14</top_attach>
-	      <bottom_attach>15</bottom_attach>
-	      <xpad>0</xpad>
-	      <ypad>0</ypad>
-	      <xexpand>True</xexpand>
-	      <yexpand>False</yexpand>
-	      <xshrink>False</xshrink>
-	      <yshrink>False</yshrink>
-	      <xfill>False</xfill>
 	      <yfill>False</yfill>
 	    </child>
 	  </widget>
@@ -10196,8 +10261,8 @@ Square Root Law
 	    <child>
 	      <left_attach>4</left_attach>
 	      <right_attach>5</right_attach>
-	      <top_attach>14</top_attach>
-	      <bottom_attach>15</bottom_attach>
+	      <top_attach>13</top_attach>
+	      <bottom_attach>14</bottom_attach>
 	      <xpad>5</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>True</xexpand>
@@ -10211,21 +10276,21 @@ Square Root Law
 
 	  <widget>
 	    <class>GtkButton</class>
-	    <name>ld_monochromatic_rv_edit_entry_button</name>
+	    <name>ld_monochromatic_lc_edit_entry_button</name>
 	    <sensitive>False</sensitive>
 	    <can_focus>True</can_focus>
 	    <signal>
 	      <name>clicked</name>
-	      <handler>on_ld_monochromatic_rv_edit_entry_button_clicked</handler>
-	      <last_modification_time>Fri, 19 Jul 2002 09:58:13 GMT</last_modification_time>
+	      <handler>on_ld_monochromatic_lc_edit_entry_button_clicked</handler>
+	      <last_modification_time>Thu, 18 Jul 2002 12:13:18 GMT</last_modification_time>
 	    </signal>
 	    <label>Edit LD Entry</label>
 	    <relief>GTK_RELIEF_NORMAL</relief>
 	    <child>
 	      <left_attach>5</left_attach>
 	      <right_attach>6</right_attach>
-	      <top_attach>21</top_attach>
-	      <bottom_attach>22</bottom_attach>
+	      <top_attach>12</top_attach>
+	      <bottom_attach>13</bottom_attach>
 	      <xpad>0</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>False</xexpand>
@@ -10239,12 +10304,12 @@ Square Root Law
 
 	  <widget>
 	    <class>GtkHSeparator</class>
-	    <name>ld_separator_4</name>
+	    <name>ld_separator_3</name>
 	    <child>
 	      <left_attach>0</left_attach>
 	      <right_attach>6</right_attach>
-	      <top_attach>22</top_attach>
-	      <bottom_attach>23</bottom_attach>
+	      <top_attach>14</top_attach>
+	      <bottom_attach>15</bottom_attach>
 	      <xpad>0</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>False</xexpand>
@@ -10253,6 +10318,32 @@ Square Root Law
 	      <yshrink>False</yshrink>
 	      <xfill>True</xfill>
 	      <yfill>True</yfill>
+	    </child>
+	  </widget>
+
+	  <widget>
+	    <class>GtkLabel</class>
+	    <name>ld_monochromatic_rv_coefficients_label</name>
+	    <label>RV Monochromatic Limb Darkening Coefficients:</label>
+	    <justify>GTK_JUSTIFY_CENTER</justify>
+	    <wrap>False</wrap>
+	    <xalign>0.5</xalign>
+	    <yalign>0.5</yalign>
+	    <xpad>0</xpad>
+	    <ypad>0</ypad>
+	    <child>
+	      <left_attach>0</left_attach>
+	      <right_attach>6</right_attach>
+	      <top_attach>15</top_attach>
+	      <bottom_attach>16</bottom_attach>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	      <xexpand>False</xexpand>
+	      <yexpand>False</yexpand>
+	      <xshrink>False</xshrink>
+	      <yshrink>False</yshrink>
+	      <xfill>True</xfill>
+	      <yfill>False</yfill>
 	    </child>
 	  </widget>
 
@@ -10266,8 +10357,8 @@ Square Root Law
 	    <child>
 	      <left_attach>0</left_attach>
 	      <right_attach>6</right_attach>
-	      <top_attach>17</top_attach>
-	      <bottom_attach>21</bottom_attach>
+	      <top_attach>16</top_attach>
+	      <bottom_attach>20</bottom_attach>
 	      <xpad>0</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>False</xexpand>
@@ -10361,20 +10452,22 @@ Square Root Law
 	  </widget>
 
 	  <widget>
-	    <class>GtkLabel</class>
-	    <name>ld_monochromatic_rv_coefficients_label</name>
-	    <label>RV Monochromatic Limb Darkening Coefficients:</label>
-	    <justify>GTK_JUSTIFY_CENTER</justify>
-	    <wrap>False</wrap>
-	    <xalign>0.5</xalign>
-	    <yalign>0.5</yalign>
-	    <xpad>0</xpad>
-	    <ypad>0</ypad>
+	    <class>GtkButton</class>
+	    <name>ld_monochromatic_rv_edit_entry_button</name>
+	    <sensitive>False</sensitive>
+	    <can_focus>True</can_focus>
+	    <signal>
+	      <name>clicked</name>
+	      <handler>on_ld_monochromatic_rv_edit_entry_button_clicked</handler>
+	      <last_modification_time>Fri, 19 Jul 2002 09:58:13 GMT</last_modification_time>
+	    </signal>
+	    <label>Edit LD Entry</label>
+	    <relief>GTK_RELIEF_NORMAL</relief>
 	    <child>
-	      <left_attach>0</left_attach>
+	      <left_attach>5</left_attach>
 	      <right_attach>6</right_attach>
-	      <top_attach>16</top_attach>
-	      <bottom_attach>17</bottom_attach>
+	      <top_attach>20</top_attach>
+	      <bottom_attach>21</bottom_attach>
 	      <xpad>0</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>False</xexpand>
@@ -10388,12 +10481,12 @@ Square Root Law
 
 	  <widget>
 	    <class>GtkHSeparator</class>
-	    <name>ld_separator_3</name>
+	    <name>ld_separator_4</name>
 	    <child>
 	      <left_attach>0</left_attach>
 	      <right_attach>6</right_attach>
-	      <top_attach>15</top_attach>
-	      <bottom_attach>16</bottom_attach>
+	      <top_attach>21</top_attach>
+	      <bottom_attach>22</bottom_attach>
 	      <xpad>0</xpad>
 	      <ypad>0</ypad>
 	      <xexpand>False</xexpand>
@@ -10406,94 +10499,24 @@ Square Root Law
 	  </widget>
 
 	  <widget>
-	    <class>GtkButton</class>
-	    <name>ld_vanhamme_interpolation</name>
+	    <class>GtkCheckButton</class>
+	    <name>ld_automatic_interpolation_switch</name>
 	    <can_focus>True</can_focus>
-	    <signal>
-	      <name>clicked</name>
-	      <handler>on_ld_interpolation_clicked</handler>
-	      <last_modification_time>Sun, 28 Apr 2002 09:45:58 GMT</last_modification_time>
-	    </signal>
-	    <label>Get Limb Darkening Coefficients from Van Hamme LD Tables</label>
-	    <relief>GTK_RELIEF_NORMAL</relief>
+	    <label>Automatically interpolate limb darkening coefficients after each  fit</label>
+	    <active>True</active>
+	    <draw_indicator>True</draw_indicator>
 	    <child>
 	      <left_attach>1</left_attach>
 	      <right_attach>5</right_attach>
-	      <top_attach>23</top_attach>
-	      <bottom_attach>24</bottom_attach>
+	      <top_attach>22</top_attach>
+	      <bottom_attach>23</bottom_attach>
 	      <xpad>0</xpad>
 	      <ypad>0</ypad>
-	      <xexpand>False</xexpand>
+	      <xexpand>True</xexpand>
 	      <yexpand>False</yexpand>
 	      <xshrink>False</xshrink>
 	      <yshrink>False</yshrink>
-	      <xfill>True</xfill>
-	      <yfill>False</yfill>
-	    </child>
-	  </widget>
-
-	  <widget>
-	    <class>GtkCheckButton</class>
-	    <name>ld_x1a_adjust</name>
-	    <can_focus>True</can_focus>
-	    <signal>
-	      <name>toggled</name>
-	      <handler>on_adjust_switch_toggled_update_fitting_window</handler>
-	      <last_modification_time>Wed, 28 Aug 2002 12:55:35 GMT</last_modification_time>
-	    </signal>
-	    <signal>
-	      <name>toggled</name>
-	      <handler>on_adjust_switch_toggled_update_fitting_quickbar</handler>
-	      <last_modification_time>Thu, 19 Sep 2002 07:52:36 GMT</last_modification_time>
-	    </signal>
-	    <label>Adjust primary monochromatic LD coefficient (X1)</label>
-	    <active>False</active>
-	    <draw_indicator>True</draw_indicator>
-	    <child>
-	      <left_attach>0</left_attach>
-	      <right_attach>3</right_attach>
-	      <top_attach>13</top_attach>
-	      <bottom_attach>14</bottom_attach>
-	      <xpad>15</xpad>
-	      <ypad>0</ypad>
-	      <xexpand>False</xexpand>
-	      <yexpand>False</yexpand>
-	      <xshrink>False</xshrink>
-	      <yshrink>False</yshrink>
-	      <xfill>True</xfill>
-	      <yfill>False</yfill>
-	    </child>
-	  </widget>
-
-	  <widget>
-	    <class>GtkCheckButton</class>
-	    <name>ld_x2a_adjust</name>
-	    <can_focus>True</can_focus>
-	    <signal>
-	      <name>toggled</name>
-	      <handler>on_adjust_switch_toggled_update_fitting_window</handler>
-	      <last_modification_time>Wed, 28 Aug 2002 12:55:41 GMT</last_modification_time>
-	    </signal>
-	    <signal>
-	      <name>toggled</name>
-	      <handler>on_adjust_switch_toggled_update_fitting_quickbar</handler>
-	      <last_modification_time>Thu, 19 Sep 2002 07:52:40 GMT</last_modification_time>
-	    </signal>
-	    <label>Adjust secondary monochromatic LD coefficient (X2)</label>
-	    <active>False</active>
-	    <draw_indicator>True</draw_indicator>
-	    <child>
-	      <left_attach>0</left_attach>
-	      <right_attach>3</right_attach>
-	      <top_attach>14</top_attach>
-	      <bottom_attach>15</bottom_attach>
-	      <xpad>15</xpad>
-	      <ypad>0</ypad>
-	      <xexpand>False</xexpand>
-	      <yexpand>False</yexpand>
-	      <xshrink>False</xshrink>
-	      <yshrink>False</yshrink>
-	      <xfill>True</xfill>
+	      <xfill>False</xfill>
 	      <yfill>False</yfill>
 	    </child>
 	  </widget>

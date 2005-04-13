@@ -530,6 +530,7 @@ create_PHOEBE (void)
   GtkWidget *ld_bolometric_primary_description;
   GtkWidget *ld_bolometric_secondary_description;
   GtkWidget *ld_monochromatic_lc_coefficients_label;
+  GtkWidget *ld_vanhamme_interpolation;
   GtkWidget *ld_monochromatic_lc_info_list_table;
   GtkWidget *ld_monochromatic_lc_info_list;
   GtkWidget *ld_monochromatic_lc_filter_label;
@@ -537,15 +538,17 @@ create_PHOEBE (void)
   GtkWidget *ld_monochromatic_lc_y1a_label;
   GtkWidget *ld_monochromatic_lc_x2a_label;
   GtkWidget *ld_monochromatic_lc_y2a_label;
-  GtkWidget *ld_monochromatic_lc_edit_entry_button;
+  GtkWidget *ld_x1a_adjust;
+  GtkWidget *ld_x2a_adjust;
   GtkWidget *ld_x1a_del_label;
+  GtkWidget *ld_x2a_del_label;
   GtkObject *ld_x1a_del_value_adj;
   GtkWidget *ld_x1a_del_value;
-  GtkWidget *ld_x2a_del_label;
   GtkObject *ld_x2a_del_value_adj;
   GtkWidget *ld_x2a_del_value;
-  GtkWidget *ld_monochromatic_rv_edit_entry_button;
-  GtkWidget *ld_separator_4;
+  GtkWidget *ld_monochromatic_lc_edit_entry_button;
+  GtkWidget *ld_separator_3;
+  GtkWidget *ld_monochromatic_rv_coefficients_label;
   GtkWidget *ld_monochromatic_rv_info_list_table;
   GtkWidget *ld_monochromatic_rv_info_list;
   GtkWidget *ld_monochromatic_rv_filter_label;
@@ -553,11 +556,9 @@ create_PHOEBE (void)
   GtkWidget *ld_monochromatic_rv_y1a_label;
   GtkWidget *ld_monochromatic_rv_x2a_label;
   GtkWidget *ld_monochromatic_rv_y2a_label;
-  GtkWidget *ld_monochromatic_rv_coefficients_label;
-  GtkWidget *ld_separator_3;
-  GtkWidget *ld_vanhamme_interpolation;
-  GtkWidget *ld_x1a_adjust;
-  GtkWidget *ld_x2a_adjust;
+  GtkWidget *ld_monochromatic_rv_edit_entry_button;
+  GtkWidget *ld_separator_4;
+  GtkWidget *ld_automatic_interpolation_switch;
   GtkWidget *ld_tab_label;
   GtkWidget *surface_frame;
   GtkWidget *surface_main_box;
@@ -5102,12 +5103,21 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
 
+  ld_vanhamme_interpolation = gtk_button_new_with_label ("Get Limb Darkening Coefficients from Van Hamme LD Tables");
+  gtk_widget_ref (ld_vanhamme_interpolation);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_vanhamme_interpolation", ld_vanhamme_interpolation,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (ld_vanhamme_interpolation);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_vanhamme_interpolation, 1, 5, 23, 24,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
   ld_monochromatic_lc_info_list_table = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_ref (ld_monochromatic_lc_info_list_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_lc_info_list_table", ld_monochromatic_lc_info_list_table,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (ld_monochromatic_lc_info_list_table);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_lc_info_list_table, 0, 6, 7, 13,
+  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_lc_info_list_table, 0, 6, 7, 12,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (ld_monochromatic_lc_info_list_table), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -5161,25 +5171,43 @@ create_PHOEBE (void)
   gtk_widget_show (ld_monochromatic_lc_y2a_label);
   gtk_clist_set_column_widget (GTK_CLIST (ld_monochromatic_lc_info_list), 4, ld_monochromatic_lc_y2a_label);
 
-  ld_monochromatic_lc_edit_entry_button = gtk_button_new_with_label ("Edit LD Entry");
-  gtk_widget_ref (ld_monochromatic_lc_edit_entry_button);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_lc_edit_entry_button", ld_monochromatic_lc_edit_entry_button,
+  ld_x1a_adjust = gtk_check_button_new_with_label ("Adjust primary monochromatic LD coefficient (X1)");
+  gtk_widget_ref (ld_x1a_adjust);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x1a_adjust", ld_x1a_adjust,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_monochromatic_lc_edit_entry_button);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_lc_edit_entry_button, 5, 6, 13, 14,
+  gtk_widget_show (ld_x1a_adjust);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_x1a_adjust, 0, 3, 12, 13,
                     (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_widget_set_sensitive (ld_monochromatic_lc_edit_entry_button, FALSE);
+                    (GtkAttachOptions) (0), 15, 0);
+
+  ld_x2a_adjust = gtk_check_button_new_with_label ("Adjust secondary monochromatic LD coefficient (X2)");
+  gtk_widget_ref (ld_x2a_adjust);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x2a_adjust", ld_x2a_adjust,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (ld_x2a_adjust);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_x2a_adjust, 0, 3, 13, 14,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 15, 0);
 
   ld_x1a_del_label = gtk_label_new ("Step:");
   gtk_widget_ref (ld_x1a_del_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x1a_del_label", ld_x1a_del_label,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (ld_x1a_del_label);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_x1a_del_label, 3, 4, 13, 14,
+  gtk_table_attach (GTK_TABLE (ld_table), ld_x1a_del_label, 3, 4, 12, 13,
                     (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (ld_x1a_del_label), 0, 0.5);
+
+  ld_x2a_del_label = gtk_label_new ("Step:");
+  gtk_widget_ref (ld_x2a_del_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x2a_del_label", ld_x2a_del_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (ld_x2a_del_label);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_x2a_del_label, 3, 4, 13, 14,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (ld_x2a_del_label), 0, 0.5);
 
   ld_x1a_del_value_adj = gtk_adjustment_new (0.01, -1, 1, 0.01, 0.1, 1);
   ld_x1a_del_value = gtk_spin_button_new (GTK_ADJUSTMENT (ld_x1a_del_value_adj), 0, 5);
@@ -5187,21 +5215,11 @@ create_PHOEBE (void)
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x1a_del_value", ld_x1a_del_value,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (ld_x1a_del_value);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_x1a_del_value, 4, 5, 13, 14,
+  gtk_table_attach (GTK_TABLE (ld_table), ld_x1a_del_value, 4, 5, 12, 13,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 5, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (ld_x1a_del_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (ld_x1a_del_value), GTK_UPDATE_IF_VALID);
-
-  ld_x2a_del_label = gtk_label_new ("Step:");
-  gtk_widget_ref (ld_x2a_del_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x2a_del_label", ld_x2a_del_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_x2a_del_label);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_x2a_del_label, 3, 4, 14, 15,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (ld_x2a_del_label), 0, 0.5);
 
   ld_x2a_del_value_adj = gtk_adjustment_new (0.01, -1, 1, 0.01, 0.1, 1);
   ld_x2a_del_value = gtk_spin_button_new (GTK_ADJUSTMENT (ld_x2a_del_value_adj), 0, 5);
@@ -5209,35 +5227,44 @@ create_PHOEBE (void)
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x2a_del_value", ld_x2a_del_value,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (ld_x2a_del_value);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_x2a_del_value, 4, 5, 14, 15,
+  gtk_table_attach (GTK_TABLE (ld_table), ld_x2a_del_value, 4, 5, 13, 14,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 5, 0);
 
-  ld_monochromatic_rv_edit_entry_button = gtk_button_new_with_label ("Edit LD Entry");
-  gtk_widget_ref (ld_monochromatic_rv_edit_entry_button);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_rv_edit_entry_button", ld_monochromatic_rv_edit_entry_button,
+  ld_monochromatic_lc_edit_entry_button = gtk_button_new_with_label ("Edit LD Entry");
+  gtk_widget_ref (ld_monochromatic_lc_edit_entry_button);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_lc_edit_entry_button", ld_monochromatic_lc_edit_entry_button,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_monochromatic_rv_edit_entry_button);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_rv_edit_entry_button, 5, 6, 21, 22,
+  gtk_widget_show (ld_monochromatic_lc_edit_entry_button);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_lc_edit_entry_button, 5, 6, 12, 13,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_widget_set_sensitive (ld_monochromatic_rv_edit_entry_button, FALSE);
+  gtk_widget_set_sensitive (ld_monochromatic_lc_edit_entry_button, FALSE);
 
-  ld_separator_4 = gtk_hseparator_new ();
-  gtk_widget_ref (ld_separator_4);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_separator_4", ld_separator_4,
+  ld_separator_3 = gtk_hseparator_new ();
+  gtk_widget_ref (ld_separator_3);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_separator_3", ld_separator_3,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_separator_4);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_separator_4, 0, 6, 22, 23,
+  gtk_widget_show (ld_separator_3);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_separator_3, 0, 6, 14, 15,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+  ld_monochromatic_rv_coefficients_label = gtk_label_new ("RV Monochromatic Limb Darkening Coefficients:");
+  gtk_widget_ref (ld_monochromatic_rv_coefficients_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_rv_coefficients_label", ld_monochromatic_rv_coefficients_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (ld_monochromatic_rv_coefficients_label);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_rv_coefficients_label, 0, 6, 15, 16,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
 
   ld_monochromatic_rv_info_list_table = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_ref (ld_monochromatic_rv_info_list_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_rv_info_list_table", ld_monochromatic_rv_info_list_table,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (ld_monochromatic_rv_info_list_table);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_rv_info_list_table, 0, 6, 17, 21,
+  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_rv_info_list_table, 0, 6, 16, 20,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (ld_monochromatic_rv_info_list_table), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -5291,50 +5318,34 @@ create_PHOEBE (void)
   gtk_widget_show (ld_monochromatic_rv_y2a_label);
   gtk_clist_set_column_widget (GTK_CLIST (ld_monochromatic_rv_info_list), 4, ld_monochromatic_rv_y2a_label);
 
-  ld_monochromatic_rv_coefficients_label = gtk_label_new ("RV Monochromatic Limb Darkening Coefficients:");
-  gtk_widget_ref (ld_monochromatic_rv_coefficients_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_rv_coefficients_label", ld_monochromatic_rv_coefficients_label,
+  ld_monochromatic_rv_edit_entry_button = gtk_button_new_with_label ("Edit LD Entry");
+  gtk_widget_ref (ld_monochromatic_rv_edit_entry_button);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_monochromatic_rv_edit_entry_button", ld_monochromatic_rv_edit_entry_button,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_monochromatic_rv_coefficients_label);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_rv_coefficients_label, 0, 6, 16, 17,
+  gtk_widget_show (ld_monochromatic_rv_edit_entry_button);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_monochromatic_rv_edit_entry_button, 5, 6, 20, 21,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (ld_monochromatic_rv_edit_entry_button, FALSE);
 
-  ld_separator_3 = gtk_hseparator_new ();
-  gtk_widget_ref (ld_separator_3);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_separator_3", ld_separator_3,
+  ld_separator_4 = gtk_hseparator_new ();
+  gtk_widget_ref (ld_separator_4);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_separator_4", ld_separator_4,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_separator_3);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_separator_3, 0, 6, 15, 16,
+  gtk_widget_show (ld_separator_4);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_separator_4, 0, 6, 21, 22,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
-  ld_vanhamme_interpolation = gtk_button_new_with_label ("Get Limb Darkening Coefficients from Van Hamme LD Tables");
-  gtk_widget_ref (ld_vanhamme_interpolation);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_vanhamme_interpolation", ld_vanhamme_interpolation,
+  ld_automatic_interpolation_switch = gtk_check_button_new_with_label ("Automatically interpolate limb darkening coefficients after each  fit");
+  gtk_widget_ref (ld_automatic_interpolation_switch);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_automatic_interpolation_switch", ld_automatic_interpolation_switch,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_vanhamme_interpolation);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_vanhamme_interpolation, 1, 5, 23, 24,
-                    (GtkAttachOptions) (GTK_FILL),
+  gtk_widget_show (ld_automatic_interpolation_switch);
+  gtk_table_attach (GTK_TABLE (ld_table), ld_automatic_interpolation_switch, 1, 5, 22, 23,
+                    (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
-
-  ld_x1a_adjust = gtk_check_button_new_with_label ("Adjust primary monochromatic LD coefficient (X1)");
-  gtk_widget_ref (ld_x1a_adjust);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x1a_adjust", ld_x1a_adjust,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_x1a_adjust);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_x1a_adjust, 0, 3, 13, 14,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 15, 0);
-
-  ld_x2a_adjust = gtk_check_button_new_with_label ("Adjust secondary monochromatic LD coefficient (X2)");
-  gtk_widget_ref (ld_x2a_adjust);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "ld_x2a_adjust", ld_x2a_adjust,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ld_x2a_adjust);
-  gtk_table_attach (GTK_TABLE (ld_table), ld_x2a_adjust, 0, 3, 14, 15,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 15, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ld_automatic_interpolation_switch), TRUE);
 
   ld_tab_label = gtk_label_new ("Limb Darkening");
   gtk_widget_ref (ld_tab_label);
@@ -9126,11 +9137,23 @@ create_PHOEBE (void)
   gtk_signal_connect (GTK_OBJECT (luminosities_weighting_edit_entry_button), "clicked",
                       GTK_SIGNAL_FUNC (on_luminosities_weighting_edit_entry_button_clicked),
                       NULL);
+  gtk_signal_connect (GTK_OBJECT (ld_vanhamme_interpolation), "clicked",
+                      GTK_SIGNAL_FUNC (on_ld_interpolation_clicked),
+                      NULL);
   gtk_signal_connect (GTK_OBJECT (ld_monochromatic_lc_info_list), "event",
                       GTK_SIGNAL_FUNC (on_ld_monochromatic_lc_info_list_double_clicked),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ld_monochromatic_lc_edit_entry_button), "clicked",
-                      GTK_SIGNAL_FUNC (on_ld_monochromatic_lc_edit_entry_button_clicked),
+  gtk_signal_connect (GTK_OBJECT (ld_x1a_adjust), "toggled",
+                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_window),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (ld_x1a_adjust), "toggled",
+                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_quickbar),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (ld_x2a_adjust), "toggled",
+                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_window),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (ld_x2a_adjust), "toggled",
+                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_quickbar),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (ld_x1a_del_value), "changed",
                       GTK_SIGNAL_FUNC (on_step_value_changed_update_fitting_quickbar),
@@ -9138,26 +9161,14 @@ create_PHOEBE (void)
   gtk_signal_connect (GTK_OBJECT (ld_x2a_del_value), "changed",
                       GTK_SIGNAL_FUNC (on_step_value_changed_update_fitting_quickbar),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ld_monochromatic_rv_edit_entry_button), "clicked",
-                      GTK_SIGNAL_FUNC (on_ld_monochromatic_rv_edit_entry_button_clicked),
+  gtk_signal_connect (GTK_OBJECT (ld_monochromatic_lc_edit_entry_button), "clicked",
+                      GTK_SIGNAL_FUNC (on_ld_monochromatic_lc_edit_entry_button_clicked),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (ld_monochromatic_rv_info_list), "event",
                       GTK_SIGNAL_FUNC (on_ld_monochromatic_rv_info_list_double_clicked),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ld_vanhamme_interpolation), "clicked",
-                      GTK_SIGNAL_FUNC (on_ld_interpolation_clicked),
-                      NULL);
-  gtk_signal_connect (GTK_OBJECT (ld_x1a_adjust), "toggled",
-                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_window),
-                      NULL);
-  gtk_signal_connect (GTK_OBJECT (ld_x1a_adjust), "toggled",
-                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_quickbar),
-                      NULL);
-  gtk_signal_connect (GTK_OBJECT (ld_x2a_adjust), "toggled",
-                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_window),
-                      NULL);
-  gtk_signal_connect (GTK_OBJECT (ld_x2a_adjust), "toggled",
-                      GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_quickbar),
+  gtk_signal_connect (GTK_OBJECT (ld_monochromatic_rv_edit_entry_button), "clicked",
+                      GTK_SIGNAL_FUNC (on_ld_monochromatic_rv_edit_entry_button_clicked),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (surface_alb1_del_value), "changed",
                       GTK_SIGNAL_FUNC (on_step_value_changed_update_fitting_quickbar),

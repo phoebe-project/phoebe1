@@ -2773,6 +2773,97 @@ void on_dc_update_corrections_button_clicked (GtkButton *button, gpointer user_d
 	/* as well (move changed to original value and erase corrections):          */
 	populate_dc_parameters_info_list ();
 
+	/* If automatic limb darkening interpolation is turned on, let's do it:     */
+
+	if (PHOEBE_LD_SWITCH && GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "ld_automatic_interpolation_switch"))->active)
+		{
+		PHOEBE_vector ld_coefs;
+		int ld;
+		int T1, T2;
+		double lgg1, lgg2, M1, M2;
+		char valstr[15];
+
+		readout_widget = lookup_widget (PHOEBE, "ld_ld_law_combo_box_entry");
+		readout_str = gtk_entry_get_text (GTK_ENTRY (readout_widget));
+		if (strcmp (readout_str, "Linear Cosine Law") == 0) ld = 0;
+		if (strcmp (readout_str,   "Logarithmic Law") == 0) ld = 1;
+		if (strcmp (readout_str,   "Square Root Law") == 0) ld = 2;
+
+		readout_widget = lookup_widget (PHOEBE, "component_tavh_value");
+		T1 = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (readout_widget));
+		readout_widget = lookup_widget (PHOEBE, "component_tavc_value");
+		T2 = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (readout_widget));
+
+		readout_widget = lookup_widget (PHOEBE, "component_logg1_value");
+		lgg1 = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
+		readout_widget = lookup_widget (PHOEBE, "component_logg2_value");
+		lgg2 = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
+
+		readout_widget = lookup_widget (PHOEBE, "component_met1_value");
+		M1 = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
+		readout_widget = lookup_widget (PHOEBE, "component_met2_value");
+		M2 = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
+
+		for (i = 0; i < lc_no; i++)
+			{
+			readout_widget = lookup_widget (PHOEBE, "data_lc_info_list");
+			gtk_clist_get_text (GTK_CLIST (readout_widget), i, 3, &readout_str);
+
+			ld_coefs = interpolate_from_ld_tables (readout_str, T1, lgg1, M1, ld);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_x1a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.x);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_y1a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.y);
+
+			readout_widget = lookup_widget (PHOEBE, "ld_monochromatic_lc_info_list");
+			sprintf (valstr, "%lf", ld_coefs.x);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 1, valstr);
+			sprintf (valstr, "%lf", ld_coefs.y);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 2, valstr);
+
+			ld_coefs = interpolate_from_ld_tables (readout_str, T2, lgg2, M2, ld);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_x2a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.x);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_y2a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.y);
+
+			readout_widget = lookup_widget (PHOEBE, "ld_monochromatic_lc_info_list");
+			sprintf (valstr, "%lf", ld_coefs.x);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 3, valstr);
+			sprintf (valstr, "%lf", ld_coefs.y);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 4, valstr);
+			}
+		for (i = 0; i < rv_no; i++)
+			{
+			readout_widget = lookup_widget (PHOEBE, "data_rv_info_list");
+			gtk_clist_get_text (GTK_CLIST (readout_widget), i, 3, &readout_str);
+
+			ld_coefs = interpolate_from_ld_tables (readout_str, T1, lgg1, M1, ld);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_x1a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.x);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_y1a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.y);
+
+			readout_widget = lookup_widget (PHOEBE, "ld_monochromatic_rv_info_list");
+			sprintf (valstr, "%lf", ld_coefs.x);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 1, valstr);
+			sprintf (valstr, "%lf", ld_coefs.y);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 2, valstr);
+
+			ld_coefs = interpolate_from_ld_tables (readout_str, T2, lgg2, M2, ld);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_x2a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.x);
+			readout_widget = lookup_widget (PHOEBE_ld_interpolation, "ld_interpolation_y2a_value");
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (readout_widget), ld_coefs.y);
+
+			readout_widget = lookup_widget (PHOEBE, "ld_monochromatic_rv_info_list");
+			sprintf (valstr, "%lf", ld_coefs.x);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 3, valstr);
+			sprintf (valstr, "%lf", ld_coefs.y);
+			gtk_clist_set_text (GTK_CLIST (readout_widget), i, 4, valstr);
+			}
+		}
+
 	/* Finally, we have to update chi2 info list:                               */
 	readout_widget = lookup_widget (PHOEBE_dc, "dc_chi2_info_list");
 	rows_present = GTK_CLIST (readout_widget)->rows;
