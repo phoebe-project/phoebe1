@@ -30,6 +30,7 @@ GtkWidget *PHOEBE_dc_correlation_matrix;
 GtkWidget *PHOEBE_file_selector;
 GtkWidget *PHOEBE_filter_menu;
 GtkWidget *PHOEBE_fitting_quickbar;
+GtkWidget *PHOEBE_import_from_fotel;
 GtkWidget *PHOEBE_open_keyword_file;
 GtkWidget *PHOEBE_open_data_file;
 GtkWidget *PHOEBE_plot_lc;

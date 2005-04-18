@@ -2627,3 +2627,227 @@ void save_data_sheet_parameters_to_file (char *filename)
 	print_to_status_bar ("Data Sheet saved to disk.");
 	fclose (output);
 	}
+
+int import_from_fotel (char *filename, char *passed_prefix)
+	{
+	FILE *input, *output, *phoebe_file;
+
+	char   comment_line[255], readout_line[255], output_name[255], phoebe_name[255], filter[255];
+	double hjd, mag, wgt;
+	int    chn, typ;
+	int    i, j, lccounter = 1, rvcounter = 1, lcno = 0, rvno = 0;
+
+	char   *prefix;
+
+	typedef struct record
+		{
+		double hjd;
+		double mag;
+		double wgt;
+		int    chn;
+		int    typ;
+		} record;
+
+	struct
+		{
+		int     *recno;
+		int     *types;
+		record **records;
+		} data;
+
+	data.recno   = malloc (31 * sizeof   ( *(data.recno)));
+	data.types   = malloc (31 * sizeof   ( *(data.types)));
+	data.records = malloc (31 * sizeof ( *(data.records)));
+
+	for (i = 0; i < 31; i++)
+		{
+		data.recno[i]   = 0;
+		data.types[i]   = -1;
+		data.records[i] = NULL;
+		}
+
+	input = fopen (filename, "r");
+	if (input == 0)
+		{
+		phoebe_warning ("\nFile '%s' not found, aborting.\n\n", filename);
+		return -1;
+		}
+
+	if (PHOEBE_DATA_DIR[strlen(PHOEBE_DATA_DIR)-1] == '/') PHOEBE_DATA_DIR[strlen(PHOEBE_DATA_DIR)-1] = '\0';
+
+	if (strlen (passed_prefix) == 0) prefix = strrchr (filename, '/') + sizeof (char);
+	else prefix = passed_prefix;
+
+	/* The first line is a comment, we'll copy it to all PHOEBE files. */
+	fgets (comment_line, 255, input);
+
+	/* Get the data: */
+	while (!feof (input))
+		{
+		fgets (readout_line, 255, input);
+		if (feof (input)) break;
+		if (sscanf (readout_line, "%lf %lf %lf %d %d", &hjd, &mag, &wgt, &chn, &typ) != 5) continue;
+		data.recno[chn]++;
+		data.types[chn] = typ;
+		data.records[chn] = realloc (data.records[chn], data.recno[chn] * sizeof (*(data.records[chn])));
+		data.records[chn][data.recno[chn]-1].hjd = hjd;
+		data.records[chn][data.recno[chn]-1].mag = mag;
+		data.records[chn][data.recno[chn]-1].wgt = wgt;
+		}
+
+	/* Count the number of curves: */
+	for (i = 0; i < 31; i++)
+		if (data.types[i] != -1)
+			switch (data.types[i])
+				{
+				case  1: rvno++; break;
+				case  2: rvno++; break;
+				case 13:         break;
+				default: lcno++; break;
+				}
+
+	/* Write out the data: */
+	sprintf (phoebe_name, "%s/%s.phoebe", PHOEBE_DATA_DIR, prefix);
+	phoebe_file = fopen (phoebe_name, "w");
+
+	fprintf (phoebe_file, "NAME    = \"%s\"\n", prefix);
+	fprintf (phoebe_file, "LCNO    = %d\n", lcno);
+	fprintf (phoebe_file, "RVNO    = %d\n", rvno);
+
+	for (i = 0; i < 31; i++)
+		{
+		if (data.types[i] != -1)
+			{
+			if (data.types[i] == 1)
+				{
+				sprintf (output_name, "%s/%s.rv1.%d", PHOEBE_DATA_DIR, prefix, i);
+
+				fprintf (phoebe_file, "RVCOL1%d = \"Time\"\n", rvcounter);
+				fprintf (phoebe_file, "RVCOL2%d = \"RV in km/s\"\n", rvcounter);
+				fprintf (phoebe_file, "RVCOL3%d = \"Absolute error\"\n", rvcounter);
+				fprintf (phoebe_file, "RVFN%d   = \"%s\"\n", rvcounter, output_name);
+				fprintf (phoebe_file, "RVSIG%d  = 10.0\n", rvcounter);
+				fprintf (phoebe_file, "RVFLT%d  = \"861nm (RVIJ)\"\n", rvcounter);
+
+				rvcounter++;
+				}
+			else if (data.types[i] ==  2)
+				{
+				sprintf (output_name, "%s/%s.rv2.%d", PHOEBE_DATA_DIR, prefix, i);
+
+				fprintf (phoebe_file, "RVCOL1%d = \"Time\"\n", rvcounter);
+				fprintf (phoebe_file, "RVCOL2%d = \"RV in km/s\"\n", rvcounter);
+				fprintf (phoebe_file, "RVCOL3%d = \"Absolute error\"\n", rvcounter);
+				fprintf (phoebe_file, "RVFN%d   = \"%s\"\n", rvcounter, output_name);
+				fprintf (phoebe_file, "RVSIG%d  = 10.0\n", rvcounter);
+				fprintf (phoebe_file, "RVFLT%d  = \"861nm (RVIJ)\"\n", rvcounter);
+				
+				rvcounter++;
+				}
+			else if (data.types[i] == 13) sprintf (output_name, "%s.rv3", prefix);
+			else
+				{
+				sprintf (output_name, "%s/%s.%d.%d", PHOEBE_DATA_DIR, prefix, data.types[i], i);
+
+				fprintf (phoebe_file, "LCCOL1%d = \"Time\"\n", lccounter);
+				fprintf (phoebe_file, "LCCOL2%d = \"Magnitude\"\n", lccounter);
+				fprintf (phoebe_file, "LCCOL3%d = \"Absolute error\"\n", lccounter);
+				fprintf (phoebe_file, "LCFN%d   = \"%s\"\n", lccounter, output_name);
+				fprintf (phoebe_file, "LCSIG%d  = 0.01\n", lccounter);
+
+				switch (data.types[i])
+					{
+					case  3: sprintf (filter, "550nm (V)"); break;
+					case  4: sprintf (filter, "440nm (B)"); break;
+					case  5: sprintf (filter, "360nm (U)"); break;
+					default: sprintf (filter, "Undefined"); break;
+					}
+
+				fprintf (phoebe_file, "LCFLT%d  = \"%s\"\n", lccounter, filter);
+
+				lccounter++;
+				}
+
+			output = fopen (output_name, "w");
+			fprintf (output, "# %s\n", comment_line);
+			for (j = 0; j < data.recno[i]; j++)
+				fprintf (output, "%lf\t%lf\t%lf\n", data.records[i][j].hjd, data.records[i][j].mag, data.records[i][j].wgt);
+			fclose (output);
+			}
+		}
+
+	fclose (phoebe_file);
+
+	/* Free the memory: */
+	free   (data.recno);
+	free   (data.types);
+	for (i = 0; i < 31; i++)
+		if (data.records[i] != NULL) free (data.records[i]);
+	free (data.records);
+
+	open_keyword_file (phoebe_name);
+
+	enumerate_passbands ();
+	gui_update_passbands ();
+
+	on_data_lc_filter_changed ();
+	on_data_rv_filter_changed ();
+	add_filters_to_available_filter_lists ();
+	}
+
+int enumerate_passbands ()
+	{
+	int lcno = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_lc_no_value")));
+	int rvno = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_rv_no_value")));
+	int i, j, no = 1;
+
+	for (i = 0; i < lcno; i++)
+		{
+		for (j = i+1; j < lcno; j++)
+			{
+			if (strcmp (PHOEBE_lc_data[i].filter, PHOEBE_lc_data[j].filter) == 0)
+				{
+				no++;
+				sprintf (PHOEBE_lc_data[j].filter, "%s #%d", PHOEBE_lc_data[i].filter, no);
+				}
+			}
+		if (no != 1)
+			{
+			no = 1;
+			sprintf (PHOEBE_lc_data[i].filter, "%s #%d", PHOEBE_lc_data[i].filter, no);
+			}
+		}
+
+	for (i = 0; i < rvno; i++)
+		{
+		for (j = i+1; j < rvno; j++)
+			{
+			if (strcmp (PHOEBE_rv_data[i].filter, PHOEBE_rv_data[j].filter) == 0)
+				{
+				no++;
+				sprintf (PHOEBE_rv_data[j].filter, "%s #%d", PHOEBE_rv_data[i].filter, no);
+				}
+			}
+		if (no != 1)
+			{
+			no = 1;
+			sprintf (PHOEBE_rv_data[i].filter, "%s #%d", PHOEBE_rv_data[i].filter, no);
+			}
+		}
+
+	return 0;
+	}
+
+int gui_update_passbands ()
+	{
+	int lcno = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_lc_no_value")));
+	int rvno = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_rv_no_value")));
+	int i;
+
+	for (i = 0; i < lcno; i++)
+		gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "data_lc_info_list")), i, 3, PHOEBE_lc_data[i].filter);
+	for (i = 0; i < rvno; i++)
+		gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "data_rv_info_list")), i, 3, PHOEBE_rv_data[i].filter);
+
+	return 0;
+	}

@@ -228,4 +228,10 @@ void on_file_selector_cancel_button_clicked (GtkButton *button, gpointer user_da
 
 void on_data_sheet_print_to_file_button_clicked (GtkButton *button, gpointer user_data);
 
+void on_menu_bar_file_import_from_fotel_activate (GtkMenuItem *menuitem, gpointer user_data);
+void on_import_from_fotel_browse_clicked (GtkButton *button, gpointer user_data);
+void on_import_from_fotel_file_selector_ok_button_clicked (GtkButton *button, gpointer user_data);
+
+void on_import_from_fotel_ok_button_clicked (GtkButton *button, gpointer user_data);
+
 #endif

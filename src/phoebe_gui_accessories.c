@@ -303,6 +303,8 @@ void phoebe_init ()
 	PHOEBE_scripter              = create_PHOEBE_scripter ();
 	PHOEBE_data_sheet            = create_PHOEBE_data_sheet ();
 
+	PHOEBE_import_from_fotel     = create_PHOEBE_import_from_fotel ();
+
 	/* GLADE has problems defining clist justifications, so we do it manually:  */
 	set_clist_justifications ();
 
