@@ -88,6 +88,11 @@ PHOEBE_vector read_in_ld_coeficients (char *input_filter, int T, double lg, doub
 	sprintf (ld_filename_str, "%s/limcof_bp_%c%02d.dat", PHOEBE_LD_DIR, pm, (int) (10.0 * fabs (M) + EPS));
 
 	ld_file = fopen (ld_filename_str, "r");
+	if (ld_file == NULL)
+		{
+		phoebe_warning ("%s not found, aborting.\n", ld_filename_str);
+		return;
+		}
 
 	/* Now we scan that file line by line (fgets function stops at eoln) while  */
 	/* we don't find desired T, log g and M; the return value of fgets is       */
@@ -172,6 +177,13 @@ PHOEBE_vector interpolate_from_ld_tables (char *input_filter, int T, double lg, 
 	while (TRUE);
 
 	fclose (ld_avail);
+
+	if (T_lo < 0 || T_hi < 0 || M_lo < 0 || M_hi < 0 || lg_lo < 0 || lg_hi < 0)
+		{
+		phoebe_warning ("LD values out of range for Van Hamme (1993) tables, aborting.\n");
+		ld_coefs.x = 0.5; ld_coefs.y = 0.5; ld_coefs.z = 0.5;
+		return ld_coefs;
+		}
 
 	/* The idea of interpolation is as follows: we expand f (T, lg, M) in Tay-  */
 	/* lor series to the 1st order, where we substitute 1st derivatives by fi-  */

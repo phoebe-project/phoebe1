@@ -4559,3 +4559,34 @@ void on_data_sheet_print_to_file_button_clicked (GtkButton *button, gpointer use
   gtk_signal_connect (GTK_OBJECT (lookup_widget (PHOEBE_file_selector, "file_selector_ok_button")), "clicked", GTK_SIGNAL_FUNC (on_data_sheet_print_to_file_ok_button_clicked), NULL);
 	gtk_widget_show (PHOEBE_file_selector);
 	}
+
+void on_menu_bar_file_import_from_fotel_activate (GtkMenuItem *menuitem, gpointer user_data)
+	{
+	gtk_widget_show (PHOEBE_import_from_fotel);
+	}
+
+void on_import_from_fotel_browse_clicked (GtkButton *button, gpointer user_data)
+	{
+	gtk_window_set_title (GTK_WINDOW (PHOEBE_file_selector), "Select FOTEL data file");
+	gtk_label_set_text (GTK_LABEL (GTK_BIN (lookup_widget (PHOEBE_file_selector, "file_selector_ok_button"))->child), "Import");
+	gtk_signal_connect (GTK_OBJECT (lookup_widget (PHOEBE_file_selector, "file_selector_ok_button")), "clicked", GTK_SIGNAL_FUNC (on_import_from_fotel_file_selector_ok_button_clicked), NULL);
+	gtk_widget_show (PHOEBE_file_selector);
+	}
+
+void on_import_from_fotel_file_selector_ok_button_clicked (GtkButton *button, gpointer user_data)
+	{
+	char *filename_str = gtk_file_selection_get_filename (GTK_FILE_SELECTION (PHOEBE_file_selector));
+	gtk_entry_set_text (GTK_ENTRY (lookup_widget (PHOEBE_import_from_fotel, "import_from_fotel_filename")), filename_str);
+	gtk_widget_hide (PHOEBE_file_selector);
+	}
+
+void on_import_from_fotel_ok_button_clicked (GtkButton *button, gpointer user_data)
+	{
+	char *input_file = gtk_entry_get_text (GTK_ENTRY (lookup_widget (PHOEBE_import_from_fotel, "import_from_fotel_filename")));
+	char *prefix     = gtk_entry_get_text (GTK_ENTRY (lookup_widget (PHOEBE_import_from_fotel, "import_from_fotel_prefix")));
+
+	import_from_fotel (input_file, prefix);
+	print_to_status_bar ("FOTEL data file imported.");
+
+	gtk_widget_hide (PHOEBE_import_from_fotel);
+	}

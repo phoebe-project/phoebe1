@@ -34,6 +34,7 @@ create_PHOEBE (void)
   GtkWidget *menu_bar_file_save_as;
   GtkWidget *menu_bar_file_separator_1;
   GtkWidget *menu_bar_file_import_from_dci;
+  GtkWidget *menu_bar_file_import_from_fotel;
   GtkWidget *menu_bar_file_export_to_dci;
   GtkWidget *menu_bar_file_separator_2;
   GtkWidget *menu_bar_file_exit;
@@ -1108,6 +1109,13 @@ create_PHOEBE (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (menu_bar_file_import_from_dci);
   gtk_container_add (GTK_CONTAINER (menu_bar_file_menu), menu_bar_file_import_from_dci);
+
+  menu_bar_file_import_from_fotel = gtk_menu_item_new_with_label ("Import from FOTEL...");
+  gtk_widget_ref (menu_bar_file_import_from_fotel);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "menu_bar_file_import_from_fotel", menu_bar_file_import_from_fotel,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (menu_bar_file_import_from_fotel);
+  gtk_container_add (GTK_CONTAINER (menu_bar_file_menu), menu_bar_file_import_from_fotel);
 
   menu_bar_file_export_to_dci = gtk_menu_item_new_with_label ("Export to DCI...");
   gtk_widget_ref (menu_bar_file_export_to_dci);
@@ -8821,6 +8829,9 @@ create_PHOEBE (void)
                       NULL);
   gtk_signal_connect (GTK_OBJECT (menu_bar_file_import_from_dci), "activate",
                       GTK_SIGNAL_FUNC (on_menu_bar_file_import_from_dci_activate),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (menu_bar_file_import_from_fotel), "activate",
+                      GTK_SIGNAL_FUNC (on_menu_bar_file_import_from_fotel_activate),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (menu_bar_file_export_to_dci), "activate",
                       GTK_SIGNAL_FUNC (on_menu_bar_file_export_to_dci_activate),
@@ -20080,5 +20091,171 @@ create_PHOEBE_file_selector (void)
                       NULL);
 
   return PHOEBE_file_selector;
+}
+
+GtkWidget*
+create_PHOEBE_import_from_fotel (void)
+{
+  GtkWidget *PHOEBE_import_from_fotel;
+  GtkWidget *import_from_fotel_main_vertical_box;
+  GtkWidget *import_from_fotel_main_frame;
+  GtkWidget *import_from_fotel_main_table;
+  GtkWidget *import_from_fotel_filename_label;
+  GtkWidget *import_from_fotel_prefix_label;
+  GtkWidget *import_from_fotel_prefix;
+  GtkWidget *import_from_fotel_label;
+  GtkWidget *import_from_fotel_browse;
+  GtkWidget *import_from_fotel_filename;
+  GtkWidget *import_from_fotel_separator;
+  GtkWidget *import_from_fotel_determine_button;
+  GtkWidget *hbox1;
+  GtkWidget *import_from_fotel_ok_button;
+  GtkWidget *import_from_fotel_cancel_button;
+
+  PHOEBE_import_from_fotel = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_object_set_data (GTK_OBJECT (PHOEBE_import_from_fotel), "PHOEBE_import_from_fotel", PHOEBE_import_from_fotel);
+  gtk_window_set_title (GTK_WINDOW (PHOEBE_import_from_fotel), "Import data from FOTEL");
+
+  import_from_fotel_main_vertical_box = gtk_vbox_new (FALSE, 0);
+  gtk_widget_ref (import_from_fotel_main_vertical_box);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_main_vertical_box", import_from_fotel_main_vertical_box,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_main_vertical_box);
+  gtk_container_add (GTK_CONTAINER (PHOEBE_import_from_fotel), import_from_fotel_main_vertical_box);
+
+  import_from_fotel_main_frame = gtk_frame_new (NULL);
+  gtk_widget_ref (import_from_fotel_main_frame);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_main_frame", import_from_fotel_main_frame,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_main_frame);
+  gtk_box_pack_start (GTK_BOX (import_from_fotel_main_vertical_box), import_from_fotel_main_frame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (import_from_fotel_main_frame), 5);
+  gtk_frame_set_shadow_type (GTK_FRAME (import_from_fotel_main_frame), GTK_SHADOW_IN);
+
+  import_from_fotel_main_table = gtk_table_new (4, 4, FALSE);
+  gtk_widget_ref (import_from_fotel_main_table);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_main_table", import_from_fotel_main_table,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_main_table);
+  gtk_container_add (GTK_CONTAINER (import_from_fotel_main_frame), import_from_fotel_main_table);
+  gtk_container_set_border_width (GTK_CONTAINER (import_from_fotel_main_table), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (import_from_fotel_main_table), 3);
+
+  import_from_fotel_filename_label = gtk_label_new ("FOTEL filename:");
+  gtk_widget_ref (import_from_fotel_filename_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_filename_label", import_from_fotel_filename_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_filename_label);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_filename_label, 0, 1, 2, 3,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (import_from_fotel_filename_label), 0, 0.5);
+
+  import_from_fotel_prefix_label = gtk_label_new ("PHOEBE prefix:");
+  gtk_widget_ref (import_from_fotel_prefix_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_prefix_label", import_from_fotel_prefix_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_prefix_label);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_prefix_label, 0, 1, 3, 4,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (import_from_fotel_prefix_label), 0, 0.5);
+
+  import_from_fotel_prefix = gtk_entry_new ();
+  gtk_widget_ref (import_from_fotel_prefix);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_prefix", import_from_fotel_prefix,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_prefix);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_prefix, 1, 2, 3, 4,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (import_from_fotel_prefix, FALSE);
+
+  import_from_fotel_label = gtk_label_new ("Please choose the FOTEL data filename and the prefix for PHOEBE files to be generated:");
+  gtk_widget_ref (import_from_fotel_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_label", import_from_fotel_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_label);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_label, 0, 4, 0, 1,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (import_from_fotel_label), 0, 0.5);
+
+  import_from_fotel_browse = gtk_button_new_with_label (" Browse... ");
+  gtk_widget_ref (import_from_fotel_browse);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_browse", import_from_fotel_browse,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_browse);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_browse, 3, 4, 2, 3,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  import_from_fotel_filename = gtk_entry_new ();
+  gtk_widget_ref (import_from_fotel_filename);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_filename", import_from_fotel_filename,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_filename);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_filename, 1, 3, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  import_from_fotel_separator = gtk_hseparator_new ();
+  gtk_widget_ref (import_from_fotel_separator);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_separator", import_from_fotel_separator,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_separator);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_separator, 0, 4, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+  import_from_fotel_determine_button = gtk_check_button_new_with_label ("Determine automatically");
+  gtk_widget_ref (import_from_fotel_determine_button);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_determine_button", import_from_fotel_determine_button,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_determine_button);
+  gtk_table_attach (GTK_TABLE (import_from_fotel_main_table), import_from_fotel_determine_button, 2, 3, 3, 4,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (import_from_fotel_determine_button), TRUE);
+
+  hbox1 = gtk_hbox_new (TRUE, 0);
+  gtk_widget_ref (hbox1);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "hbox1", hbox1,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (hbox1);
+  gtk_box_pack_start (GTK_BOX (import_from_fotel_main_vertical_box), hbox1, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox1), 5);
+
+  import_from_fotel_ok_button = gtk_button_new_with_label ("OK");
+  gtk_widget_ref (import_from_fotel_ok_button);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_ok_button", import_from_fotel_ok_button,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_ok_button);
+  gtk_box_pack_start (GTK_BOX (hbox1), import_from_fotel_ok_button, FALSE, TRUE, 0);
+
+  import_from_fotel_cancel_button = gtk_button_new_with_label ("Cancel");
+  gtk_widget_ref (import_from_fotel_cancel_button);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_import_from_fotel), "import_from_fotel_cancel_button", import_from_fotel_cancel_button,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (import_from_fotel_cancel_button);
+  gtk_box_pack_start (GTK_BOX (hbox1), import_from_fotel_cancel_button, FALSE, TRUE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (PHOEBE_import_from_fotel), "delete_event",
+                      GTK_SIGNAL_FUNC (gtk_widget_hide),
+                      NULL);
+  gtk_signal_connect_object (GTK_OBJECT (import_from_fotel_browse), "clicked",
+                             GTK_SIGNAL_FUNC (on_import_from_fotel_browse_clicked),
+                             GTK_OBJECT (import_from_fotel_filename));
+  gtk_signal_connect_object (GTK_OBJECT (import_from_fotel_determine_button), "toggled",
+                             GTK_SIGNAL_FUNC (on_switches_reverse_toggled),
+                             GTK_OBJECT (import_from_fotel_prefix));
+  gtk_signal_connect (GTK_OBJECT (import_from_fotel_ok_button), "clicked",
+                      GTK_SIGNAL_FUNC (on_import_from_fotel_ok_button_clicked),
+                      NULL);
+  gtk_signal_connect_object (GTK_OBJECT (import_from_fotel_cancel_button), "clicked",
+                             GTK_SIGNAL_FUNC (gtk_widget_hide),
+                             GTK_OBJECT (PHOEBE_import_from_fotel));
+
+  return PHOEBE_import_from_fotel;
 }
 

@@ -18,4 +18,8 @@ void add_all_parameters_to_data_sheet_list ();
 void add_relevant_parameters_to_data_sheet_list ();
 void save_data_sheet_parameters_to_file (char *filename);
 
+int import_from_fotel (char *filename, char *passed_prefix);
+int enumerate_passbands ();
+int gui_update_passbands ();
+
 #endif

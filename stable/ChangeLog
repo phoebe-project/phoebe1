@@ -1,8 +1,22 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-04-18: - If physical parameters (T, M, log g) for LD tables were out-
+              of-range, PHOEBE segfaulted. A range check is now added which
+	      sets all LD coefficients to 0.5 if the overflow occurs.
+2005-04-14: - A new dedicated function added that renumbers all filters that
+              share the same name. FOTEL parser suffered from this issue and
+	      it now works in all cases where the 21st column of the FOTEL
+	      input file is missing and all weights are in place. Some day
+	      these two restrictions should be removed, but I don't think
+	      it's such a problem to slightly modify the input.
 2005-04-13: - GUI modified to encompass automatic LD interpolation! Testing
               was successful! :)
+            - A big chunk of code added that is capable of parsing FOTEL
+	      input data files. It should be reasonably fool-proof. This
+	      was done after suggestion of Petr Harmanec. Note however that
+	      any export (if someone desires it) will be left for contri-
+	      bution of interested parties.
 2005-04-12: - Another formatting problem in WD2004 has been discovered that
               caused improper readout of inclinations larger than 100 degs.
 	      Many thanks to Petr Zasche for pointing this out!

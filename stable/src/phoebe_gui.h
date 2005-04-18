@@ -33,3 +33,4 @@ GtkWidget* create_PHOEBE_assign_secondary_spots (void);
 GtkWidget* create_PHOEBE_dc_correlation_matrix (void);
 GtkWidget* create_PHOEBE_data_sheet (void);
 GtkWidget* create_PHOEBE_file_selector (void);
+GtkWidget* create_PHOEBE_import_from_fotel (void);
