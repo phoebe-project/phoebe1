@@ -4124,7 +4124,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (orbit_f1_label_min, FALSE);
 
-  orbit_f1_value_min_adj = gtk_adjustment_new (0, 0, 1, 0.01, 0.1, 1);
+  orbit_f1_value_min_adj = gtk_adjustment_new (0, 0, 10, 0.01, 0.1, 1);
   orbit_f1_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (orbit_f1_value_min_adj), 0, 5);
   gtk_widget_ref (orbit_f1_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_f1_value_min", orbit_f1_value_min,
@@ -4137,7 +4137,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (orbit_f1_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (orbit_f1_value_min), GTK_UPDATE_IF_VALID);
 
-  orbit_f1_value_max_adj = gtk_adjustment_new (1, 0, 1, 0.01, 0.1, 1);
+  orbit_f1_value_max_adj = gtk_adjustment_new (10, 0, 10, 0.01, 0.1, 1);
   orbit_f1_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (orbit_f1_value_max_adj), 0, 5);
   gtk_widget_ref (orbit_f1_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_f1_value_max", orbit_f1_value_max,
@@ -4172,7 +4172,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (orbit_f1_del_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (orbit_f1_del_value), GTK_UPDATE_IF_VALID);
 
-  orbit_f1_value_adj = gtk_adjustment_new (1, 0, 1, 0.01, 0.1, 1);
+  orbit_f1_value_adj = gtk_adjustment_new (1, 0, 10, 0.01, 0.1, 1);
   orbit_f1_value = gtk_spin_button_new (GTK_ADJUSTMENT (orbit_f1_value_adj), 0, 5);
   gtk_widget_ref (orbit_f1_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_f1_value", orbit_f1_value,
@@ -4247,7 +4247,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (orbit_f2_label_min, FALSE);
 
-  orbit_f2_value_min_adj = gtk_adjustment_new (0, 0, 1, 0.01, 0.1, 1);
+  orbit_f2_value_min_adj = gtk_adjustment_new (0, 0, 10, 0.01, 0.1, 1);
   orbit_f2_value_min = gtk_spin_button_new (GTK_ADJUSTMENT (orbit_f2_value_min_adj), 0, 5);
   gtk_widget_ref (orbit_f2_value_min);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_f2_value_min", orbit_f2_value_min,
@@ -4260,7 +4260,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (orbit_f2_value_min), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (orbit_f2_value_min), GTK_UPDATE_IF_VALID);
 
-  orbit_f2_value_max_adj = gtk_adjustment_new (1, 0, 1, 0.01, 0.1, 1);
+  orbit_f2_value_max_adj = gtk_adjustment_new (10, 0, 10, 0.01, 0.1, 1);
   orbit_f2_value_max = gtk_spin_button_new (GTK_ADJUSTMENT (orbit_f2_value_max_adj), 0, 5);
   gtk_widget_ref (orbit_f2_value_max);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_f2_value_max", orbit_f2_value_max,
@@ -4295,7 +4295,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (orbit_f2_del_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (orbit_f2_del_value), GTK_UPDATE_IF_VALID);
 
-  orbit_f2_value_adj = gtk_adjustment_new (1, 0, 1, 0.01, 0.1, 1);
+  orbit_f2_value_adj = gtk_adjustment_new (1, 0, 10, 0.01, 0.1, 1);
   orbit_f2_value = gtk_spin_button_new (GTK_ADJUSTMENT (orbit_f2_value_adj), 0, 5);
   gtk_widget_ref (orbit_f2_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_f2_value", orbit_f2_value,
