@@ -4,6 +4,10 @@ PHOEBE Project ChangeLog:
 2005-04-18: - If physical parameters (T, M, log g) for LD tables were out-
               of-range, PHOEBE segfaulted. A range check is now added which
 	      sets all LD coefficients to 0.5 if the overflow occurs.
+            - Synchronicity parameters F1 and F2 were limited to the [0,1]
+	      interval, which doesn't make sense if the stars are rotating
+	      faster about their axis than is their period. It has now been
+	      set to 10.
 2005-04-14: - A new dedicated function added that renumbers all filters that
               share the same name. FOTEL parser suffered from this issue and
 	      it now works in all cases where the 21st column of the FOTEL

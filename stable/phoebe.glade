@@ -7583,7 +7583,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>0</value>
 		<lower>0</lower>
-		<upper>1</upper>
+		<upper>10</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -7614,9 +7614,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>1</value>
+		<value>10</value>
 		<lower>0</lower>
-		<upper>1</upper>
+		<upper>10</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -7717,7 +7717,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>1</value>
 		<lower>0</lower>
-		<upper>1</upper>
+		<upper>10</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -7912,7 +7912,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>0</value>
 		<lower>0</lower>
-		<upper>1</upper>
+		<upper>10</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -7943,9 +7943,9 @@ X-ray binary
 		<update_policy>GTK_UPDATE_IF_VALID</update_policy>
 		<snap>False</snap>
 		<wrap>False</wrap>
-		<value>1</value>
+		<value>10</value>
 		<lower>0</lower>
-		<upper>1</upper>
+		<upper>10</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
@@ -8046,7 +8046,7 @@ X-ray binary
 		<wrap>False</wrap>
 		<value>1</value>
 		<lower>0</lower>
-		<upper>1</upper>
+		<upper>10</upper>
 		<step>0.01</step>
 		<page>0.1</page>
 		<page_size>1</page_size>
