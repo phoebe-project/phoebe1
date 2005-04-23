@@ -6,6 +6,8 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include "config.h"
+
 #include "phoebe_error_handling.h"
 #include "phoebe_global.h"
 #include "phoebe_gui.h"
@@ -403,6 +405,16 @@ void phoebe_init ()
 				"Please open a valid file through File->Open selection.",
 				gtk_widget_destroy);
 		}
+
+	/* If SuperMongo libraries are missing, disable the SM selection widget:    */
+	#ifndef HAVE_LIBDEVICES
+	gtk_widget_set_sensitive (lookup_widget (PHOEBE_configuration, "configuration_sm_switch"), FALSE);
+	#endif
+
+	/* If SuperMongo libraries are missing, disable the SM selection widget:    */
+	#ifndef PHOEBE_GNUPLOT_SUPPORT
+	gtk_widget_set_sensitive (lookup_widget (PHOEBE_configuration, "configuration_gnuplot_switch"), FALSE);
+	#endif
 
 	/* If the script is run non-interactively, run it:                          */
 	if (PHOEBE_EXECUTE_SCRIPT == 1)

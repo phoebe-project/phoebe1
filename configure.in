@@ -41,8 +41,22 @@
 # Check for system programs:
 	# C compiler:
 		AC_PROG_CC
+		if test bla$CC = bla ; then
+		echo
+		echo "C compiler (gcc, cc, ...) cannot be found."
+		echo "Please install it and restart ./configure."
+		echo
+		exit
+		fi
 	# FORTRAN compiler:
 		AC_PROG_F77
+		if test bla$F77 = bla ; then
+		echo
+		echo "Fortran compiler (F77, G77, ...) cannot be found."
+		echo "Please install it and restart ./configure."
+		echo
+		exit
+		fi
 	# Are symbolic links allowed:
 		AC_PROG_LN_S
 	# Install script:
@@ -96,6 +110,18 @@
 		exit
 		fi
 
+	# Netpbm (ppmtoxpm) support:
+		AC_DEFUN(AC_PROG_NETPBM, [AC_CHECK_PROG(PPMTOXPM,ppmtoxpm,yes)])
+		AC_PROG_NETPBM
+		if test empty$PPMTOXPM = empty ; then
+		echo
+		echo "The netpbm package that provides ppmtoxpm tool isn't installed."
+		echo "Please install it and restart ./configure."
+		echo
+		exit
+		fi
+
+
 # Check for header files.
 	# Is C compiler ANSI-compliant:
 		AC_HEADER_STDC
@@ -135,4 +161,6 @@
              pixmaps/Makefile
              wd/Makefile
             ])
-	AC_OUTPUT_COMMANDS([echo PHOEBE configuration complete!])
+
+	echo PHOEBE configuration complete!
+	echo

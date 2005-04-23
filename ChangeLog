@@ -1,6 +1,17 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-04-23: - A check added for C and Fortran compilers to configure.in.
+              If they're not found, the configure script will exit with a
+	      notification message. This was a major support hurdle, so it
+	      should now help resolve common installation problems more
+	      easily.
+	    - A check added for netpbm package that contains ppmtoxpm tool
+	      to configure.in. It was common to be able to compile and
+	      run PHOEBE, but the plotting window wasn't able to convert
+	      plots to xpm and hence there were no plots shown on screen.
+	    - If SuperMongo isn't installed, the option to use it should
+	      be shaded. The same goes for gnuplot. Fixed.
 2005-04-18: - If physical parameters (T, M, log g) for LD tables were out-
               of-range, PHOEBE segfaulted. A range check is now added which
 	      sets all LD coefficients to 0.5 if the overflow occurs.
