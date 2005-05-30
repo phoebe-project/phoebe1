@@ -322,11 +322,6 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 		sprintf (working_str, "%lf", chi2);
 		readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_chi2_unweighted_sigma_value");
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
-
-		/* Now for the residuals; after this function, synthetic_data will hold   */
-		/* only zeroes (for reference) and experimental_data will hold residuals: */
-		if (RESIDUALS == 1)
-			calculate_residuals (&synthetic_data, &experimental_data);
 		}
 
 	/* Finally, we must call aliasing function in the end, so that chi2 calcu-  */
@@ -338,6 +333,11 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 		/* as some points to the outside regions:                                 */
 		if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
 			alias_phase_to_interval (&experimental_data, curve.PHSTRT, curve.PHSTOP);
+
+		/* Now for the residuals; after this function, synthetic_data will hold   */
+		/* only zeroes (for reference) and experimental_data will hold residuals: */
+		if (RESIDUALS == 1 && MODEL == 1)
+			calculate_residuals (&synthetic_data, &experimental_data);
 		}
 
 	/* Create a plot: */
@@ -704,6 +704,31 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_chi2_unweighted_sigma_value");
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
 
+	/* If the phase range of the plot is narrower than [-0.5,0.5], we must      */
+	/* crop the experimental data output. If the range is wider, we must ali-   */
+	/* as some points to the outside regions:                                   */
+	if (DATA == 1)
+		{
+		if ( ( DEP == 3 ) || ( DEP == 7 ) )
+			{
+			if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
+				alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
+			}
+		if ( ( DEP == 4 ) || ( DEP == 8 ) )
+			{
+			if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
+				alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
+			}
+		if ( DEP == 9 )
+			{
+			if ( (ALIASING == 1) && (switches.JDPHS == 2) )
+				{
+				alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
+				alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
+				}
+			}
+		}
+
 		/* Now for the residuals; after this function, synthetic_data will hold   */
 		/* only zeroes (for reference) and experimental_data will hold residuals: */
 		if ( (RESIDUALS == 1) && ( (DEP == 3) || (DEP == 7) || (DEP == 9) ) )
@@ -755,34 +780,6 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 				joint_experimental_data.weight[i] = experimental_rv2_data.weight[i-experimental_rv1_data.ptsno];
 				}
 			}
-
-	/* If the phase range of the plot is narrower than [-0.5,0.5], we must      */
-	/* crop the experimental data output. If the range is wider, we must ali-   */
-	/* as some points to the outside regions:                                   */
-	if (DATA == 1)
-		{
-		if ( ( DEP == 3 ) || ( DEP == 7 ) )
-			{
-			if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
-				alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
-			}
-		if ( ( DEP == 4 ) || ( DEP == 8 ) )
-			{
-			if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
-				alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
-			}
-		if ( DEP == 9 )
-			{
-			if ( (ALIASING == 1) && (switches.JDPHS == 2) )
-				{
-/*
-				alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
-				alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
-*/
-				alias_phase_to_interval (&joint_experimental_data, curve.PHSTRT, curve.PHSTOP);
-				}
-			}
-		}
 
 	/* Create a plot: */
 	if ( ( DEP == 3 ) || ( DEP == 5 ) || ( DEP == 7 ) )
