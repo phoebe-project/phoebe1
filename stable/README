@@ -1,4 +1,4 @@
-PHOEBE-0.26 TOPLEVEL DOCUMENTATION                         OCTOBER 21st, 2004
+PHOEBE-0.27 TOPLEVEL DOCUMENTATION                               May 30, 2005
 -----------------------------------------------------------------------------
 
 Hello and thank you for your interest in PHOEBE.
@@ -118,23 +118,19 @@ PHOEBE may be obtained by two common ways:
 
    The main program:
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
-                                                              checkout phoebe
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout phoebe
 
    The bleeding-edge development version:
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
-                                                          checkout phoebe-dev
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout phoebe-dev
 
    Documentation (optional):
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
-                                                       checkout documentation
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout documentation
 
    Van Hamme limb darkening tables (optional):
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs \
-                                                         checkout catalogs/ld
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout catalogs/ld
 
    This method is preferable for testing users and contributors. Please note
    that the development version might not work, it might not even compile.
@@ -162,6 +158,15 @@ this means that you have newer autoutils suite. Please run:
   autoreconf --force --install
 
 and then repeat the generic installation steps given above.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.27 USERS
+------------------------------------------
+
+This version removes two important bugs from previous versions: inclinations
+larger than 90 degrees were misread by WD because of input file formatting
+change in the new WD version. The second is the plotting issue, where residuals
+for aliased data points weren't computed correctly if a non-symmetric phase
+interval was chosen.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.26 USERS
 ------------------------------------------

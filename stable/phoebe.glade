@@ -20425,7 +20425,7 @@ Normalized Flux
 	<widget>
 	  <class>GtkLabel</class>
 	  <name>plot_lc_vertexes_label</name>
-	  <label>Vertexes:</label>
+	  <label>Vertices:</label>
 	  <justify>GTK_JUSTIFY_CENTER</justify>
 	  <wrap>False</wrap>
 	  <xalign>0</xalign>
@@ -24446,7 +24446,7 @@ Secondary eclipse-proximity corrections
 	<widget>
 	  <class>GtkLabel</class>
 	  <name>plot_rv_vertexes_label</name>
-	  <label>      Vertexes:</label>
+	  <label>      Vertices:</label>
 	  <justify>GTK_JUSTIFY_CENTER</justify>
 	  <wrap>False</wrap>
 	  <xalign>0</xalign>

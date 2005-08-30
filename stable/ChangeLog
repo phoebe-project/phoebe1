@@ -1,12 +1,18 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-08-30: - Constraints set for a double-contact binary were too strict:
+              T2, A2 and GR2 can in fact be different from their primary
+              star counterparts. Fixed.
 2005-05-30: - Computing residuals in both LC and RV windows was done before
               aliasing took place, which meant that the residuals were com-
 	      puted against the original (i.e. non-aliased) data. This in
 	      turn meant that the phases were out-of-sync between aliased
 	      data and residuals. This is now fixed. Many thanks to Keivan
 	      Stassun for pointing this out!
+            - A typo 'Vertexes' corrected to 'Vertices' in LC and RV plot
+	      windows.
+	    - PHOEBE 0.27 released!
 2005-04-30: - PHOEBE installed without issues under Mandrake 9.1. Many
               thanks to Keith Bambery for reporting this!
 2005-04-23: - A check added for C and Fortran compilers to configure.in.
