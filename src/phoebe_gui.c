@@ -10601,7 +10601,7 @@ create_PHOEBE_plot_lc (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (plot_lc_synthetic_lightcurve), TRUE);
 
-  plot_lc_vertexes_label = gtk_label_new ("Vertexes:");
+  plot_lc_vertexes_label = gtk_label_new ("Vertices:");
   gtk_widget_ref (plot_lc_vertexes_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_vertexes_label", plot_lc_vertexes_label,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -12629,7 +12629,7 @@ create_PHOEBE_plot_rv (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (plot_rv_synthetic_lightcurve), TRUE);
 
-  plot_rv_vertexes_label = gtk_label_new ("      Vertexes:");
+  plot_rv_vertexes_label = gtk_label_new ("      Vertices:");
   gtk_widget_ref (plot_rv_vertexes_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_rv), "plot_rv_vertexes_label", plot_rv_vertexes_label,
                             (GtkDestroyNotify) gtk_widget_unref);
