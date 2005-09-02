@@ -1,6 +1,10 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-09-02: - Limb darkening coefficient interpolation didn't work for nega-
+              tive values of metallicities due to a silly if-clause that
+              rejected any parameters smaller than 0.0. Fixed. Many thanks
+              to Janusz Kaluzny for pointing this out!
 2005-08-30: - Constraints set for a double-contact binary were too strict:
               T2, A2 and GR2 can in fact be different from their primary
               star counterparts. Fixed.
