@@ -156,8 +156,7 @@ PHOEBE_vector interpolate_from_ld_tables (char *input_filter, int T, double lg, 
 	sprintf (ld_avail_str, "%s/ld_availability.data", PHOEBE_LD_DIR);
 	ld_avail = fopen (ld_avail_str, "r");
 
-	do
-		{
+	do {
 		if (fscanf (ld_avail, "%d %lf %lf\n", &read_T, &read_lg, &read_M) != 3) break;
 
 		if ( (read_T <= T) && (read_lg <= lg) && (read_M <= M) &&
@@ -165,20 +164,19 @@ PHOEBE_vector interpolate_from_ld_tables (char *input_filter, int T, double lg, 
 			{
 			delta_1 = (read_T-T)*(read_T-T)+(read_lg-lg)*(read_lg-lg)+(read_M-M)*(read_M-M);
 			T_lo  = read_T; lg_lo = read_lg; M_lo  = read_M;
-			}
+		}
 
 		if ( (read_T >= T) && (read_lg >= lg) && (read_M >= M) &&
 	     ( (read_T-T)*(read_T-T)+(read_lg-lg)*(read_lg-lg)+(read_M-M)*(read_M-M) < delta_2 ) )
 			{
 			delta_2 = (read_T-T)*(read_T-T)+(read_lg-lg)*(read_lg-lg)+(read_M-M)*(read_M-M);
 			T_hi  = read_T; lg_hi = read_lg; M_hi  = read_M;
-			}
 		}
-	while (TRUE);
+	} while (TRUE);
 
 	fclose (ld_avail);
 
-	if (T_lo < 0 || T_hi < 0 || M_lo < 0 || M_hi < 0 || lg_lo < 0 || lg_hi < 0)
+	if (T_lo < 0 || T_hi < 0 || M_lo < -5.0 || M_hi < -4.5 || lg_lo < 0 || lg_hi < 0)
 		{
 		phoebe_warning ("LD values out of range for Van Hamme (1993) tables, aborting.\n");
 		ld_coefs.x = 0.5; ld_coefs.y = 0.5; ld_coefs.z = 0.5;
@@ -193,15 +191,13 @@ PHOEBE_vector interpolate_from_ld_tables (char *input_filter, int T, double lg, 
 
 	ld_coefs_1 = read_in_ld_coeficients (input_filter, T_lo, lg_lo, M_lo, ld_law);
 	ld_coefs_2 = read_in_ld_coeficients (input_filter, T_hi, lg_lo, M_lo, ld_law);
-	if (T_hi - T_lo < EPS)
-		{
+	if (T_hi - T_lo < EPS) {
 		c11 = c12 = 0.0;
-		}
-	else
-		{
+	}
+	else {
 		c11 = (ld_coefs_2.x - ld_coefs_1.x) * (T - T_lo) / (T_hi - T_lo);
 		c12 = (ld_coefs_2.y - ld_coefs_1.y) * (T - T_lo) / (T_hi - T_lo);
-		}
+	}
 
 	ld_coefs_1 = read_in_ld_coeficients (input_filter, T_lo, lg_lo, M_lo, ld_law);
 	ld_coefs_2 = read_in_ld_coeficients (input_filter, T_lo, lg_hi, M_lo, ld_law);
