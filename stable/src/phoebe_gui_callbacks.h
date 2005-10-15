@@ -233,5 +233,6 @@ void on_import_from_fotel_browse_clicked (GtkButton *button, gpointer user_data)
 void on_import_from_fotel_file_selector_ok_button_clicked (GtkButton *button, gpointer user_data);
 
 void on_import_from_fotel_ok_button_clicked (GtkButton *button, gpointer user_data);
+void on_critical_phases_changed (GtkEditable *editable, gpointer user_data);
 
 #endif

@@ -2395,6 +2395,11 @@ X-ray binary
 		<class>GtkSpinButton</class>
 		<name>system_pshift_value</name>
 		<can_focus>True</can_focus>
+		<signal>
+		  <name>changed</name>
+		  <handler>on_critical_phases_changed</handler>
+		  <last_modification_time>Thu, 29 Sep 2005 22:11:49 GMT</last_modification_time>
+		</signal>
 		<climb_rate>0</climb_rate>
 		<digits>5</digits>
 		<numeric>True</numeric>
@@ -6798,6 +6803,11 @@ X-ray binary
 		  <handler>on_lagrange_dependent_variable_changed</handler>
 		  <last_modification_time>Thu, 17 Apr 2003 11:51:10 GMT</last_modification_time>
 		</signal>
+		<signal>
+		  <name>changed</name>
+		  <handler>on_critical_phases_changed</handler>
+		  <last_modification_time>Thu, 29 Sep 2005 20:50:02 GMT</last_modification_time>
+		</signal>
 		<climb_rate>0</climb_rate>
 		<digits>5</digits>
 		<numeric>True</numeric>
@@ -7063,6 +7073,11 @@ X-ray binary
 		<class>GtkSpinButton</class>
 		<name>orbit_perr0_value</name>
 		<can_focus>True</can_focus>
+		<signal>
+		  <name>changed</name>
+		  <handler>on_critical_phases_changed</handler>
+		  <last_modification_time>Thu, 29 Sep 2005 20:49:47 GMT</last_modification_time>
+		</signal>
 		<climb_rate>0</climb_rate>
 		<digits>5</digits>
 		<numeric>True</numeric>
@@ -8128,19 +8143,204 @@ X-ray binary
 	  </widget>
 
 	  <widget>
-	    <class>GtkPixmap</class>
-	    <name>orbit_under_construction</name>
-	    <filename>under_construction.xpm</filename>
-	    <xalign>0.5</xalign>
-	    <yalign>0.5</yalign>
-	    <xpad>0</xpad>
-	    <ypad>0</ypad>
-	    <build_insensitive>True</build_insensitive>
+	    <class>GtkHBox</class>
+	    <name>orbit_todo_box</name>
+	    <homogeneous>False</homogeneous>
+	    <spacing>0</spacing>
 	    <child>
 	      <padding>0</padding>
 	      <expand>True</expand>
 	      <fill>True</fill>
 	    </child>
+
+	    <widget>
+	      <class>GtkPixmap</class>
+	      <name>orbit_under_construction</name>
+	      <filename>under_construction.xpm</filename>
+	      <xalign>0.5</xalign>
+	      <yalign>0.5</yalign>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	      <build_insensitive>True</build_insensitive>
+	      <child>
+		<padding>0</padding>
+		<expand>True</expand>
+		<fill>False</fill>
+	      </child>
+	    </widget>
+
+	    <widget>
+	      <class>GtkFrame</class>
+	      <name>orbit_critical_phases_frame</name>
+	      <border_width>3</border_width>
+	      <label_xalign>0</label_xalign>
+	      <shadow_type>GTK_SHADOW_ETCHED_IN</shadow_type>
+	      <child>
+		<padding>0</padding>
+		<expand>False</expand>
+		<fill>True</fill>
+	      </child>
+
+	      <widget>
+		<class>GtkTable</class>
+		<name>orbit_critical_phases_table</name>
+		<border_width>5</border_width>
+		<rows>5</rows>
+		<columns>2</columns>
+		<homogeneous>False</homogeneous>
+		<row_spacing>0</row_spacing>
+		<column_spacing>0</column_spacing>
+
+		<widget>
+		  <class>GtkLabel</class>
+		  <name>label30</name>
+		  <label>Critical phases:</label>
+		  <justify>GTK_JUSTIFY_CENTER</justify>
+		  <wrap>False</wrap>
+		  <xalign>0</xalign>
+		  <yalign>0.5</yalign>
+		  <xpad>0</xpad>
+		  <ypad>0</ypad>
+		  <child>
+		    <left_attach>0</left_attach>
+		    <right_attach>2</right_attach>
+		    <top_attach>0</top_attach>
+		    <bottom_attach>1</bottom_attach>
+		    <xpad>0</xpad>
+		    <ypad>0</ypad>
+		    <xexpand>True</xexpand>
+		    <yexpand>False</yexpand>
+		    <xshrink>False</xshrink>
+		    <yshrink>False</yshrink>
+		    <xfill>False</xfill>
+		    <yfill>False</yfill>
+		  </child>
+		</widget>
+
+		<widget>
+		  <class>GtkLabel</class>
+		  <name>orbit_critical_phases_periastron_phase</name>
+		  <label>Periastron passage:</label>
+		  <justify>GTK_JUSTIFY_CENTER</justify>
+		  <wrap>False</wrap>
+		  <xalign>0</xalign>
+		  <yalign>0.5</yalign>
+		  <xpad>0</xpad>
+		  <ypad>0</ypad>
+		  <child>
+		    <left_attach>0</left_attach>
+		    <right_attach>1</right_attach>
+		    <top_attach>2</top_attach>
+		    <bottom_attach>3</bottom_attach>
+		    <xpad>0</xpad>
+		    <ypad>0</ypad>
+		    <xexpand>True</xexpand>
+		    <yexpand>False</yexpand>
+		    <xshrink>False</xshrink>
+		    <yshrink>False</yshrink>
+		    <xfill>False</xfill>
+		    <yfill>False</yfill>
+		  </child>
+		</widget>
+
+		<widget>
+		  <class>GtkLabel</class>
+		  <name>orbit_critical_phases_conjunction_phase</name>
+		  <label>Superior conjunction:</label>
+		  <justify>GTK_JUSTIFY_CENTER</justify>
+		  <wrap>False</wrap>
+		  <xalign>0</xalign>
+		  <yalign>0.5</yalign>
+		  <xpad>0</xpad>
+		  <ypad>0</ypad>
+		  <child>
+		    <left_attach>0</left_attach>
+		    <right_attach>1</right_attach>
+		    <top_attach>3</top_attach>
+		    <bottom_attach>4</bottom_attach>
+		    <xpad>0</xpad>
+		    <ypad>0</ypad>
+		    <xexpand>True</xexpand>
+		    <yexpand>False</yexpand>
+		    <xshrink>False</xshrink>
+		    <yshrink>False</yshrink>
+		    <xfill>False</xfill>
+		    <yfill>False</yfill>
+		  </child>
+		</widget>
+
+		<widget>
+		  <class>GtkLabel</class>
+		  <name>orbit_periastron_phase</name>
+		  <label>0.00000</label>
+		  <justify>GTK_JUSTIFY_CENTER</justify>
+		  <wrap>False</wrap>
+		  <xalign>0</xalign>
+		  <yalign>0.5</yalign>
+		  <xpad>0</xpad>
+		  <ypad>0</ypad>
+		  <child>
+		    <left_attach>1</left_attach>
+		    <right_attach>2</right_attach>
+		    <top_attach>2</top_attach>
+		    <bottom_attach>3</bottom_attach>
+		    <xpad>0</xpad>
+		    <ypad>0</ypad>
+		    <xexpand>True</xexpand>
+		    <yexpand>False</yexpand>
+		    <xshrink>False</xshrink>
+		    <yshrink>False</yshrink>
+		    <xfill>False</xfill>
+		    <yfill>False</yfill>
+		  </child>
+		</widget>
+
+		<widget>
+		  <class>GtkLabel</class>
+		  <name>orbit_conjunction_phase</name>
+		  <label>0.00000</label>
+		  <justify>GTK_JUSTIFY_CENTER</justify>
+		  <wrap>False</wrap>
+		  <xalign>0</xalign>
+		  <yalign>0.5</yalign>
+		  <xpad>0</xpad>
+		  <ypad>0</ypad>
+		  <child>
+		    <left_attach>1</left_attach>
+		    <right_attach>2</right_attach>
+		    <top_attach>3</top_attach>
+		    <bottom_attach>4</bottom_attach>
+		    <xpad>0</xpad>
+		    <ypad>0</ypad>
+		    <xexpand>True</xexpand>
+		    <yexpand>False</yexpand>
+		    <xshrink>False</xshrink>
+		    <yshrink>False</yshrink>
+		    <xfill>False</xfill>
+		    <yfill>False</yfill>
+		  </child>
+		</widget>
+
+		<widget>
+		  <class>GtkHSeparator</class>
+		  <name>orbit_critical_phases_separator</name>
+		  <child>
+		    <left_attach>0</left_attach>
+		    <right_attach>2</right_attach>
+		    <top_attach>1</top_attach>
+		    <bottom_attach>2</bottom_attach>
+		    <xpad>0</xpad>
+		    <ypad>3</ypad>
+		    <xexpand>False</xexpand>
+		    <yexpand>False</yexpand>
+		    <xshrink>False</xshrink>
+		    <yshrink>False</yshrink>
+		    <xfill>True</xfill>
+		    <yfill>True</yfill>
+		  </child>
+		</widget>
+	      </widget>
+	    </widget>
 	  </widget>
 	</widget>
       </widget>
@@ -20484,7 +20684,7 @@ Normalized Flux
 	  <class>GtkCheckButton</class>
 	  <name>plot_lc_experimental_data</name>
 	  <can_focus>True</can_focus>
-	  <label>Experimental light curve (data)</label>
+	  <label>Observed light curve (data)</label>
 	  <active>False</active>
 	  <draw_indicator>True</draw_indicator>
 	  <child>
@@ -24505,7 +24705,7 @@ Secondary eclipse-proximity corrections
 	  <class>GtkCheckButton</class>
 	  <name>plot_rv_experimental_data</name>
 	  <can_focus>True</can_focus>
-	  <label>Experimental RV curve (data)</label>
+	  <label>Observed RV curve (data)</label>
 	  <active>False</active>
 	  <draw_indicator>True</draw_indicator>
 	  <child>

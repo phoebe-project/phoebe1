@@ -194,12 +194,12 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 	if (GTK_TOGGLE_BUTTON (readout_widget)->active == TRUE) DATA = 1;
 	else DATA = 0;
 
-	phoebe_debug ("plot experimental data:     %d\n", DATA);
+	phoebe_debug ("plot observed data:     %d\n", DATA);
 
 	/* Is the data switch turned on, but we have no input files?                */
 	if ( (chosen_filter == -1) && (DATA == 1) )
 		{
-		warning_window = create_notice_window ("PHOEBE Notice", "Experimental data plot failure", "You should supply experimental data to PHOEBE in the", "main window's Data tab. Until then experimental data cannot be plotted.", gtk_widget_destroy);
+		warning_window = create_notice_window ("PHOEBE Notice", "Observed data plot failure", "You should supply observed data to PHOEBE in the", "main window's Data tab. Until then observed data cannot be plotted.", gtk_widget_destroy);
 		DATA = 0;
 		}
 
@@ -548,7 +548,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 	/* Is the data switch turned on, but we have no input files?                */
 	if ( (chosen_filter == -1) && (DATA == 1) )
 		{
-		warning_window = create_notice_window ("PHOEBE Notice", "Experimental data plot failure", "You should supply experimental data to PHOEBE in the", "main window's Data tab. Until then experimental data cannot be plotted.", gtk_widget_destroy);
+		warning_window = create_notice_window ("PHOEBE Notice", "Observed data plot failure", "You should supply observed data to PHOEBE in the", "main window's Data tab. Until then observed data cannot be plotted.", gtk_widget_destroy);
 		DATA = 0;
 		}
 

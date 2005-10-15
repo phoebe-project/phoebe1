@@ -434,7 +434,16 @@ create_PHOEBE (void)
   GtkWidget *orbit_f2_value;
   GtkWidget *orbit_f2_adjust;
   GtkWidget *orbit_f2_del_label;
+  GtkWidget *orbit_todo_box;
   GtkWidget *orbit_under_construction;
+  GtkWidget *orbit_critical_phases_frame;
+  GtkWidget *orbit_critical_phases_table;
+  GtkWidget *label30;
+  GtkWidget *orbit_critical_phases_periastron_phase;
+  GtkWidget *orbit_critical_phases_conjunction_phase;
+  GtkWidget *orbit_periastron_phase;
+  GtkWidget *orbit_conjunction_phase;
+  GtkWidget *orbit_critical_phases_separator;
   GtkWidget *orbit_tab_label;
   GtkWidget *luminosities_frame;
   GtkWidget *luminosities_table;
@@ -4326,12 +4335,94 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (orbit_f2_del_label), 0, 0.5);
 
+  orbit_todo_box = gtk_hbox_new (FALSE, 0);
+  gtk_widget_ref (orbit_todo_box);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_todo_box", orbit_todo_box,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_todo_box);
+  gtk_box_pack_start (GTK_BOX (orbit_main_box), orbit_todo_box, TRUE, TRUE, 0);
+
   orbit_under_construction = create_pixmap (PHOEBE, "under_construction.xpm");
   gtk_widget_ref (orbit_under_construction);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_under_construction", orbit_under_construction,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (orbit_under_construction);
-  gtk_box_pack_start (GTK_BOX (orbit_main_box), orbit_under_construction, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (orbit_todo_box), orbit_under_construction, TRUE, FALSE, 0);
+
+  orbit_critical_phases_frame = gtk_frame_new (NULL);
+  gtk_widget_ref (orbit_critical_phases_frame);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_frame", orbit_critical_phases_frame,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_frame);
+  gtk_box_pack_start (GTK_BOX (orbit_todo_box), orbit_critical_phases_frame, FALSE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (orbit_critical_phases_frame), 3);
+
+  orbit_critical_phases_table = gtk_table_new (5, 2, FALSE);
+  gtk_widget_ref (orbit_critical_phases_table);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_table", orbit_critical_phases_table,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_table);
+  gtk_container_add (GTK_CONTAINER (orbit_critical_phases_frame), orbit_critical_phases_table);
+  gtk_container_set_border_width (GTK_CONTAINER (orbit_critical_phases_table), 5);
+
+  label30 = gtk_label_new ("Critical phases:");
+  gtk_widget_ref (label30);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "label30", label30,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (label30);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), label30, 0, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label30), 0, 0.5);
+
+  orbit_critical_phases_periastron_phase = gtk_label_new ("Periastron passage:");
+  gtk_widget_ref (orbit_critical_phases_periastron_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_periastron_phase", orbit_critical_phases_periastron_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_periastron_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_periastron_phase, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_periastron_phase), 0, 0.5);
+
+  orbit_critical_phases_conjunction_phase = gtk_label_new ("Superior conjunction:");
+  gtk_widget_ref (orbit_critical_phases_conjunction_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_conjunction_phase", orbit_critical_phases_conjunction_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_conjunction_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_conjunction_phase, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_conjunction_phase), 0, 0.5);
+
+  orbit_periastron_phase = gtk_label_new ("0.00000");
+  gtk_widget_ref (orbit_periastron_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_periastron_phase", orbit_periastron_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_periastron_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_periastron_phase, 1, 2, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_periastron_phase), 0, 0.5);
+
+  orbit_conjunction_phase = gtk_label_new ("0.00000");
+  gtk_widget_ref (orbit_conjunction_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_conjunction_phase", orbit_conjunction_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_conjunction_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_conjunction_phase, 1, 2, 3, 4,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_conjunction_phase), 0, 0.5);
+
+  orbit_critical_phases_separator = gtk_hseparator_new ();
+  gtk_widget_ref (orbit_critical_phases_separator);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_separator", orbit_critical_phases_separator,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_separator);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_separator, 0, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 3);
 
   orbit_tab_label = gtk_label_new ("Orbit");
   gtk_widget_ref (orbit_tab_label);
@@ -8908,6 +8999,9 @@ create_PHOEBE (void)
   gtk_signal_connect (GTK_OBJECT (system_pshift_step_value), "changed",
                       GTK_SIGNAL_FUNC (on_step_value_changed_update_fitting_quickbar),
                       NULL);
+  gtk_signal_connect (GTK_OBJECT (system_pshift_value), "changed",
+                      GTK_SIGNAL_FUNC (on_critical_phases_changed),
+                      NULL);
   gtk_signal_connect (GTK_OBJECT (system_sma_adjust), "toggled",
                       GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_window),
                       NULL);
@@ -9031,8 +9125,14 @@ create_PHOEBE (void)
   gtk_signal_connect (GTK_OBJECT (orbit_e_value), "changed",
                       GTK_SIGNAL_FUNC (on_lagrange_dependent_variable_changed),
                       NULL);
+  gtk_signal_connect (GTK_OBJECT (orbit_e_value), "changed",
+                      GTK_SIGNAL_FUNC (on_critical_phases_changed),
+                      NULL);
   gtk_signal_connect (GTK_OBJECT (orbit_perr0_del_value), "changed",
                       GTK_SIGNAL_FUNC (on_step_value_changed_update_fitting_quickbar),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (orbit_perr0_value), "changed",
+                      GTK_SIGNAL_FUNC (on_critical_phases_changed),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (orbit_perr0_adjust), "toggled",
                       GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_window),
@@ -10621,7 +10721,7 @@ create_PHOEBE_plot_lc (void)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 30, 0);
 
-  plot_lc_experimental_data = gtk_check_button_new_with_label ("Experimental light curve (data)");
+  plot_lc_experimental_data = gtk_check_button_new_with_label ("Observed light curve (data)");
   gtk_widget_ref (plot_lc_experimental_data);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_experimental_data", plot_lc_experimental_data,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -12649,7 +12749,7 @@ create_PHOEBE_plot_rv (void)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 30, 0);
 
-  plot_rv_experimental_data = gtk_check_button_new_with_label ("Experimental RV curve (data)");
+  plot_rv_experimental_data = gtk_check_button_new_with_label ("Observed RV curve (data)");
   gtk_widget_ref (plot_rv_experimental_data);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_rv), "plot_rv_experimental_data", plot_rv_experimental_data,
                             (GtkDestroyNotify) gtk_widget_unref);
