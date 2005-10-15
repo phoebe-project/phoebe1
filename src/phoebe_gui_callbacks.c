@@ -4590,3 +4590,28 @@ void on_import_from_fotel_ok_button_clicked (GtkButton *button, gpointer user_da
 
 	gtk_widget_hide (PHOEBE_import_from_fotel);
 	}
+
+void on_critical_phases_changed (GtkEditable *editable, gpointer user_data)
+	{
+	double omega, e, pshift;
+	double phiper, phiconj;
+	char value[255];
+
+	omega  = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "orbit_perr0_value")));
+	e      = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "orbit_e_value")));
+	pshift = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "system_pshift_value")));
+
+	if (fabs (e) < 1e-6) {
+		phiper = 0.0;
+		phiconj = 0.0;
+	}
+	else {
+		calculate_critical_phases (omega, e, pshift, &phiper, &phiconj);
+	}
+
+	sprintf (value, "%5.5lf", phiper);
+	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_periastron_phase")), value);
+
+	sprintf (value, "%5.5lf", phiconj);
+	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_conjunction_phase")), value);
+	}

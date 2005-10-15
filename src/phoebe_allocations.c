@@ -1311,7 +1311,7 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 
 	if (!file_exists (PHOEBE_lc_data[curve].filename))
 		{
-		notice_window = create_notice_window ("PHOEBE Notice", "Experimental data filename not found", "PHOEBE cannot find the file containing experimental data.", "Please check your settings in the Data tab.", gtk_widget_destroy);
+		notice_window = create_notice_window ("PHOEBE Notice", "Observed data filename not found", "PHOEBE cannot find the file containing observed data.", "Please check your settings in the Data tab.", gtk_widget_destroy);
 		data->ptsno = 0;
 		return;
 		}
@@ -1337,7 +1337,7 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 			err_no = sscanf (working_str, "%lf %lf\n", &data->indep[i-1], &data->dep[i-1]);
 			if (err_no != 2)
 				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid experimental data file format", "Experimental data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
 				data->ptsno = 0;
 				return;
 				}
@@ -1348,7 +1348,7 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 			err_no = sscanf (working_str, "%lf %lf %d\n",  &data->indep[i-1], &data->dep[i-1], &readout_int);
 			if (err_no != 3)
 				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid experimental data file format", "Experimental data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
 				data->ptsno = 0;
 				return;
 				}
@@ -1359,7 +1359,7 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 			err_no = sscanf (working_str, "%lf %lf %lf\n", &data->indep[i-1], &data->dep[i-1], &data->weight[i-1]);
 			if (err_no != 3)
 				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid experimental data file format", "Experimental data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
 				data->ptsno = 0;
 				return;
 				}
@@ -1454,8 +1454,8 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 		{
 		notice_window = create_notice_window (
 			"PHOEBE Notice",
-			"Experimental data filename not found",
-			"PHOEBE cannot find the file containing experimental data.",
+			"Observed data filename not found",
+			"PHOEBE cannot find the file containing observed data.",
 			"Please check your settings in the Data tab.",
 			gtk_widget_destroy);
 		data->ptsno = 0;
@@ -1484,7 +1484,7 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 			err_no = sscanf (working_str, "%lf %lf\n", &data->indep[i-1], &data->dep[i-1]);
 			if (err_no != 2)
 				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid experimental data file format", "Experimental data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
 				data->ptsno = 0;
 				return;
 				}
@@ -1495,7 +1495,7 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 			err_no = sscanf (working_str, "%lf %lf %d\n",  &data->indep[i-1], &data->dep[i-1], &readout_int);
 			if (err_no != 3)
 				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid experimental data file format", "Experimental data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
 				data->ptsno = 0;
 				return;
 				}
@@ -1506,7 +1506,7 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 			err_no = sscanf (working_str, "%lf %lf %lf\n", &data->indep[i-1], &data->dep[i-1], &data->weight[i-1]);
 			if (err_no != 3)
 				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid experimental data file format", "Experimental data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
 				data->ptsno = 0;
 				return;
 				}

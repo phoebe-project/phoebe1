@@ -1441,13 +1441,13 @@ void phoebe_common_name (PHOEBE_keyword keyword, char **string)
 	if (keyword == LC_PLOT_SYNTHETIC)
 	                         sprintf (*string, "Plot synthetic lightcurve:");
 	if (keyword == LC_PLOT_EXPERIMENTAL)
-	                         sprintf (*string, "Plot experimental lightcurve:");
+	                         sprintf (*string, "Plot observed lightcurve:");
 	if (keyword == LC_FILTER)
 	                         sprintf (*string, "Plotted LC filter:");
 	if (keyword == RV_PLOT_SYNTHETIC)
 	                         sprintf (*string, "Plot synthetic RV curve:");
 	if (keyword == RV_PLOT_EXPERIMENTAL)
-	                         sprintf (*string, "Plot experimental RV curve:");
+	                         sprintf (*string, "Plot observed RV curve:");
 	if (keyword == RV_FILTER)
 	                         sprintf (*string, "Plotted RV filter:");
 	}

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #include "phoebe_global.h"
@@ -91,3 +92,37 @@ int calculate_critical_potentials (double q, double F, double e, double *L1crit,
 	xL2 = xL;
 	*L2crit = 1.0/fabs(xL2) + q*(1.0/fabs(xL2-1)-xL2) + 1./2.*(q+1)*xL2*xL2;
 	}
+
+/* Functions for computing critical phases: */
+
+double calculate_eccentric_anomaly_from_true_anomaly (double upsilon, double e)
+{
+	double E = 2*atan(sqrt((1-e)/(1+e)) * tan(upsilon/2));
+	E += M_PI * (int) ((upsilon+M_PI/2)/M_PI);
+	return E;
+}
+
+double calculate_mean_anomaly_from_eccentric_anomaly (double E, double e)
+{
+	return E - e*sin(E);
+}
+
+int calculate_critical_phases (double omega, double e, double pshift, double *phiper, double *phiconj)
+{
+	double upsilon = M_PI/2 - omega;
+	double E = calculate_eccentric_anomaly_from_true_anomaly (upsilon, e);
+	double M = calculate_mean_anomaly_from_eccentric_anomaly (E, e);
+/*
+	double per  = 1-M/2.0/M_PI;
+	printf ("# Tper = %lf\n", upsilon*180.0/M_PI);
+	printf ("# Eper = %lf\n", E*180.0/M_PI);
+	printf ("# Mper = %lf\n", M*180.0/M_PI);
+	printf ("# Pper = %lf\n", per);
+*/
+	*phiconj = (M+omega-M_PI/2.0)/(2.0*M_PI) + pshift;
+	if (*phiconj >= 1.0) *phiconj -= 1.0;
+	if (*phiconj < -1.0) *phiconj += 1.0;
+	*phiper  = omega/(2.0*M_PI) + 0.75 + pshift;
+
+	return 0;
+}
