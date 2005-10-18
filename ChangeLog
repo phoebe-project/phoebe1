@@ -1,6 +1,8 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-10-18: - Upper limit for the semi-major axis changed from 1000.0 to
+              100000.0 RSun.
 2005-10-15: - Labels "Experimental light curve" and "Experimental RV curve"
               changed to "Observed light curve" and "Observed RV curve" in
               plotting windows. The same has been done for all error-repor-

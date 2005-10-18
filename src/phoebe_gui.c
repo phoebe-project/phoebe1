@@ -2238,7 +2238,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_label_set_justify (GTK_LABEL (system_sma_description), GTK_JUSTIFY_LEFT);
 
-  system_sma_value_adj = gtk_adjustment_new (10, 0, 1000, 0.1, 1, 10);
+  system_sma_value_adj = gtk_adjustment_new (10, 0, 100000, 0.1, 1, 10);
   system_sma_value = gtk_spin_button_new (GTK_ADJUSTMENT (system_sma_value_adj), 0, 5);
   gtk_widget_ref (system_sma_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "system_sma_value", system_sma_value,
@@ -2364,7 +2364,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (system_rm_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (system_rm_value), GTK_UPDATE_IF_VALID);
 
-  system_rm_min_value_adj = gtk_adjustment_new (0, 0, 100, 0.1, 1, 10);
+  system_rm_min_value_adj = gtk_adjustment_new (0, 0, 100000, 0.1, 1, 10);
   system_rm_min_value = gtk_spin_button_new (GTK_ADJUSTMENT (system_rm_min_value_adj), 0, 5);
   gtk_widget_ref (system_rm_min_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "system_rm_min_value", system_rm_min_value,
@@ -2377,7 +2377,7 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (system_rm_min_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (system_rm_min_value), GTK_UPDATE_IF_VALID);
 
-  system_rm_max_value_adj = gtk_adjustment_new (100, 0, 100, 0.1, 1, 10);
+  system_rm_max_value_adj = gtk_adjustment_new (100, 0, 100000, 0.1, 1, 10);
   system_rm_max_value = gtk_spin_button_new (GTK_ADJUSTMENT (system_rm_max_value_adj), 0, 5);
   gtk_widget_ref (system_rm_max_value);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "system_rm_max_value", system_rm_max_value,
