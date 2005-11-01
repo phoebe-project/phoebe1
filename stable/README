@@ -1,4 +1,4 @@
-PHOEBE-0.27 TOPLEVEL DOCUMENTATION                               May 30, 2005
+PHOEBE-0.28 TOPLEVEL DOCUMENTATION                          November 01, 2005
 -----------------------------------------------------------------------------
 
 Hello and thank you for your interest in PHOEBE.
@@ -30,7 +30,9 @@ To successfully set up PHOEBE, you need:
     * Debian Woody 3.0r1   no issues
     * Debian Woody 3.0r2   no issues
     * Debian Sarge         no issues
-    * Ubuntu 5.04 (Hoary)  no issues    (development platform)
+    * Debian Etch          no issues
+    * Ubuntu 5.04 (Hoary)  no issues
+    * Ubuntu 6.04 (Breezy) no issues  (development platform)
     * Linux Redhat 7.2     no issues
     * Linux Redhat 7.3     no issues
     * Linux Redhat 8.0     no issues
@@ -103,7 +105,7 @@ PHOEBE may be obtained by two common ways:
 
 1. By downloading the stable release from PHOEBE homepage:
 
-     http://www.fiz.uni-lj.si/phoebe
+     http://phoebe.fiz.uni-lj.si
 
    This method is preferable for casual users. I will do my best to support
    your work with stable releases.
@@ -112,7 +114,7 @@ PHOEBE may be obtained by two common ways:
 
    Login:
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/var/lib/cvs login
+     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root login
 
    [ hit <ENTER> for password ]
 
@@ -158,6 +160,12 @@ this means that you have newer autoutils suite. Please run:
   autoreconf --force --install
 
 and then repeat the generic installation steps given above.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.28 USERS
+------------------------------------------
+
+This version fixes the aliasing out-of-sync issue when plotting residuals and
+the limb darkening interpolation failure for [M/H] < 0.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.27 USERS
 ------------------------------------------

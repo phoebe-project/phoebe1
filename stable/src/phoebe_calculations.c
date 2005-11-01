@@ -93,36 +93,26 @@ int calculate_critical_potentials (double q, double F, double e, double *L1crit,
 	*L2crit = 1.0/fabs(xL2) + q*(1.0/fabs(xL2-1)-xL2) + 1./2.*(q+1)*xL2*xL2;
 	}
 
-/* Functions for computing critical phases: */
-
-double calculate_eccentric_anomaly_from_true_anomaly (double upsilon, double e)
+double calculate_phase (double T, double e, double omega, double pshift)
 {
-	double E = 2*atan(sqrt((1-e)/(1+e)) * tan(upsilon/2));
-	E += M_PI * (int) ((upsilon+M_PI/2)/M_PI);
-	return E;
+	/*
+	 * This function computes the orbital phase from true anomaly T.
+	 */
+
+	double E = 2*atan(sqrt((1-e)/(1+e)) * tan(T/2));
+	double M = E - e*sin(E);
+	return (M+omega)/(2.0*M_PI) - 0.25 + pshift;
 }
 
-double calculate_mean_anomaly_from_eccentric_anomaly (double E, double e)
+int calculate_critical_phases (double omega, double e, double pshift, double *phiper, double *phiconj, double *phiinf, double *phiasc, double *phidesc)
 {
-	return E - e*sin(E);
-}
+	double T, E, M;
 
-int calculate_critical_phases (double omega, double e, double pshift, double *phiper, double *phiconj)
-{
-	double upsilon = M_PI/2 - omega;
-	double E = calculate_eccentric_anomaly_from_true_anomaly (upsilon, e);
-	double M = calculate_mean_anomaly_from_eccentric_anomaly (E, e);
-/*
-	double per  = 1-M/2.0/M_PI;
-	printf ("# Tper = %lf\n", upsilon*180.0/M_PI);
-	printf ("# Eper = %lf\n", E*180.0/M_PI);
-	printf ("# Mper = %lf\n", M*180.0/M_PI);
-	printf ("# Pper = %lf\n", per);
-*/
-	*phiconj = (M+omega-M_PI/2.0)/(2.0*M_PI) + pshift;
-	if (*phiconj >= 1.0) *phiconj -= 1.0;
-	if (*phiconj < -1.0) *phiconj += 1.0;
-	*phiper  = omega/(2.0*M_PI) + 0.75 + pshift;
+	*phiper  = (omega - M_PI/2)/(2.0*M_PI) + pshift;
+	*phiconj = calculate_phase (M_PI/2-omega, e, omega, pshift);
+	*phiinf  = calculate_phase (3.0*M_PI/2-omega, e, omega, pshift);
+	*phiasc  = calculate_phase (-omega, e, omega, pshift);
+	*phidesc = calculate_phase (M_PI-omega, e, omega, pshift);
 
 	return 0;
 }

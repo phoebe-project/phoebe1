@@ -4594,7 +4594,7 @@ void on_import_from_fotel_ok_button_clicked (GtkButton *button, gpointer user_da
 void on_critical_phases_changed (GtkEditable *editable, gpointer user_data)
 	{
 	double omega, e, pshift;
-	double phiper, phiconj;
+	double phiper, phiconj, phiinf, phiasc, phidesc;
 	char value[255];
 
 	omega  = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "orbit_perr0_value")));
@@ -4606,12 +4606,21 @@ void on_critical_phases_changed (GtkEditable *editable, gpointer user_data)
 		phiconj = 0.0;
 	}
 	else {
-		calculate_critical_phases (omega, e, pshift, &phiper, &phiconj);
+		calculate_critical_phases (omega, e, pshift, &phiper, &phiconj, &phiinf, &phiasc, &phidesc);
 	}
 
 	sprintf (value, "%5.5lf", phiper);
 	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_periastron_phase")), value);
 
 	sprintf (value, "%5.5lf", phiconj);
-	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_conjunction_phase")), value);
+	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_superior_conjunction_phase")), value);
+
+	sprintf (value, "%5.5lf", phiinf);
+	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_inferior_conjunction_phase")), value);
+
+	sprintf (value, "%5.5lf", phiasc);
+	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_ascending_node_phase")), value);
+
+	sprintf (value, "%5.5lf", phidesc);
+	gtk_label_set_text (GTK_LABEL (lookup_widget (PHOEBE, "orbit_descending_node_phase")), value);
 	}

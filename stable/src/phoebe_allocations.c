@@ -696,7 +696,7 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 
 	if (mono.IBAND == 0)
 		{
-		phoebe_warning ("IBAND assignment failed. Johnson V filter (550nm) assumed.");
+		phoebe_warning ("IBAND assignment failed. Johnson V filter (550nm) assumed.\n");
 		mono.IBAND = 7;
 		}
 
