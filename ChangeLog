@@ -1,6 +1,16 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-11-01: - Critical epochs fully implemented. The program now computes
+              the periastron passage phase, phases of superior and inferior
+              conjunctions (the positions of minima) and phases of the
+              ascending and descending nodes (the positions of maxima).
+              This was incorporated on suggestion by Petr Harmanec.
+            - Surface tab was a bit overcrowded due to the overwhelming
+              space devoted to spots. Fixed.
+            - PHOEBE 0.28 released!
+2005-10-20: - Warning message for the invalid filter passband lacked a
+              newline in the end of the line. Fixed.
 2005-10-18: - Upper limit for the semi-major axis changed from 1000.0 to
               100000.0 RSun.
 2005-10-15: - Labels "Experimental light curve" and "Experimental RV curve"

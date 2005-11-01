@@ -438,12 +438,18 @@ create_PHOEBE (void)
   GtkWidget *orbit_under_construction;
   GtkWidget *orbit_critical_phases_frame;
   GtkWidget *orbit_critical_phases_table;
-  GtkWidget *label30;
-  GtkWidget *orbit_critical_phases_periastron_phase;
-  GtkWidget *orbit_critical_phases_conjunction_phase;
-  GtkWidget *orbit_periastron_phase;
-  GtkWidget *orbit_conjunction_phase;
   GtkWidget *orbit_critical_phases_separator;
+  GtkWidget *orbit_critical_phases_superior_conjunction_phase;
+  GtkWidget *orbit_critical_phases_periastron_phase;
+  GtkWidget *orbit_critical_phases_descending_node;
+  GtkWidget *orbit_descending_node_phase;
+  GtkWidget *orbit_critical_phases_ascending_node;
+  GtkWidget *orbit_ascending_node_phase;
+  GtkWidget *orbit_critical_phases_inferior_conjunction_phase;
+  GtkWidget *orbit_inferior_conjunction_phase;
+  GtkWidget *orbit_superior_conjunction_phase;
+  GtkWidget *orbit_periastron_phase;
+  GtkWidget *label30;
   GtkWidget *orbit_tab_label;
   GtkWidget *luminosities_frame;
   GtkWidget *luminosities_table;
@@ -641,16 +647,6 @@ create_PHOEBE (void)
   GtkWidget *spots_sprim_label;
   GtkObject *spots_sprim_value_adj;
   GtkWidget *spots_sprim_value;
-  GtkWidget *spots_ssec_label;
-  GtkObject *spots_ssec_value_adj;
-  GtkWidget *spots_ssec_value;
-  GtkWidget *spots_spot_1_adjust;
-  GtkWidget *spots_spot_2_adjust;
-  GtkWidget *spots_spot_1_source_list;
-  GtkWidget *spots_spot_1_source_list_menu;
-  GtkWidget *glade_menuitem;
-  GtkWidget *spots_spot_2_source_list;
-  GtkWidget *spots_spot_2_source_list_menu;
   GtkWidget *spots_primary_info_list_table;
   GtkWidget *spots_primary_info_list;
   GtkWidget *spots_primary_info_spot_label;
@@ -658,6 +654,20 @@ create_PHOEBE (void)
   GtkWidget *spots_primary_info_longitude_label;
   GtkWidget *spots_primary_info_radius_label;
   GtkWidget *spots_primary_info_temperature_label;
+  GtkWidget *spots_edit_primary_button;
+  GtkWidget *spots_ifsmv1_switch;
+  GtkWidget *spots_spot_1_adjust;
+  GtkWidget *spots_spot_1_source_list;
+  GtkWidget *spots_spot_1_source_list_menu;
+  GtkWidget *glade_menuitem;
+  GtkWidget *spots_spot_1_spot_list;
+  GtkWidget *spots_spot_1_spot_list_menu;
+  GtkWidget *spots_spot_2_adjust;
+  GtkWidget *spots_spot_2_source_list;
+  GtkWidget *spots_spot_2_source_list_menu;
+  GtkWidget *spots_spot_2_spot_list;
+  GtkWidget *spots_spot_2_spot_list_menu;
+  GtkWidget *spots_ssec_label;
   GtkWidget *spots_secondary_info_list_table;
   GtkWidget *spots_secondary_info_list;
   GtkWidget *spots_secondary_info_spot_label;
@@ -665,9 +675,7 @@ create_PHOEBE (void)
   GtkWidget *spots_secondary_info_longitude_label;
   GtkWidget *spots_secondary_info_radius_label;
   GtkWidget *spots_secondary_info_temperature_label;
-  GtkWidget *spots_edit_primary_button;
   GtkWidget *spots_edit_secondary_button;
-  GtkWidget *spots_ifsmv1_switch;
   GtkWidget *spots_ifsmv2_switch;
   GtkWidget *spots_spot_1_adjustment_box;
   GtkWidget *spots_xlat1_adjust;
@@ -679,10 +687,6 @@ create_PHOEBE (void)
   GtkWidget *spots_xlong2_adjust;
   GtkWidget *spots_radsp2_adjust;
   GtkWidget *spots_temsp2_adjust;
-  GtkWidget *spots_spot_1_spot_list;
-  GtkWidget *spots_spot_1_spot_list_menu;
-  GtkWidget *spots_spot_2_spot_list;
-  GtkWidget *spots_spot_2_spot_list_menu;
   GtkWidget *surface_tab_label;
   GtkWidget *fitting_frame;
   GtkWidget *fitting_table;
@@ -4340,7 +4344,7 @@ create_PHOEBE (void)
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_todo_box", orbit_todo_box,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (orbit_todo_box);
-  gtk_box_pack_start (GTK_BOX (orbit_main_box), orbit_todo_box, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (orbit_main_box), orbit_todo_box, FALSE, TRUE, 0);
 
   orbit_under_construction = create_pixmap (PHOEBE, "under_construction.xpm");
   gtk_widget_ref (orbit_under_construction);
@@ -4354,66 +4358,16 @@ create_PHOEBE (void)
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_frame", orbit_critical_phases_frame,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (orbit_critical_phases_frame);
-  gtk_box_pack_start (GTK_BOX (orbit_todo_box), orbit_critical_phases_frame, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (orbit_todo_box), orbit_critical_phases_frame, FALSE, FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (orbit_critical_phases_frame), 3);
 
-  orbit_critical_phases_table = gtk_table_new (5, 2, FALSE);
+  orbit_critical_phases_table = gtk_table_new (7, 2, FALSE);
   gtk_widget_ref (orbit_critical_phases_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_table", orbit_critical_phases_table,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (orbit_critical_phases_table);
   gtk_container_add (GTK_CONTAINER (orbit_critical_phases_frame), orbit_critical_phases_table);
   gtk_container_set_border_width (GTK_CONTAINER (orbit_critical_phases_table), 5);
-
-  label30 = gtk_label_new ("Critical phases:");
-  gtk_widget_ref (label30);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "label30", label30,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label30);
-  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), label30, 0, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label30), 0, 0.5);
-
-  orbit_critical_phases_periastron_phase = gtk_label_new ("Periastron passage:");
-  gtk_widget_ref (orbit_critical_phases_periastron_phase);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_periastron_phase", orbit_critical_phases_periastron_phase,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (orbit_critical_phases_periastron_phase);
-  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_periastron_phase, 0, 1, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_periastron_phase), 0, 0.5);
-
-  orbit_critical_phases_conjunction_phase = gtk_label_new ("Superior conjunction:");
-  gtk_widget_ref (orbit_critical_phases_conjunction_phase);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_conjunction_phase", orbit_critical_phases_conjunction_phase,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (orbit_critical_phases_conjunction_phase);
-  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_conjunction_phase, 0, 1, 3, 4,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_conjunction_phase), 0, 0.5);
-
-  orbit_periastron_phase = gtk_label_new ("0.00000");
-  gtk_widget_ref (orbit_periastron_phase);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_periastron_phase", orbit_periastron_phase,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (orbit_periastron_phase);
-  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_periastron_phase, 1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (orbit_periastron_phase), 0, 0.5);
-
-  orbit_conjunction_phase = gtk_label_new ("0.00000");
-  gtk_widget_ref (orbit_conjunction_phase);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_conjunction_phase", orbit_conjunction_phase,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (orbit_conjunction_phase);
-  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_conjunction_phase, 1, 2, 3, 4,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (orbit_conjunction_phase), 0, 0.5);
 
   orbit_critical_phases_separator = gtk_hseparator_new ();
   gtk_widget_ref (orbit_critical_phases_separator);
@@ -4423,6 +4377,126 @@ create_PHOEBE (void)
   gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_separator, 0, 2, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 3);
+
+  orbit_critical_phases_superior_conjunction_phase = gtk_label_new ("Superior conjunction:");
+  gtk_widget_ref (orbit_critical_phases_superior_conjunction_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_superior_conjunction_phase", orbit_critical_phases_superior_conjunction_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_superior_conjunction_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_superior_conjunction_phase, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_superior_conjunction_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_critical_phases_superior_conjunction_phase), 10, 0);
+
+  orbit_critical_phases_periastron_phase = gtk_label_new ("Periastron passage:");
+  gtk_widget_ref (orbit_critical_phases_periastron_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_periastron_phase", orbit_critical_phases_periastron_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_periastron_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_periastron_phase, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_periastron_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_critical_phases_periastron_phase), 10, 0);
+
+  orbit_critical_phases_descending_node = gtk_label_new ("Descending node:");
+  gtk_widget_ref (orbit_critical_phases_descending_node);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_descending_node", orbit_critical_phases_descending_node,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_descending_node);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_descending_node, 0, 1, 6, 7,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_descending_node), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_critical_phases_descending_node), 10, 0);
+
+  orbit_descending_node_phase = gtk_label_new ("0.00000");
+  gtk_widget_ref (orbit_descending_node_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_descending_node_phase", orbit_descending_node_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_descending_node_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_descending_node_phase, 1, 2, 6, 7,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_descending_node_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_descending_node_phase), 10, 0);
+
+  orbit_critical_phases_ascending_node = gtk_label_new ("Ascending node:");
+  gtk_widget_ref (orbit_critical_phases_ascending_node);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_ascending_node", orbit_critical_phases_ascending_node,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_ascending_node);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_ascending_node, 0, 1, 5, 6,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_ascending_node), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_critical_phases_ascending_node), 10, 0);
+
+  orbit_ascending_node_phase = gtk_label_new ("0.00000");
+  gtk_widget_ref (orbit_ascending_node_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_ascending_node_phase", orbit_ascending_node_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_ascending_node_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_ascending_node_phase, 1, 2, 5, 6,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_ascending_node_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_ascending_node_phase), 10, 0);
+
+  orbit_critical_phases_inferior_conjunction_phase = gtk_label_new ("Inferior conjunction:");
+  gtk_widget_ref (orbit_critical_phases_inferior_conjunction_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_critical_phases_inferior_conjunction_phase", orbit_critical_phases_inferior_conjunction_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_critical_phases_inferior_conjunction_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_critical_phases_inferior_conjunction_phase, 0, 1, 4, 5,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_critical_phases_inferior_conjunction_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_critical_phases_inferior_conjunction_phase), 10, 0);
+
+  orbit_inferior_conjunction_phase = gtk_label_new ("0.00000");
+  gtk_widget_ref (orbit_inferior_conjunction_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_inferior_conjunction_phase", orbit_inferior_conjunction_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_inferior_conjunction_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_inferior_conjunction_phase, 1, 2, 4, 5,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_inferior_conjunction_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_inferior_conjunction_phase), 10, 0);
+
+  orbit_superior_conjunction_phase = gtk_label_new ("0.00000");
+  gtk_widget_ref (orbit_superior_conjunction_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_superior_conjunction_phase", orbit_superior_conjunction_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_superior_conjunction_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_superior_conjunction_phase, 1, 2, 3, 4,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_superior_conjunction_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_superior_conjunction_phase), 10, 0);
+
+  orbit_periastron_phase = gtk_label_new ("0.00000");
+  gtk_widget_ref (orbit_periastron_phase);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "orbit_periastron_phase", orbit_periastron_phase,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (orbit_periastron_phase);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), orbit_periastron_phase, 1, 2, 2, 3,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (orbit_periastron_phase), 0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (orbit_periastron_phase), 10, 0);
+
+  label30 = gtk_label_new ("Critical phases:");
+  gtk_widget_ref (label30);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "label30", label30,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (label30);
+  gtk_table_attach (GTK_TABLE (orbit_critical_phases_table), label30, 0, 2, 0, 1,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label30), 0, 0.5);
 
   orbit_tab_label = gtk_label_new ("Orbit");
   gtk_widget_ref (orbit_tab_label);
@@ -5966,10 +6040,10 @@ create_PHOEBE (void)
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "surface_spots_frame", surface_spots_frame,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (surface_spots_frame);
-  gtk_box_pack_start (GTK_BOX (surface_main_box), surface_spots_frame, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (surface_main_box), surface_spots_frame, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (surface_spots_frame), 3);
 
-  spots_table = gtk_table_new (8, 6, TRUE);
+  spots_table = gtk_table_new (7, 6, TRUE);
   gtk_widget_ref (spots_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_table", spots_table,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -5999,84 +6073,12 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spots_sprim_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spots_sprim_value), GTK_UPDATE_IF_VALID);
 
-  spots_ssec_label = gtk_label_new ("Number of spots on secondary star:");
-  gtk_widget_ref (spots_ssec_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ssec_label", spots_ssec_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_ssec_label);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_ssec_label, 3, 5, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (spots_ssec_label), 0, 0.5);
-
-  spots_ssec_value_adj = gtk_adjustment_new (0, 0, 10, 1, 10, 10);
-  spots_ssec_value = gtk_spin_button_new (GTK_ADJUSTMENT (spots_ssec_value_adj), 0, 0);
-  gtk_widget_ref (spots_ssec_value);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ssec_value", spots_ssec_value,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_ssec_value);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_ssec_value, 5, 6, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spots_ssec_value), TRUE);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spots_ssec_value), GTK_UPDATE_IF_VALID);
-
-  spots_spot_1_adjust = gtk_check_button_new_with_label ("Adjust 1st spot:");
-  gtk_widget_ref (spots_spot_1_adjust);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_1_adjust", spots_spot_1_adjust,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_spot_1_adjust);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_adjust, 0, 1, 6, 7,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_widget_set_sensitive (spots_spot_1_adjust, FALSE);
-
-  spots_spot_2_adjust = gtk_check_button_new_with_label ("Adjust 2nd spot:");
-  gtk_widget_ref (spots_spot_2_adjust);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_2_adjust", spots_spot_2_adjust,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_spot_2_adjust);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_adjust, 0, 1, 7, 8,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_widget_set_sensitive (spots_spot_2_adjust, FALSE);
-
-  spots_spot_1_source_list = gtk_option_menu_new ();
-  gtk_widget_ref (spots_spot_1_source_list);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_1_source_list", spots_spot_1_source_list,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_spot_1_source_list);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_source_list, 1, 2, 6, 7,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_widget_set_sensitive (spots_spot_1_source_list, FALSE);
-  spots_spot_1_source_list_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label ("on primary");
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (spots_spot_1_source_list_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_1_source_list), spots_spot_1_source_list_menu);
-
-  spots_spot_2_source_list = gtk_option_menu_new ();
-  gtk_widget_ref (spots_spot_2_source_list);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_2_source_list", spots_spot_2_source_list,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_spot_2_source_list);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_source_list, 1, 2, 7, 8,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_widget_set_sensitive (spots_spot_2_source_list, FALSE);
-  spots_spot_2_source_list_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label ("on primary");
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (spots_spot_2_source_list_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_2_source_list), spots_spot_2_source_list_menu);
-
   spots_primary_info_list_table = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_ref (spots_primary_info_list_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_primary_info_list_table", spots_primary_info_list_table,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (spots_primary_info_list_table);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_primary_info_list_table, 0, 3, 1, 4,
+  gtk_table_attach (GTK_TABLE (spots_table), spots_primary_info_list_table, 0, 3, 1, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (spots_primary_info_list_table), 5);
@@ -6131,12 +6133,122 @@ create_PHOEBE (void)
   gtk_widget_show (spots_primary_info_temperature_label);
   gtk_clist_set_column_widget (GTK_CLIST (spots_primary_info_list), 4, spots_primary_info_temperature_label);
 
+  spots_edit_primary_button = gtk_button_new_with_label ("Edit selected spot parameters");
+  gtk_widget_ref (spots_edit_primary_button);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_edit_primary_button", spots_edit_primary_button,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_edit_primary_button);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_edit_primary_button, 0, 3, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (spots_edit_primary_button), 5);
+  gtk_widget_set_sensitive (spots_edit_primary_button, FALSE);
+
+  spots_ifsmv1_switch = gtk_check_button_new_with_label ("Spots on primary star move in longitude");
+  gtk_widget_ref (spots_ifsmv1_switch);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ifsmv1_switch", spots_ifsmv1_switch,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_ifsmv1_switch);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_ifsmv1_switch, 0, 3, 4, 5,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  spots_spot_1_adjust = gtk_check_button_new_with_label ("Adjust 1st spot:");
+  gtk_widget_ref (spots_spot_1_adjust);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_1_adjust", spots_spot_1_adjust,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_spot_1_adjust);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_adjust, 0, 1, 5, 6,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (spots_spot_1_adjust, FALSE);
+
+  spots_spot_1_source_list = gtk_option_menu_new ();
+  gtk_widget_ref (spots_spot_1_source_list);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_1_source_list", spots_spot_1_source_list,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_spot_1_source_list);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_source_list, 1, 2, 5, 6,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (spots_spot_1_source_list, FALSE);
+  spots_spot_1_source_list_menu = gtk_menu_new ();
+  glade_menuitem = gtk_menu_item_new_with_label ("on primary");
+  gtk_widget_show (glade_menuitem);
+  gtk_menu_append (GTK_MENU (spots_spot_1_source_list_menu), glade_menuitem);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_1_source_list), spots_spot_1_source_list_menu);
+
+  spots_spot_1_spot_list = gtk_option_menu_new ();
+  gtk_widget_ref (spots_spot_1_spot_list);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_1_spot_list", spots_spot_1_spot_list,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_spot_1_spot_list);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_spot_list, 2, 3, 5, 6,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 5, 0);
+  gtk_widget_set_sensitive (spots_spot_1_spot_list, FALSE);
+  spots_spot_1_spot_list_menu = gtk_menu_new ();
+  glade_menuitem = gtk_menu_item_new_with_label ("Spot 1");
+  gtk_widget_show (glade_menuitem);
+  gtk_menu_append (GTK_MENU (spots_spot_1_spot_list_menu), glade_menuitem);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_1_spot_list), spots_spot_1_spot_list_menu);
+
+  spots_spot_2_adjust = gtk_check_button_new_with_label ("Adjust 2nd spot:");
+  gtk_widget_ref (spots_spot_2_adjust);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_2_adjust", spots_spot_2_adjust,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_spot_2_adjust);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_adjust, 0, 1, 6, 7,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (spots_spot_2_adjust, FALSE);
+
+  spots_spot_2_source_list = gtk_option_menu_new ();
+  gtk_widget_ref (spots_spot_2_source_list);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_2_source_list", spots_spot_2_source_list,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_spot_2_source_list);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_source_list, 1, 2, 6, 7,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (spots_spot_2_source_list, FALSE);
+  spots_spot_2_source_list_menu = gtk_menu_new ();
+  glade_menuitem = gtk_menu_item_new_with_label ("on primary");
+  gtk_widget_show (glade_menuitem);
+  gtk_menu_append (GTK_MENU (spots_spot_2_source_list_menu), glade_menuitem);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_2_source_list), spots_spot_2_source_list_menu);
+
+  spots_spot_2_spot_list = gtk_option_menu_new ();
+  gtk_widget_ref (spots_spot_2_spot_list);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_2_spot_list", spots_spot_2_spot_list,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_spot_2_spot_list);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_spot_list, 2, 3, 6, 7,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 5, 0);
+  gtk_widget_set_sensitive (spots_spot_2_spot_list, FALSE);
+  spots_spot_2_spot_list_menu = gtk_menu_new ();
+  glade_menuitem = gtk_menu_item_new_with_label ("Spot 1");
+  gtk_widget_show (glade_menuitem);
+  gtk_menu_append (GTK_MENU (spots_spot_2_spot_list_menu), glade_menuitem);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_2_spot_list), spots_spot_2_spot_list_menu);
+
+  spots_ssec_label = gtk_label_new ("Number of spots on secondary star:");
+  gtk_widget_ref (spots_ssec_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ssec_label", spots_ssec_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_ssec_label);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_ssec_label, 3, 6, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (spots_ssec_label), 0, 0.5);
+
   spots_secondary_info_list_table = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_ref (spots_secondary_info_list_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_secondary_info_list_table", spots_secondary_info_list_table,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (spots_secondary_info_list_table);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_secondary_info_list_table, 3, 6, 1, 4,
+  gtk_table_attach (GTK_TABLE (spots_table), spots_secondary_info_list_table, 3, 6, 1, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (spots_secondary_info_list_table), 5);
@@ -6191,43 +6303,23 @@ create_PHOEBE (void)
   gtk_widget_show (spots_secondary_info_temperature_label);
   gtk_clist_set_column_widget (GTK_CLIST (spots_secondary_info_list), 4, spots_secondary_info_temperature_label);
 
-  spots_edit_primary_button = gtk_button_new_with_label ("Edit selected spot parameters");
-  gtk_widget_ref (spots_edit_primary_button);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_edit_primary_button", spots_edit_primary_button,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_edit_primary_button);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_edit_primary_button, 0, 3, 4, 5,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (spots_edit_primary_button), 5);
-  gtk_widget_set_sensitive (spots_edit_primary_button, FALSE);
-
   spots_edit_secondary_button = gtk_button_new_with_label ("Edit selected spot parameters");
   gtk_widget_ref (spots_edit_secondary_button);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_edit_secondary_button", spots_edit_secondary_button,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (spots_edit_secondary_button);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_edit_secondary_button, 3, 6, 4, 5,
+  gtk_table_attach (GTK_TABLE (spots_table), spots_edit_secondary_button, 3, 6, 3, 4,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (spots_edit_secondary_button), 5);
   gtk_widget_set_sensitive (spots_edit_secondary_button, FALSE);
-
-  spots_ifsmv1_switch = gtk_check_button_new_with_label ("Spots on primary star move in longitude");
-  gtk_widget_ref (spots_ifsmv1_switch);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ifsmv1_switch", spots_ifsmv1_switch,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_ifsmv1_switch);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_ifsmv1_switch, 0, 3, 5, 6,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
 
   spots_ifsmv2_switch = gtk_check_button_new_with_label ("Spots on secondary star move in longitude");
   gtk_widget_ref (spots_ifsmv2_switch);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ifsmv2_switch", spots_ifsmv2_switch,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (spots_ifsmv2_switch);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_ifsmv2_switch, 3, 6, 5, 6,
+  gtk_table_attach (GTK_TABLE (spots_table), spots_ifsmv2_switch, 3, 6, 4, 5,
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (0), 0, 0);
 
@@ -6236,7 +6328,7 @@ create_PHOEBE (void)
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_1_adjustment_box", spots_spot_1_adjustment_box,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (spots_spot_1_adjustment_box);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_adjustment_box, 3, 6, 6, 7,
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_adjustment_box, 3, 6, 5, 6,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
@@ -6277,7 +6369,7 @@ create_PHOEBE (void)
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_2_adjustment_box", spots_spot_2_adjustment_box,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (spots_spot_2_adjustment_box);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_adjustment_box, 3, 6, 7, 8,
+  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_adjustment_box, 3, 6, 6, 7,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
@@ -6312,36 +6404,6 @@ create_PHOEBE (void)
   gtk_widget_show (spots_temsp2_adjust);
   gtk_box_pack_start (GTK_BOX (spots_spot_2_adjustment_box), spots_temsp2_adjust, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (spots_temsp2_adjust, FALSE);
-
-  spots_spot_1_spot_list = gtk_option_menu_new ();
-  gtk_widget_ref (spots_spot_1_spot_list);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_1_spot_list", spots_spot_1_spot_list,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_spot_1_spot_list);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_1_spot_list, 2, 3, 6, 7,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 5, 0);
-  gtk_widget_set_sensitive (spots_spot_1_spot_list, FALSE);
-  spots_spot_1_spot_list_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label ("Spot 1");
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (spots_spot_1_spot_list_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_1_spot_list), spots_spot_1_spot_list_menu);
-
-  spots_spot_2_spot_list = gtk_option_menu_new ();
-  gtk_widget_ref (spots_spot_2_spot_list);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_spot_2_spot_list", spots_spot_2_spot_list,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_spot_2_spot_list);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_spot_2_spot_list, 2, 3, 7, 8,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 5, 0);
-  gtk_widget_set_sensitive (spots_spot_2_spot_list, FALSE);
-  spots_spot_2_spot_list_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label ("Spot 1");
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (spots_spot_2_spot_list_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_2_spot_list), spots_spot_2_spot_list_menu);
 
   surface_tab_label = gtk_label_new ("Surface");
   gtk_widget_ref (surface_tab_label);
@@ -9320,8 +9382,11 @@ create_PHOEBE (void)
   gtk_signal_connect (GTK_OBJECT (spots_sprim_value), "changed",
                       GTK_SIGNAL_FUNC (on_spots_sprim_value_changed),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (spots_ssec_value), "changed",
-                      GTK_SIGNAL_FUNC (on_spots_ssec_value_changed),
+  gtk_signal_connect (GTK_OBJECT (spots_primary_info_list), "event",
+                      GTK_SIGNAL_FUNC (on_spots_primary_info_list_double_clicked),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (spots_edit_primary_button), "clicked",
+                      GTK_SIGNAL_FUNC (on_spots_edit_primary_button_clicked),
                       NULL);
   gtk_signal_connect_object (GTK_OBJECT (spots_spot_1_adjust), "toggled",
                              GTK_SIGNAL_FUNC (on_switches_toggled),
@@ -9359,14 +9424,8 @@ create_PHOEBE (void)
   gtk_signal_connect_object (GTK_OBJECT (spots_spot_2_adjust), "toggled",
                              GTK_SIGNAL_FUNC (on_switches_toggled),
                              GTK_OBJECT (spots_temsp2_adjust));
-  gtk_signal_connect (GTK_OBJECT (spots_primary_info_list), "event",
-                      GTK_SIGNAL_FUNC (on_spots_primary_info_list_double_clicked),
-                      NULL);
   gtk_signal_connect (GTK_OBJECT (spots_secondary_info_list), "event",
                       GTK_SIGNAL_FUNC (on_spots_secondary_info_list_double_clicked),
-                      NULL);
-  gtk_signal_connect (GTK_OBJECT (spots_edit_primary_button), "clicked",
-                      GTK_SIGNAL_FUNC (on_spots_edit_primary_button_clicked),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (spots_edit_secondary_button), "clicked",
                       GTK_SIGNAL_FUNC (on_spots_edit_secondary_button_clicked),
