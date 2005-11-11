@@ -46,7 +46,6 @@
       implicit none
       double precision E,SMA,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
       write(1,5) E,SMA,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
-c    5 format(F6.5,F10.4,2F10.4,F10.4,F9.3,2F7.3,F7.2)
     5 format(F6.5,D13.6,2F10.4,F10.4,F9.3,2F7.3,F7.2)
       END
 
@@ -170,7 +169,7 @@ c    5 format(F6.5,F10.4,2F10.4,F10.4,F9.3,2F7.3,F7.2)
       implicit none
       double precision E,A,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
       write(1,10) E,A,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
-   10 format(F6.5,F10.4,2F10.4,F10.4,F9.3,3F7.3)
+   10 FORMAT(F6.5,d13.6,2F10.4,F10.4,f9.3,2f7.3,f7.2)
       END
 
       SUBROUTINE CREATEDCILINE11(TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,
