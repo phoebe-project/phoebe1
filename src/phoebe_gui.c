@@ -667,7 +667,6 @@ create_PHOEBE (void)
   GtkWidget *spots_spot_2_source_list_menu;
   GtkWidget *spots_spot_2_spot_list;
   GtkWidget *spots_spot_2_spot_list_menu;
-  GtkWidget *spots_ssec_label;
   GtkWidget *spots_secondary_info_list_table;
   GtkWidget *spots_secondary_info_list;
   GtkWidget *spots_secondary_info_spot_label;
@@ -687,6 +686,9 @@ create_PHOEBE (void)
   GtkWidget *spots_xlong2_adjust;
   GtkWidget *spots_radsp2_adjust;
   GtkWidget *spots_temsp2_adjust;
+  GtkWidget *spots_ssec_label;
+  GtkObject *spots_ssec_value_adj;
+  GtkWidget *spots_ssec_value;
   GtkWidget *surface_tab_label;
   GtkWidget *fitting_frame;
   GtkWidget *fitting_table;
@@ -6233,16 +6235,6 @@ create_PHOEBE (void)
   gtk_menu_append (GTK_MENU (spots_spot_2_spot_list_menu), glade_menuitem);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (spots_spot_2_spot_list), spots_spot_2_spot_list_menu);
 
-  spots_ssec_label = gtk_label_new ("Number of spots on secondary star:");
-  gtk_widget_ref (spots_ssec_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ssec_label", spots_ssec_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (spots_ssec_label);
-  gtk_table_attach (GTK_TABLE (spots_table), spots_ssec_label, 3, 6, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (spots_ssec_label), 0, 0.5);
-
   spots_secondary_info_list_table = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_ref (spots_secondary_info_list_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_secondary_info_list_table", spots_secondary_info_list_table,
@@ -6404,6 +6396,28 @@ create_PHOEBE (void)
   gtk_widget_show (spots_temsp2_adjust);
   gtk_box_pack_start (GTK_BOX (spots_spot_2_adjustment_box), spots_temsp2_adjust, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (spots_temsp2_adjust, FALSE);
+
+  spots_ssec_label = gtk_label_new ("Number of spots on secondary star:");
+  gtk_widget_ref (spots_ssec_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ssec_label", spots_ssec_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_ssec_label);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_ssec_label, 3, 5, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (spots_ssec_label), 0, 0.5);
+
+  spots_ssec_value_adj = gtk_adjustment_new (0, 0, 10, 1, 10, 10);
+  spots_ssec_value = gtk_spin_button_new (GTK_ADJUSTMENT (spots_ssec_value_adj), 0, 0);
+  gtk_widget_ref (spots_ssec_value);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "spots_ssec_value", spots_ssec_value,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (spots_ssec_value);
+  gtk_table_attach (GTK_TABLE (spots_table), spots_ssec_value, 5, 6, 0, 1,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spots_ssec_value), TRUE);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spots_ssec_value), GTK_UPDATE_IF_VALID);
 
   surface_tab_label = gtk_label_new ("Surface");
   gtk_widget_ref (surface_tab_label);
@@ -9477,6 +9491,9 @@ create_PHOEBE (void)
                       NULL);
   gtk_signal_connect (GTK_OBJECT (spots_temsp2_adjust), "toggled",
                       GTK_SIGNAL_FUNC (on_adjust_switch_toggled_update_fitting_quickbar),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (spots_ssec_value), "changed",
+                      GTK_SIGNAL_FUNC (on_spots_ssec_value_changed),
                       NULL);
   gtk_signal_connect_object (GTK_OBJECT (fitting_mms_switch), "toggled",
                              GTK_SIGNAL_FUNC (on_switches_toggled),

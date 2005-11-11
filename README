@@ -1,4 +1,4 @@
-PHOEBE-0.28 TOPLEVEL DOCUMENTATION                          November 01, 2005
+PHOEBE-0.28a TOPLEVEL DOCUMENTATION                         November 10, 2005
 -----------------------------------------------------------------------------
 
 Hello and thank you for your interest in PHOEBE.
@@ -165,7 +165,10 @@ IMPORTANT NOTICE FOR PRE-PHOEBE-0.28 USERS
 ------------------------------------------
 
 This version fixes the aliasing out-of-sync issue when plotting residuals and
-the limb darkening interpolation failure for [M/H] < 0.
+the limb darkening interpolation failure for [M/H] < 0. The 0.28a version
+fixes two regressions with respect to 0.27 that caused the gravity darkening
+coefficients to be passed to WD in a malformed format and the value button for
+the number of spots on a secondary star that was inadvertantly removed.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.27 USERS
 ------------------------------------------

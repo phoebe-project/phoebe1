@@ -1,6 +1,15 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-11-11: - Observations for negative values of dP/dt were not phased
+              properly for LC plots. Fixed.
+2005-11-10: - A value button that set the number of spots on a secondary
+              star was inadvertantly removed, which caused additional
+              GTK+ warnings to be printed to the console. Fixed.
+            - Dirk Terrell found a serious formatting bug in PHOEBE that
+              caused malformed values of gravity darkening coefficients to
+              be passed to WD. Fixed.
+            - PHOEBE 0.28a released!
 2005-11-01: - Critical epochs fully implemented. The program now computes
               the periastron passage phase, phases of superior and inferior
               conjunctions (the positions of minima) and phases of the

@@ -24,7 +24,7 @@ void transform_hjd_to_phase (PHOEBE_data *data, double hjd0, double period, doub
 
 	for (i = 0; i < data->ptsno; i++)
 		{
-		if (dpdt < 1E-15) data->indep[i] = fmod ((data->indep[i]-hjd0)/period, 1.0);
+		if (fabs(dpdt) < 1E-15) data->indep[i] = fmod ((data->indep[i]-hjd0)/period, 1.0);
 		else              data->indep[i] = fmod (log(1.0+dpdt*((data->indep[i]-hjd0)/period))/dpdt, 1.0);
 		/* If HJD0 is larger than HJD, then the difference is negative and we     */
 		/* must fix that:                                                         */
