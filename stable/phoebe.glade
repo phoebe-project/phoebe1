@@ -11616,7 +11616,7 @@ Square Root Law
 	      <widget>
 		<class>GtkLabel</class>
 		<name>surface_gr1_description</name>
-		<label>Primary Gravity Brightening</label>
+		<label>Primary Gravity Darkening</label>
 		<justify>GTK_JUSTIFY_CENTER</justify>
 		<wrap>False</wrap>
 		<xalign>0.5</xalign>
@@ -11940,7 +11940,7 @@ Square Root Law
 	      <widget>
 		<class>GtkLabel</class>
 		<name>surface_gr2_description</name>
-		<label>Secondary Gravity Brightening</label>
+		<label>Secondary Gravity Darkening</label>
 		<justify>GTK_JUSTIFY_CENTER</justify>
 		<wrap>False</wrap>
 		<xalign>0.5</xalign>
