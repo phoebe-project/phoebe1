@@ -10,7 +10,7 @@ void phoebe_init ();
 int  file_exists                    (char *file_name);
 int everything_ok_with_the_filename (char *file_name);
 void strip_string_tail              (char *in);
-int  parse_input_data               (char *in);
+int parse_input_data                (char **in);
 void print_to_status_bar            (char *text);
 
 GtkWidget *create_warning_window (char *title, char *main_label, char *description1, char *description2, GtkSignalFunc ok_function, GtkSignalFunc cancel_function);

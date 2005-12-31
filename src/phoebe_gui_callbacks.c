@@ -3372,21 +3372,18 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
-			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), TRUE);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
 		/* 3. Bolometric albedo ALB2 is not constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
-			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), TRUE);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
 		/* 4. Secondary temperature TAVC is not constrained:                      */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
-			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), TRUE);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
 		/* 5. Secondary star luminosities CLA are constrained:                    */

@@ -1325,7 +1325,7 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 		fgets (working_str, 255, data_file);
 
 		/* Strip all comments and spaces; if the line is empty discard it:        */
-		if (parse_input_data (working_str) != 0) continue;
+		if (parse_input_data (&working_str) != 0) continue;
 
 		/* By this point only real data should survive the filtering, so we allo- */
 		/* cate space for it and read it in:                                      */
@@ -1472,7 +1472,7 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 		fgets (working_str, 255, data_file);
 
 		/* Strip all comments and spaces; if the line is empty discard it:        */
-		if (parse_input_data (working_str) != 0) continue;
+		if (parse_input_data (&working_str) != 0) continue;
 
 		/* By this point only real data should survive the filtering, so we allo- */
 		/* cate space for it and read it in:                                      */

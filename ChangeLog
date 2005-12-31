@@ -1,6 +1,13 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2005-12-31: - Well, I got two bug reports today, do you expect me to stand
+              still and do nothing about it? Don't worry, the party begins
+              at 18h and I won't be late! :)
+            - The double-contact morphology constraint turned the adjustment
+              switches for T2, A2 and GR2 on accidentally. Fixed.
+            - MERRY CHRISTMAS AND A HAPPY NEW YEAR!!!
+2005-11-17: - Gravity brightening renamed to gravity darkening.
 2005-11-11: - Observations for negative values of dP/dt were not phased
               properly for LC plots. Fixed.
 2005-11-10: - A value button that set the number of spots on a secondary

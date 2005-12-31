@@ -5816,7 +5816,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  surface_gr1_description = gtk_label_new ("Primary Gravity Brightening");
+  surface_gr1_description = gtk_label_new ("Primary Gravity Darkening");
   gtk_widget_ref (surface_gr1_description);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "surface_gr1_description", surface_gr1_description,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -5939,7 +5939,7 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  surface_gr2_description = gtk_label_new ("Secondary Gravity Brightening");
+  surface_gr2_description = gtk_label_new ("Secondary Gravity Darkening");
   gtk_widget_ref (surface_gr2_description);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "surface_gr2_description", surface_gr2_description,
                             (GtkDestroyNotify) gtk_widget_unref);

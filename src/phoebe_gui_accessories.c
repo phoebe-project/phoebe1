@@ -467,7 +467,7 @@ void strip_string_tail (char *in)
 	return;
 	}
 
-int parse_input_data (char *in)
+int parse_input_data (char **in)
 	{
 	/* This function will filter out all commented parts and undesired spaces   */
 	/* from string *in and return it in PHOEBE-readable form. If it returns non */
@@ -476,15 +476,15 @@ int parse_input_data (char *in)
 
 	/* If the line contains the comment delimeter '#', discard everything       */
 	/* that follows it (strip the input line):                                  */
-	if (strchr (in, '#') != NULL)
-		in[strlen(in)-strlen(strchr(in,'#'))] = '\0';
+	if (strchr (*in, '#') != NULL)
+		(*in)[strlen(*in)-strlen(strchr(*in,'#'))] = '\0';
 
 	/* If we have spaces in front of the first character in line, remove        */
 	/* them by incrementing the pointer by 1:                                   */
-	while (*in == ' ') in++;
+	while ((*in)[0] == ' ') (*in)++;
 
 	/* If the file we read out is an empty line, return non-zero:               */
-	if ( (strlen (in) == 0) || (in[0] == '\n') )
+	if ( (strlen (*in) == 0) || ((*in)[0] == '\n') )
 		return -1;
 	else
 		return 0;
