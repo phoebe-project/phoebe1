@@ -57,7 +57,6 @@ int create_lci_file (char filename[], PHOEBE_main_parameters main, PHOEBE_switch
     PHOEBE_wl_dependent_parameters mono)
 	{
 	int i;
-printf ("->%g<-\n", main.DPDT);
 
 	OPENSTREAM (filename);
 	CREATELCILINE1  (switches.MPAGE, switches.NREF, switches.MREF, spots.IFSMV1, spots.IFSMV2, switches.ICOR1, switches.ICOR2, ld.LD);
