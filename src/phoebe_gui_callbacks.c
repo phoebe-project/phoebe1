@@ -3535,19 +3535,17 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
-		/* 2. Gravity brightening GR2 is constrained:                             */
+		/* 2. Gravity brightening GR2 isn't constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
-			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
-			gtk_widget_set_sensitive (readout_widget, FALSE);
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
-		/* 3. Bolometric albedo ALB2 is constrained:                              */
+		/* 3. Bolometric albedo ALB2 isn't constrained:                           */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
-			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
-			gtk_widget_set_sensitive (readout_widget, FALSE);
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
 		/* 4. Secondary temperature TAVC isn't constrained:                       */
 		for (i = 0; i < 6; i++)
@@ -3566,12 +3564,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, FALSE);
-		/* 6. Limb darkening coefficients X2A and Y2A are constrained:            */
+		/* 6. Limb darkening coefficients X2A and Y2A aren't constrained:         */
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, ld[i]);
-			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
-			gtk_widget_set_sensitive (readout_widget, FALSE);
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
 		/* 7. The duration of eclipse for X-Ray binaries is constrained:          */
 		for (i = 0; i < 4; i++)
