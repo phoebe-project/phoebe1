@@ -2678,8 +2678,8 @@ void on_dc_update_corrections_button_clicked (GtkButton *button, gpointer user_d
 				else
 					if ( (strncmp (keyword[j], "XLAT", 4) == 0)  ||
 					     (strncmp (keyword[j], "XLONG", 5) == 0) ||
-							 (strncmp (keyword[j], "RADSP", 5) == 0) ||
-							 (strncmp (keyword[j], "TEMSP", 5) == 0) )
+					     (strncmp (keyword[j], "RADSP", 5) == 0) ||
+					     (strncmp (keyword[j], "TEMSP", 5) == 0) )
 						{
 						GtkWidget *parent;
 						PHOEBE_spots spots;
@@ -2687,13 +2687,54 @@ void on_dc_update_corrections_button_clicked (GtkButton *button, gpointer user_d
 						allocate_memory_for_spots (&spots);
 						read_in_spots (&spots);
 
-						if (spots.KSPA == 1)
-							parent = lookup_widget (PHOEBE, "spots_primary_info_list");
-						if (spots.KSPA == 2)
-							parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+						if (strcmp (keyword[j], "XLAT1") == 0) {
+							if (spots.KSPA == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPA - 1, 1, readout_str);
+						}
+						if (strcmp (keyword[j], "XLONG1") == 0) {
+							if (spots.KSPA == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPA - 1, 2, readout_str);
+						}
+						if (strcmp (keyword[j], "RADSP1") == 0) {
+							if (spots.KSPA == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPA - 1, 3, readout_str);
+						}
+						if (strcmp (keyword[j], "TEMSP1") == 0) {
+							if (spots.KSPA == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPA - 1, 4, readout_str);
+						}
 
-						if (spots.KSPA == 1 || spots.KSPA == 2)
-							{
+						if (strcmp (keyword[j], "XLAT2") == 0) {
+							if (spots.KSPB == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPB - 1, 1, readout_str);
+						}
+						if (strcmp (keyword[j], "XLONG2") == 0) {
+							if (spots.KSPB == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPB - 1, 2, readout_str);
+						}
+						if (strcmp (keyword[j], "RADSP2") == 0) {
+							if (spots.KSPB == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPB - 1, 3, readout_str);
+						}
+						if (strcmp (keyword[j], "TEMSP2") == 0) {
+							if (spots.KSPB == 1) parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							else                 parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+							gtk_clist_set_text (GTK_CLIST (parent), spots.NSPB - 1, 4, readout_str);
+						}
+/*
+						if (spots.KSPA != 0) {
+							if (spots.KSPA == 1)
+								parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							if (spots.KSPA == 2)
+								parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+
 							if (strncmp (keyword[j], "XLAT", 4) == 0)
 								gtk_clist_set_text (GTK_CLIST (parent), spots.NSPA - 1, 1, readout_str);
 							if (strncmp (keyword[j], "XLONG", 5) == 0)
@@ -2702,15 +2743,14 @@ void on_dc_update_corrections_button_clicked (GtkButton *button, gpointer user_d
 								gtk_clist_set_text (GTK_CLIST (parent), spots.NSPA - 1, 3, readout_str);
 							if (strncmp (keyword[j], "TEMSP", 5) == 0)
 								gtk_clist_set_text (GTK_CLIST (parent), spots.NSPA - 1, 4, readout_str);
-							}
+						}
 
-						if (spots.KSPB == 1)
-							parent = lookup_widget (PHOEBE, "spots_primary_info_list");
-						if (spots.KSPB == 2)
-							parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
+						if (spots.KSPB != 0) {
+							if (spots.KSPB == 1)
+								parent = lookup_widget (PHOEBE, "spots_primary_info_list");
+							if (spots.KSPB == 2)
+								parent = lookup_widget (PHOEBE, "spots_secondary_info_list");
 
-						if (spots.KSPB == 1 || spots.KSPB == 2)
-							{
 							if (strncmp (keyword[j], "XLAT", 4) == 0)
 								gtk_clist_set_text (GTK_CLIST (parent), spots.NSPB - 1, 1, readout_str);
 							if (strncmp (keyword[j], "XLONG", 5) == 0)
@@ -2719,8 +2759,8 @@ void on_dc_update_corrections_button_clicked (GtkButton *button, gpointer user_d
 								gtk_clist_set_text (GTK_CLIST (parent), spots.NSPB - 1, 3, readout_str);
 							if (strncmp (keyword[j], "TEMSP", 5) == 0)
 								gtk_clist_set_text (GTK_CLIST (parent), spots.NSPB - 1, 4, readout_str);
-							}
-
+						}
+*/
 						free_memory_allocated_for_spots (&spots);
 						}
 					else

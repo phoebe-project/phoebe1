@@ -1,6 +1,11 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-01-06: - If two spots were adjusted simultaneously, parameter values
+              were updated to erroneous fields (the last occurence of the
+              spot parameter was updated to *all* spot fields). Fixed.
+              Many thanks to Ron Kaitchuck for pointing this out!
+2006-01-03: - Stale debugging printout was removed from the terminal.
 2005-12-31: - Well, I got two bug reports today, do you expect me to stand
               still and do nothing about it? Don't worry, the party begins
               at 18h and I won't be late! :)
