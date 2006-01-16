@@ -1,6 +1,12 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-01-13: - PHOEBE reported to compile and run cleanly on Fedora Core 4.
+              Many thanks to Carla Maceroni for pointing this out!
+            - Empty lines in data files caused a spurious message about a
+              malformatted input file. Fixed. The input files may now
+              contain any number of white-space separated lines.
+            - PHOEBE 0.29 released!
 2006-01-06: - If two spots were adjusted simultaneously, parameter values
               were updated to erroneous fields (the last occurence of the
               spot parameter was updated to *all* spot fields). Fixed.

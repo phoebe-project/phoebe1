@@ -30,7 +30,7 @@ void parse_startup_line (int argc, char *argv[])
 		     (strcmp (argv[i],  "-?"   ) == 0) ||
 				 (strcmp (argv[i], "--help") == 0) )
 			{
-			printf ("\nPHOEBE 0.28a command line arguments: [-hsv] [keyword_file]\n\n");
+			printf ("\nPHOEBE 0.29 command line arguments: [-hsv] [keyword_file]\n\n");
 			printf ("  -h, --help, -?      ..  this help screen\n");
 			printf ("  -s, --script        ..  execute PHOEBE script\n");
 			printf ("  -v, --version       ..  display PHOEBE version and exit\n");
@@ -40,7 +40,7 @@ void parse_startup_line (int argc, char *argv[])
 		if ( (strcmp (argv[i],  "-v"      ) == 0) ||
 				 (strcmp (argv[i], "--version") == 0) )
 			{
-			printf ("\nPHOEBE 0.28a (stable release), November 10, 2005 by Andrej Prsa\n");
+			printf ("\nPHOEBE 0.29 (stable release), January 13, 2006 by Andrej Prsa\n");
 			printf ("  Send comments and/or requests to andrej.prsa@fmf.uni-lj.si\n\n");
 			exit (0);
 			}
@@ -92,8 +92,8 @@ void phoebe_init ()
 	PHOEBE_LOCALE = strdup (setlocale (LC_NUMERIC, NULL));
 	setlocale (LC_NUMERIC, "C");
 
-	sprintf (PHOEBE_VERSION_NUMBER, "0.28a (stable release)");
-	sprintf (PHOEBE_VERSION_DATE,   "November 10, 2005");
+	sprintf (PHOEBE_VERSION_NUMBER, "0.29 (stable release)");
+	sprintf (PHOEBE_VERSION_DATE,   "January 13, 2006");
 
 	sprintf (PHOEBE_KEYWORD_FILENAME, "Undefined");
 
@@ -474,14 +474,16 @@ int parse_input_data (char **in)
 	/* zero, it means that the line contains no useful data and that the caller */
 	/* function should disregard it.                                            */
 
+	char *ptr;
+
 	/* If the line contains the comment delimeter '#', discard everything       */
 	/* that follows it (strip the input line):                                  */
-	if (strchr (*in, '#') != NULL)
-		(*in)[strlen(*in)-strlen(strchr(*in,'#'))] = '\0';
+	if ( (ptr = strchr (*in, '#')) != NULL)
+		*ptr = '\0';
 
 	/* If we have spaces in front of the first character in line, remove        */
 	/* them by incrementing the pointer by 1:                                   */
-	while ((*in)[0] == ' ') (*in)++;
+	while ((*in)[0] == ' ' || (*in)[0] == '\t' || (*in)[0] == '\n') (*in)++;
 
 	/* If the file we read out is an empty line, return non-zero:               */
 	if ( (strlen (*in) == 0) || ((*in)[0] == '\n') )
