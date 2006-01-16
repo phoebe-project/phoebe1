@@ -1,7 +1,7 @@
-PHOEBE-0.28a TOPLEVEL DOCUMENTATION                         November 10, 2005
+PHOEBE-0.29 TOPLEVEL DOCUMENTATION                           January 13, 2006
 -----------------------------------------------------------------------------
 
-Hello and thank you for your interest in PHOEBE.
+Hello and thank you for your interest in the Friday 13th version of PHOEBE. :)
 
 THINGS YOU NEED TO KNOW
 -----------------------
@@ -14,8 +14,8 @@ cence in PHOEBE documentation. If you do feel you need to change the code,
 be sure to distribute it only if the original version along with exact chan-
 ging policy is attached.
 
-Wilson-Devinney WD2003 code is distributed along with this version of PHOEBE
-for testing purposes only. If you are new to WD2003, please contact Robert E.
+Wilson-Devinney WD2004 code is distributed along with this version of PHOEBE
+for testing purposes only. If you are new to WD2004, please contact Robert E.
 Wilson, University of Florida, and let him know that you use his software.
 
 REQUIREMENTS
@@ -29,16 +29,21 @@ To successfully set up PHOEBE, you need:
 
     * Debian Woody 3.0r1   no issues
     * Debian Woody 3.0r2   no issues
+    * Debian Woody 3.0r3   no issues
+    * Debian Woody 3.0r4   no issues
     * Debian Sarge         no issues
     * Debian Etch          no issues
+    * Debian Sid           no issues
     * Ubuntu 5.04 (Hoary)  no issues
-    * Ubuntu 6.04 (Breezy) no issues  (development platform)
+    * Ubuntu 5.10 (Breezy) no issues  (development platform)
     * Linux Redhat 7.2     no issues
     * Linux Redhat 7.3     no issues
     * Linux Redhat 8.0     no issues
     * Linux Redhat 9.0     no issues
     * Linux Fedora Core 1  no issues
     * Linux Fedora Core 2  no issues
+    * Linux Fedora Core 3  no issues
+    * Linux Fedora Core 4  no issues
     * Linux SUSE 8.2       no issues
     * Linux SUSE 9.0       no issues
     * Gentoo Linux 2004    no issues
@@ -47,8 +52,7 @@ To successfully set up PHOEBE, you need:
   If you ran PHOEBE successfully on a different platform, please inform the
   author.
 
-- autoconf and automake suite for generic compiling (comes with every single
-  brand of Linux we're aware of and is installed by default).
+- GNU make (a standard component of virtually every Linux box today),
 
 - ANSI C compliant compiler (gcc will do just fine),
 
@@ -160,6 +164,13 @@ this means that you have newer autoutils suite. Please run:
   autoreconf --force --install
 
 and then repeat the generic installation steps given above.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.29 USERS
+------------------------------------------
+
+This version fixes the erroneaous HJD-to-phase transformation for negative
+values of DPDT. The second major issue were incorrect constraints which were
+applied in the overcontact case without thermal contact, which are now fixed.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.28 USERS
 ------------------------------------------
@@ -302,7 +313,7 @@ to contact the author:
 	Andrej Prsa
 	Jadranska 19
 	SI-1000 Ljubljana
-	Tel: +386-1-540-13-53
+	Tel: +386-1-476-65-67
 	andrej.prsa@fmf.uni-lj.si
 
 For the list of contributors, please take a look at the top-level AUTHORS file.

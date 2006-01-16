@@ -1,9 +1,9 @@
 # UV Leo Bessell V
 # Data from the Crni Vrh Observatory, Slovenia
-#
+
 # Standard star T0845-00073 used to measure nightly sigma.
 # Weights calculated as 1/sigma^2, renormalized to [0.1, 9.9].
-#
+
 #     HJD          Mag      w
 2451602.394566    9.441   5.74
 2451602.396256    9.469   5.74
