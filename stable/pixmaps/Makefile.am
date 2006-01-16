@@ -30,6 +30,7 @@ phoebepixmaps_DATA = answer_bad.xpm         \
                      empty_lc.xpm           \
                      empty_rv.xpm           \
                      empty_si.xpm           \
+		     icon.png               \
                      logo.xpm               \
                      under_construction.xpm
 
