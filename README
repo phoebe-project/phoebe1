@@ -118,25 +118,25 @@ PHOEBE may be obtained by two common ways:
 
    Login:
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root login
+     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository login
 
    [ hit <ENTER> for password ]
 
    The main program:
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout phoebe
+     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout phoebe
 
    The bleeding-edge development version:
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout phoebe-dev
+     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout phoebe-dev
 
    Documentation (optional):
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout documentation
+     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout documentation
 
    Van Hamme limb darkening tables (optional):
 
-     cvs -d :pserver:anonymous@deneb.ago.uni-lj.si:/root checkout catalogs/ld
+     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout catalogs/ld
 
    This method is preferable for testing users and contributors. Please note
    that the development version might not work, it might not even compile.
