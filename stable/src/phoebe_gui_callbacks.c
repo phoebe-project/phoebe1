@@ -702,8 +702,8 @@ void on_configuration_ok_button_clicked (GtkButton *button, gpointer user_data)
 		{
 		notice_window = create_notice_window (
 			"PHOEBE notice",
-			"PHOEBE wd98 directory selection issue",
-			"The directory you have currently chosen to contain wd98's lc executable (must be named lc)",
+			"WD directory selection issue",
+			"The directory you have currently chosen to contain WD's lc executable (must be named lc)",
 			"doesn't appear to be in. Please check permissions or choose another directory.",
 			gtk_widget_destroy);
 		return;
@@ -717,8 +717,8 @@ void on_configuration_ok_button_clicked (GtkButton *button, gpointer user_data)
 		{
 		notice_window = create_notice_window (
 			"PHOEBE notice",
-			"PHOEBE wd98 directory selection issue",
-			"The directory you have currently chosen to contain wd98's dc executable (must be named dc)",
+			"WD directory selection issue",
+			"The directory you have currently chosen to contain WD's dc executable (must be named dc)",
 			"doesn't appear to be in. Please check permissions or choose another directory.",
 			gtk_widget_destroy);
 		return;
@@ -2483,7 +2483,7 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 		}
 
 	create_dci_input_file (DEL, KEP, main, ld, spots, switches, mms);
-	/* Let's call WD98's dc program on the created input file:                */
+	/* Let's call WD's dc program on the created input file:                  */
 	i = scan_temporary_directory_for_dci_file_index ("phoebe_dc");
 	sprintf (working_str, "%s/dc < %s/phoebe_dc_%03d.dci > %s/phoebe_dc_%03d.dco", PHOEBE_DC_DIR, PHOEBE_TEMP_DIR, i, PHOEBE_TEMP_DIR, i);
 	system (working_str);

@@ -1034,7 +1034,7 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 		/* WD internal problems:                                                  */
 		if (strstr (working_str, "TEMPERATURE RANGE EXCEEDED IN SUBROUTINE ATM") != NULL)
 			{
-			notice_window = create_notice_window ("PHOEBE Notice", "Internal WD algorithm problem", "Your current configuration exceeds the allowed temperature range", "in WD98 subroutine ATM. Further LC output will be suppressed.", gtk_widget_destroy);
+			notice_window = create_notice_window ("PHOEBE Notice", "Internal WD algorithm problem", "Your current configuration exceeds the allowed temperature range", "in WD subroutine ATM. Further LC output will be suppressed.", gtk_widget_destroy);
 			break;
 			}
 
@@ -1159,7 +1159,7 @@ int read_in_synthetic_rv_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 
 	/* We shall read in all the values through a checkup "while" loop, because  */
 	/* the output format of .lco file is only *more or less* standard, which    */
-	/* means that WD98 sometimes appends some comments to that file (such as    */
+	/* means that WD sometimes appends some comments to that file (such as      */
 	/* the warning that the secondary component exceeds critical lobe).         */
 	while (! feof (data_file))
 		{
@@ -1171,10 +1171,10 @@ int read_in_synthetic_rv_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 		if (strcmp (working_str, " Secondary star exceeds outer contact surface\n") == 0)
 			notice_window = create_notice_window ("PHOEBE Notice", "Physical Content Feasibility Problem", "Your current set of parameters suggests that", "the secondary star exceeds the outer contact surface (L2)!", gtk_widget_destroy);
 
-		/* Internal WD98 problems:                                                */
+		/* Internal WD problems:                                                  */
 		if (strstr (working_str, "TEMPERATURE RANGE EXCEEDED IN SUBROUTINE ATM") != NULL)
 			{
-			notice_window = create_notice_window ("PHOEBE Notice", "Internal WD algorithm problem", "Your current configuration exceeds the allowed temperature range", "in WD98 subroutine ATM. Further output will be suppressed.", gtk_widget_destroy);
+			notice_window = create_notice_window ("PHOEBE Notice", "Internal WD algorithm problem", "Your current configuration exceeds the allowed temperature range", "in WD subroutine ATM. Further output will be suppressed.", gtk_widget_destroy);
 			break;
 			}
 

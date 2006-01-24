@@ -1,6 +1,11 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-01-24: - Carla Maceroni pointed out obsolete tool-tips and labels that
+              contained a reference to WD98 and were thus confusing the user
+              about the WD version, which is the latest 2004 version. Fixed.
+              Would you believe it: there were more than 15 instances of
+              such obsolete labels! :( Sorry for the inconvenience!
 2006-01-16: - CVS server moved to dioniz.fiz.uni-lj.si. README file updated.
 2006-01-13: - PHOEBE reported to compile and run cleanly on Fedora Core 4.
               Many thanks to Carla Maceroni for pointing this out!

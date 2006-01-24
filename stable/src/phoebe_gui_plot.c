@@ -575,7 +575,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		/* Now we have prepared everything and it is time to write the LCI file:  */
 		create_lci_input_file ("phoebe_rv", main, switches, ld, spots, curve, mono);
 
-		/* Let's call WD98's lc program on the created input file:                */
+		/* Let's call WD's lc program on the created input file:                  */
 		i = scan_temporary_directory_for_lci_file_index ("phoebe_rv");
 		sprintf (working_str, "%s/lc < %s/phoebe_rv_%03d.lci > %s/phoebe_rv_%03d.lco", PHOEBE_LC_DIR, PHOEBE_TEMP_DIR, i, PHOEBE_TEMP_DIR, i);
 		system (working_str);
@@ -1126,13 +1126,13 @@ void plot_3d_image_plot (PHOEBE_plot_device device, char *filename)
 	curve.PHSTRT = curve.PHSTOP = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
 	curve.PHIN = 1.0; curve.HJDST = curve.HJDSP = curve.HJDIN = 0.0;
 
-	/* Create an input file and call WD98 to calculate star shape:              */
+	/* Create an input file and call WD to calculate star shape:                */
 	create_lci_input_file ("phoebe_3d", main, switches, ld, spots, curve, mono);
 	i = scan_temporary_directory_for_lci_file_index ("phoebe_3d");
 	sprintf (working_str, "%s/lc < %s/phoebe_3d_%03d.lci > %s/phoebe_3d_%03d.lco", PHOEBE_LC_DIR, PHOEBE_TEMP_DIR, i, PHOEBE_TEMP_DIR, i);
 	system (working_str);
 
-	/* Get the output of WD98 into image_data (allocated within the function):  */
+	/* Get the output of WD into image_data (allocated within the function):    */
 	sprintf (working_str, "%s/phoebe_3d_%03d.lco", PHOEBE_TEMP_DIR, i);
 	read_in_3d_image_data (working_str, &image_data);
 
