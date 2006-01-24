@@ -92,8 +92,8 @@ void configuration_save_file (GtkWidget *widget, gpointer user_data)
 		{
 		notice_window = create_notice_window (
 			"PHOEBE notice",
-			"PHOEBE wd98 directory selection issue",
-			"The directory you have currently chosen to contain wd98's lc executable (must be named lc)",
+			"WD directory selection issue",
+			"The directory you have currently chosen to contain WD's lc executable (must be named lc)",
 			"doesn't appear to be in. Please check permissions or choose another directory.",
 			gtk_widget_destroy);
 		fclose (CONFIG_FILE);
@@ -109,8 +109,8 @@ void configuration_save_file (GtkWidget *widget, gpointer user_data)
 		{
 		notice_window = create_notice_window (
 			"PHOEBE notice",
-			"PHOEBE wd98 directory selection issue",
-			"The directory you have currently chosen to contain wd98's dc executable (must be named dc)",
+			"WD directory selection issue",
+			"The directory you have currently chosen to contain WD's dc executable (must be named dc)",
 			"doesn't appear to be in. Please check permissions or choose another directory.",
 			gtk_widget_destroy);
 		fclose (CONFIG_FILE);

@@ -17554,7 +17554,7 @@ HJD0 Time Derivative
 	      <widget>
 		<class>GtkSpinButton</class>
 		<name>fitting_n1_value</name>
-		<tooltip>WD98 name: N1, N2</tooltip>
+		<tooltip>WD name: N1, N2</tooltip>
 		<can_focus>True</can_focus>
 		<climb_rate>0</climb_rate>
 		<digits>0</digits>
@@ -17587,7 +17587,7 @@ HJD0 Time Derivative
 	      <widget>
 		<class>GtkSpinButton</class>
 		<name>fitting_n2_value</name>
-		<tooltip>WD98 name: N1, N2</tooltip>
+		<tooltip>WD name: N1, N2</tooltip>
 		<can_focus>True</can_focus>
 		<climb_rate>0</climb_rate>
 		<digits>0</digits>
@@ -17620,7 +17620,7 @@ HJD0 Time Derivative
 	      <widget>
 		<class>GtkSpinButton</class>
 		<name>fitting_n1l_value</name>
-		<tooltip>WD98 name: N1L, N2L</tooltip>
+		<tooltip>WD name: N1L, N2L</tooltip>
 		<can_focus>True</can_focus>
 		<climb_rate>0</climb_rate>
 		<digits>0</digits>
@@ -17653,7 +17653,7 @@ HJD0 Time Derivative
 	      <widget>
 		<class>GtkSpinButton</class>
 		<name>fitting_n2l_value</name>
-		<tooltip>WD98 name: N1L, N2L</tooltip>
+		<tooltip>WD name: N1L, N2L</tooltip>
 		<can_focus>True</can_focus>
 		<climb_rate>0</climb_rate>
 		<digits>0</digits>
@@ -23405,7 +23405,7 @@ Normalized Flux
 	  <widget>
 	    <class>GtkEntry</class>
 	    <name>configuration_lc_directory</name>
-	    <tooltip>This is the absolute path to the Wilson-Devinney WD98 LC Executable.</tooltip>
+	    <tooltip>This is the absolute path to WD's LC Executable.</tooltip>
 	    <can_focus>True</can_focus>
 	    <editable>True</editable>
 	    <text_visible>True</text_visible>
@@ -23430,7 +23430,7 @@ Normalized Flux
 	  <widget>
 	    <class>GtkEntry</class>
 	    <name>configuration_dc_directory</name>
-	    <tooltip>This is the absolute path to the Wilson-Devinney WD98 DC Executable.</tooltip>
+	    <tooltip>This is the absolute path to WD's DC Executable.</tooltip>
 	    <can_focus>True</can_focus>
 	    <editable>True</editable>
 	    <text_visible>True</text_visible>

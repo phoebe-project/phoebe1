@@ -206,7 +206,7 @@ void calculate_residuals (PHOEBE_data *set1, PHOEBE_data *set2)
 	/* This function calculates residuals between synthetic (set1) and experi-  */
 	/* mental (set2) data and outputs them to set2. At the time it uses linear  */
 	/* interpolation, which isn't good; it will be changed when BBL routine     */
-	/* from WD98 will be called directly.                                       */
+	/* from WD will be called directly.                                         */
 
 	int i, j;
 	int breaked;

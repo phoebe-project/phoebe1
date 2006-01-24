@@ -8619,7 +8619,7 @@ create_PHOEBE (void)
   gtk_table_attach (GTK_TABLE (fitting_fitting_parameters_table), fitting_n1_value, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 10, 0);
-  gtk_tooltips_set_tip (tooltips, fitting_n1_value, "WD98 name: N1, N2", NULL);
+  gtk_tooltips_set_tip (tooltips, fitting_n1_value, "WD name: N1, N2", NULL);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_n1_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_n1_value), GTK_UPDATE_IF_VALID);
 
@@ -8632,7 +8632,7 @@ create_PHOEBE (void)
   gtk_table_attach (GTK_TABLE (fitting_fitting_parameters_table), fitting_n2_value, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 10, 0);
-  gtk_tooltips_set_tip (tooltips, fitting_n2_value, "WD98 name: N1, N2", NULL);
+  gtk_tooltips_set_tip (tooltips, fitting_n2_value, "WD name: N1, N2", NULL);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_n2_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_n2_value), GTK_UPDATE_IF_VALID);
 
@@ -8645,7 +8645,7 @@ create_PHOEBE (void)
   gtk_table_attach (GTK_TABLE (fitting_fitting_parameters_table), fitting_n1l_value, 0, 1, 3, 4,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 10, 0);
-  gtk_tooltips_set_tip (tooltips, fitting_n1l_value, "WD98 name: N1L, N2L", NULL);
+  gtk_tooltips_set_tip (tooltips, fitting_n1l_value, "WD name: N1L, N2L", NULL);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_n1l_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_n1l_value), GTK_UPDATE_IF_VALID);
 
@@ -8658,7 +8658,7 @@ create_PHOEBE (void)
   gtk_table_attach (GTK_TABLE (fitting_fitting_parameters_table), fitting_n2l_value, 1, 2, 3, 4,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 10, 0);
-  gtk_tooltips_set_tip (tooltips, fitting_n2l_value, "WD98 name: N1L, N2L", NULL);
+  gtk_tooltips_set_tip (tooltips, fitting_n2l_value, "WD name: N1L, N2L", NULL);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_n2l_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_n2l_value), GTK_UPDATE_IF_VALID);
 
@@ -12061,7 +12061,7 @@ create_PHOEBE_configuration (void)
   gtk_table_attach (GTK_TABLE (configuration_table), configuration_lc_directory, 2, 5, 8, 9,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_tooltips_set_tip (tooltips, configuration_lc_directory, "This is the absolute path to the Wilson-Devinney WD98 LC Executable.", NULL);
+  gtk_tooltips_set_tip (tooltips, configuration_lc_directory, "This is the absolute path to WD's LC Executable.", NULL);
 
   configuration_dc_directory = gtk_entry_new ();
   gtk_widget_ref (configuration_dc_directory);
@@ -12071,7 +12071,7 @@ create_PHOEBE_configuration (void)
   gtk_table_attach (GTK_TABLE (configuration_table), configuration_dc_directory, 2, 5, 9, 10,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_tooltips_set_tip (tooltips, configuration_dc_directory, "This is the absolute path to the Wilson-Devinney WD98 DC Executable.", NULL);
+  gtk_tooltips_set_tip (tooltips, configuration_dc_directory, "This is the absolute path to WD's DC Executable.", NULL);
 
   configuration_dc_directory_label = gtk_label_new ("WD DC Directory:");
   gtk_widget_ref (configuration_dc_directory_label);
