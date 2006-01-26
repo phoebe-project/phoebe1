@@ -12,40 +12,45 @@
 #include "phoebe_transformations.h"
 
 int allocate_memory_for_data_record (PHOEBE_data_record **data, int records_no)
-	{
-	/* This function allocates memory to PHOEBE_data_record structure passed to */
-	/* this routine as a pointer &var_name. It allocates memory for records_no  */
-	/* entries and checks for errors. The return integer (error handler) is al- */
-	/* ways 0 because phoebe_realloc stops the execution in case of failure.    */
+{
+	/*
+	 * This function allocates memory to PHOEBE_data_record structure passed to
+	 * this routine as a pointer &var_name. It allocates memory for records_no
+	 * entries and checks for errors. The return integer (error handler) is al-
+	 * ways 0 because phoebe_realloc stops the execution in case of failure.
+	 */
 
-	if (records_no == 0) data = NULL;
+	if (records_no == 0) {
+		free (*data);
+		*data = NULL;
+	}
 	else *data = phoebe_realloc (*data, records_no * sizeof (**data));
 
 	return 0;
-	}
+}
 
 int allocate_memory_for_data (PHOEBE_data *data)
-	{
-	/* This function allocates memory to all three entries of the PHOEBE_data   */
-	/* structure: indep, dep and weight. It reads the number of points from the */
-	/* structure itself, data->ptsno, so be sure you initialize it prior to     */
-	/* calling this function.                                                   */
+{
+	/*
+	 * This function allocates memory to all three entries of the PHOEBE_data
+	 * structure: indep, dep and weight. It reads the number of points from the
+	 * structure itself, data->ptsno, so be sure you initialize it prior to
+	 * calling this function.
+	 */
 
-	if (data->ptsno == 0)
-		{
+	if (data->ptsno == 0) {
 		data->indep  = NULL;
 		data->dep    = NULL;
 		data->weight = NULL;
-		}
-	else
-		{
+	}
+	else {
 		data->indep  = phoebe_realloc (data->indep,  data->ptsno * sizeof (*data->indep));
 		data->dep    = phoebe_realloc (data->dep,    data->ptsno * sizeof (*data->dep));
 		data->weight = phoebe_realloc (data->weight, data->ptsno * sizeof (*data->weight));
-		}
+	}
 
 	return 0;
-	}
+}
 
 int allocate_memory_for_spots (PHOEBE_spots *spots)
 	{
@@ -1269,102 +1274,123 @@ int read_in_synthetic_rv_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 	}
 
 int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int dep)
-	{
+{
 	int i;
 	int col_type;
 	int readout_int;
 
 	int phase, magnitude;
 
-	int err_no;
+	int status;
 
-	char working_string[255];
-	char *working_str = working_string;
+	char *readout_str;
 
 	GtkWidget *notice_window;
 
-	/* If data units mismatch the given indep/dep switches, we need to know pe- */
-	/* riod and HJD0, that's why we declare this variable, but read the values  */
-	/* in only in case of a mismatch.                                           */
+	/*
+	 * If data units mismatch the given indep/dep switches, we need to know pe-
+	 * riod and HJD0, that's why we declare this variable, but read the values
+	 * in only in case of a mismatch.                                         
+	 */
+
 	PHOEBE_main_parameters main_pars;
 
-	/* Although this isn't really very elegant, somehow we have to know if the  */
-	/* user wants the data to be binned; that's why we read in all switches:    */
-	PHOEBE_switches        switches = read_in_switches ();
+	/*
+	 * Although this isn't really very elegant, somehow we have to know if the
+	 * user wants the data to be binned; that's why we read in all switches:    
+	 */
+
+	PHOEBE_switches switches = read_in_switches ();
 
 	FILE *data_file;
 
-	/* Initialize everything to 0, so we don't get any accidental appending:    */
+	/* Initialize everything to 0, so we don't get any accidental appending:  */
 	data->ptsno = 0; data->indep = NULL; data->dep = NULL; data->weight = NULL;
 
-	/* Set the columns variable to hold the number and type of columns in a fi- */
-	/* le; we do it here and not in the loop so that strcmp gets evaluated only */
-	/* now and not for each point in the loop.                                  */
+	/*
+	 * Set the columns variable to hold the number and type of columns in a fi-
+	 * le; we do it here and not in the loop so that strcmp gets evaluated only
+	 * now and not for each point in the loop.                                 
+	 */
+
 	if (strcmp (PHOEBE_lc_data[curve].column3, "Unavailable") == 0)    col_type = 1;
 	if (strcmp (PHOEBE_lc_data[curve].column3, "Weight (int)") == 0)   col_type = 2;
 	if (strcmp (PHOEBE_lc_data[curve].column3, "Weight (real)") == 0)  col_type = 3;
 	if (strcmp (PHOEBE_lc_data[curve].column3, "Absolute error") == 0) col_type = 4;
 
-	/* Do the same for phase and magnitude, just to have everything here:       */
+	/* Do the same for phase and magnitude, just to have everything here:     */
 	if (strcmp (PHOEBE_lc_data[curve].column1, "Phase")     == 0) phase = 1;     else phase = 0;
 	if (strcmp (PHOEBE_lc_data[curve].column2, "Magnitude") == 0) magnitude = 1; else magnitude = 0;
 
-	if (!file_exists (PHOEBE_lc_data[curve].filename))
-		{
+	if (!file_exists (PHOEBE_lc_data[curve].filename)) {
 		notice_window = create_notice_window ("PHOEBE Notice", "Observed data filename not found", "PHOEBE cannot find the file containing observed data.", "Please check your settings in the Data tab.", gtk_widget_destroy);
 		data->ptsno = 0;
 		return;
-		}
+	}
 		
 	data_file = fopen (PHOEBE_lc_data[curve].filename, "r");
 
 	i = 0;
-	while (feof (data_file) == FALSE)
-		{
-		/* We now read in the whole line (255 characters or less) and parse it:   */
-		fgets (working_str, 255, data_file);
+	while (!feof (data_file)) {
+		/*
+		 * We now read in the whole line (255 characters or less) and parse it:
+		 */
+		readout_str = phoebe_malloc (255 * sizeof (*readout_str));
+		fgets (readout_str, 255, data_file);
+		if (feof (data_file)) {
+			free (readout_str);
+			break;
+		}
 
-		/* Strip all comments and spaces; if the line is empty discard it:        */
-		if (parse_input_data (&working_str) != 0) continue;
+		/* Strip all comments and spaces; if the line is empty, discard it:   */
+		if (parse_input_data (&readout_str) != 0) {
+			if (readout_str) printf ("MEMORY CORRUPTION!!!\n");
+			continue;
+		}
 
-		/* By this point only real data should survive the filtering, so we allo- */
-		/* cate space for it and read it in:                                      */
-		data->ptsno = ++i;
+		/*
+		 * By this point only real data should have survived the filtering,
+		 * so we allocate space for it and read it in:
+		 */
+
+		i++; data->ptsno = i;
 		allocate_memory_for_data (data);
 
-		if ( col_type == 1 )
-			{
-			err_no = sscanf (working_str, "%lf %lf\n", &data->indep[i-1], &data->dep[i-1]);
-			if (err_no != 2)
-				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
-				data->ptsno = 0;
-				return;
-				}
+		if ( col_type == 1 ) {
+			status = sscanf (readout_str, "%lf %lf", &data->indep[i-1], &data->dep[i-1]);
+			if (status != 2) {
+				char notice[255];
+				sprintf (notice, "%d. LC data file does not conform to the format specified in the Data tab", curve+1);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", notice, "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				data->ptsno = 0; free (data->indep); free (data->dep); free (data->weight);
+				return -1;
+			}
 			data->weight[i-1] = 1.0;
+		}
+
+		if ( col_type == 2 ) {
+			status = sscanf (readout_str, "%lf %lf %d", &(data->indep[i-1]), &(data->dep[i-1]), &readout_int);
+			if (status != 3) {
+				char notice[255];
+				sprintf (notice, "%d. LC data file does not conform to the format specified in the Data tab", curve+1);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", notice, "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				data->ptsno = 0; free (data->indep); free (data->dep); free (data->weight);
+				return -1;
 			}
-		if ( col_type == 2 )
-			{
-			err_no = sscanf (working_str, "%lf %lf %d\n",  &data->indep[i-1], &data->dep[i-1], &readout_int);
-			if (err_no != 3)
-				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
-				data->ptsno = 0;
-				return;
-				}
 			data->weight[i-1] = (double) readout_int;
-			}
-		if ( (col_type == 3) || (col_type == 4) )
-			{
-			err_no = sscanf (working_str, "%lf %lf %lf\n", &data->indep[i-1], &data->dep[i-1], &data->weight[i-1]);
-			if (err_no != 3)
-				{
-				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
-				data->ptsno = 0;
-				return;
-				}
+		}
+		if ( (col_type == 3) || (col_type == 4) ) {
+			status = sscanf (readout_str, "%lf %lf %lf", &data->indep[i-1], &data->dep[i-1], &data->weight[i-1]);
+			if (status != 3) {
+				char notice[255];
+				sprintf (notice, "%d. LC data file does not conform to the format specified in the Data tab", curve+1);
+				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", notice, "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
+				data->ptsno = 0; free (data->indep); free (data->dep); free (data->weight);
+				return -1;
 			}
 		}
+		free (readout_str);
+	}
 
 	/* We made one increment too many, which caused an OB1 in points number:    */
 	data->ptsno--;
@@ -1418,13 +1444,12 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 	int phase;
 
 	int input_vunit;    /* The switch that tells PHOEBE what is in input files: */
-											/*     0 .. 100km/s                                     */
-											/*     1 .. 1km/s                                       */
+						/*     0 .. 100km/s                                     */
+						/*     1 .. 1km/s                                       */
 
 	int err_no;
 
-	char working_string[255];
-	char *working_str = working_string;
+	char *readout_str;
 	
 	GtkWidget *notice_window;
 
@@ -1450,8 +1475,7 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 	if (strcmp (PHOEBE_rv_data[curve].column1, "Phase")     == 0)  phase = 1; else phase = 0;
 	if (strcmp (PHOEBE_rv_data[curve].column2, "RV in km/s") == 0) input_vunit = 1; else input_vunit = 0;
 
-	if (!file_exists (PHOEBE_rv_data[curve].filename))
-		{
+	if (!file_exists (PHOEBE_rv_data[curve].filename)) {
 		notice_window = create_notice_window (
 			"PHOEBE Notice",
 			"Observed data filename not found",
@@ -1460,58 +1484,72 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 			gtk_widget_destroy);
 		data->ptsno = 0;
 		return;
-		}
+	}
 	data_file = fopen (PHOEBE_rv_data[curve].filename, "r");
 
 	i = 0;
-	while (feof (data_file) == FALSE)
-		{
-		/* Although not completely and absolutely safe, we presume that no input  */
-		/* file contains more than 255 characters. If it does, it will be messy.  */
-		/* But come on, who ever saw an input file longer than 255 characters???  */
-		fgets (working_str, 255, data_file);
+	while (!feof (data_file)) {
+		/*
+		 * We now read in the whole line (255 characters or less) and parse it:
+		 */
+		readout_str = phoebe_malloc (255 * sizeof (*readout_str));
+		fgets (readout_str, 255, data_file);
+		if (feof (data_file)) {
+			free (readout_str);
+			break;
+		}
 
-		/* Strip all comments and spaces; if the line is empty discard it:        */
-		if (parse_input_data (&working_str) != 0) continue;
+		/* Strip all comments and spaces; if the line is empty, discard it:   */
+		if (parse_input_data (&readout_str) != 0) {
+			if (readout_str) printf ("MEMORY CORRUPTION!!!\n");
+			continue;
+		}
 
-		/* By this point only real data should survive the filtering, so we allo- */
-		/* cate space for it and read it in:                                      */
-		data->ptsno = ++i;
+		/*
+		 * By this point only real data should have survived the filtering,
+		 * so we allocate space for it and read it in:
+		 */
+
+		i++; data->ptsno = i;
 		allocate_memory_for_data (data);
 
-		if ( col_type == 1 )
-			{
-			err_no = sscanf (working_str, "%lf %lf\n", &data->indep[i-1], &data->dep[i-1]);
-			if (err_no != 2)
-				{
+		if ( col_type == 1 ) {
+			err_no = sscanf (readout_str, "%lf %lf\n", &data->indep[i-1], &data->dep[i-1]);
+			if (err_no != 2) {
+				char notice[255];
+				sprintf (notice, "%d. RV data file does not conform to the format specified in the Data tab", curve+1);
 				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
-				data->ptsno = 0;
-				return;
-				}
+				data->ptsno = 0; free (data->indep); free (data->dep); free (data->weight);
+				return -1;
+			}
 			data->weight[i-1] = 1.0;
-			}
-		if ( col_type == 2 )
-			{
-			err_no = sscanf (working_str, "%lf %lf %d\n",  &data->indep[i-1], &data->dep[i-1], &readout_int);
-			if (err_no != 3)
-				{
+		}
+
+		if ( col_type == 2 ) {
+			err_no = sscanf (readout_str, "%lf %lf %d\n",  &data->indep[i-1], &data->dep[i-1], &readout_int);
+			if (err_no != 3) {
+				char notice[255];
+				sprintf (notice, "%d. LC data file does not conform to the format specified in the Data tab", curve+1);
 				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
-				data->ptsno = 0;
-				return;
-				}
+				data->ptsno = 0; free (data->indep); free (data->dep); free (data->weight);
+				return -1;
+			}
 			data->weight[i-1] = (double) readout_int;
-			}
-		if ( (col_type == 3) || (col_type == 4) )
-			{
-			err_no = sscanf (working_str, "%lf %lf %lf\n", &data->indep[i-1], &data->dep[i-1], &data->weight[i-1]);
-			if (err_no != 3)
-				{
+		}
+
+		if ( (col_type == 3) || (col_type == 4) ) {
+			err_no = sscanf (readout_str, "%lf %lf %lf\n", &data->indep[i-1], &data->dep[i-1], &data->weight[i-1]);
+			if (err_no != 3) {
+				char notice[255];
+				sprintf (notice, "%d. LC data file does not conform to the format specified in the Data tab", curve+1);
 				notice_window = create_notice_window ("PHOEBE Notice", "Invalid observed data file format", "Observed data file doesn't conform to the format specified in the Data tab", "and the output will be suppressed. Please verify your file format specifications!", gtk_widget_destroy);
-				data->ptsno = 0;
-				return;
-				}
+				data->ptsno = 0; free (data->indep); free (data->dep); free (data->weight);
+				return -1;
 			}
 		}
+
+		free (readout_str);
+	}
 
 	/* We made one increment too many, which caused an OB1 in points number:    */
 	data->ptsno--;
@@ -1574,10 +1612,13 @@ int read_in_3d_image_data (char *filename, PHOEBE_data *data)
 
 int read_in_data_file_specifics ()
 	{
-	/* This function opens all data files and extracts the following info:      */
-	/* - The number of points,                                                  */
-	/* - The sum of all points,                                                 */
-	/* - The median of all points.                                              */
+	/*
+	 * This function opens all data files and extracts the following info:
+	 *
+	 * - The number of points,
+	 * - The sum of all points,
+	 * - The median of all points.
+	 */
 
 	int lc_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_lc_no_value")));
 	int rv_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_rv_no_value")));
@@ -1589,29 +1630,28 @@ int read_in_data_file_specifics ()
 
 	PHOEBE_data data;
 
-/* MOVE ME *TODAY*!!! */
 	GtkWidget *data_list = lookup_widget (PHOEBE, "data_files_info_list");
 	char working_string[255];
 	char *working_str = working_string;
-/* ****************** */
 
-	for (i = 0; i < lc_no; i++)
-		{
-		/* First do some error checking; the default values entered in the list   */
-		/* correspond to the undefined entry, so we just skip all declarations in */
-		/* here if an error occurs.                                               */
+	for (i = 0; i < lc_no; i++) {
+
+		/*
+		 * First do some error checking; the default values entered in the list
+		 * correspond to the undefined entry, so we just skip all declarations
+		 * in here if an error occurs.
+		 */
+
 		if (!file_exists (PHOEBE_lc_data[i].filename)) continue;
 
 		if (strcmp (PHOEBE_lc_data[i].column1, "Phase") == 0) INDEP = 2; else INDEP = 1;
 		if (strcmp (PHOEBE_lc_data[i].column2, "Magnitude") == 0) DEP = 8; else DEP = 5;
 
 		read_in_experimental_lc_data (i, &data, INDEP, DEP);
-		if (data.ptsno != 0)
-			{
+		if (data.ptsno != 0) {
 			sum    = calculate_sum (data);
 			median = calculate_median (data);
 
-/* MOVE ME *TODAY*!!! */
 			gtk_clist_set_text (GTK_CLIST (data_list), i, 0, PHOEBE_lc_data[i].filter);
 			sprintf (working_str, "%d", data.ptsno);
 			gtk_clist_set_text (GTK_CLIST (data_list), i, 1, working_str);
@@ -1619,26 +1659,22 @@ int read_in_data_file_specifics ()
 			gtk_clist_set_text (GTK_CLIST (data_list), i, 2, working_str);
 			sprintf (working_str, "%5.5lf", median);
 			gtk_clist_set_text (GTK_CLIST (data_list), i, 3, working_str);
-/* ****************** */
 
 			data.ptsno = 0; free (data.indep); free (data.dep); free (data.weight);
-			}
 		}
+	}
 
-	for (i = 0; i < rv_no; i++)
-		{
+	for (i = 0; i < rv_no; i++) {
 		if (!file_exists (PHOEBE_rv_data[i].filename)) continue;
 
 		if (strcmp (PHOEBE_rv_data[i].column1, "Phase") == 0) INDEP = 2; else INDEP = 1;
 		if (strcmp (PHOEBE_rv_data[i].column2, "RV in km/s") == 0) DEP = 7; else DEP = 3;
 
 		read_in_experimental_rv_data (i, &data, INDEP, DEP, 1.0);
-		if (data.ptsno != 0)
-			{
+		if (data.ptsno != 0) {
 			sum    = calculate_sum (data);
 			median = calculate_median (data);
 
-/* MOVE ME *TODAY*!!! */
 			gtk_clist_set_text (GTK_CLIST (data_list), lc_no + i, 0, PHOEBE_rv_data[i].filter);
 			sprintf (working_str, "%d", data.ptsno);
 			gtk_clist_set_text (GTK_CLIST (data_list), lc_no + i, 1, working_str);
@@ -1646,13 +1682,10 @@ int read_in_data_file_specifics ()
 			gtk_clist_set_text (GTK_CLIST (data_list), lc_no + i, 2, working_str);
 			sprintf (working_str, "%5.5lf", median);
 			gtk_clist_set_text (GTK_CLIST (data_list), lc_no + i, 3, working_str);
-/* ****************** */
 
 			data.ptsno = 0; free (data.indep); free (data.dep); free (data.weight);
-			}
 		}
-
-	return 0;
 	}
 
-
+	return 0;
+}

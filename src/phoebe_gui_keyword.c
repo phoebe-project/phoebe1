@@ -428,15 +428,11 @@ void open_keyword_file (const char *filename)
 	
 	keyword_file = fopen (filename, "r");
 
-	while (feof (keyword_file) == 0)
+	while (!feof (keyword_file))
 		{
 		fgets (readout_str, 255, keyword_file);
-		while (strlen (readout_str) <= 1)
-			{
-			fgets (readout_str, 255, keyword_file);
-			if (feof (keyword_file) != 0) break;
-			}
 		if (feof (keyword_file) != 0) break;
+		if (*readout_str == '\n') continue;
 
 		/* fgets reads a newline character, which we don't want really:           */
 		strip_string_tail (readout_str);

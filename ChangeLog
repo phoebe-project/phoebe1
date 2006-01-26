@@ -1,11 +1,20 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-01-26: - PHOEBE segfaulted on some architectures if ^M characters were
+              used (DOS/Windows <CR> character). These characters are now
+              automatically removed during parsing.
 2006-01-24: - Carla Maceroni pointed out obsolete tool-tips and labels that
               contained a reference to WD98 and were thus confusing the user
               about the WD version, which is the latest 2004 version. Fixed.
               Would you believe it: there were more than 15 instances of
               such obsolete labels! :( Sorry for the inconvenience!
+            - Filters R and I of the Bessell series are actually Rc and Ic.
+              Because of the missing 'c' the filters were not recognized
+              as valid. Many thanks to Carla Maceroni for pointing this out!
+            - PHOEBE segfaulted if invoked with -s and without the script
+              file. Fixed.
+            - A small memory leak in data allocation fixed.
 2006-01-16: - CVS server moved to dioniz.fiz.uni-lj.si. README file updated.
 2006-01-13: - PHOEBE reported to compile and run cleanly on Fedora Core 4.
               Many thanks to Carla Maceroni for pointing this out!
