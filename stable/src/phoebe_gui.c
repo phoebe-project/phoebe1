@@ -18843,14 +18843,14 @@ create_PHOEBE_filter_menu (void)
   gtk_widget_show (filters_bessell_v);
   gtk_container_add (GTK_CONTAINER (filters_bessell_series_menu), filters_bessell_v);
 
-  filters_bessell_r = gtk_menu_item_new_with_label ("647nm (R)");
+  filters_bessell_r = gtk_menu_item_new_with_label ("647nm (Rc)");
   gtk_widget_ref (filters_bessell_r);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_filter_menu), "filters_bessell_r", filters_bessell_r,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (filters_bessell_r);
   gtk_container_add (GTK_CONTAINER (filters_bessell_series_menu), filters_bessell_r);
 
-  filters_bessell_i = gtk_menu_item_new_with_label ("786nm (I)");
+  filters_bessell_i = gtk_menu_item_new_with_label ("786nm (Ic)");
   gtk_widget_ref (filters_bessell_i);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_filter_menu), "filters_bessell_i", filters_bessell_i,
                             (GtkDestroyNotify) gtk_widget_unref);

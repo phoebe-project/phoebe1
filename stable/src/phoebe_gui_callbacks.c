@@ -57,7 +57,7 @@ void on_switches_reverse_toggled (GtkToggleButton *togglebutton, gpointer user_d
 	}
 
 void on_data_lc_no_value_changed (GtkEditable *editable, gpointer user_data)
-	{
+{
 	int lc_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_lc_no_value")));
 
 	/* Be sure that the 2D parameter correlation Calculate button is off if     */
@@ -69,9 +69,9 @@ void on_data_lc_no_value_changed (GtkEditable *editable, gpointer user_data)
 
 	allocate_memory_for_data_record (&PHOEBE_lc_data, lc_no);
 	add_empty_record_to_all_lc_dependent_info_lists ();
-	add_filters_to_available_filter_lists ();
+/*	add_filters_to_available_filter_lists ();*/
 	read_in_data_file_specifics ();
-	}
+}
 
 void on_data_rv_no_value_changed (GtkEditable *editable, gpointer user_data)
 	{

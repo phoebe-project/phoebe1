@@ -3,12 +3,12 @@
 #include "phoebe_gui_accessories.h"
 
 int main (int argc, char *argv[])
-	{
-  gtk_set_locale ();
-  gtk_init (&argc, &argv);
+{
+	gtk_set_locale ();
+	gtk_init (&argc, &argv);
 	parse_startup_line (argc, argv);
 	phoebe_init ();
-  gtk_main ();
+	gtk_main ();
 
-  return 0;
-	}
+	return 0;
+}

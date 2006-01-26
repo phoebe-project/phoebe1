@@ -36269,7 +36269,7 @@ Portable Pixmap (.ppm)
 	  <handler>on_filter_menu_specific_filter_activate</handler>
 	  <last_modification_time>Wed, 04 Jun 2003 17:41:08 GMT</last_modification_time>
 	</signal>
-	<label>647nm (R)</label>
+	<label>647nm (Rc)</label>
 	<right_justify>False</right_justify>
       </widget>
 
@@ -36281,7 +36281,7 @@ Portable Pixmap (.ppm)
 	  <handler>on_filter_menu_specific_filter_activate</handler>
 	  <last_modification_time>Wed, 04 Jun 2003 17:41:08 GMT</last_modification_time>
 	</signal>
-	<label>786nm (I)</label>
+	<label>786nm (Ic)</label>
 	<right_justify>False</right_justify>
       </widget>
     </widget>

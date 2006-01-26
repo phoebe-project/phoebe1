@@ -17,43 +17,58 @@
 #include "phoebe_scripting.h"
 
 void parse_startup_line (int argc, char *argv[])
-	{
-	/* This function parses the command line and looks for known switches; it   */
-	/* doesn't really do anything with them, it just writes what it found to    */
-	/* the PHOEBE_args variable that is supposed to be used for real actions.   */
+{
+	/*
+	 * This function parses the command line and looks for known switches; it
+	 * doesn't really do anything with them, it just writes what it found to
+	 * the PHOEBE_args variable that is supposed to be used for real actions.
+	 */
 
 	int i;
 
-	for (i = 1; i < argc; i++)
-		{
+	for (i = 1; i < argc; i++) {
 		if ( (strcmp (argv[i],  "-h"   ) == 0) ||
 		     (strcmp (argv[i],  "-?"   ) == 0) ||
-				 (strcmp (argv[i], "--help") == 0) )
-			{
+			 (strcmp (argv[i], "--help") == 0) ) {
 			printf ("\nPHOEBE 0.29 command line arguments: [-hsv] [keyword_file]\n\n");
 			printf ("  -h, --help, -?      ..  this help screen\n");
 			printf ("  -s, --script        ..  execute PHOEBE script\n");
 			printf ("  -v, --version       ..  display PHOEBE version and exit\n");
 			printf ("\n");
 			exit (0);
-			}
+		}
+
 		if ( (strcmp (argv[i],  "-v"      ) == 0) ||
-				 (strcmp (argv[i], "--version") == 0) )
-			{
+				 (strcmp (argv[i], "--version") == 0) ) {
 			printf ("\nPHOEBE 0.29 (stable release), January 13, 2006 by Andrej Prsa\n");
 			printf ("  Send comments and/or requests to andrej.prsa@fmf.uni-lj.si\n\n");
 			exit (0);
-			}
+		}
+
 		if ( (strcmp (argv[i],  "-s"     ) == 0) ||
-				 (strcmp (argv[i], "--script") == 0) )
-			{
-			/* We cannot start the script from here because the widgets aren't ini- */
-			/* tialized yet; thus we just initialize the proper switches:           */
+				 (strcmp (argv[i], "--script") == 0) ) {
+			/*
+			 * We cannot start the script from here because the widgets aren't
+			 * initialized yet; thus we just initialize the proper switches:           
+			 */
+
+			if (i+1 >= argc) {
+				printf ("\nPHOEBE 0.29 command line arguments: [-hsv] [keyword_file]\n\n");
+				printf ("  -h, --help, -?      ..  this help screen\n");
+				printf ("  -s, --script        ..  execute PHOEBE script\n");
+				printf ("  -v, --version       ..  display PHOEBE version and exit\n");
+				printf ("\n");
+				printf ("PHOEBE error: please provide a script name to the -s switch.\n\n");
+				exit (0);
+			}
+
 			PHOEBE_EXECUTE_SCRIPT = 1;
 			sprintf (PHOEBE_EXECUTE_SCRIPT_NAME, "%s", argv[i+1]);
-			i++; i++;                            /* This will skip the script name. */
-			if (i >= argc) break;   /* If this was the last switch, break the loop. */
-			}
+			i++;
+			/* If this was the last switch, break the loop. */
+			if (i >= argc) break; else continue;
+		}
+
 		if ( argv[i][0] != '-' )
 			{
 			/* This means that the command line argument doesn't contain '-'; thus  */
@@ -79,16 +94,16 @@ void phoebe_init ()
 	char keyword_string[255];
 	char *keyword_str = keyword_string;
 
-	/* This is a read-in string used by getline():                              */
+	/* This is a read-in string used by getline():                            */
 	char *delimeter_str = NULL;
 
-	/* Two strings to create symbolic links to atmcof*.dat:                     */
+	/* Two strings to create symbolic links to atmcof*.dat:                   */
 	char source_string[255], dest_string[255];
 	char *source_str = source_string, *dest_str = dest_string;
 
 	FILE *config_file;
 
-	/* First thing: set all numbers to conform to ISO "C" locale:               */
+	/* First thing: set all numbers to conform to ISO "C" locale:             */
 	PHOEBE_LOCALE = strdup (setlocale (LC_NUMERIC, NULL));
 	setlocale (LC_NUMERIC, "C");
 
@@ -411,7 +426,7 @@ void phoebe_init ()
 	gtk_widget_set_sensitive (lookup_widget (PHOEBE_configuration, "configuration_sm_switch"), FALSE);
 	#endif
 
-	/* If SuperMongo libraries are missing, disable the SM selection widget:    */
+	/* If GnuPlot is missing, disable the corresponding selection widget:     */
 	#ifndef PHOEBE_GNUPLOT_SUPPORT
 	gtk_widget_set_sensitive (lookup_widget (PHOEBE_configuration, "configuration_gnuplot_switch"), FALSE);
 	#endif
@@ -463,34 +478,54 @@ int everything_ok_with_the_filename (char *file_name)
 
 void strip_string_tail (char *in)
 	{
+	if (!in) return;
+	if (!(*in)) return;
 	in[strlen(in)-1] = '\0';
 	return;
 	}
 
 int parse_input_data (char **in)
-	{
-	/* This function will filter out all commented parts and undesired spaces   */
-	/* from string *in and return it in PHOEBE-readable form. If it returns non */
-	/* zero, it means that the line contains no useful data and that the caller */
-	/* function should disregard it.                                            */
+{
+	/*
+	 * This function filters out all commented parts and undesired spaces
+	 * from the passed string and returns it clean. If it returns non-zero,
+	 * it means that the line contains no useful data and that the caller
+	 * function should disregard it.                                           
+	 */
 
+	char *copy = strdup (*in);
 	char *ptr;
 
-	/* If the line contains the comment delimeter '#', discard everything       */
-	/* that follows it (strip the input line):                                  */
-	if ( (ptr = strchr (*in, '#')) != NULL)
-		*ptr = '\0';
+	/* Free the original string: */
+	free (*in);
 
-	/* If we have spaces in front of the first character in line, remove        */
-	/* them by incrementing the pointer by 1:                                   */
-	while ((*in)[0] == ' ' || (*in)[0] == '\t' || (*in)[0] == '\n') (*in)++;
+	/* If the line contains the comment delimeter '#', discard everything     */
+	/* that follows it (strip the rest of the line):                          */
+	if ( (ptr = strchr (copy, '#')) ) *ptr = '\0';
+
+	/* Remove any newline characters (*nix AND DOS/Windows): */
+	if ( (ptr = strchr (copy, '\n')) ) *ptr = '\0';
+	if ( (ptr = strchr (copy, 13))   ) *ptr = '\0';
+
+	/* If we have spaces in front of the first character in line, remove      */
+	/* them by incrementing the pointer by 1:                                 */
+	ptr = copy;
+	while (*ptr == ' ' || *ptr == '\t') {
+		ptr++;
+	}
 
 	/* If the file we read out is an empty line, return non-zero:               */
-	if ( (strlen (*in) == 0) || ((*in)[0] == '\n') )
+	if ( *ptr == '\0' ) {
+		*in = NULL;
+		free (copy);
 		return -1;
-	else
+	}
+	else {
+		*in = strdup (ptr);
+		free (copy);
 		return 0;
 	}
+}
 
 void print_to_status_bar (char *text)
 	{
@@ -758,14 +793,14 @@ void set_clist_justifications ()
 	}
 
 void add_empty_record_to_all_lc_dependent_info_lists ()
-	{
+{
 	add_empty_record_to_lc_info_list ();
 	add_empty_record_to_luminosities_lc_info_list ();
 	add_empty_record_to_luminosities_el3_info_list ();
 	add_empty_record_to_ld_monochromatic_lc_info_list ();
 	add_empty_record_to_luminosities_weighting_info_list ();
 	add_empty_record_to_data_files_info_list ();
-	}
+}
 
 void add_empty_record_to_all_rv_dependent_info_lists ()
 	{
@@ -775,14 +810,15 @@ void add_empty_record_to_all_rv_dependent_info_lists ()
 	}
 
 void add_empty_record_to_lc_info_list ()
-	{
-	GtkWidget *lc_list = lookup_widget (PHOEBE, "data_lc_info_list");
+{
+ 	GtkWidget *lc_list = lookup_widget (PHOEBE, "data_lc_info_list");
 	int lc_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_lc_no_value")));
 	int rows_already_present = GTK_CLIST (lc_list)->rows;
 	int i;
 
-	char entry_string[4][255];
-	char *entry[4] = {entry_string[0], entry_string[1], entry_string[2], entry_string[3]};
+	char **entry = phoebe_malloc (4 * sizeof (*entry));
+	for (i = 0; i < 4; i++)
+		entry[i] = phoebe_malloc (255 * sizeof (**entry));
 
 	/* If lc_no is greater than 0, Edit button should be available: */
 	if (lc_no != 0) gtk_widget_set_sensitive (lookup_widget (PHOEBE, "data_lc_edit_data_entry_button"), TRUE);
@@ -795,8 +831,7 @@ void add_empty_record_to_lc_info_list ()
 		}
 
 	if (lc_no > rows_already_present)
-		for (i = rows_already_present; i < lc_no; i++)
-			{
+		for (i = rows_already_present; i < lc_no; i++) {
 			sprintf (entry[0], "%d.", i+1);
 			sprintf (entry[1], "Undefined");
 			sprintf (entry[2], "0.01000");
@@ -810,8 +845,10 @@ void add_empty_record_to_lc_info_list ()
 			sprintf (PHOEBE_lc_data[i].filter,   "Undefined");
 
 			gtk_clist_append (GTK_CLIST (lc_list), entry);
-			}
-	}
+		}
+
+	for (i = 0; i < 4; i++) free (entry[i]); free (entry);
+}
 
 void add_empty_record_to_data_files_info_list ()
 	{
