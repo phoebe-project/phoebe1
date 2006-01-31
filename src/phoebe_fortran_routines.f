@@ -191,13 +191,6 @@
    12 format(I3,2F10.5,4F7.3,D10.3,D12.5,F10.6)
       END
 
-      SUBROUTINE CREATEDATALINE(INDEP,DEP,WEIGHT)
-      implicit none
-      double precision INDEP,DEP,WEIGHT
-      write(1,1) INDEP,DEP,WEIGHT
-    1 format(5(F14.5,F8.4,F6.2))
-      END
-
       SUBROUTINE CREATEDCILINELC(IBAND,HLA,CLA,X1A,X2A,Y1A,Y2A,EL3,
      +                            OPSF,NOISE,SIGMA,WLA)
       implicit none
@@ -206,6 +199,13 @@
       write(1,13) IBAND,HLA,CLA,X1A,X2A,Y1A,Y2A,EL3,OPSF,NOISE,
      +            SIGMA,WLA
    13 format(I3,2F10.5,4F7.3,F8.4,D10.3,I2,D12.5,F10.6)
+      END
+
+      SUBROUTINE CREATEDATALINE(INDEP,DEP,WEIGHT)
+      implicit none
+      double precision INDEP,DEP,WEIGHT
+      write(1,1) INDEP,DEP,WEIGHT
+    1 format(5(F14.5,F8.4,F6.2))
       END
 
       SUBROUTINE CREATESPOTSSTOPLINE()
@@ -246,4 +246,121 @@
       SEP = 2
       write(1,2) SEP
     2 format(I2)
+      END
+
+      SUBROUTINE READDCILINE1(DEL1,DEL2,DEL3,DEL4,DEL5,DEL6,DEL7,
+     +                          DEL8)
+      implicit none
+      double precision DEL1,DEL2,DEL3,DEL4,DEL5,DEL6,DEL7,DEL8
+      read(1,1) DEL1,DEL2,DEL3,DEL4,DEL5,DEL6,DEL7,DEL8
+    1 format(10(1X,D7.1))
+      END
+
+      SUBROUTINE READDCILINE2(DEL10,DEL11,DEL12,DEL13,DEL14,DEL16,
+     +                          DEL17,DEL18,DEL19,DEL20)
+      implicit none
+      double precision DEL10,DEL11,DEL12,DEL13,DEL14,DEL16,DEL17,DEL18,
+     +                 DEL19,DEL20
+      read(1,2) DEL10,DEL11,DEL12,DEL13,DEL14,DEL16,DEL17,DEL18,DEL19,
+     +           DEL20
+    2 format(10(1X,D7.1))
+      END
+
+      SUBROUTINE READDCILINE3(DEL21,DEL22,DEL23,DEL24,DEL25,DEL31,
+     +                          DEL32,DEL33,DEL34)
+      implicit none
+      double precision DEL21,DEL22,DEL23,DEL24,DEL25,DEL31,DEL32,DEL33,
+     +                 DEL34
+      read(1,3) DEL21,DEL22,DEL23,DEL24,DEL25,DEL31,DEL32,DEL33,DEL34
+    3 format(10(1X,D7.1))
+      END
+
+      SUBROUTINE READDCILINE4(KEP,IFDER,IFM,IFR,XLAMDA)
+      implicit none
+      integer I,KEP(35),IFDER,IFM,IFR
+      double precision XLAMDA
+      read(1,4) (KEP(I),I=1,35),IFDER,IFM,IFR,XLAMDA
+    4 format(1X,2(4I1,1X),7I1,1X,4(5I1,1X),I1,1X,I1,1X,I1,D10.3)
+      END
+
+      SUBROUTINE READDCILINE5(KSPA,NSPA,KSPB,NSPB)
+      implicit none
+      integer KSPA,NSPA,KSPB,NSPB
+      read(1,5) KSPA,NSPA,KSPB,NSPB
+    5 format(4I3)
+      END
+
+      SUBROUTINE READDCILINE6(IFVC1,IFVC2,NLC,K0,KDISK,ISYM,NPPL)
+      implicit none
+      integer IFVC1,IFVC2,NLC,K0,KDISK,ISYM,NPPL
+      read(1,6) IFVC1,IFVC2,NLC,K0,KDISK,ISYM,NPPL
+    6 format(I1,1X,I1,1X,5I2)
+      END
+
+      SUBROUTINE READDCILINE7(NREF,MREF,IFSMV1,IFSMV2,ICOR1,ICOR2,LD)
+      implicit none
+      integer NREF,MREF,IFSMV1,IFSMV2,ICOR1,ICOR2,LD
+      read(1,7) NREF,MREF,IFSMV1,IFSMV2,ICOR1,ICOR2,LD
+    7 format(7(I1,1X))
+      END
+
+      SUBROUTINE READDCILINE8(JDPHS,HJD0,PERIOD,DPDT,PSHIFT)
+      implicit none
+      integer JDPHS
+      double precision HJD0,PERIOD,DPDT,PSHIFT
+      read(1,8) JDPHS,HJD0,PERIOD,DPDT,PSHIFT
+    8 format(I1,F15.6,D17.10,D14.6,F10.4)
+      END
+
+      SUBROUTINE READDCILINE9(MODE,IPB,IFAT1,IFAT2,N1,N2,N1L,N2L,
+     +                          PERR0,DPERDT,THE,VUNIT)
+      implicit none
+      integer MODE,IPB,IFAT1,IFAT2,N1,N2,N1L,N2L
+      double precision PERR0,DPERDT,THE,VUNIT
+      read(1,9) MODE,IPB,IFAT1,IFAT2,N1,N2,N1L,N2L,PERR0,DPERDT,THE,
+     +           VUNIT
+    9 format(4I2,4I3,F13.6,D12.5,F8.5,F9.3)
+      END
+
+      SUBROUTINE READDCILINE10(E,A,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN)
+      implicit none
+      double precision E,A,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
+      read(1,10) E,A,F1,F2,VGA,XINCL,GR1,GR2,ABUNIN
+   10 FORMAT(F6.5,d13.6,2F10.4,F10.4,f9.3,2f7.3,f7.2)
+      END
+
+      SUBROUTINE READDCILINE11(TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,
+     +                           XBOL1,XBOL2,YBOL1,YBOL2)
+      implicit none
+      double precision TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,XBOL1,XBOL2,
+     +                 YBOL1,YBOL2
+      read(1,11) TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,XBOL1,XBOL2,YBOL1,
+     +            YBOL2
+   11 format(F7.4,F8.4,2F7.3,2D13.6,F10.5,4F7.3)
+      END
+
+      SUBROUTINE READDCILINERV(IBAND,HLA,CLA,X1A,X2A,Y1A,Y2A,
+     +                           OPSF,SIGMA,WLA)
+      implicit none
+      integer IBAND
+      double precision WLA,HLA,CLA,X1A,X2A,Y1A,Y2A,OPSF,SIGMA
+      read(1,12) IBAND,HLA,CLA,X1A,X2A,Y1A,Y2A,OPSF,SIGMA,WLA
+   12 format(I3,2F10.5,4F7.3,D10.3,D12.5,F10.6)
+      END
+
+      SUBROUTINE READDCILINELC(IBAND,HLA,CLA,X1A,X2A,Y1A,Y2A,EL3,
+     +                            OPSF,NOISE,SIGMA,WLA)
+      implicit none
+      integer NOISE,IBAND
+      double precision WLA,HLA,CLA,X1A,X2A,Y1A,Y2A,EL3,OPSF,SIGMA
+      read(1,13) IBAND,HLA,CLA,X1A,X2A,Y1A,Y2A,EL3,OPSF,NOISE,
+     +            SIGMA,WLA
+   13 format(I3,2F10.5,4F7.3,F8.4,D10.3,I2,D12.5,F10.6)
+      END
+
+      SUBROUTINE READDCILINESPOTS(XLAT1,XLONG1,RADSP1,TEMSP1)
+      implicit none
+      double precision XLAT1,XLONG1,RADSP1,TEMSP1
+      read(1,8) XLAT1,XLONG1,RADSP1,TEMSP1
+    8 format(4F9.5)
       END

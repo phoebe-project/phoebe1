@@ -11,4 +11,6 @@ int create_dci_file (char filename[], double DEL[35], int KEP[35], PHOEBE_main_p
                      PHOEBE_limb_darkening ld, PHOEBE_spots spots,
 										 PHOEBE_switches switches, PHOEBE_mms mms);
 
+int read_out_dci_file (char *filename);
+
 #endif

@@ -9,6 +9,7 @@
 
 #include "../include/cfortran.h"
 #include "phoebe_allocations.h"
+#include "phoebe_error_handling.h"
 #include "phoebe_global.h"
 #include "phoebe_gui_support.h"
 #include "phoebe_transformations.h"
@@ -51,6 +52,20 @@
 
 	#define CREATEDATALINE(a1,a2,a3) CCALLSFSUB3(CREATEDATALINE,createdataline,DOUBLE,DOUBLE,DOUBLE,a1,a2,a3)
 
+	#define READDCILINE1(a1,a2,a3,a4,a5,a6,a7,a8)                 CCALLSFSUB8(READDCILINE1,readdciline1,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8)
+	#define READDCILINE2(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)          CCALLSFSUB10(READDCILINE2,readdciline2,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)
+	#define READDCILINE3(a1,a2,a3,a4,a5,a6,a7,a8,a9)              CCALLSFSUB9(READDCILINE3,readdciline3,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8,a9)
+	#define READDCILINE4(a1,a2,a3,a4,a5)                          CCALLSFSUB5(READDCILINE4,readdciline4,INTVV,INTV,INTV,INTV,DOUBLEV,a1,a2,a3,a4,a5)
+	#define READDCILINE5(a1,a2,a3,a4)                             CCALLSFSUB4(READDCILINE5,readdciline5,INTV,INTV,INTV,INTV,a1,a2,a3,a4)
+	#define READDCILINE6(a1,a2,a3,a4,a5,a6,a7)                    CCALLSFSUB7(READDCILINE6,readdciline6,INTV,INTV,INTV,INTV,INTV,INTV,INTV,a1,a2,a3,a4,a5,a6,a7)
+	#define READDCILINE7(a1,a2,a3,a4,a5,a6,a7)                    CCALLSFSUB7(READDCILINE7,readdciline7,INTV,INTV,INTV,INTV,INTV,INTV,INTV,a1,a2,a3,a4,a5,a6,a7)
+	#define READDCILINE8(a1,a2,a3,a4,a5)                          CCALLSFSUB5(READDCILINE8,readdciline8,INTV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5)
+	#define READDCILINE9(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)  CCALLSFSUB12(READDCILINE9,readdciline9,INTV,INTV,INTV,INTV,INTV,INTV,INTV,INTV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)
+	#define READDCILINE10(a1,a2,a3,a4,a5,a6,a7,a8,a9)             CCALLSFSUB9(READDCILINE10,readdciline10,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8,a9)
+	#define READDCILINE11(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)     CCALLSFSUB11(READDCILINE11,readdciline11,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)
+	#define READDCILINERV(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)         CCALLSFSUB10(READDCILINERV,readdcilinerv,INTV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)
+	#define READDCILINELC(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12) CCALLSFSUB12(READDCILINELC,readdcilinelc,INTV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,INTV,DOUBLEV,DOUBLEV,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)
+	#define READDCILINESPOTS(h1,h2,h3,h4)                         CCALLSFSUB4(READDCILINESPOTS,readdcilinespots,DOUBLEV,DOUBLEV,DOUBLEV,DOUBLEV,h1,h2,h3,h4)
 
 int create_lci_file (char filename[], PHOEBE_main_parameters main, PHOEBE_switches switches,
     PHOEBE_limb_darkening ld, PHOEBE_spots spots, PHOEBE_curve_parameters curve,
@@ -184,3 +199,178 @@ int create_dci_file (char filename[], double DEL[35], int KEP[35],
 
 	return 0;
 	}
+
+int read_out_dci_file (char *filename)
+{
+	int i, curves;
+	double *s = phoebe_malloc (35 * sizeof (*s));
+	int    *k = phoebe_malloc (35 * sizeof (*k));
+	int    dummyint;
+	int    kspa, kspb, nspa, nspb, ifvc1, ifvc2, nlc, isym, nppl;
+	int    nref, mref, ifsmv1, ifsmv2, icor1, icor2, ld, jdphs;
+	int    mode, ipb, ifat1, ifat2, n1, n2, n1l, n2l;
+	double lambda, hjd0, period, dpdt, pshift, perr0, dperdt, the, vunit;
+	double e, a, f1, f2, vga, incl, gr1, gr2, abun, tavh, tavc, alb1, alb2;
+	double phsv, pcsv, rm, xbol1, xbol2, ybol1, ybol2;
+
+	int *iband, *noise;
+	double *hla, *cla, *x1a, *x2a, *y1a, *y2a, *el3, *opsf, *sigma, *wla;
+	double *xlat1, *xlat2, *xlong1, *xlong2, *radsp1, *radsp2, *temsp1, *temsp2;
+	
+	OPENSTREAM (filename);
+	READDCILINE1  (&s[0], &s[1], &s[2], &s[3], &s[4], &s[5], &s[6], &s[7]);
+	READDCILINE2  (&s[8], &s[9], &s[10], &s[11], &s[12], &s[13], &s[14], &s[15], &s[16], &s[17]);
+	READDCILINE3  (&s[18], &s[19], &s[20], &s[21], &s[22], &s[23], &s[24], &s[25], &s[26]);
+	READDCILINE4  (&k, &dummyint, &dummyint, &dummyint, &lambda);
+	READDCILINE5  (&kspa, &nspa, &kspb, &nspb);
+	READDCILINE6  (&ifvc1, &ifvc2, &nlc, &dummyint, &dummyint, &isym, &nppl);
+	READDCILINE7  (&nref, &mref, &ifsmv1, &ifsmv2, &icor1, &icor2, &ld);
+	READDCILINE8  (&jdphs, &hjd0, &period, &dpdt, &pshift);
+	READDCILINE9  (&mode, &ipb, &ifat1, &ifat2, &n1, &n2, &n1l, &n2l, &perr0, &dperdt, &the, &vunit);
+	READDCILINE10 (&e, &a, &f1, &f2, &vga, &incl, &gr1, &gr2, &abun);
+	READDCILINE11 (&tavh, &tavc, &alb1, &alb2, &phsv, &pcsv, &rm, &xbol1, &xbol2, &ybol1, &ybol2);
+
+	/* Now we must do the readout of passband-dependent parameters: */
+	curves = ifvc1 + ifvc2 + nlc;
+	iband = phoebe_malloc (curves * sizeof (*iband));
+	hla   = phoebe_malloc (curves * sizeof (*hla));
+	cla   = phoebe_malloc (curves * sizeof (*cla));
+	x1a   = phoebe_malloc (curves * sizeof (*x1a));
+	x2a   = phoebe_malloc (curves * sizeof (*x2a));
+	y1a   = phoebe_malloc (curves * sizeof (*y1a));
+	y2a   = phoebe_malloc (curves * sizeof (*y2a));
+	el3   = phoebe_malloc (curves * sizeof (*el3));
+	opsf  = phoebe_malloc (curves * sizeof (*opsf));
+	sigma = phoebe_malloc (curves * sizeof (*sigma));
+	wla   = phoebe_malloc (curves * sizeof (*wla));
+	noise = phoebe_malloc (curves * sizeof (*noise));
+
+	for (i = 0; i < ifvc1 + ifvc2; i++) {
+		READDCILINERV (&iband[i], &hla[i], &cla[i], &x1a[i], &x2a[i], &y1a[i], &y2a[i], &opsf[i], &sigma[i], &wla[i]);
+		el3[i] = -1.0; noise[i] = -1;
+	}
+	for (i = ifvc1 + ifvc2; i < ifvc1 + ifvc2 + nlc; i++) {
+		READDCILINELC (&iband[i], &hla[i], &cla[i], &x1a[i], &x2a[i], &y1a[i], &y2a[i], &el3[i], &opsf[i], &noise[i], &sigma[i], &wla[i]);
+	}
+
+	/* Next come the spots: */
+	if (nspa != 0) {
+		xlat1  = phoebe_malloc (nspa * sizeof (*xlat1));
+		xlong1 = phoebe_malloc (nspa * sizeof (*xlong1));
+		radsp1 = phoebe_malloc (nspa * sizeof (*radsp1));
+		temsp1 = phoebe_malloc (nspa * sizeof (*temsp1));
+
+		for (i = 0; i < nspa; i++) {
+			READDCILINESPOTS (&xlat1[i], &xlong1[i], &radsp1[i], &temsp1[i]);
+		}
+	}
+	if (nspb != 0) {
+		xlat2  = phoebe_malloc (nspa * sizeof (*xlat2));
+		xlong2 = phoebe_malloc (nspa * sizeof (*xlong2));
+		radsp2 = phoebe_malloc (nspa * sizeof (*radsp2));
+		temsp2 = phoebe_malloc (nspa * sizeof (*temsp2));
+
+		for (i = 0; i < nspb; i++) {
+			READDCILINESPOTS (&xlat2[i], &xlong2[i], &radsp2[i], &temsp2[i]);
+		}
+	}
+
+	CLOSESTREAM ();
+
+	printf ("dels:   "); for (i = 0; i < 26; i++) { printf ("%3.3lf, ", s[i]); } printf ("%lf\n", s[i]);
+	printf ("keps:   "); for (i = 0; i < 35; i++) { printf ("%d", k[i]); } printf ("\n");
+	printf ("lambda: %lf\n", lambda);
+	printf ("kspa:   %d\n", kspa);
+	printf ("nspa:   %d\n", nspa);
+	printf ("kspb:   %d\n", kspb);
+	printf ("nspb:   %d\n", nspb);
+	printf ("ifvc1:  %d\n", ifvc1);
+	printf ("ifvc2:  %d\n", ifvc2);
+	printf ("nlc:    %d\n", nlc);
+	printf ("isym:   %d\n", isym);
+	printf ("nppl:   %d\n", nppl);
+	printf ("nref:   %d\n", nref);
+	printf ("mref:   %d\n", mref);
+	printf ("ifsmv1: %d\n", ifsmv1);
+	printf ("ifsmv2: %d\n", ifsmv2);
+	printf ("icor1:  %d\n", icor1);
+	printf ("icor2:  %d\n", icor2);
+	printf ("ld:     %d\n", ld);
+	printf ("jdphs:  %d\n", jdphs);
+	printf ("hjd0:   %lf\n", hjd0);
+	printf ("period: %lf\n", period);
+	printf ("dpdt:   %lf\n", dpdt);
+	printf ("pshift: %lf\n", pshift);
+	printf ("mode:   %d\n", mode);
+	printf ("ipb:    %d\n", ipb);
+	printf ("ifat1:  %d\n", ifat1);
+	printf ("ifat2:  %d\n", ifat2);
+	printf ("n1:     %d\n", n1);
+	printf ("n2:     %d\n", n2);
+	printf ("n1l:    %d\n", n1l);
+	printf ("n2l:    %d\n", n2l);
+	printf ("perr0:  %lf\n", perr0);
+	printf ("dperdt: %lf\n", dperdt);
+	printf ("the:    %lf\n", the);
+	printf ("vunit:  %lf\n", vunit);
+	printf ("e:      %lf\n", e);
+	printf ("a:      %lf\n", a);
+	printf ("f1:     %lf\n", f1);
+	printf ("f2:     %lf\n", f2);
+	printf ("vga:    %lf\n", vga);
+	printf ("incl:   %lf\n", incl);
+	printf ("gr1:    %lf\n", gr1);
+	printf ("gr2:    %lf\n", gr2);
+	printf ("abun:   %lf\n", abun);
+	printf ("tavh:   %lf\n", tavh);
+	printf ("tavc:   %lf\n", tavc);
+	printf ("alb1:   %lf\n", alb1);
+	printf ("alb2:   %lf\n", alb2);
+	printf ("phsv:   %lf\n", phsv);
+	printf ("pcsv:   %lf\n", pcsv);
+	printf ("rm:     %lf\n", rm);
+	printf ("xbol1:  %lf\n", xbol1);
+	printf ("xbol2:  %lf\n", xbol2);
+	printf ("ybol1:  %lf\n", ybol1);
+	printf ("ybol2:  %lf\n", ybol2);
+	printf ("iband:  "); for (i = 0; i < curves-1; i++) { printf ("%d, ", iband[i]); } printf ("%d\n", iband[i]);
+	printf ("hla:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", hla[i]); } printf ("%lf\n", hla[i]);
+	printf ("cla:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", cla[i]); } printf ("%lf\n", cla[i]);
+	printf ("x1a:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", x1a[i]); } printf ("%lf\n", x1a[i]);
+	printf ("x2a:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", x2a[i]); } printf ("%lf\n", x2a[i]);
+	printf ("y1a:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", y1a[i]); } printf ("%lf\n", y1a[i]);
+	printf ("y2a:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", y2a[i]); } printf ("%lf\n", y2a[i]);
+	printf ("el3:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", el3[i]); } printf ("%lf\n", el3[i]);
+	printf ("opsf:   "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", opsf[i]); } printf ("%lf\n", opsf[i]);
+	printf ("noise:  "); for (i = 0; i < curves-1; i++) { printf ("%d, ", noise[i]); } printf ("%d\n", noise[i]);
+	printf ("sigma:  "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", sigma[i]); } printf ("%lf\n", sigma[i]);
+	printf ("wla:    "); for (i = 0; i < curves-1; i++) { printf ("%lf, ", wla[i]); } printf ("%lf\n", wla[i]);
+	printf ("xlat1:  "); for (i = 0; i < nspa-1; i++) { printf ("%lf, ", xlat1[i]); } if (nspa != 0) printf ("%lf\n", xlat1[i]); else printf ("none\n");
+	printf ("xlong1: "); for (i = 0; i < nspa-1; i++) { printf ("%lf, ", xlong1[i]); } if (nspa != 0) printf ("%lf\n", xlong1[i]); else printf ("none\n");
+	printf ("radsp1: "); for (i = 0; i < nspa-1; i++) { printf ("%lf, ", radsp1[i]); } if (nspa != 0) printf ("%lf\n", radsp1[i]); else printf ("none\n");
+	printf ("temsp1: "); for (i = 0; i < nspa-1; i++) { printf ("%lf, ", temsp1[i]); } if (nspa != 0) printf ("%lf\n", temsp1[i]); else printf ("none\n");
+	printf ("xlat2:  "); for (i = 0; i < nspb-1; i++) { printf ("%lf, ", xlat2[i]); } if (nspb != 0) printf ("%lf\n", xlat2[i]); else printf ("none\n");
+	printf ("xlong2: "); for (i = 0; i < nspb-1; i++) { printf ("%lf, ", xlong2[i]); } if (nspb != 0) printf ("%lf\n", xlong2[i]); else printf ("none\n");
+	printf ("radsp2: "); for (i = 0; i < nspb-1; i++) { printf ("%lf, ", radsp2[i]); } if (nspb != 0) printf ("%lf\n", radsp2[i]); else printf ("none\n");
+	printf ("temsp2: "); for (i = 0; i < nspb-1; i++) { printf ("%lf, ", temsp2[i]); } if (nspb != 0) printf ("%lf\n", temsp2[i]); else printf ("none\n");
+
+	free (iband);
+	free (hla);
+	free (cla);
+	free (x1a);
+	free (x2a);
+	free (y1a);
+	free (y2a);
+	free (el3);
+	free (opsf);
+	free (noise);
+	free (sigma);
+	free (wla);
+
+	if (nspa != 0) { free (xlat1); free (xlong1); free (radsp1); free (temsp1); }
+	if (nspb != 0) { free (xlat2); free (xlong2); free (radsp2); free (temsp2); }
+
+	free (s);
+	free (k);
+	return 0;
+}

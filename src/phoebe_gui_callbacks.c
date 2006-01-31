@@ -249,7 +249,8 @@ void on_menu_bar_file_exit_activated (GtkMenuItem *menuitem, gpointer user_data)
 
 void on_menu_bar_file_import_from_dci_activate (GtkMenuItem *menuitem, gpointer user_data)
 	{
-	phoebe_warning ("not implemented");
+	read_out_dci_file ("/home/andrej/programming/development/phoebe/src/test.dci");
+	return;
 	}
 
 void on_menu_bar_file_export_to_dci_activate (GtkMenuItem *menuitem, gpointer user_data)

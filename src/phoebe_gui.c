@@ -18174,6 +18174,12 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_signal_connect (GTK_OBJECT (fitting_quickbar_temsp1_switch), "toggled",
                       GTK_SIGNAL_FUNC (on_fitting_quickbar_adjust_switch_toggled_update_main_switches),
                       NULL);
+  gtk_signal_connect (GTK_OBJECT (fitting_quickbar_latsp2_switch), "toggled",
+                      GTK_SIGNAL_FUNC (on_fitting_quickbar_adjust_switch_toggled_update_main_switches),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (fitting_quickbar_longsp2_switch), "toggled",
+                      GTK_SIGNAL_FUNC (on_fitting_quickbar_adjust_switch_toggled_update_main_switches),
+                      NULL);
   gtk_signal_connect (GTK_OBJECT (fitting_quickbar_radsp2_switch), "toggled",
                       GTK_SIGNAL_FUNC (on_fitting_quickbar_adjust_switch_toggled_update_main_switches),
                       NULL);
