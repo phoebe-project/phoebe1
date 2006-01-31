@@ -17397,6 +17397,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_latsp1_switch, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_latsp1_switch, FALSE);
 
   fitting_quickbar_longsp1_switch = gtk_check_button_new_with_label ("AS1 Longitude");
   gtk_widget_ref (fitting_quickbar_longsp1_switch);
@@ -17406,6 +17407,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_longsp1_switch, 0, 1, 3, 4,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_longsp1_switch, FALSE);
 
   fitting_quickbar_radsp1_switch = gtk_check_button_new_with_label ("AS1 Angular Radius");
   gtk_widget_ref (fitting_quickbar_radsp1_switch);
@@ -17415,6 +17417,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_radsp1_switch, 0, 1, 4, 5,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_radsp1_switch, FALSE);
 
   fitting_quickbar_temsp1_switch = gtk_check_button_new_with_label ("AS1 Temperature Factor");
   gtk_widget_ref (fitting_quickbar_temsp1_switch);
@@ -17424,6 +17427,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_temsp1_switch, 0, 1, 5, 6,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_temsp1_switch, FALSE);
 
   fitting_quickbar_latsp2_switch = gtk_check_button_new_with_label ("AS2 Latitude");
   gtk_widget_ref (fitting_quickbar_latsp2_switch);
@@ -17433,6 +17437,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_latsp2_switch, 0, 1, 6, 7,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_latsp2_switch, FALSE);
 
   fitting_quickbar_longsp2_switch = gtk_check_button_new_with_label ("AS2 Longitude");
   gtk_widget_ref (fitting_quickbar_longsp2_switch);
@@ -17442,6 +17447,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_longsp2_switch, 0, 1, 7, 8,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_longsp2_switch, FALSE);
 
   fitting_quickbar_radsp2_switch = gtk_check_button_new_with_label ("AS2 Angular Radius");
   gtk_widget_ref (fitting_quickbar_radsp2_switch);
@@ -17451,6 +17457,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_radsp2_switch, 0, 1, 8, 9,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_radsp2_switch, FALSE);
 
   fitting_quickbar_temsp2_switch = gtk_check_button_new_with_label ("AS2 Temperature Factor");
   gtk_widget_ref (fitting_quickbar_temsp2_switch);
@@ -17460,6 +17467,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_temsp2_switch, 0, 1, 9, 10,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_temsp2_switch, FALSE);
 
   fitting_quickbar_sma_switch = gtk_check_button_new_with_label ("Orbital Semi-Major Axis");
   gtk_widget_ref (fitting_quickbar_sma_switch);
@@ -17543,6 +17551,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_latsp1_step_value, 1, 2, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_latsp1_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_latsp1_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_latsp1_step_value), GTK_UPDATE_IF_VALID);
 
@@ -17615,6 +17624,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_longsp1_step_value, 1, 2, 3, 4,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_longsp1_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_longsp1_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_longsp1_step_value), GTK_UPDATE_IF_VALID);
 
@@ -17627,6 +17637,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_radsp1_step_value, 1, 2, 4, 5,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_radsp1_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_radsp1_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_radsp1_step_value), GTK_UPDATE_IF_VALID);
 
@@ -17639,6 +17650,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_temsp1_step_value, 1, 2, 5, 6,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_temsp1_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_temsp1_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_temsp1_step_value), GTK_UPDATE_IF_VALID);
 
@@ -17651,6 +17663,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_latsp2_step_value, 1, 2, 6, 7,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_latsp2_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_latsp2_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_latsp2_step_value), GTK_UPDATE_IF_VALID);
 
@@ -17663,6 +17676,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_longsp2_step_value, 1, 2, 7, 8,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_longsp2_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_longsp2_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_longsp2_step_value), GTK_UPDATE_IF_VALID);
 
@@ -17675,6 +17689,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_radsp2_step_value, 1, 2, 8, 9,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_radsp2_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_radsp2_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_radsp2_step_value), GTK_UPDATE_IF_VALID);
 
@@ -17687,6 +17702,7 @@ create_PHOEBE_fitting_quickbar (void)
   gtk_table_attach (GTK_TABLE (fitting_quickbar_main_table), fitting_quickbar_temsp2_step_value, 1, 2, 9, 10,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_sensitive (fitting_quickbar_temsp2_step_value, FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (fitting_quickbar_temsp2_step_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (fitting_quickbar_temsp2_step_value), GTK_UPDATE_IF_VALID);
 

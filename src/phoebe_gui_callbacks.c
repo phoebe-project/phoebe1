@@ -3798,7 +3798,7 @@ void on_data_file_dependent_variable_changed (GtkEditable *editable, gpointer us
 	}
 
 void set_sensitivity_of_spots_widgets ()
-	{
+{
 	int sp_prim_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "spots_sprim_value")));
 	int sp_sec_no  = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "spots_ssec_value")));
 	int spots_no;
@@ -3814,24 +3814,98 @@ void set_sensitivity_of_spots_widgets ()
 	GtkWidget *menuitem;
 
 	/* First, let's take care of the sensitivity:                               */
-	if ( sp_prim_no + sp_sec_no == 0 )
-		{
+	if ( sp_prim_no + sp_sec_no == 0 ) {
 		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE, "spots_spot_1_adjust")), FALSE);
 		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE, "spots_spot_2_adjust")), FALSE);
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_spot_1_adjust")), FALSE);
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_spot_2_adjust")), FALSE);
-		}
-	if ( sp_prim_no + sp_sec_no == 1 )
-		{
+
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlat1_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlong1_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_radsp1_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_temsp1_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlat2_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlong2_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_radsp2_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_temsp2_adjust")), FALSE);
+
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_switch")), FALSE);
+
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_step_value")), FALSE);
+	}
+	if ( sp_prim_no + sp_sec_no == 1 ) {
 		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE, "spots_spot_1_adjust")), TRUE);
 		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE, "spots_spot_2_adjust")), FALSE);
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_spot_2_adjust")), FALSE);
-		}
-	if ( sp_prim_no + sp_sec_no >= 2 )
-		{
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlat2_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlong2_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_radsp2_adjust")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_temsp2_adjust")), FALSE);
+
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_switch")), FALSE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_switch")), FALSE);
+
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_switch")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_step_value")), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_step_value")), FALSE);
+	}
+	if ( sp_prim_no + sp_sec_no >= 2 ) {
 		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE, "spots_spot_1_adjust")), TRUE);
 		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE, "spots_spot_2_adjust")), TRUE);
-		}
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_switch")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_step_value")), TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_step_value")), TRUE);
+	}
 
 	/* The first option that has to be handled is the spot source, that could   */
 	/* either the first or the second star. However, both spots to be adjusted  */
@@ -3839,20 +3913,18 @@ void set_sensitivity_of_spots_widgets ()
 	gtk_option_menu_remove_menu (GTK_OPTION_MENU (lookup_widget (PHOEBE, "spots_spot_1_source_list")));
 	gtk_option_menu_remove_menu (GTK_OPTION_MENU (lookup_widget (PHOEBE, "spots_spot_2_source_list")));
 
-	if (sp_prim_no != 0)
-		{
+	if (sp_prim_no != 0) {
 		menuitem = gtk_menu_item_new_with_label ("on primary"); gtk_widget_show (menuitem);
 		gtk_menu_prepend (GTK_MENU (menu), menuitem);
 		menuitem = gtk_menu_item_new_with_label ("on primary"); gtk_widget_show (menuitem);
 		gtk_menu_prepend (GTK_MENU (menu2), menuitem);
-		}
-	if (sp_sec_no != 0)
-		{
+	}
+	if (sp_sec_no != 0) {
 		menuitem = gtk_menu_item_new_with_label ("on secondary"); gtk_widget_show (menuitem);
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 		menuitem = gtk_menu_item_new_with_label ("on secondary"); gtk_widget_show (menuitem);
 		gtk_menu_append (GTK_MENU (menu2), menuitem);
-		}
+	}
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (lookup_widget (PHOEBE, "spots_spot_1_source_list")), menu);
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (lookup_widget (PHOEBE, "spots_spot_2_source_list")), menu2);
@@ -3866,18 +3938,17 @@ void set_sensitivity_of_spots_widgets ()
 	gtk_option_menu_remove_menu (GTK_OPTION_MENU (lookup_widget (PHOEBE, "spots_spot_2_spot_list")));
 
 	if (sp_prim_no > sp_sec_no) spots_no = sp_prim_no; else spots_no = sp_sec_no;
-	for (i = 0; i < spots_no; i++)
-		{
+	for (i = 0; i < spots_no; i++) {
 		sprintf (working_str, "Spot %d", i+1);
 		menuitem = gtk_menu_item_new_with_label (working_str); gtk_widget_show (menuitem);
 		gtk_menu_append (GTK_MENU (menu3), menuitem);
 		menuitem = gtk_menu_item_new_with_label (working_str); gtk_widget_show (menuitem);
 		gtk_menu_append (GTK_MENU (menu4), menuitem);
-		}
+	}
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (lookup_widget (PHOEBE, "spots_spot_1_spot_list")), menu3);
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (lookup_widget (PHOEBE, "spots_spot_2_spot_list")), menu4);
-	}
+}
 
 void on_spots_sprim_value_changed (GtkEditable *editable, gpointer user_data)
 	{
