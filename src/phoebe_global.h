@@ -268,22 +268,22 @@ typedef struct PHOEBE_limb_darkening
 
 typedef struct PHOEBE_spots
 	{
-	int    SPRIM;    /* Number of spots on the primary star                     */
-	int    SSEC;     /* Number of spots on the secondary star                   */
-	int    IFSMV1;   /* Do spots move longitudinally on primary star            */
-	int    IFSMV2;   /* Do spots move longitudinally on secondary star          */
-	int    KSPA;     /* Is the adjustable spot on a primary star?   [1,2]       */
-	int    NSPA;     /* Which spot do we want to adjust?                        */
-	int    KSPB;     /* Is the adjustable spot on a secondary star? [1,2]       */
-	int    NSPB;     /* Which spot do we want to adjust?                        */
-	double *XLAT1;   /* Primary star spots latitude                             */
-	double *XLONG1;  /* Primary star spots longitude                            */
-	double *RADSP1;  /* Primary star spots angular radius                       */
-	double *TEMSP1;  /* Primary star spots temperature                          */
-	double *XLAT2;   /* Secondary star spots latitude                           */
-	double *XLONG2;  /* Secondary star spots longitude                          */
-	double *RADSP2;  /* Secondary star spots angular radius                     */
-	double *TEMSP2;  /* Secondary star spots temperature                        */
+	int    SPRIM;    /* Number of spots on the primary star                   */
+	int    SSEC;     /* Number of spots on the secondary star                 */
+	int    IFSMV1;   /* Do spots move longitudinally on primary star          */
+	int    IFSMV2;   /* Do spots move longitudinally on secondary star        */
+	int    KSPA;     /* Is the adjustable spot on a primary star?   [1,2]     */
+	int    NSPA;     /* Which spot do we want to adjust?                      */
+	int    KSPB;     /* Is the adjustable spot on a secondary star? [1,2]     */
+	int    NSPB;     /* Which spot do we want to adjust?                      */
+	double *XLAT1;   /* Primary star spots latitude                           */
+	double *XLONG1;  /* Primary star spots longitude                          */
+	double *RADSP1;  /* Primary star spots angular radius                     */
+	double *TEMSP1;  /* Primary star spots temperature                        */
+	double *XLAT2;   /* Secondary star spots latitude                         */
+	double *XLONG2;  /* Secondary star spots longitude                        */
+	double *RADSP2;  /* Secondary star spots angular radius                   */
+	double *TEMSP2;  /* Secondary star spots temperature                      */
 	} PHOEBE_spots;
 
 typedef struct PHOEBE_wl_dependent_parameters

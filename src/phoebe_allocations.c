@@ -53,7 +53,7 @@ int allocate_memory_for_data (PHOEBE_data *data)
 }
 
 int allocate_memory_for_spots (PHOEBE_spots *spots)
-	{
+{
 	int sp_no, ss_no;
 
 	GtkWidget *readout_widget;
@@ -64,27 +64,25 @@ int allocate_memory_for_spots (PHOEBE_spots *spots)
 	readout_widget = lookup_widget (PHOEBE, "spots_ssec_value");
 	ss_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (readout_widget));
 
-	if (sp_no != 0)
-		{
+	if (sp_no != 0) {
 		spots->XLAT1  = phoebe_malloc (sp_no * sizeof (double));
 		spots->XLONG1 = phoebe_malloc (sp_no * sizeof (double));
 		spots->RADSP1 = phoebe_malloc (sp_no * sizeof (double));
 		spots->TEMSP1 = phoebe_malloc (sp_no * sizeof (double));
-		}
+	}
 
-	if (ss_no != 0)
-		{
+	if (ss_no != 0) {
 		spots->XLAT2  = phoebe_malloc (ss_no * sizeof (double));
 		spots->XLONG2 = phoebe_malloc (ss_no * sizeof (double));
 		spots->RADSP2 = phoebe_malloc (ss_no * sizeof (double));
 		spots->TEMSP2 = phoebe_malloc (ss_no * sizeof (double));
-		}
-
-	return 0;
 	}
 
+	return 0;
+}
+
 int free_memory_allocated_for_spots (PHOEBE_spots *spots)
-	{
+{
 	int sp_no, ss_no;
 
 	GtkWidget *readout_widget;
@@ -95,22 +93,20 @@ int free_memory_allocated_for_spots (PHOEBE_spots *spots)
 	readout_widget = lookup_widget (PHOEBE, "spots_ssec_value");
 	ss_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (readout_widget));
 
-	if (sp_no != 0)
-		{
+	if (sp_no != 0) {
 		free (spots->XLAT1);
 		free (spots->XLONG1);
 		free (spots->RADSP1);
 		free (spots->TEMSP1);
-		}
+	}
 
-	if (ss_no != 0)
-		{
+	if (ss_no != 0) {
 		free (spots->XLAT2);
 		free (spots->XLONG2);
 		free (spots->RADSP2);
 		free (spots->TEMSP2);
-		}
 	}
+}
 
 PHOEBE_main_parameters read_in_main_parameters ()
 	{
@@ -400,7 +396,7 @@ int read_in_spots (PHOEBE_spots *spots)
 
 	char *readout_str;
 
-	/* First we read in the number of spots on both stars:                      */
+	/* First we read in the number of spots on both stars:                    */
 	readout_widget = lookup_widget (PHOEBE, "spots_sprim_value");
 	spots->SPRIM = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (readout_widget));
 	readout_widget = lookup_widget (PHOEBE, "spots_ssec_value");
@@ -414,11 +410,11 @@ int read_in_spots (PHOEBE_spots *spots)
 	if (GTK_TOGGLE_BUTTON (readout_widget)->active) spots->IFSMV2 = 1; else spots->IFSMV2 = 0;
 
 	/* Check whether the first spot is to be adjusted:                          */
-	if ( (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlat1_adjust"))->active)  ||
-       (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlong1_adjust"))->active) ||
-       (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_radsp1_adjust"))->active) ||
-       (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_temsp1_adjust"))->active) )
-		{
+	if ( (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE,  "spots_xlat1_adjust"))->active) ||
+		 (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlong1_adjust"))->active) ||
+		 (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_radsp1_adjust"))->active) ||
+		 (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_temsp1_adjust"))->active) ) {
+
 		readout_widget = lookup_widget (PHOEBE, "spots_spot_1_source_list");
 		gtk_label_get (GTK_LABEL(GTK_BIN(readout_widget)->child), &readout_str);
 		if (strcmp (readout_str, "on primary") == 0) spots->KSPA = 1; else spots->KSPA = 2;
@@ -427,18 +423,17 @@ int read_in_spots (PHOEBE_spots *spots)
 		gtk_label_get (GTK_LABEL(GTK_BIN(readout_widget)->child), &readout_str);
 		sscanf (readout_str, "Spot %d", &i);
 		spots->NSPA = i;
-		}
-	else
-		{
+	}
+	else {
 		spots->KSPA = 0;
 		spots->NSPA = 0;
-		}
+	}
 
-	if ( (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlat2_adjust"))->active)  ||
-       (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlong2_adjust"))->active) ||
-       (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_radsp2_adjust"))->active) ||
-       (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_temsp2_adjust"))->active) )
-		{
+	if ( (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE,  "spots_xlat2_adjust"))->active) ||
+		 (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_xlong2_adjust"))->active) ||
+		 (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_radsp2_adjust"))->active) ||
+		 (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "spots_temsp2_adjust"))->active) ) {
+
 		readout_widget = lookup_widget (PHOEBE, "spots_spot_2_source_list");
 		gtk_label_get (GTK_LABEL(GTK_BIN(readout_widget)->child), &readout_str);
 		if (strcmp (readout_str, "on primary") == 0) spots->KSPB = 1; else spots->KSPB = 2;
@@ -447,16 +442,14 @@ int read_in_spots (PHOEBE_spots *spots)
 		gtk_label_get (GTK_LABEL(GTK_BIN(readout_widget)->child), &readout_str);
 		sscanf (readout_str, "Spot %d", &i);
 		spots->NSPB = i;
-		}
-	else
-		{
+	}
+	else {
 		spots->KSPB = 0;
 		spots->NSPB = 0;
-		}
+	}
 
 	if (spots->SPRIM != 0)
-		for (i = 0; i < spots->SPRIM; i++)
-			{
+		for (i = 0; i < spots->SPRIM; i++) {
 			readout_widget = lookup_widget (PHOEBE, "spots_primary_info_list");
 			gtk_clist_get_text (GTK_CLIST (readout_widget), i, 1, &readout_str);
 			spots->XLAT1[i]  = atof (readout_str);
@@ -466,11 +459,10 @@ int read_in_spots (PHOEBE_spots *spots)
 			spots->RADSP1[i] = atof (readout_str);
 			gtk_clist_get_text (GTK_CLIST (readout_widget), i, 4, &readout_str);
 			spots->TEMSP1[i] = atof (readout_str);
-			}
+		}
 
 	if (spots->SSEC != 0)
-		for (i = 0; i < spots->SSEC; i++)
-			{
+		for (i = 0; i < spots->SSEC; i++) {
 			readout_widget = lookup_widget (PHOEBE, "spots_secondary_info_list");
 			gtk_clist_get_text (GTK_CLIST (readout_widget), i, 1, &readout_str);
 			spots->XLAT2[i] = atof (readout_str);
@@ -480,10 +472,10 @@ int read_in_spots (PHOEBE_spots *spots)
 			spots->RADSP2[i] = atof (readout_str);
 			gtk_clist_get_text (GTK_CLIST (readout_widget), i, 4, &readout_str);
 			spots->TEMSP2[i] = atof (readout_str);
-			}
+		}
 
 	return 0;
-	}
+}
 
 PHOEBE_mms read_in_mms ()
 	{

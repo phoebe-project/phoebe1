@@ -10,6 +10,9 @@ PHOEBE Project ChangeLog:
               was not tied to the spot number. These problems caused
               segfaults if the user was not pedantic enough to turn the
               switches off himself. Fixed.
+            - An erroneous memory handling was present in DC window that
+              caused arbitrary values of parameters to appear in different
+              clist entries. Fixed.
 2006-01-26: - PHOEBE segfaulted on some architectures if ^M characters were
               used (DOS/Windows <CR> character). These characters are now
               automatically removed during parsing.
