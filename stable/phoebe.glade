@@ -33393,6 +33393,11 @@ Portable Pixmap (.ppm)
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_latsp2_switch</name>
 	  <can_focus>True</can_focus>
+	  <signal>
+	    <name>toggled</name>
+	    <handler>on_fitting_quickbar_adjust_switch_toggled_update_main_switches</handler>
+	    <last_modification_time>Tue, 31 Jan 2006 09:59:02 GMT</last_modification_time>
+	  </signal>
 	  <label>AS2 Latitude</label>
 	  <active>False</active>
 	  <draw_indicator>True</draw_indicator>
@@ -33416,6 +33421,11 @@ Portable Pixmap (.ppm)
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_longsp2_switch</name>
 	  <can_focus>True</can_focus>
+	  <signal>
+	    <name>toggled</name>
+	    <handler>on_fitting_quickbar_adjust_switch_toggled_update_main_switches</handler>
+	    <last_modification_time>Tue, 31 Jan 2006 09:59:15 GMT</last_modification_time>
+	  </signal>
 	  <label>AS2 Longitude</label>
 	  <active>False</active>
 	  <draw_indicator>True</draw_indicator>
