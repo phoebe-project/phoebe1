@@ -33285,6 +33285,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_latsp1_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>toggled</name>
@@ -33313,6 +33314,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_longsp1_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>toggled</name>
@@ -33341,6 +33343,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_radsp1_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <label>AS1 Angular Radius</label>
 	  <active>False</active>
@@ -33364,6 +33367,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_temsp1_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>toggled</name>
@@ -33392,6 +33396,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_latsp2_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>toggled</name>
@@ -33420,6 +33425,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_longsp2_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>toggled</name>
@@ -33448,6 +33454,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_radsp2_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>toggled</name>
@@ -33476,6 +33483,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkCheckButton</class>
 	  <name>fitting_quickbar_temsp2_switch</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>toggled</name>
@@ -33726,6 +33734,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_latsp1_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
@@ -33927,6 +33936,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_longsp1_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
@@ -33964,6 +33974,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_radsp1_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
@@ -34001,6 +34012,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_temsp1_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
@@ -34038,6 +34050,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_latsp2_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
@@ -34075,6 +34088,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_longsp2_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
@@ -34112,6 +34126,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_radsp2_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
@@ -34149,6 +34164,7 @@ Portable Pixmap (.ppm)
 	<widget>
 	  <class>GtkSpinButton</class>
 	  <name>fitting_quickbar_temsp2_step_value</name>
+	  <sensitive>False</sensitive>
 	  <can_focus>True</can_focus>
 	  <signal>
 	    <name>changed</name>
