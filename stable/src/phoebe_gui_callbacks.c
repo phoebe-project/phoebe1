@@ -2250,18 +2250,21 @@ void populate_dc_parameters_info_list ()
 	char *entry[5] = {entry_string[0], entry_string[1], entry_string[2], entry_string[3], entry_string[4]};
 
 	GtkWidget *readout_widget;
+	char *readout_str;
 
 	PHOEBE_spots spots;
 
-	/* We need info on spots because it would be too bloated to read the values */
-	/* from their widgets.                                                      */
+	/*
+	 * We need info on spots because it would be too bloated to read the values
+	 * from their widgets.
+	 */
+
 	allocate_memory_for_spots (&spots);
 	read_in_spots (&spots);
 
 	gtk_clist_clear (GTK_CLIST (param_list));
 
-	for (i = 0; i <= 34; i++)
-		{
+	for (i = 0; i <= 34; i++) {
 		/* Reserved channel: */
 		if (i == 29) continue;
 
@@ -2269,140 +2272,130 @@ void populate_dc_parameters_info_list ()
 		readout_widget = lookup_widget (PHOEBE, keps[i]);
 		if (GTK_TOGGLE_BUTTON (readout_widget)->active == TRUE) KEP[i] = 0; else KEP[i] = 1;
 
-                        /* SPOTS */  /* HJD0 */   /* P0  */    /* DPDT */   /* DPERDT */ /* HLA */    /* CLA */    /* X1A */    /* X2A */    /* EL3 */
-		if ( (KEP[i] == 0) && (i > 7) && (i != 25) && (i != 26) && (i != 27) && (i != 28) && (i != 30) && (i != 31) && (i != 32) && (i != 33) && (i != 34) )
-			{
+                            /* SPOTS */  /* HJD0 */   /* P0  */    /* DPDT */   /* DPERDT */ /* HLA */    /* CLA */    /* X1A */    /* X2A */    /* EL3 */
+		if ( (KEP[i] == 0) && (i > 7) && (i != 25) && (i != 26) && (i != 27) && (i != 28) && (i != 30) && (i != 31) && (i != 32) && (i != 33) && (i != 34) ) {
 			sprintf (entry[0], "%s", keyword[i]);
 			sprintf (entry[1], "%lf", gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, values[i]))));
 			sprintf (entry[2], "not calculated");
 			sprintf (entry[3], "not calculated");
 			sprintf (entry[4], "not calculated");
 			gtk_clist_append (GTK_CLIST (param_list), entry);
-			}
-		if ( (KEP[i] == 0) && (i < 4) /* SPOTS1 */)
-			{
+		}
+		if ( (KEP[i] == 0) && (i < 4) /* SPOTS1 */) {
 			sprintf (entry[0], "%s", keyword[i]);
 			if (spots.KSPA == 1) readout_widget = lookup_widget (PHOEBE, "spots_primary_info_list");
 			if (spots.KSPA == 2) readout_widget = lookup_widget (PHOEBE, "spots_secondary_info_list");
-			gtk_clist_get_text (GTK_CLIST (readout_widget), spots.NSPA-1, i+1, &entry[1]);
+			gtk_clist_get_text (GTK_CLIST (readout_widget), spots.NSPA-1, i+1, &readout_str);
+			sprintf (entry[1], "%s", readout_str);
 			sprintf (entry[2], "not calculated");
 			sprintf (entry[3], "not calculated");
 			sprintf (entry[4], "not calculated");
 			gtk_clist_append (GTK_CLIST (param_list), entry);
-			}
-		if ( (KEP[i] == 0) && (i >= 4) && (i < 8) /* SPOTS2 */)
-			{
+		}
+		if ( (KEP[i] == 0) && (i >= 4) && (i < 8) /* SPOTS2 */) {
 			sprintf (entry[0], "%s", keyword[i]);
 			if (spots.KSPB == 1) readout_widget = lookup_widget (PHOEBE, "spots_primary_info_list");
 			if (spots.KSPB == 2) readout_widget = lookup_widget (PHOEBE, "spots_secondary_info_list");
-			gtk_clist_get_text (GTK_CLIST (readout_widget), spots.NSPB-1, i-3, &entry[1]);
+			gtk_clist_get_text (GTK_CLIST (readout_widget), spots.NSPB-1, i-3, &readout_str);
+			sprintf (entry[1], "%s", readout_str);
 			sprintf (entry[2], "not calculated");
 			sprintf (entry[3], "not calculated");
 			sprintf (entry[4], "not calculated");
 			gtk_clist_append (GTK_CLIST (param_list), entry);
-			}
-		if ( (KEP[i] == 0) && (i == 25) /* HJD0 */)
-			{
+		}
+		if ( (KEP[i] == 0) && (i == 25) /* HJD0 */) {
 			sprintf (entry[0], "%s", keyword[i]);
 			sprintf (entry[1], "%s", gtk_entry_get_text (GTK_ENTRY (lookup_widget (PHOEBE, values[i]))));
 			sprintf (entry[2], "not calculated");
 			sprintf (entry[3], "not calculated");
 			sprintf (entry[4], "not calculated");
 			gtk_clist_append (GTK_CLIST (param_list), entry);
-			}
-		if ( (KEP[i] == 0) && (i == 26) /* PERIOD */)
-			{
+		}
+		if ( (KEP[i] == 0) && (i == 26) /* PERIOD */) {
 			sprintf (entry[0], "%s", keyword[i]);
 			sprintf (entry[1], "%s", gtk_entry_get_text (GTK_ENTRY (lookup_widget (PHOEBE, values[i]))));
 			sprintf (entry[2], "not calculated");
 			sprintf (entry[3], "not calculated");
 			sprintf (entry[4], "not calculated");
 			gtk_clist_append (GTK_CLIST (param_list), entry);
-			}
-		if ( (KEP[i] == 0) && (i == 27) /* DPDT */)
-			{
+		}
+		if ( (KEP[i] == 0) && (i == 27) /* DPDT */) {
 			sprintf (entry[0], "%s", keyword[i]);
 			sprintf (entry[1], "%s", gtk_entry_get_text (GTK_ENTRY (lookup_widget (PHOEBE, values[i]))));
 			sprintf (entry[2], "not calculated");
 			sprintf (entry[3], "not calculated");
 			sprintf (entry[4], "not calculated");
 			gtk_clist_append (GTK_CLIST (param_list), entry);
-			}
-		if ( (KEP[i] == 0) && (i == 28) /* DPERDT */)
-			{
+		}
+		if ( (KEP[i] == 0) && (i == 28) /* DPERDT */) {
 			sprintf (entry[0], "%s", keyword[i]);
 			sprintf (entry[1], "%s", gtk_entry_get_text (GTK_ENTRY (lookup_widget (PHOEBE, values[i]))));
 			sprintf (entry[2], "not calculated");
 			sprintf (entry[3], "not calculated");
 			sprintf (entry[4], "not calculated");
 			gtk_clist_append (GTK_CLIST (param_list), entry);
-			}
-		if ( (KEP[i] == 0) && (i == 30) /* HLA */)
-			{
-			for (j = 0; j < lc_no; j++)
-				{
+		}
+		if ( (KEP[i] == 0) && (i == 30) /* HLA */) {
+			for (j = 0; j < lc_no; j++) {
 				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
-				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_lc_info_list")), j, 1, &entry[1]);
+				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_lc_info_list")), j, 1, &readout_str);
+				sprintf (entry[1], "%s", readout_str);
 				sprintf (entry[2], "not calculated");
 				sprintf (entry[3], "not calculated");
 				sprintf (entry[4], "not calculated");
 				gtk_clist_append (GTK_CLIST (param_list), entry);
-				}
-			}
-		if ( (KEP[i] == 0) && (i == 31) /* CLA */)
-			{
-			for (j = 0; j < lc_no; j++)
-				{
-				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
-				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_lc_info_list")), j, 2, &entry[1]);
-				sprintf (entry[2], "not calculated");
-				sprintf (entry[3], "not calculated");
-				sprintf (entry[4], "not calculated");
-				gtk_clist_append (GTK_CLIST (param_list), entry);
-				}
-			}
-		if ( (KEP[i] == 0) && (i == 32) /* X1A */)
-			{
-			for (j = 0; j < lc_no; j++)
-				{
-				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
-				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "ld_monochromatic_lc_info_list")), j, 1, &entry[1]);
-				sprintf (entry[2], "not calculated");
-				sprintf (entry[3], "not calculated");
-				sprintf (entry[4], "not calculated");
-				gtk_clist_append (GTK_CLIST (param_list), entry);
-				}
-			}
-		if ( (KEP[i] == 0) && (i == 33) /* X2A */)
-			{
-			for (j = 0; j < lc_no; j++)
-				{
-				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
-				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "ld_monochromatic_lc_info_list")), j, 3, &entry[1]);
-				sprintf (entry[2], "not calculated");
-				sprintf (entry[3], "not calculated");
-				sprintf (entry[4], "not calculated");
-				gtk_clist_append (GTK_CLIST (param_list), entry);
-				}
-			}
-		if ( (KEP[i] == 0) && (i == 34) /* EL3 */)
-			{
-			for (j = 0; j < lc_no; j++)
-				{
-				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
-				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_el3_info_list")), j, 1, &entry[1]);
-				sprintf (entry[2], "not calculated");
-				sprintf (entry[3], "not calculated");
-				sprintf (entry[4], "not calculated");
-				gtk_clist_append (GTK_CLIST (param_list), entry);
-				}
 			}
 		}
+		if ( (KEP[i] == 0) && (i == 31) /* CLA */) {
+			for (j = 0; j < lc_no; j++) {
+				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
+				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_lc_info_list")), j, 2, &readout_str);
+				sprintf (entry[1], "%s", readout_str);
+				sprintf (entry[2], "not calculated");
+				sprintf (entry[3], "not calculated");
+				sprintf (entry[4], "not calculated");
+				gtk_clist_append (GTK_CLIST (param_list), entry);
+			}
+		}
+		if ( (KEP[i] == 0) && (i == 32) /* X1A */) {
+			for (j = 0; j < lc_no; j++) {
+				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
+				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "ld_monochromatic_lc_info_list")), j, 1, &readout_str);
+				sprintf (entry[1], "%s", readout_str);
+				sprintf (entry[2], "not calculated");
+				sprintf (entry[3], "not calculated");
+				sprintf (entry[4], "not calculated");
+				gtk_clist_append (GTK_CLIST (param_list), entry);
+			}
+		}
+		if ( (KEP[i] == 0) && (i == 33) /* X2A */) {
+			for (j = 0; j < lc_no; j++) {
+				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
+				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "ld_monochromatic_lc_info_list")), j, 3, &readout_str);
+				sprintf (entry[1], "%s", readout_str);
+				sprintf (entry[2], "not calculated");
+				sprintf (entry[3], "not calculated");
+				sprintf (entry[4], "not calculated");
+				gtk_clist_append (GTK_CLIST (param_list), entry);
+			}
+		}
+		if ( (KEP[i] == 0) && (i == 34) /* EL3 */) {
+			for (j = 0; j < lc_no; j++) {
+				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
+				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_el3_info_list")), j, 1, &readout_str);
+				sprintf (entry[1], "%s", readout_str);
+				sprintf (entry[2], "not calculated");
+				sprintf (entry[3], "not calculated");
+				sprintf (entry[4], "not calculated");
+				gtk_clist_append (GTK_CLIST (param_list), entry);
+			}
+		}
+	}
 
 	free_memory_allocated_for_spots (&spots);
 
 	return;
-	}
+}
 
 void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 	{
