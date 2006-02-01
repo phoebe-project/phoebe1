@@ -618,12 +618,11 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 
 	/* If this function was called without any data files, we just set every-   */
 	/* thing to 0 and return:                                                   */
-	if ( (lc_no == 0) && (rv_no == 0) )
-		{
+	if ( (lc_no == 0) && (rv_no == 0) ) {
 		mono.WLA = mono.HLA = mono.CLA = mono.X1A = mono.X2A = mono.Y1A = mono.Y2A = mono.EL3 = mono.OPSF = mono.SIGMA = 0.0;
 		return mono;
-		}
-	
+	}
+
 	/* Within the following loop we examine all filter names and stop at one    */
 	/* that successfully compares to the argument name.                         */
 	for (i = 0; i < lc_no; i++)
@@ -685,17 +684,15 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 	if (strncmp (filter, "523nm (Vt)", 10) == 0) mono.IBAND = 24;
 	if (strncmp (filter, "505nm (Hp)", 10) == 0) mono.IBAND = 25;
 
-	if (strncmp (filter, "861nm (RVIJ)", 12) == 0)
-		{
+	if (strncmp (filter, "861nm (RVIJ)", 12) == 0) {
 		phoebe_warning ("861nm filter not supported by WD2003, Johnson I adopted.\n");
 		mono.IBAND = 9;
-		}
+	}
 
-	if (mono.IBAND == 0)
-		{
+	if (mono.IBAND == 0) {
 		phoebe_warning ("IBAND assignment failed. Johnson V filter (550nm) assumed.\n");
 		mono.IBAND = 7;
-		}
+	}
 
 	/* 2. Luminosities: */
 	if (match_lc == 1)

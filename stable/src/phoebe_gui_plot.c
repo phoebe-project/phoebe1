@@ -110,12 +110,12 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 	i = 0;
 	readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_data_combo_box_entry");
 	readout_str = gtk_entry_get_text (GTK_ENTRY (readout_widget));
+
 	if (strcmp (readout_str, "None Specified") == 0) chosen_filter = -1;
-	else
-		{
+	else {
 		while (strcmp (readout_str, PHOEBE_lc_data[i].filter) != 0) i++;
 		chosen_filter = i;
-		}
+	}
 	phoebe_debug ("chosen filter number:       %d\n", chosen_filter);
 
 	/* If the filter is not specified (chosen_filter == -1), we read in the de- */
@@ -451,6 +451,8 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 								 /*   RESIDUALS = 0 .. don't calculate/plot residuals         */
 								 /*   RESIDUALS = 1 .. calculate/plot residuals               */
 
+	int rvno = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_rv_no_value")));
+
 	double chi2_rv1 = 0.0;
 	double chi2_rv2 = 0.0;
 	double chi2_tot = 0.0;
@@ -469,17 +471,16 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 	i = 0;
 	readout_widget = lookup_widget (PHOEBE_plot_rv, "plot_rv_data_combo_box_entry");
 	readout_str = gtk_entry_get_text (GTK_ENTRY (readout_widget));
+
 	if (strcmp (readout_str, "None Specified") == 0) chosen_filter = -1;
-	else
-		{
+	else {
 		while (strcmp (readout_str, PHOEBE_rv_data[i].filter) != 0) i++;
 		chosen_filter = i;
-		}
+	}
 
 	/* If the filter is not specified (chosen_filter == -1), we read in the de- */
 	/* faults, else we read in filter-dependent parameters:                     */
-	if (chosen_filter == -1)
-		{
+	if (chosen_filter == -1) {
 		mono.WLA   = 550.0;
 		mono.IBAND = 7;
 		mono.HLA   = 10.0;
@@ -491,7 +492,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		mono.EL3   = 0.0;
 		mono.OPSF  = 0.0;
 		mono.SIGMA = 0.0;
-		}
+	}
 	else mono = read_in_wl_dependent_parameters (readout_str);
 
 	/* Read out the phase settings from RV Plot Window:                         */
@@ -527,6 +528,15 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 	if (strcmp (readout_str, "Primary RV in km/s") == 0)   DEP = 7;
 	if (strcmp (readout_str, "Secondary RV in km/s") == 0)   DEP = 8;
 	if (strcmp (readout_str, "Both RVs in km/s") == 0) DEP = 9;
+
+	if (DEP == 9 && rvno == 0) {
+		warning_window = create_notice_window ("PHOEBE Notice", "Observed data plot failure", "You have not defined any RV data curves in the Data tab.", "Please supply the data and try again.", gtk_widget_destroy);
+		return;
+	}
+	if (DEP == 9 && rvno == 1) {
+		warning_window = create_notice_window ("PHOEBE Notice", "Observed data plot failure", "You have defined only one RV data curve in the Data tab,", "but you are attempting to plot two curves; aborting.", gtk_widget_destroy);
+		return;
+	}
 
 	/* Do we want to have a gridded plot? If so, set GRID to 1 or 2:            */
 	GRID = 0;
@@ -610,63 +620,57 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		if (MODEL != 0) plot_update_info (2, params);
 		}
 
-	if (DATA == 1)
-		{
-		if ( ( DEP == 3 ) || ( DEP == 7 ) )
-			{
+	if (DATA == 1) {
+		printf ("filter: %d\n", chosen_filter);
+		if ( ( DEP == 3 ) || ( DEP == 7 ) ) {
 			read_in_experimental_rv_data (chosen_filter, &experimental_rv1_data, INDEP, DEP, 1.0);
 
 			/* If an error occured, ptsno value is 0. In that case we don't want    */
 			/* any experimental data present in our work, otherwise we expect the   */
 			/* program to segfault.                                                 */
-			if (experimental_rv1_data.ptsno == 0)
-				{
+			if (experimental_rv1_data.ptsno == 0) {
 				free (experimental_rv1_data.indep);
 				free (experimental_rv1_data.dep);
 				free (experimental_rv1_data.weight);
 				DATA = 0;
-				}
-
-			sprintf (working_str, "%d", experimental_rv1_data.ptsno);
 			}
 
-		if ( ( DEP == 4 ) || ( DEP == 8 ) )
-			{
+			sprintf (working_str, "%d", experimental_rv1_data.ptsno);
+		}
+
+		if ( ( DEP == 4 ) || ( DEP == 8 ) ) {
 			read_in_experimental_rv_data (chosen_filter, &experimental_rv2_data, INDEP, DEP, 1.0);
 
 			/* If an error occured, ptsno value is 0. In that case we don't want    */
 			/* any experimental data present in our work, otherwise we expect the   */
 			/* program to segfault.                                                 */
-			if (experimental_rv2_data.ptsno == 0)
-				{
+			if (experimental_rv2_data.ptsno == 0) {
 				free (experimental_rv2_data.indep);
 				free (experimental_rv2_data.dep);
 				free (experimental_rv2_data.weight);
 				DATA = 0;
-				}
-
-			sprintf (working_str, "%d", experimental_rv2_data.ptsno);
 			}
 
-		if ( DEP == 9 )
-			{
+			sprintf (working_str, "%d", experimental_rv2_data.ptsno);
+		}
+
+		if ( DEP == 9 ) {
 			read_in_experimental_rv_data (0, &experimental_rv1_data, INDEP, DEP, 1.0);
 			read_in_experimental_rv_data (1, &experimental_rv2_data, INDEP, DEP, 1.0);
 
-			if ( (experimental_rv1_data.ptsno == 0) || (experimental_rv2_data.ptsno == 0) )
-				{
+			if ( (experimental_rv1_data.ptsno == 0) || (experimental_rv2_data.ptsno == 0) ) {
 				free (experimental_rv1_data.indep);   free (experimental_rv2_data.indep);
 				free (experimental_rv1_data.dep); 		free (experimental_rv2_data.dep);
 				free (experimental_rv1_data.weight);	free (experimental_rv2_data.weight);
 				DATA = 0;
-				}
+			}
 
 			sprintf (working_str, "%d", experimental_rv1_data.ptsno + experimental_rv2_data.ptsno);
-			}
+		}
 
 		readout_widget = lookup_widget (PHOEBE_plot_rv, "plot_rv_chi2_ptsno_value");
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
-		}
+	}
 
 	/* If we plot both experimental and synthetic data, we can calculate chi2:  */
 	if ( (DATA == 1) && (MODEL == 1) && (DEP != 5) && (DEP != 6 ) )
@@ -678,11 +682,10 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		sprintf (working_str, "%lf", chi2_rv1 + chi2_rv2);
 
 		/* If we plot in DEP = 9, we must calculate the combined sigma: */
-		if (DEP == 9)
-			{
+		if (DEP == 9) {
 			chi2_tot = chi2_rv1 * chi2_rv2 / sqrt (chi2_rv1*chi2_rv1 + chi2_rv2*chi2_rv2);
 			sprintf (working_str, "%lf", chi2_tot);
-			}
+		}
 
 		readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_chi2_weighted_sigma_value");
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
@@ -695,36 +698,30 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		sprintf (working_str, "%lf", chi2_rv1 + chi2_rv2);
 
 		/* If we plot in DEP = 9, we must calculate the combined sigma: */
-		if (DEP == 9)
-			{
+		if (DEP == 9) {
 			chi2_tot = chi2_rv1 * chi2_rv2 / sqrt (chi2_rv1*chi2_rv1 + chi2_rv2*chi2_rv2);
 			sprintf (working_str, "%lf", chi2_tot);
-			}
+		}
 
 		readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_chi2_unweighted_sigma_value");
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
 
-	/* If the phase range of the plot is narrower than [-0.5,0.5], we must      */
-	/* crop the experimental data output. If the range is wider, we must ali-   */
-	/* as some points to the outside regions:                                   */
-	if (DATA == 1)
-		{
-		if ( ( DEP == 3 ) || ( DEP == 7 ) )
-			{
-			if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
-				alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
+		/* If the phase range of the plot is narrower than [-0.5,0.5], we must      */
+		/* crop the experimental data output. If the range is wider, we must ali-   */
+		/* as some points to the outside regions:                                   */
+		if (DATA == 1) {
+			if ( ( DEP == 3 ) || ( DEP == 7 ) ) {
+				if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
+					alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
 			}
-		if ( ( DEP == 4 ) || ( DEP == 8 ) )
-			{
-			if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
-				alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
+			if ( ( DEP == 4 ) || ( DEP == 8 ) ) {
+				if ( (ALIASING == 1) && (switches.JDPHS == 2 /* Phases */) )
+					alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
 			}
-		if ( DEP == 9 )
-			{
-			if ( (ALIASING == 1) && (switches.JDPHS == 2) )
-				{
-				alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
-				alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
+			if ( DEP == 9 ) {
+				if ( (ALIASING == 1) && (switches.JDPHS == 2) ) {
+					alias_phase_to_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
+					alias_phase_to_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
 				}
 			}
 		}
@@ -735,7 +732,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			calculate_residuals (&synthetic_rv1_data, &experimental_rv1_data);
 		if ( (RESIDUALS == 1) && ( (DEP == 4) || (DEP == 8) || (DEP == 9) ) )
 			calculate_residuals (&synthetic_rv2_data, &experimental_rv2_data);
-		}
+	}
 
 	/* Now we have everything calculated for DEP = 9 plot, so we may join the   */
 	/* data to a single array:                                                  */

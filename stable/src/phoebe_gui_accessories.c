@@ -30,7 +30,7 @@ void parse_startup_line (int argc, char *argv[])
 		if ( (strcmp (argv[i],  "-h"   ) == 0) ||
 		     (strcmp (argv[i],  "-?"   ) == 0) ||
 			 (strcmp (argv[i], "--help") == 0) ) {
-			printf ("\nPHOEBE 0.29 command line arguments: [-hsv] [keyword_file]\n\n");
+			printf ("\nPHOEBE 0.29a command line arguments: [-hsv] [keyword_file]\n\n");
 			printf ("  -h, --help, -?      ..  this help screen\n");
 			printf ("  -s, --script        ..  execute PHOEBE script\n");
 			printf ("  -v, --version       ..  display PHOEBE version and exit\n");
@@ -40,7 +40,7 @@ void parse_startup_line (int argc, char *argv[])
 
 		if ( (strcmp (argv[i],  "-v"      ) == 0) ||
 				 (strcmp (argv[i], "--version") == 0) ) {
-			printf ("\nPHOEBE 0.29 (stable release), January 13, 2006 by Andrej Prsa\n");
+			printf ("\nPHOEBE 0.29a (stable release), January 31, 2006 by Andrej Prsa\n");
 			printf ("  Send comments and/or requests to andrej.prsa@fmf.uni-lj.si\n\n");
 			exit (0);
 		}
@@ -53,7 +53,7 @@ void parse_startup_line (int argc, char *argv[])
 			 */
 
 			if (i+1 >= argc) {
-				printf ("\nPHOEBE 0.29 command line arguments: [-hsv] [keyword_file]\n\n");
+				printf ("\nPHOEBE 0.29a command line arguments: [-hsv] [keyword_file]\n\n");
 				printf ("  -h, --help, -?      ..  this help screen\n");
 				printf ("  -s, --script        ..  execute PHOEBE script\n");
 				printf ("  -v, --version       ..  display PHOEBE version and exit\n");
@@ -107,8 +107,8 @@ void phoebe_init ()
 	PHOEBE_LOCALE = strdup (setlocale (LC_NUMERIC, NULL));
 	setlocale (LC_NUMERIC, "C");
 
-	sprintf (PHOEBE_VERSION_NUMBER, "0.29 (stable release)");
-	sprintf (PHOEBE_VERSION_DATE,   "January 13, 2006");
+	sprintf (PHOEBE_VERSION_NUMBER, "0.29a (stable release)");
+	sprintf (PHOEBE_VERSION_DATE,   "January 31, 2006");
 
 	sprintf (PHOEBE_KEYWORD_FILENAME, "Undefined");
 

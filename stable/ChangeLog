@@ -1,6 +1,11 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-02-01: - RV plotting failed when a single RV data curve is defined
+              because by default the plot is set for *both* RV curves.
+              This is understandable, but the notice message indicated that
+              there is a problem with data filename formatting. Fixed.
+              Many thanks to Ettore Tamajo for pointing this out!
 2006-01-31: - DC fitting quickbar did not mark the 2nd spot latitude and
               longitude due to a missing signal handler. Fixed. Many thanks
               to Carla Maceroni for pointing this out!
@@ -13,6 +18,7 @@ PHOEBE Project ChangeLog:
             - An erroneous memory handling was present in DC window that
               caused arbitrary values of parameters to appear in different
               clist entries. Fixed.
+            - PHOEBE 0.29a released! (a bugfix release)
 2006-01-26: - PHOEBE segfaulted on some architectures if ^M characters were
               used (DOS/Windows <CR> character). These characters are now
               automatically removed during parsing.
