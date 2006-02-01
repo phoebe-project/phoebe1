@@ -1,4 +1,4 @@
-PHOEBE-0.29 TOPLEVEL DOCUMENTATION                           January 13, 2006
+PHOEBE-0.29a TOPLEVEL DOCUMENTATION                          January 31, 2006
 -----------------------------------------------------------------------------
 
 Hello and thank you for your interest in the Friday 13th version of PHOEBE. :)
@@ -171,6 +171,8 @@ IMPORTANT NOTICE FOR PRE-PHOEBE-0.29 USERS
 This version fixes the erroneaous HJD-to-phase transformation for negative
 values of DPDT. The second major issue were incorrect constraints which were
 applied in the overcontact case without thermal contact, which are now fixed.
+Version 0.29a contains a critical bugfix that removes the memory-trashing
+problem connected to DC window parameters.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.28 USERS
 ------------------------------------------
