@@ -374,6 +374,24 @@ void save_keyword_file (char *filename)
 	add_to_keyword_file ("NSPOTSSEC",   PHOEBE, "spots_ssec_value", keyword_file);
 	add_to_keyword_file ("SPOTPRIM",    PHOEBE, "spots_primary_info_list", keyword_file);
 	add_to_keyword_file ("SPOTSEC",     PHOEBE, "spots_secondary_info_list", keyword_file);
+	add_to_keyword_file ("SPOT1_ADJ",   PHOEBE, "spots_spot_1_adjust", keyword_file);
+	add_to_keyword_file ("SPOT2_ADJ",   PHOEBE, "spots_spot_2_adjust", keyword_file);
+	add_to_keyword_file ("XLAT1_ADJ",   PHOEBE, "spots_xlat1_adjust", keyword_file);
+	add_to_keyword_file ("XLONG1_ADJ",  PHOEBE, "spots_xlong1_adjust", keyword_file);
+	add_to_keyword_file ("RADSP1_ADJ",  PHOEBE, "spots_radsp1_adjust", keyword_file);
+	add_to_keyword_file ("TEMSP1_ADJ",  PHOEBE, "spots_temsp1_adjust", keyword_file);
+	add_to_keyword_file ("XLAT2_ADJ",   PHOEBE, "spots_xlat2_adjust", keyword_file);
+	add_to_keyword_file ("XLONG2_ADJ",  PHOEBE, "spots_xlong2_adjust", keyword_file);
+	add_to_keyword_file ("RADSP2_ADJ",  PHOEBE, "spots_radsp2_adjust", keyword_file);
+	add_to_keyword_file ("TEMSP2_ADJ",  PHOEBE, "spots_temsp2_adjust", keyword_file);
+	add_to_keyword_file ("XLAT1_DEL",   PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_step_value", keyword_file);
+	add_to_keyword_file ("XLONG1_DEL",  PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_step_value", keyword_file);
+	add_to_keyword_file ("RADSP1_DEL",  PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_step_value", keyword_file);
+	add_to_keyword_file ("TEMSP1_DEL",  PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_step_value", keyword_file);
+	add_to_keyword_file ("XLAT2_DEL",   PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_step_value", keyword_file);
+	add_to_keyword_file ("XLONG2_DEL",  PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_step_value", keyword_file);
+	add_to_keyword_file ("RADSP2_DEL",  PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_step_value", keyword_file);
+	add_to_keyword_file ("TEMSP2_DEL",  PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_step_value", keyword_file);
 
 	/* **************************** FITTING TAB ******************************* */
 
@@ -795,6 +813,25 @@ void open_keyword_file (const char *filename)
 			sscanf (keyword_str, "Y2ARV%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "ld_monochromatic_rv_info_list")), readout_int-1, 4, value_str);
 			}
+
+		if (strcmp (keyword_str, "SPOT1_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_spot_1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "SPOT2_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_spot_2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT1_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_xlat1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT1_DEL")   == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_xlong1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_radsp1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_temsp1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT2_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_xlat2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT2_DEL")   == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_xlong2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_radsp2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_temsp2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_step_value", value_str, keyword_file);
 
 		/* **************************** SURFACE TAB ***************************** */
 
