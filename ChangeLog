@@ -1,6 +1,9 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-02-03: - States of adjustment buttons and step values for spot para-
+              meters were not saved and/or read out from .phoebe files.
+              Fixed. Many thanks to Carla Maceroni for pointing this out!
 2006-02-01: - RV plotting failed when a single RV data curve is defined
               because by default the plot is set for *both* RV curves.
               This is understandable, but the notice message indicated that
