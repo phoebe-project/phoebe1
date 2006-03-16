@@ -990,6 +990,7 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 	struct lc_record_tag  rec;
 
 	int i;
+	double L1, L2;
 
 	char working_string[255];
 	char *working_str = working_string;
@@ -1030,6 +1031,22 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 			{
 			notice_window = create_notice_window ("PHOEBE Notice", "Internal WD algorithm problem", "Your current configuration exceeds the allowed temperature range", "in WD subroutine ATM. Further LC output will be suppressed.", gtk_widget_destroy);
 			break;
+			}
+
+		/* Read in the value of L2:                                               */
+		if (strstr (working_str, " band       L1         L2 ") != NULL)
+			{
+			if (fscanf (data_file, "%*d %lf %lf %*lf %*lf %*lf %*lf %*lf %*e %*lf %*lf %*lf\n", &L1, &L2) != 2)
+				{
+				phoebe_warning ("Error in read_in_synthetic_lc_data line 0!\n");
+				params->lum_p = -1.0;
+				params->lum_s = -1.0;
+				}
+			else
+				{
+				params->lum_p = L1;
+				params->lum_s = L2;
+				}
 			}
 
 		/* Read in the first set of calculated parameters:                        */
@@ -1381,9 +1398,6 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 		free (readout_str);
 	}
 
-	/* We made one increment too many, which caused an OB1 in points number:    */
-	data->ptsno--;
-
 	fclose (data_file);
 
 	if (col_type == 4) transform_absolute_error_to_weight (data);
@@ -1539,9 +1553,6 @@ int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int d
 
 		free (readout_str);
 	}
-
-	/* We made one increment too many, which caused an OB1 in points number:    */
-	data->ptsno--;
 
 	fclose (data_file);
 
