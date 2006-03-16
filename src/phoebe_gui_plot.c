@@ -1270,6 +1270,8 @@ void plot_update_info (int DESTINATION, PHOEBE_calculated_parameters params)
 		"plot_lc_info_mass_s_label",
 		"plot_lc_info_radius_p_label",
 		"plot_lc_info_radius_s_label",
+		"plot_lc_info_lum_p_label",
+		"plot_lc_info_lum_s_label",
 		"plot_lc_info_mbol_p_label",
 		"plot_lc_info_mbol_s_label",
 		"plot_lc_info_logg_p_label",
@@ -1294,6 +1296,8 @@ void plot_update_info (int DESTINATION, PHOEBE_calculated_parameters params)
 		"plot_rv_info_mass_s_label",
 		"plot_rv_info_radius_p_label",
 		"plot_rv_info_radius_s_label",
+		"plot_lc_info_lum_p_label",
+		"plot_lc_info_lum_s_label",
 		"plot_rv_info_mbol_p_label",
 		"plot_rv_info_mbol_s_label",
 		"plot_rv_info_logg_p_label",
@@ -1312,12 +1316,14 @@ void plot_update_info (int DESTINATION, PHOEBE_calculated_parameters params)
 		"plot_rv_info_rback_s_label"
 		};
 
-	double values[20] =
+	double values[22] =
 		{
 		params.mass_p,
 		params.mass_s,
 		params.radius_p,
 		params.radius_s,
+		params.lum_p,
+		params.lum_s,
 		params.mbol_p,
 		params.mbol_s,
 		params.logg_p,
@@ -1336,7 +1342,7 @@ void plot_update_info (int DESTINATION, PHOEBE_calculated_parameters params)
 		params.rback_s
 		};
 
-	for (i = 0; i < 20; i++)
+	for (i = 0; i < 22; i++)
 		{
 		if (DESTINATION == 1)
 			readout_widget = lookup_widget (PHOEBE_plot_lc, lc_keywords[i]);
@@ -1344,7 +1350,7 @@ void plot_update_info (int DESTINATION, PHOEBE_calculated_parameters params)
 			readout_widget = lookup_widget (PHOEBE_plot_rv, rv_keywords[i]);
 
 		sprintf (working_str, "%.3lf", values[i]);
-		if (i > 11 && values[i] <= 0.0)
+		if (i > 13 && values[i] <= 0.0)
 			sprintf (working_str, "n/a");
 
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);

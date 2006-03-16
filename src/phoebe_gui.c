@@ -10563,34 +10563,37 @@ create_PHOEBE_plot_lc (void)
   GtkWidget *plot_lc_info_separator_2;
   GtkWidget *plot_lc_info_mass_label;
   GtkWidget *plot_lc_info_radius_label;
-  GtkWidget *plot_lc_info_mbol_label;
-  GtkWidget *plot_lc_info_logg_label;
-  GtkWidget *plot_lc_info_psb_label;
-  GtkWidget *plot_lc_info_surface_label;
-  GtkWidget *plot_lc_info_rpole_label;
-  GtkWidget *plot_lc_info_rpoint_label;
-  GtkWidget *plot_lc_info_rside_label;
-  GtkWidget *plot_lc_info_rback_label;
   GtkWidget *plot_lc_info_mass_p_label;
   GtkWidget *plot_lc_info_mass_s_label;
   GtkWidget *plot_lc_info_radius_p_label;
-  GtkWidget *plot_lc_info_mbol_p_label;
-  GtkWidget *plot_lc_info_logg_p_label;
-  GtkWidget *plot_lc_info_psb_p_label;
-  GtkWidget *plot_lc_info_surface_p_label;
-  GtkWidget *plot_lc_info_rpole_p_label;
-  GtkWidget *plot_lc_info_rpoint_p_label;
-  GtkWidget *plot_lc_info_rside_p_label;
-  GtkWidget *plot_lc_info_rback_p_label;
   GtkWidget *plot_lc_info_radius_s_label;
-  GtkWidget *plot_lc_info_mbol_s_label;
-  GtkWidget *plot_lc_info_logg_s_label;
-  GtkWidget *plot_lc_info_psb_s_label;
-  GtkWidget *plot_lc_info_surface_s_label;
-  GtkWidget *plot_lc_info_rpole_s_label;
-  GtkWidget *plot_lc_info_rpoint_s_label;
-  GtkWidget *plot_lc_info_rside_s_label;
+  GtkWidget *plot_lc_info_rback_label;
+  GtkWidget *plot_lc_info_rback_p_label;
   GtkWidget *plot_lc_info_rback_s_label;
+  GtkWidget *plot_lc_info_rside_label;
+  GtkWidget *plot_lc_info_rpoint_label;
+  GtkWidget *plot_lc_info_rpole_label;
+  GtkWidget *plot_lc_info_surface_label;
+  GtkWidget *plot_lc_info_psb_label;
+  GtkWidget *plot_lc_info_logg_label;
+  GtkWidget *plot_lc_info_mbol_label;
+  GtkWidget *plot_lc_info_rside_p_label;
+  GtkWidget *plot_lc_info_rpoint_p_label;
+  GtkWidget *plot_lc_info_rpole_p_label;
+  GtkWidget *plot_lc_info_rside_s_label;
+  GtkWidget *plot_lc_info_rpoint_s_label;
+  GtkWidget *plot_lc_info_rpole_s_label;
+  GtkWidget *plot_lc_info_surface_s_label;
+  GtkWidget *plot_lc_info_psb_s_label;
+  GtkWidget *plot_lc_info_logg_s_label;
+  GtkWidget *plot_lc_info_surface_p_label;
+  GtkWidget *plot_lc_info_psb_p_label;
+  GtkWidget *plot_lc_info_logg_p_label;
+  GtkWidget *plot_lc_info_mbol_p_label;
+  GtkWidget *plot_lc_info_mbol_s_label;
+  GtkWidget *plot_lc_info_lum_label;
+  GtkWidget *plot_lc_info_lum_p_label;
+  GtkWidget *plot_lc_info_lum_s_label;
   GtkWidget *plot_lc_lagrange_frame;
   GtkWidget *plot_lc_lagrange_table;
   GtkWidget *plot_lc_lagrange_l1_label;
@@ -11254,7 +11257,7 @@ create_PHOEBE_plot_lc (void)
   gtk_container_set_border_width (GTK_CONTAINER (plot_lc_info_frame), 5);
   gtk_frame_set_shadow_type (GTK_FRAME (plot_lc_info_frame), GTK_SHADOW_IN);
 
-  plot_lc_info_table = gtk_table_new (12, 3, TRUE);
+  plot_lc_info_table = gtk_table_new (13, 3, TRUE);
   gtk_widget_ref (plot_lc_info_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_table", plot_lc_info_table,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -11321,94 +11324,6 @@ create_PHOEBE_plot_lc (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (plot_lc_info_radius_label), 0, 0.5);
 
-  plot_lc_info_mbol_label = gtk_label_new ("Mbol:");
-  gtk_widget_ref (plot_lc_info_mbol_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_mbol_label", plot_lc_info_mbol_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_mbol_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_mbol_label, 0, 1, 4, 5,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_mbol_label), 0, 0.5);
-
-  plot_lc_info_logg_label = gtk_label_new ("log g:");
-  gtk_widget_ref (plot_lc_info_logg_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_logg_label", plot_lc_info_logg_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_logg_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_logg_label, 0, 1, 5, 6,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_logg_label), 0, 0.5);
-
-  plot_lc_info_psb_label = gtk_label_new ("PSB:");
-  gtk_widget_ref (plot_lc_info_psb_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_psb_label", plot_lc_info_psb_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_psb_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_psb_label, 0, 1, 6, 7,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_psb_label), 0, 0.5);
-
-  plot_lc_info_surface_label = gtk_label_new ("Surface:");
-  gtk_widget_ref (plot_lc_info_surface_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_surface_label", plot_lc_info_surface_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_surface_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_surface_label, 0, 1, 7, 8,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_surface_label), 0, 0.5);
-
-  plot_lc_info_rpole_label = gtk_label_new ("");
-  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rpole_label),
-                         "r__pole:");
-  gtk_widget_ref (plot_lc_info_rpole_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpole_label", plot_lc_info_rpole_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rpole_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpole_label, 0, 1, 8, 9,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpole_label), 0, 0.5);
-
-  plot_lc_info_rpoint_label = gtk_label_new ("");
-  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rpoint_label),
-                         "r__point:");
-  gtk_widget_ref (plot_lc_info_rpoint_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpoint_label", plot_lc_info_rpoint_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rpoint_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpoint_label, 0, 1, 9, 10,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpoint_label), 0, 0.5);
-
-  plot_lc_info_rside_label = gtk_label_new ("");
-  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rside_label),
-                         "r__side:");
-  gtk_widget_ref (plot_lc_info_rside_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rside_label", plot_lc_info_rside_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rside_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rside_label, 0, 1, 10, 11,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rside_label), 0, 0.5);
-
-  plot_lc_info_rback_label = gtk_label_new ("");
-  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rback_label),
-                         "r__back:");
-  gtk_widget_ref (plot_lc_info_rback_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rback_label", plot_lc_info_rback_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rback_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rback_label, 0, 1, 11, 12,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rback_label), 0, 0.5);
-
   plot_lc_info_mass_p_label = gtk_label_new ("0.0");
   gtk_widget_ref (plot_lc_info_mass_p_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_mass_p_label", plot_lc_info_mass_p_label,
@@ -11439,86 +11354,6 @@ create_PHOEBE_plot_lc (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (plot_lc_info_radius_p_label), 0, 0.5);
 
-  plot_lc_info_mbol_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_mbol_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_mbol_p_label", plot_lc_info_mbol_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_mbol_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_mbol_p_label, 1, 2, 4, 5,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_mbol_p_label), 0, 0.5);
-
-  plot_lc_info_logg_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_logg_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_logg_p_label", plot_lc_info_logg_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_logg_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_logg_p_label, 1, 2, 5, 6,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_logg_p_label), 0, 0.5);
-
-  plot_lc_info_psb_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_psb_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_psb_p_label", plot_lc_info_psb_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_psb_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_psb_p_label, 1, 2, 6, 7,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_psb_p_label), 0, 0.5);
-
-  plot_lc_info_surface_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_surface_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_surface_p_label", plot_lc_info_surface_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_surface_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_surface_p_label, 1, 2, 7, 8,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_surface_p_label), 0, 0.5);
-
-  plot_lc_info_rpole_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_rpole_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpole_p_label", plot_lc_info_rpole_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rpole_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpole_p_label, 1, 2, 8, 9,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpole_p_label), 0, 0.5);
-
-  plot_lc_info_rpoint_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_rpoint_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpoint_p_label", plot_lc_info_rpoint_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rpoint_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpoint_p_label, 1, 2, 9, 10,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpoint_p_label), 0, 0.5);
-
-  plot_lc_info_rside_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_rside_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rside_p_label", plot_lc_info_rside_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rside_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rside_p_label, 1, 2, 10, 11,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rside_p_label), 0, 0.5);
-
-  plot_lc_info_rback_p_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_rback_p_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rback_p_label", plot_lc_info_rback_p_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rback_p_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rback_p_label, 1, 2, 11, 12,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rback_p_label), 0, 0.5);
-
   plot_lc_info_radius_s_label = gtk_label_new ("0.0");
   gtk_widget_ref (plot_lc_info_radius_s_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_radius_s_label", plot_lc_info_radius_s_label,
@@ -11529,85 +11364,283 @@ create_PHOEBE_plot_lc (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (plot_lc_info_radius_s_label), 0, 0.5);
 
-  plot_lc_info_mbol_s_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_mbol_s_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_mbol_s_label", plot_lc_info_mbol_s_label,
+  plot_lc_info_rback_label = gtk_label_new ("");
+  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rback_label),
+                         "r__back:");
+  gtk_widget_ref (plot_lc_info_rback_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rback_label", plot_lc_info_rback_label,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_mbol_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_mbol_s_label, 2, 3, 4, 5,
+  gtk_widget_show (plot_lc_info_rback_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rback_label, 0, 1, 12, 13,
                     (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_mbol_s_label), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rback_label), 0, 0.5);
 
-  plot_lc_info_logg_s_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_logg_s_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_logg_s_label", plot_lc_info_logg_s_label,
+  plot_lc_info_rback_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_rback_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rback_p_label", plot_lc_info_rback_p_label,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_logg_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_logg_s_label, 2, 3, 5, 6,
+  gtk_widget_show (plot_lc_info_rback_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rback_p_label, 1, 2, 12, 13,
                     (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_logg_s_label), 0, 0.5);
-
-  plot_lc_info_psb_s_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_psb_s_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_psb_s_label", plot_lc_info_psb_s_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_psb_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_psb_s_label, 2, 3, 6, 7,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_psb_s_label), 0, 0.5);
-
-  plot_lc_info_surface_s_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_surface_s_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_surface_s_label", plot_lc_info_surface_s_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_surface_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_surface_s_label, 2, 3, 7, 8,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_surface_s_label), 0, 0.5);
-
-  plot_lc_info_rpole_s_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_rpole_s_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpole_s_label", plot_lc_info_rpole_s_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rpole_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpole_s_label, 2, 3, 8, 9,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpole_s_label), 0, 0.5);
-
-  plot_lc_info_rpoint_s_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_rpoint_s_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpoint_s_label", plot_lc_info_rpoint_s_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rpoint_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpoint_s_label, 2, 3, 9, 10,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpoint_s_label), 0, 0.5);
-
-  plot_lc_info_rside_s_label = gtk_label_new ("0.0");
-  gtk_widget_ref (plot_lc_info_rside_s_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rside_s_label", plot_lc_info_rside_s_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (plot_lc_info_rside_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rside_s_label, 2, 3, 10, 11,
-                    (GtkAttachOptions) (GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rside_s_label), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rback_p_label), 0, 0.5);
 
   plot_lc_info_rback_s_label = gtk_label_new ("0.0");
   gtk_widget_ref (plot_lc_info_rback_s_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rback_s_label", plot_lc_info_rback_s_label,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (plot_lc_info_rback_s_label);
-  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rback_s_label, 2, 3, 11, 12,
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rback_s_label, 2, 3, 12, 13,
                     (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rback_s_label), 0, 0.5);
+
+  plot_lc_info_rside_label = gtk_label_new ("");
+  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rside_label),
+                         "r__side:");
+  gtk_widget_ref (plot_lc_info_rside_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rside_label", plot_lc_info_rside_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rside_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rside_label, 0, 1, 11, 12,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rside_label), 0, 0.5);
+
+  plot_lc_info_rpoint_label = gtk_label_new ("");
+  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rpoint_label),
+                         "r__point:");
+  gtk_widget_ref (plot_lc_info_rpoint_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpoint_label", plot_lc_info_rpoint_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rpoint_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpoint_label, 0, 1, 10, 11,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpoint_label), 0, 0.5);
+
+  plot_lc_info_rpole_label = gtk_label_new ("");
+  gtk_label_parse_uline (GTK_LABEL (plot_lc_info_rpole_label),
+                         "r__pole:");
+  gtk_widget_ref (plot_lc_info_rpole_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpole_label", plot_lc_info_rpole_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rpole_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpole_label, 0, 1, 9, 10,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpole_label), 0, 0.5);
+
+  plot_lc_info_surface_label = gtk_label_new ("Surface:");
+  gtk_widget_ref (plot_lc_info_surface_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_surface_label", plot_lc_info_surface_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_surface_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_surface_label, 0, 1, 8, 9,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_surface_label), 0, 0.5);
+
+  plot_lc_info_psb_label = gtk_label_new ("PSB:");
+  gtk_widget_ref (plot_lc_info_psb_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_psb_label", plot_lc_info_psb_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_psb_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_psb_label, 0, 1, 7, 8,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_psb_label), 0, 0.5);
+
+  plot_lc_info_logg_label = gtk_label_new ("log g:");
+  gtk_widget_ref (plot_lc_info_logg_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_logg_label", plot_lc_info_logg_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_logg_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_logg_label, 0, 1, 6, 7,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_logg_label), 0, 0.5);
+
+  plot_lc_info_mbol_label = gtk_label_new ("Mbol:");
+  gtk_widget_ref (plot_lc_info_mbol_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_mbol_label", plot_lc_info_mbol_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_mbol_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_mbol_label, 0, 1, 5, 6,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_mbol_label), 0, 0.5);
+
+  plot_lc_info_rside_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_rside_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rside_p_label", plot_lc_info_rside_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rside_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rside_p_label, 1, 2, 11, 12,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rside_p_label), 0, 0.5);
+
+  plot_lc_info_rpoint_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_rpoint_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpoint_p_label", plot_lc_info_rpoint_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rpoint_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpoint_p_label, 1, 2, 10, 11,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpoint_p_label), 0, 0.5);
+
+  plot_lc_info_rpole_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_rpole_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpole_p_label", plot_lc_info_rpole_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rpole_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpole_p_label, 1, 2, 9, 10,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpole_p_label), 0, 0.5);
+
+  plot_lc_info_rside_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_rside_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rside_s_label", plot_lc_info_rside_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rside_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rside_s_label, 2, 3, 11, 12,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rside_s_label), 0, 0.5);
+
+  plot_lc_info_rpoint_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_rpoint_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpoint_s_label", plot_lc_info_rpoint_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rpoint_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpoint_s_label, 2, 3, 10, 11,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpoint_s_label), 0, 0.5);
+
+  plot_lc_info_rpole_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_rpole_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_rpole_s_label", plot_lc_info_rpole_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_rpole_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_rpole_s_label, 2, 3, 9, 10,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_rpole_s_label), 0, 0.5);
+
+  plot_lc_info_surface_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_surface_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_surface_s_label", plot_lc_info_surface_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_surface_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_surface_s_label, 2, 3, 8, 9,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_surface_s_label), 0, 0.5);
+
+  plot_lc_info_psb_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_psb_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_psb_s_label", plot_lc_info_psb_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_psb_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_psb_s_label, 2, 3, 7, 8,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_psb_s_label), 0, 0.5);
+
+  plot_lc_info_logg_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_logg_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_logg_s_label", plot_lc_info_logg_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_logg_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_logg_s_label, 2, 3, 6, 7,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_logg_s_label), 0, 0.5);
+
+  plot_lc_info_surface_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_surface_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_surface_p_label", plot_lc_info_surface_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_surface_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_surface_p_label, 1, 2, 8, 9,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_surface_p_label), 0, 0.5);
+
+  plot_lc_info_psb_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_psb_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_psb_p_label", plot_lc_info_psb_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_psb_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_psb_p_label, 1, 2, 7, 8,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_psb_p_label), 0, 0.5);
+
+  plot_lc_info_logg_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_logg_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_logg_p_label", plot_lc_info_logg_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_logg_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_logg_p_label, 1, 2, 6, 7,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_logg_p_label), 0, 0.5);
+
+  plot_lc_info_mbol_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_mbol_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_mbol_p_label", plot_lc_info_mbol_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_mbol_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_mbol_p_label, 1, 2, 5, 6,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_mbol_p_label), 0, 0.5);
+
+  plot_lc_info_mbol_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_mbol_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_mbol_s_label", plot_lc_info_mbol_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_mbol_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_mbol_s_label, 2, 3, 5, 6,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_mbol_s_label), 0, 0.5);
+
+  plot_lc_info_lum_label = gtk_label_new ("Lum:");
+  gtk_widget_ref (plot_lc_info_lum_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_lum_label", plot_lc_info_lum_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_lum_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_lum_label, 0, 1, 4, 5,
+                    (GtkAttachOptions) (0),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_lum_label), 0, 0.5);
+
+  plot_lc_info_lum_p_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_lum_p_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_lum_p_label", plot_lc_info_lum_p_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_lum_p_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_lum_p_label, 1, 2, 4, 5,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_lum_p_label), 0, 0.5);
+
+  plot_lc_info_lum_s_label = gtk_label_new ("0.0");
+  gtk_widget_ref (plot_lc_info_lum_s_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_plot_lc), "plot_lc_info_lum_s_label", plot_lc_info_lum_s_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (plot_lc_info_lum_s_label);
+  gtk_table_attach (GTK_TABLE (plot_lc_info_table), plot_lc_info_lum_s_label, 2, 3, 4, 5,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (plot_lc_info_lum_s_label), 0, 0.5);
 
   plot_lc_lagrange_frame = gtk_frame_new (NULL);
   gtk_widget_ref (plot_lc_lagrange_frame);

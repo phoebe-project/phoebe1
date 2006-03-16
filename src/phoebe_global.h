@@ -368,6 +368,8 @@ typedef struct PHOEBE_calculated_parameters
 	double mass_s;
 	double radius_p;
 	double radius_s;
+	double lum_p;
+	double lum_s;
 	double mbol_p;
 	double mbol_s;
 	double logg_p;
