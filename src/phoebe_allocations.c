@@ -1010,7 +1010,7 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 	/* the output format of .lco file is only *more or less* standard, which    */
 	/* means that WD sometimes appends some comments to that file (such as      */
 	/* the warning that the secondary component exceeds critical lobe).         */
-	while (! feof (data_file))
+	while (!feof (data_file))
 		{
 		fgets (working_str, 250, data_file);
 		if (feof (data_file) != 0) break;
@@ -1047,10 +1047,11 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 				params->lum_p = L1;
 				params->lum_s = L2;
 				}
+			continue;
 			}
 
 		/* Read in the first set of calculated parameters:                        */
-		if (strstr (working_str, " Star         M/Msun   (Mean Radius)/Rsun     M Bol    Log g (cgs)") != NULL)
+		if (strstr (working_str, "Star         M/Msun   (Mean Radius)/Rsun     M Bol    Log g (cgs)") != NULL)
 			{
 			if (fscanf (data_file, "%d %lf %lf %lf %lf\n", &i, &params->mass_p, &params->radius_p, &params->mbol_p, &params->logg_p) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 1!\n");
 			if (fscanf (data_file, "%d %lf %lf %lf %lf\n", &i, &params->mass_s, &params->radius_s, &params->mbol_s, &params->logg_s) != 5) phoebe_warning ("Error in read_in_synthetic_lc_data line 2!\n");

@@ -3,6 +3,8 @@ PHOEBE Project ChangeLog:
 
 2006-03-16: - An OB1 error caused the last data point in both LC and RV data
               to be discarded. Fixed.
+            - Slightly improved readout of LCO files now avoids problems
+              when reading the value of masses/radii of both components.
 2006-03-15: - Luminosities added to the LC plotting window upon feature
               request by Kresimir Pavlovski.
 2006-02-03: - States of adjustment buttons and step values for spot para-
