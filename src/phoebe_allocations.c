@@ -1070,9 +1070,9 @@ int read_in_synthetic_lc_data (char *filename, PHOEBE_data *data, PHOEBE_calcula
 				{
 				record = realloc (record, (i+1) * sizeof (*record));
 				sscanf (working_str, "%lf %lf %lf %lf %lf %lf %lf %lf", &record[i].hjd, &record[i].phase, &record[i].flux1, &record[i].flux2, &record[i].total, &record[i].norm, &record[i].dist, &record[i].mag);
-				sprintf(working_str,"%i",i);
 				i++;
 				fgets (working_str, 250, data_file);
+				if (feof (data_file)) break;
 				}
 			data->ptsno = i;
 			}
