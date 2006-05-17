@@ -914,7 +914,11 @@ void open_keyword_file (const char *filename)
 		if (strcmp (keyword_str, "N2L_VAL")     == 0) get_from_keyword_file (PHOEBE, "fitting_n2l_value", value_str, keyword_file);
 		if (strcmp (keyword_str, "XLAMDA_VAL")  == 0) get_from_keyword_file (PHOEBE, "fitting_xlamda_value", value_str, keyword_file);
 		if (strcmp (keyword_str, "ISYM_ON")     == 0) get_from_keyword_file (PHOEBE, "fitting_isym_switch", value_str, keyword_file);
-		if (strcmp (keyword_str, "JDPHS_TIME")  == 0) get_from_keyword_file (PHOEBE, "fitting_independent_variable_times_switch", value_str, keyword_file);
+		if (strcmp (keyword_str, "JDPHS_TIME")  == 0)
+			{
+			if (atoi (value_str) == 1) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "fitting_independent_variable_times_switch")), TRUE);
+			else gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "fitting_independent_variable_phases_switch")), TRUE);
+			}
 
 		/* ************************* LC PLOTTING WINDOW ************************* */
 
