@@ -1,6 +1,10 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-05-17: - Independent fit variable (HJD or phase) in the Fitting tab
+              was not properly parsed when opening parameter files, it was
+              always set to Times. Many thanks to Petr Harmanec for pointing
+              this out!
 2006-03-16: - An OB1 error caused the last data point in both LC and RV data
               to be discarded. Fixed.
             - Slightly improved readout of LCO files now avoids problems
