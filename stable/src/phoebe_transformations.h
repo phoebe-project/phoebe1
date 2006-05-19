@@ -11,6 +11,7 @@ void transform_100kms_to_kms            (PHOEBE_data *data);
 void transform_kms_to_100kms            (PHOEBE_data *data);
 void transform_absolute_error_to_weight (PHOEBE_data *data);
 void remove_reddening_from_data         (PHOEBE_data *data, double lambda, double R, double EBV);
+void remove_reddening_from_fluxes       (PHOEBE_data *data, double lambda, double R, double EBV);
 void normalize_rv_to_orbit              (PHOEBE_data *data, double sma, double period);
 
 void alias_phase_to_interval (PHOEBE_data *data, double phmin, double phmax);

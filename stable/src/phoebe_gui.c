@@ -15696,6 +15696,12 @@ create_PHOEBE_dc (void)
   GtkWidget *dc_chi2_original_chi2_label;
   GtkWidget *dc_chi2_corrected_chi2_label;
   GtkWidget *dc_show_correlation_matrix_button;
+  GtkWidget *dc_levels_container;
+  GtkWidget *dc_levels_list;
+  GtkWidget *dc_levels_filter_label;
+  GtkWidget *dc_levels_primary_label;
+  GtkWidget *dc_levels_secondary_label;
+  GtkWidget *dc_levels_el3_label;
   GtkWidget *dc_button_box;
   GtkWidget *dc_calculate_button;
   GtkWidget *dc_show_quickbar_button;
@@ -15724,7 +15730,7 @@ create_PHOEBE_dc (void)
   gtk_container_set_border_width (GTK_CONTAINER (dc_main_frame), 5);
   gtk_frame_set_shadow_type (GTK_FRAME (dc_main_frame), GTK_SHADOW_IN);
 
-  dc_main_table = gtk_table_new (16, 4, TRUE);
+  dc_main_table = gtk_table_new (17, 4, TRUE);
   gtk_widget_ref (dc_main_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_main_table", dc_main_table,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -15841,15 +15847,66 @@ create_PHOEBE_dc (void)
   gtk_widget_show (dc_chi2_corrected_chi2_label);
   gtk_clist_set_column_widget (GTK_CLIST (dc_chi2_info_list), 3, dc_chi2_corrected_chi2_label);
 
-  dc_show_correlation_matrix_button = gtk_button_new_with_label ("Show the Correlation Matrix");
+  dc_show_correlation_matrix_button = gtk_button_new_with_label ("Correlation Matrix");
   gtk_widget_ref (dc_show_correlation_matrix_button);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_show_correlation_matrix_button", dc_show_correlation_matrix_button,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (dc_show_correlation_matrix_button);
-  gtk_table_attach (GTK_TABLE (dc_main_table), dc_show_correlation_matrix_button, 0, 2, 12, 13,
+  gtk_table_attach (GTK_TABLE (dc_main_table), dc_show_correlation_matrix_button, 0, 1, 12, 14,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (dc_show_correlation_matrix_button), 5);
+
+  dc_levels_container = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_ref (dc_levels_container);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_levels_container", dc_levels_container,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (dc_levels_container);
+  gtk_table_attach (GTK_TABLE (dc_main_table), dc_levels_container, 1, 4, 12, 17,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (dc_levels_container), 5);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (dc_levels_container), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+
+  dc_levels_list = gtk_clist_new (4);
+  gtk_widget_ref (dc_levels_list);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_levels_list", dc_levels_list,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (dc_levels_list);
+  gtk_container_add (GTK_CONTAINER (dc_levels_container), dc_levels_list);
+  gtk_clist_set_column_width (GTK_CLIST (dc_levels_list), 0, 99);
+  gtk_clist_set_column_width (GTK_CLIST (dc_levels_list), 1, 106);
+  gtk_clist_set_column_width (GTK_CLIST (dc_levels_list), 2, 113);
+  gtk_clist_set_column_width (GTK_CLIST (dc_levels_list), 3, 80);
+  gtk_clist_column_titles_show (GTK_CLIST (dc_levels_list));
+
+  dc_levels_filter_label = gtk_label_new ("Filter:");
+  gtk_widget_ref (dc_levels_filter_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_levels_filter_label", dc_levels_filter_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (dc_levels_filter_label);
+  gtk_clist_set_column_widget (GTK_CLIST (dc_levels_list), 0, dc_levels_filter_label);
+
+  dc_levels_primary_label = gtk_label_new ("Primary level:");
+  gtk_widget_ref (dc_levels_primary_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_levels_primary_label", dc_levels_primary_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (dc_levels_primary_label);
+  gtk_clist_set_column_widget (GTK_CLIST (dc_levels_list), 1, dc_levels_primary_label);
+
+  dc_levels_secondary_label = gtk_label_new ("Secondary level:");
+  gtk_widget_ref (dc_levels_secondary_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_levels_secondary_label", dc_levels_secondary_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (dc_levels_secondary_label);
+  gtk_clist_set_column_widget (GTK_CLIST (dc_levels_list), 2, dc_levels_secondary_label);
+
+  dc_levels_el3_label = gtk_label_new ("3rd light level:");
+  gtk_widget_ref (dc_levels_el3_label);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_dc), "dc_levels_el3_label", dc_levels_el3_label,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (dc_levels_el3_label);
+  gtk_clist_set_column_widget (GTK_CLIST (dc_levels_list), 3, dc_levels_el3_label);
 
   dc_button_box = gtk_hbox_new (TRUE, 0);
   gtk_widget_ref (dc_button_box);

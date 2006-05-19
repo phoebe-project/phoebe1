@@ -797,6 +797,20 @@ int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *c
 		{
 		fgets (working_str, 255, dcout);
 
+		if (strstr (working_str, "band     L1        L2     x1     x2     y1     y2   3rd lt"))
+			{
+			double L1, L2, el3;
+			i = 0;
+			fgets (working_str, 255, dcout);
+			while (sscanf (working_str, "%*d %lf %lf %*lf %*lf %*lf %*lf %lf", &L1, &L2, &el3) == 3)
+				{
+				dco_record->L1[i] = L1;
+				dco_record->L2[i] = L2;
+				dco_record->L3[i] = el3 * 4.0 * 3.1415926;
+				fgets (working_str, 255, dcout);
+				i++;
+				}
+			}
 		if (strcmp (working_str, " Sums of squares of residuals for separate curves, including only individual weights\n") == 0)
 			{
 			fgets (working_str, 255, dcout);      /* Skip an empty line in DCO file */
@@ -1304,7 +1318,8 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 
 	/*
 	 * Although this isn't really very elegant, somehow we have to know if the
-	 * user wants the data to be binned; that's why we read in all switches:    
+	 * user wants the data to be binned; that's why we read in all switches;
+	 * actually, we need it for de-reddening as well!	 
 	 */
 
 	PHOEBE_switches switches = read_in_switches ();
@@ -1400,6 +1415,13 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 	}
 
 	fclose (data_file);
+
+	if (switches.REDDENING == 1) {
+		/* De-redden data: */
+		double lambda;
+		sscanf (PHOEBE_lc_data[curve].filter, "%lfnm", &lambda);
+		remove_reddening_from_data (data, lambda, switches.REDDENING_R, switches.REDDENING_E);
+	}
 
 	if (col_type == 4) transform_absolute_error_to_weight (data);
 
