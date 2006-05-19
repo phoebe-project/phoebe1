@@ -360,6 +360,9 @@ typedef struct PHOEBE_dco_record
 	double *correction;     /* The correction to a given parameter              */
 	double *modified_value; /* Modified value of a given parameter              */
 	double *sigma;          /* Standard deviation of the parameter fit          */
+	double *L1;             /* Passband luminosities of the primary star        */
+	double *L2;             /* Passband luminosities of the secondary star      */
+	double *L3;             /* Passband luminosities of the third light         */
 	} PHOEBE_dco_record;
 
 typedef struct PHOEBE_calculated_parameters

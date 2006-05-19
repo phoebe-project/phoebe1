@@ -30582,7 +30582,7 @@ Unavailable
       <widget>
 	<class>GtkTable</class>
 	<name>dc_main_table</name>
-	<rows>16</rows>
+	<rows>17</rows>
 	<columns>4</columns>
 	<homogeneous>True</homogeneous>
 	<row_spacing>0</row_spacing>
@@ -30785,13 +30785,13 @@ Unavailable
 	    <handler>on_dc_show_correlation_matrix_button_clicked</handler>
 	    <last_modification_time>Fri, 27 Dec 2002 01:21:13 GMT</last_modification_time>
 	  </signal>
-	  <label>Show the Correlation Matrix</label>
+	  <label>Correlation Matrix</label>
 	  <relief>GTK_RELIEF_NORMAL</relief>
 	  <child>
 	    <left_attach>0</left_attach>
-	    <right_attach>2</right_attach>
+	    <right_attach>1</right_attach>
 	    <top_attach>12</top_attach>
-	    <bottom_attach>13</bottom_attach>
+	    <bottom_attach>14</bottom_attach>
 	    <xpad>0</xpad>
 	    <ypad>0</ypad>
 	    <xexpand>False</xexpand>
@@ -30801,6 +30801,93 @@ Unavailable
 	    <xfill>True</xfill>
 	    <yfill>False</yfill>
 	  </child>
+	</widget>
+
+	<widget>
+	  <class>GtkScrolledWindow</class>
+	  <name>dc_levels_container</name>
+	  <border_width>5</border_width>
+	  <hscrollbar_policy>GTK_POLICY_AUTOMATIC</hscrollbar_policy>
+	  <vscrollbar_policy>GTK_POLICY_AUTOMATIC</vscrollbar_policy>
+	  <hupdate_policy>GTK_UPDATE_CONTINUOUS</hupdate_policy>
+	  <vupdate_policy>GTK_UPDATE_CONTINUOUS</vupdate_policy>
+	  <child>
+	    <left_attach>1</left_attach>
+	    <right_attach>4</right_attach>
+	    <top_attach>12</top_attach>
+	    <bottom_attach>17</bottom_attach>
+	    <xpad>0</xpad>
+	    <ypad>0</ypad>
+	    <xexpand>False</xexpand>
+	    <yexpand>False</yexpand>
+	    <xshrink>False</xshrink>
+	    <yshrink>False</yshrink>
+	    <xfill>True</xfill>
+	    <yfill>True</yfill>
+	  </child>
+
+	  <widget>
+	    <class>GtkCList</class>
+	    <name>dc_levels_list</name>
+	    <can_focus>True</can_focus>
+	    <columns>4</columns>
+	    <column_widths>99,106,113,80</column_widths>
+	    <selection_mode>GTK_SELECTION_SINGLE</selection_mode>
+	    <show_titles>True</show_titles>
+	    <shadow_type>GTK_SHADOW_IN</shadow_type>
+
+	    <widget>
+	      <class>GtkLabel</class>
+	      <child_name>CList:title</child_name>
+	      <name>dc_levels_filter_label</name>
+	      <label>Filter:</label>
+	      <justify>GTK_JUSTIFY_CENTER</justify>
+	      <wrap>False</wrap>
+	      <xalign>0.5</xalign>
+	      <yalign>0.5</yalign>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	    </widget>
+
+	    <widget>
+	      <class>GtkLabel</class>
+	      <child_name>CList:title</child_name>
+	      <name>dc_levels_primary_label</name>
+	      <label>Primary level:</label>
+	      <justify>GTK_JUSTIFY_CENTER</justify>
+	      <wrap>False</wrap>
+	      <xalign>0.5</xalign>
+	      <yalign>0.5</yalign>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	    </widget>
+
+	    <widget>
+	      <class>GtkLabel</class>
+	      <child_name>CList:title</child_name>
+	      <name>dc_levels_secondary_label</name>
+	      <label>Secondary level:</label>
+	      <justify>GTK_JUSTIFY_CENTER</justify>
+	      <wrap>False</wrap>
+	      <xalign>0.5</xalign>
+	      <yalign>0.5</yalign>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	    </widget>
+
+	    <widget>
+	      <class>GtkLabel</class>
+	      <child_name>CList:title</child_name>
+	      <name>dc_levels_el3_label</name>
+	      <label>3rd light level:</label>
+	      <justify>GTK_JUSTIFY_CENTER</justify>
+	      <wrap>False</wrap>
+	      <xalign>0.5</xalign>
+	      <yalign>0.5</yalign>
+	      <xpad>0</xpad>
+	      <ypad>0</ypad>
+	    </widget>
+	  </widget>
 	</widget>
       </widget>
     </widget>

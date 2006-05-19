@@ -2406,6 +2406,7 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 	char working_string[255];
 	char *working_str = working_string;
 
+	char value_string[15];
 	GtkWidget *readout_widget;
 
 	const char *dels[] = {"", "", "", "", "", "", "", "", "system_sma_step_value", "orbit_e_del_value", "orbit_perr0_del_value", "orbit_f1_del_value", "orbit_f2_del_value", "system_pshift_step_value", "system_vga_step_value", "system_incl_step_value", "surface_gr1_del_value", "surface_gr2_del_value", "component_tavh_del_value", "component_tavc_del_value", "surface_alb1_del_value", "surface_alb2_del_value", "component_phsv_del_value", "component_pcsv_del_value", "system_rm_step_value", "system_hjd0_step_value", "system_period_step_value", "system_dpdt_step_value", "orbit_dperdt_del_value", "", "luminosities_hla_del_value", "luminosities_cla_del_value", "ld_x1a_del_value", "ld_x2a_del_value", "luminosities_el3_del_value"};
@@ -2422,7 +2423,9 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 
 	GtkWidget *dc_cm_info_list_table;
 	GtkWidget *dc_cm_info_list;
+	GtkWidget *dc_levels_list;
 	char **dc_cm_list_column;
+	char **dc_levels;
 	double window_width, window_height;
 
 	char arg1[255], arg2[255], arg3[255], arg4[255];
@@ -2490,6 +2493,9 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 	/* Initialize arrays that will contain data from dco file:                  */
 	dco_record.points_no      = phoebe_malloc ((switches.NLC + switches.IFVC1 + switches.IFVC2) * sizeof (*dco_record.points_no));
 	dco_record.chi2           = phoebe_malloc ((switches.NLC + switches.IFVC1 + switches.IFVC2) * sizeof (*dco_record.chi2));
+	dco_record.L1             = phoebe_malloc (switches.NLC * sizeof (*dco_record.L1));
+	dco_record.L2             = phoebe_malloc (switches.NLC * sizeof (*dco_record.L2));
+	dco_record.L3             = phoebe_malloc (switches.NLC * sizeof (*dco_record.L3));
 
 	readout_widget = lookup_widget (PHOEBE_dc, "dc_parameters_info_list");
 	i = GTK_CLIST (readout_widget)->rows;      /* How many parameters are there */
@@ -2576,7 +2582,7 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 	gtk_container_add (GTK_CONTAINER (dc_cm_info_list_table), dc_cm_info_list);
 	for (j = 0; j <= i; j++)
 		{
-	  gtk_clist_set_column_width (GTK_CLIST (dc_cm_info_list), j, 60);
+		gtk_clist_set_column_width (GTK_CLIST (dc_cm_info_list), j, 60);
 		gtk_clist_set_column_justification (GTK_CLIST (dc_cm_info_list), j, GTK_JUSTIFY_RIGHT);
 		}
 	gtk_clist_set_column_justification (GTK_CLIST (dc_cm_info_list), 0, GTK_JUSTIFY_CENTER);
@@ -2607,9 +2613,37 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 		gtk_clist_append (GTK_CLIST (dc_cm_info_list), dc_cm_list_column);
 		}
 
+	/* 4th step: populate passband luminosities:                                */
+	dc_levels_list = lookup_widget (PHOEBE_dc, "dc_levels_list");
+	gtk_clist_clear (GTK_CLIST (dc_levels_list));
+	gtk_clist_set_column_justification (GTK_CLIST (dc_levels_list), 0, GTK_JUSTIFY_CENTER);
+	gtk_clist_set_column_justification (GTK_CLIST (dc_levels_list), 1, GTK_JUSTIFY_CENTER);
+	gtk_clist_set_column_justification (GTK_CLIST (dc_levels_list), 2, GTK_JUSTIFY_CENTER);
+	gtk_clist_set_column_justification (GTK_CLIST (dc_levels_list), 3, GTK_JUSTIFY_CENTER);
+
 	/* Finally, let's free the row space:                                       */
 	for (j = 0; j <= i; j++) free (dc_cm_list_column[j]);
 	free (dc_cm_list_column);
+
+	dc_levels = phoebe_malloc (4 * sizeof (*dc_levels));
+
+	for (j = 0; j < switches.NLC; j++)
+		{
+		dc_levels[0] = strdup (PHOEBE_lc_data[j].filter);
+
+		sprintf (value_string, "%5.5lf", dco_record.L1[j]);
+		dc_levels[1] = strdup (value_string);
+
+		sprintf (value_string, "%5.5lf", dco_record.L2[j]);
+		dc_levels[2] = strdup (value_string);
+
+		sprintf (value_string, "%5.5lf", dco_record.L3[j]);
+		dc_levels[3] = strdup (value_string);
+
+		gtk_clist_append (GTK_CLIST (dc_levels_list), dc_levels);
+		free (dc_levels[0]); free (dc_levels[1]); free (dc_levels[2]); free (dc_levels[3]);
+		}
+	free (dc_levels);
 
 	/* Free all dco_record arrays:                                              */
 	free (dco_record.points_no);
@@ -2620,6 +2654,9 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 	free (dco_record.correction);
 	free (dco_record.modified_value);
 	free (dco_record.sigma);
+	free (dco_record.L1);
+	free (dco_record.L2);
+	free (dco_record.L3);
 	
 	/* Free the correlation matrix:                                             */
 	free (correlation_matrix);

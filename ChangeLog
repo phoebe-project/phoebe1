@@ -1,6 +1,10 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-05-19: - The dereddening function did not properly remove interstellar
+              extinction: DC iterations were not fed with de-reddened data
+              and thus both the levels and temperature dependence on pass-
+              band reddening were wrong. Fixed.
 2006-05-17: - Independent fit variable (HJD or phase) in the Fitting tab
               was not properly parsed when opening parameter files, it was
               always set to Times. Many thanks to Petr Harmanec for pointing

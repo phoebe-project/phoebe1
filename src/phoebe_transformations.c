@@ -157,7 +157,16 @@ void remove_reddening_from_data (PHOEBE_data *data, double lambda, double R, dou
 	int i;
 
 	for (i = 0; i < data->ptsno; i++)
-		data->dep[i] = data->dep[i] + extinction;
+		data->dep[i] = data->dep[i] - extinction;
+	}
+
+void remove_reddening_from_fluxes (PHOEBE_data *data, double lambda, double R, double EBV)
+	{
+	double extinction = R * EBV * 0.68 * (1000./lambda - 0.35);
+	int i;
+
+	for (i = 0; i < data->ptsno; i++)
+		data->dep[i] = data->dep[i] * pow (10.0, 2./5. * extinction);
 	}
 
 void normalize_rv_to_orbit (PHOEBE_data *data, double sma, double period)

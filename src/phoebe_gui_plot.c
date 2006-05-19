@@ -290,9 +290,6 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 		/* from a file according to indep and dep switches:                       */
 		read_in_experimental_lc_data (chosen_filter, &experimental_data, INDEP, DEP);
 
-		/* Remove the reddening if the user wishes:                               */
-		if (REDDENING == 1) remove_reddening_from_data (&experimental_data, mono.WLA, switches.REDDENING_R, switches.REDDENING_E);
-
 		/* If an error occured, ptsno value is 0. In that case we don't want any  */
 		/* experimental data present in our work, otherwise we expect segfault.   */
 		if (experimental_data.ptsno == 0)
