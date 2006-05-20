@@ -2761,7 +2761,7 @@ int import_from_fotel (char *filename, char *passed_prefix)
 
 				fprintf (phoebe_file, "RVCOL1%d = \"Time\"\n", rvcounter);
 				fprintf (phoebe_file, "RVCOL2%d = \"RV in km/s\"\n", rvcounter);
-				fprintf (phoebe_file, "RVCOL3%d = \"Absolute error\"\n", rvcounter);
+				fprintf (phoebe_file, "RVCOL3%d = \"Weight (real)\"\n", rvcounter);
 				fprintf (phoebe_file, "RVFN%d   = \"%s\"\n", rvcounter, output_name);
 				fprintf (phoebe_file, "RVSIG%d  = 10.0\n", rvcounter);
 				fprintf (phoebe_file, "RVFLT%d  = \"861nm (RVIJ)\"\n", rvcounter);
@@ -2774,7 +2774,7 @@ int import_from_fotel (char *filename, char *passed_prefix)
 
 				fprintf (phoebe_file, "RVCOL1%d = \"Time\"\n", rvcounter);
 				fprintf (phoebe_file, "RVCOL2%d = \"RV in km/s\"\n", rvcounter);
-				fprintf (phoebe_file, "RVCOL3%d = \"Absolute error\"\n", rvcounter);
+				fprintf (phoebe_file, "RVCOL3%d = \"Weight (real)\"\n", rvcounter);
 				fprintf (phoebe_file, "RVFN%d   = \"%s\"\n", rvcounter, output_name);
 				fprintf (phoebe_file, "RVSIG%d  = 10.0\n", rvcounter);
 				fprintf (phoebe_file, "RVFLT%d  = \"861nm (RVIJ)\"\n", rvcounter);
@@ -2788,7 +2788,7 @@ int import_from_fotel (char *filename, char *passed_prefix)
 
 				fprintf (phoebe_file, "LCCOL1%d = \"Time\"\n", lccounter);
 				fprintf (phoebe_file, "LCCOL2%d = \"Magnitude\"\n", lccounter);
-				fprintf (phoebe_file, "LCCOL3%d = \"Absolute error\"\n", lccounter);
+				fprintf (phoebe_file, "LCCOL3%d = \"Weight (real)\"\n", lccounter);
 				fprintf (phoebe_file, "LCFN%d   = \"%s\"\n", lccounter, output_name);
 				fprintf (phoebe_file, "LCSIG%d  = 0.01\n", lccounter);
 

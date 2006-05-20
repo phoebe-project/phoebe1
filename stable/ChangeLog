@@ -1,6 +1,8 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-05-20: - Fotel import function set the 3rd column to be standard
+              deviation, but it should be set to weight. Fixed.
 2006-05-19: - The dereddening function did not properly remove interstellar
               extinction: DC iterations were not fed with de-reddened data
               and thus both the levels and temperature dependence on pass-
