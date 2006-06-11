@@ -606,6 +606,7 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 
 	int lc_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_lc_no_value")));
 	int rv_no = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_rv_no_value")));
+	int el3_switch;
 
 	int i;
 	int match_lc = 0;
@@ -724,7 +725,14 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 	mono.Y2A = atof (readout_str);
 
 	/* 4. Third light: */
-	
+
+	/* First we need to see whether 3rd light is given in percents or fluxes: */
+	readout_widget = lookup_widget (PHOEBE, "luminosities_el3_flux_switch");
+	if (GTK_TOGGLE_BUTTON (readout_widget)->active)
+		el3_switch = 1;
+	else
+		el3_switch = 0;
+
 	/* Third light is defined only for LCs, so we have to disable the readout   */
 	/* for RVs:                                                                 */
 
@@ -735,6 +743,11 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 		}
 	else
 		mono.EL3 = 0.0;
+
+	/* If it is given in percents, transform it to fluxes:                    */
+	if (el3_switch == 0) {
+		mono.EL3 *= (mono.HLA + mono.CLA) / 4.0 / 3.1415926;
+	}
 
 	/* 5. Opacity function:                                                     */
 	if (match_lc == 1)

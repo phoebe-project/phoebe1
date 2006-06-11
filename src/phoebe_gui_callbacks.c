@@ -2380,14 +2380,42 @@ void populate_dc_parameters_info_list ()
 			}
 		}
 		if ( (KEP[i] == 0) && (i == 34) /* EL3 */) {
+			int el3_switch;
+
+			readout_widget = lookup_widget (PHOEBE, "luminosities_el3_flux_switch");
+			if (GTK_TOGGLE_BUTTON (readout_widget)->active) el3_switch = 1; else el3_switch = 0;
+
 			for (j = 0; j < lc_no; j++) {
-				sprintf (entry[0], "%s [%d]", keyword[i], j+1);
-				gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_el3_info_list")), j, 1, &readout_str);
-				sprintf (entry[1], "%s", readout_str);
-				sprintf (entry[2], "not calculated");
-				sprintf (entry[3], "not calculated");
-				sprintf (entry[4], "not calculated");
-				gtk_clist_append (GTK_CLIST (param_list), entry);
+				if (el3_switch == 0) {
+					/* This means that 3rd light is given in percentage:      */
+					double L1, L2, L3;
+					char el3_str[20];
+					readout_widget = lookup_widget (PHOEBE, "luminosities_lc_info_list");
+					gtk_clist_get_text (GTK_CLIST (readout_widget), j, 1, &readout_str);
+					L1 = atof (readout_str);
+					gtk_clist_get_text (GTK_CLIST (readout_widget), j, 2, &readout_str);
+					L2 = atof (readout_str);
+					gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_el3_info_list")), j, 1, &readout_str);
+					L3 = atof (readout_str);
+					L3 *= (L1 + L2)/4.0/3.1415926;
+					sprintf (el3_str, "%lf", L3);
+					sprintf (entry[0], "%s [%d]", keyword[i], j+1);
+					sprintf (entry[1], "%s", el3_str);
+					sprintf (entry[2], "not calculated");
+					sprintf (entry[3], "not calculated");
+					sprintf (entry[4], "not calculated");
+					gtk_clist_append (GTK_CLIST (param_list), entry);
+				}
+				else {
+					/* This means that 3rd light is given in flux:            */
+					gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_el3_info_list")), j, 1, &readout_str);
+					sprintf (entry[0], "%s [%d]", keyword[i], j+1);
+					sprintf (entry[1], "%s", readout_str);
+					sprintf (entry[2], "not calculated");
+					sprintf (entry[3], "not calculated");
+					sprintf (entry[4], "not calculated");
+					gtk_clist_append (GTK_CLIST (param_list), entry);
+				}
 			}
 		}
 	}
@@ -2829,16 +2857,49 @@ void on_dc_update_corrections_button_clicked (GtkButton *button, gpointer user_d
 					readout_widget = lookup_widget (PHOEBE, "ld_monochromatic_lc_info_list");
 					gtk_clist_set_text (GTK_CLIST (readout_widget), readout_int - 1, 3, readout_str);
 					}
-				if (strncmp (readout_str, "EL3", 3) == 0)
-					{
+				if (strncmp (readout_str, "EL3", 3) == 0) {
+					int el3_switch;
+
 					sscanf (readout_str, "EL3 [%d]", &readout_int);
-					gtk_clist_get_text (GTK_CLIST (par_list), i, 3, &readout_str);
-					readout_widget = lookup_widget (PHOEBE, "luminosities_el3_info_list");
-					gtk_clist_set_text (GTK_CLIST (readout_widget), readout_int - 1, 1, readout_str);
+
+					readout_widget = lookup_widget (PHOEBE, "luminosities_el3_flux_switch");
+					if (GTK_TOGGLE_BUTTON (readout_widget)->active) el3_switch = 1; else el3_switch = 0;
+
+					if (el3_switch == 0) {
+						/* This means that 3rd light is given in percentage:  */
+						double L1, L2, L3;
+						char el3_str[20];
+						readout_widget = lookup_widget (PHOEBE, "luminosities_lc_info_list");
+						gtk_clist_get_text (GTK_CLIST (readout_widget), readout_int - 1, 1, &readout_str);
+						L1 = atof (readout_str);
+						gtk_clist_get_text (GTK_CLIST (readout_widget), readout_int - 1, 2, &readout_str);
+						L2 = atof (readout_str);
+						gtk_clist_get_text (GTK_CLIST (par_list), i, 3, &readout_str);
+						L3 = atof (readout_str);
+						L3 *= 4.0*3.1415926/(L1 + L2 + 4.0*3.1415926*L3);
+						sprintf (el3_str, "%lf", L3);
+						readout_widget = lookup_widget (PHOEBE, "luminosities_el3_info_list");
+						gtk_clist_set_text (GTK_CLIST (readout_widget), readout_int - 1, 1, el3_str);
 					}
+					else {
+						/* This means that 3rd light is given in flux:        */
+						gtk_clist_get_text (GTK_CLIST (par_list), i, 3, &readout_str);
+						readout_widget = lookup_widget (PHOEBE, "luminosities_el3_info_list");
+						gtk_clist_set_text (GTK_CLIST (readout_widget), readout_int - 1, 1, readout_str);
+					}
+				}
+
 				}
 			}
 		}
+
+	/* Update the L2 values:                                                  */
+	for (i = 0; i < lc_no; i++) {
+		readout_widget = lookup_widget (PHOEBE_dc, "dc_levels_list");
+		gtk_clist_get_text (GTK_CLIST (readout_widget), i, 2, &readout_str);
+		readout_widget = lookup_widget (PHOEBE, "luminosities_lc_info_list");
+		gtk_clist_set_text (GTK_CLIST (readout_widget), i, 2, readout_str);
+	}
 
 	/* We have now updated all main PHOEBE widgets, we have to update DC window */
 	/* as well (move changed to original value and erase corrections):          */
