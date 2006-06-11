@@ -315,6 +315,7 @@ void save_keyword_file (char *filename)
 
 	add_to_keyword_file ("LUMLC",       PHOEBE, "luminosities_lc_info_list", keyword_file);
 	add_to_keyword_file ("EL3",         PHOEBE, "luminosities_el3_info_list", keyword_file);
+	add_to_keyword_file ("EL3_FLUX",    PHOEBE, "luminosities_el3_flux_switch", keyword_file);
 	add_to_keyword_file ("WEIGHTS",     PHOEBE, "luminosities_weighting_info_list", keyword_file);
 	add_to_keyword_file ("HLA_ADJ",     PHOEBE, "luminosities_hla_adjust", keyword_file);
 	add_to_keyword_file ("HLA_DEL",     PHOEBE, "luminosities_hla_del_value", keyword_file);
@@ -722,6 +723,11 @@ void open_keyword_file (const char *filename)
 		if (strcmp (keyword_str, "SEED_VAL")    == 0) get_from_keyword_file (PHOEBE, "luminosities_seed_value", value_str, keyword_file);
 		if (strcmp (keyword_str, "ICOR1_ON")    == 0) get_from_keyword_file (PHOEBE, "luminosities_icor1_switch", value_str, keyword_file);
 		if (strcmp (keyword_str, "ICOR2_ON")    == 0) get_from_keyword_file (PHOEBE, "luminosities_icor2_switch", value_str, keyword_file);
+		if (strcmp (keyword_str, "EL3_FLUX")    == 0)
+			{
+			if (atoi (value_str) == 1) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "luminosities_el3_flux_switch")), TRUE);
+			else gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lookup_widget (PHOEBE, "luminosities_el3_percent_switch")), TRUE);
+			}
 
 		if (strncmp (keyword_str, "HLALC", 5) == 0)
 			{
@@ -735,7 +741,7 @@ void open_keyword_file (const char *filename)
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_lc_info_list")), readout_int-1, 2, value_str);
 			}
 
-		if ( (strncmp (keyword_str, "EL3", 3) == 0) && (strcmp (keyword_str, "EL3_ADJ") != 0) )
+		if ( (strncmp (keyword_str, "EL3", 3) == 0) && (strcmp (keyword_str, "EL3_ADJ") != 0) && (strcmp (keyword_str, "EL3_FLUX") != 0) )
 			{
 			sscanf (keyword_str, "EL3%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_el3_info_list")), readout_int-1, 1, value_str);

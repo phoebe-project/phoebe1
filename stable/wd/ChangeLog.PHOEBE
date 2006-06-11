@@ -1,25 +1,38 @@
 This is a ChangeLog of WD modifications introduced by PHOEBE development team
 in order to incorporate LC and DC programs to PHOEBE 0.2x series.
 
-This ChangeLog applies to WD version 2004-10-18.
+This ChangeLog applies to WD version 2005-10-28.
 
 --------------------------------------------------------------------------------
 
-2004-10-21:
+2006-06-07:
 
-	Commented lines 266 and 267 of the lcflop source file. These two lines
+*****	Commented lines 266 and 267 of the lcflop source file. These two lines
 	open LC input and output files with determined filenames, which is not
 	practical for PHOEBE.
 
-	Commented lines 361 and 362 of the dcflop source file. These two lines
+*****	Commented lines 361 and 362 of the dcflop source file. These two lines
 	open DC input and output files with determined filenames, which is not
 	practical for PHOEBE.
 
-	All WD arrays re-dimensioned from Nmax = 30 to Nmax = 60. This was done
+*****	Arrays for the number of observational data points resized:
+
+		 3000 ->   9000
+		60000 -> 180000
+
+	In particular, the following arrays were changed:
+
+		phas(9000),flux(9000),wt(9000),br(9000),bl(9000)
+		obs(180000),hold(180000)
+		phjd(9000),dfdph(9000),dfdap(9000)
+
+*****	The redimensioning from above demanded another extension: the readout
+	loop in WD's DC program, line 764, was upwards limited to 7000 by the
+	hard-coded value. This has now been changed to 9000.
+
+*****	All WD arrays re-dimensioned from Nmax = 30 to Nmax = 60. This was done
 	by changing the dimensions in the following manner:
 
-		60000 -> 120000
-		 3000 ->   6000
 		 1600 ->   6400
 		  800 ->   3200
 		  762 ->   3011
@@ -30,9 +43,6 @@ This ChangeLog applies to WD version 2004-10-18.
 
 	The variables that were changed are:
 
-		phas(6000),flux(6000),wt(6000),br(6000),bl(6000),
-		obs(120000),hold(120000),
-		phjd(6000),dfdph(6000),dfdap(6000),
 		hld(3200),snthh(130),csthh(130),snfih(6400),csfih(6400),
 		snthl(130),csthl(130),snfil(6400),csfil(6400),tldh(6400),
 		tldl(6400),

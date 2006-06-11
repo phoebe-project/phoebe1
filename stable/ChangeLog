@@ -1,6 +1,27 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-06-11: - Upon request of Petr Harmanec, 3rd light can now be entered
+              in percents of total light instead of internal flux units.
+              This required a slight modification of the GUI appearence,
+              namely the Luminosities tab: the "Edit 3rd light" button has
+              been reduced in size and two radio buttons have been added
+              with the 3rd light units' choice: percents or flux. In
+              adition, several other functions needed to be changed and
+              currently a slight confusion exists between light and lumi-
+              nosity. The Luminosities tab clist *always* contains the
+              values in units that the user has set: percents or fluxes.
+              The DC fitting clist *always* contains the values in fluxes,
+              since these are native to WD. Finally, the DC Luminosities
+              clist *always* contains the values in luminosity, for 3rd
+              light this effectively means that its value is multiplied by
+              4\pi and that isotropic 3rd source is assumed. I hope this
+              is not too complicated and I will think how to facilitate it
+              in future. Note however that these design decisions will hit
+              only the new version (0.30), this one will not be modified.
+2006-06-06: - New WD (2005 version) binaries have replaced the older 2004
+              version. The arrays have been resized to encompass 9000 data
+              points and up to 60 surface elements.
 2006-05-20: - Fotel import function set the 3rd column to be standard
               deviation, but it should be set to weight. Fixed.
 2006-05-19: - The dereddening function did not properly remove interstellar

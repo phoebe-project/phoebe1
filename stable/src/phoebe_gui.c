@@ -463,7 +463,6 @@ create_PHOEBE (void)
   GtkWidget *luminosities_hla_del_value;
   GtkObject *luminosities_cla_del_value_adj;
   GtkWidget *luminosities_cla_del_value;
-  GtkWidget *luminosities_el3_edit_entry_button;
   GtkObject *luminosities_el3_del_value_adj;
   GtkWidget *luminosities_el3_del_value;
   GtkWidget *luminosities_hla_adjust;
@@ -523,6 +522,10 @@ create_PHOEBE (void)
   GtkWidget *luminosities_ifat1_switch;
   GtkWidget *luminosities_ifat2_switch;
   GtkWidget *luminosities_logg_from_model_switch;
+  GtkWidget *luminosities_el3_edit_entry_button;
+  GSList *_3rd_light_radio_group = NULL;
+  GtkWidget *luminosities_el3_percent_switch;
+  GtkWidget *luminosities_el3_flux_switch;
   GtkWidget *luminosities_tab_label;
   GtkWidget *ld_frame;
   GtkWidget *ld_table;
@@ -4604,16 +4607,6 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (luminosities_cla_del_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (luminosities_cla_del_value), GTK_UPDATE_IF_VALID);
 
-  luminosities_el3_edit_entry_button = gtk_button_new_with_label ("Edit 3rd Light / Opacity Entry");
-  gtk_widget_ref (luminosities_el3_edit_entry_button);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "luminosities_el3_edit_entry_button", luminosities_el3_edit_entry_button,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (luminosities_el3_edit_entry_button);
-  gtk_table_attach (GTK_TABLE (luminosities_table), luminosities_el3_edit_entry_button, 3, 6, 4, 5,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 5, 0);
-  gtk_widget_set_sensitive (luminosities_el3_edit_entry_button, FALSE);
-
   luminosities_el3_del_value_adj = gtk_adjustment_new (0.01, 0, 1, 0.01, 0.1, 1);
   luminosities_el3_del_value = gtk_spin_button_new (GTK_ADJUSTMENT (luminosities_el3_del_value_adj), 0, 5);
   gtk_widget_ref (luminosities_el3_del_value);
@@ -5101,6 +5094,37 @@ create_PHOEBE (void)
   gtk_widget_show (luminosities_logg_from_model_switch);
   gtk_box_pack_start (GTK_BOX (luminosities_stellar_atmospheres_box), luminosities_logg_from_model_switch, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (luminosities_logg_from_model_switch), TRUE);
+
+  luminosities_el3_edit_entry_button = gtk_button_new_with_label ("Edit entry");
+  gtk_widget_ref (luminosities_el3_edit_entry_button);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "luminosities_el3_edit_entry_button", luminosities_el3_edit_entry_button,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (luminosities_el3_edit_entry_button);
+  gtk_table_attach (GTK_TABLE (luminosities_table), luminosities_el3_edit_entry_button, 5, 6, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 5, 0);
+  gtk_widget_set_sensitive (luminosities_el3_edit_entry_button, FALSE);
+
+  luminosities_el3_percent_switch = gtk_radio_button_new_with_label (_3rd_light_radio_group, "3rd light in %");
+  _3rd_light_radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (luminosities_el3_percent_switch));
+  gtk_widget_ref (luminosities_el3_percent_switch);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "luminosities_el3_percent_switch", luminosities_el3_percent_switch,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (luminosities_el3_percent_switch);
+  gtk_table_attach (GTK_TABLE (luminosities_table), luminosities_el3_percent_switch, 3, 4, 4, 5,
+                    (GtkAttachOptions) (GTK_EXPAND),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  luminosities_el3_flux_switch = gtk_radio_button_new_with_label (_3rd_light_radio_group, "3rd light in flux");
+  _3rd_light_radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (luminosities_el3_flux_switch));
+  gtk_widget_ref (luminosities_el3_flux_switch);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "luminosities_el3_flux_switch", luminosities_el3_flux_switch,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (luminosities_el3_flux_switch);
+  gtk_table_attach (GTK_TABLE (luminosities_table), luminosities_el3_flux_switch, 4, 5, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (luminosities_el3_flux_switch), TRUE);
 
   luminosities_tab_label = gtk_label_new ("Luminosities");
   gtk_widget_ref (luminosities_tab_label);
@@ -9261,9 +9285,6 @@ create_PHOEBE (void)
   gtk_signal_connect (GTK_OBJECT (luminosities_cla_del_value), "changed",
                       GTK_SIGNAL_FUNC (on_step_value_changed_update_fitting_quickbar),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (luminosities_el3_edit_entry_button), "clicked",
-                      GTK_SIGNAL_FUNC (on_luminosities_el3_edit_entry_button_clicked),
-                      NULL);
   gtk_signal_connect (GTK_OBJECT (luminosities_el3_del_value), "changed",
                       GTK_SIGNAL_FUNC (on_step_value_changed_update_fitting_quickbar),
                       NULL);
@@ -9323,6 +9344,9 @@ create_PHOEBE (void)
                       NULL);
   gtk_signal_connect (GTK_OBJECT (luminosities_weighting_edit_entry_button), "clicked",
                       GTK_SIGNAL_FUNC (on_luminosities_weighting_edit_entry_button_clicked),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (luminosities_el3_edit_entry_button), "clicked",
+                      GTK_SIGNAL_FUNC (on_luminosities_el3_edit_entry_button_clicked),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (ld_vanhamme_interpolation), "clicked",
                       GTK_SIGNAL_FUNC (on_ld_interpolation_clicked),
