@@ -254,7 +254,7 @@ void phoebe_init ()
 
 	/* Pixmaps (empty LC/RV/Chi2 plots, logos, ...):                            */
 	sprintf (working_str, "%s/pixmaps/", PHOEBE_BASE_DIR);
-  add_pixmap_directory (working_str);
+	add_pixmap_directory (working_str);
 
 	/* Temporary directory:                                                     */
 	sprintf (working_str, "%s/", PHOEBE_TEMP_DIR);
@@ -265,14 +265,14 @@ void phoebe_init ()
 		/* This occurs when PHOEBE is started for the first time from src:        */
 
 		/* Pixmaps (empty LC/RV/Chi2 plots, logos, ...):                            */
-	  add_pixmap_directory ("../pixmaps/");
+		add_pixmap_directory ("../pixmaps/");
 
 		/* Temporary directory:                                                     */
 		add_pixmap_directory (PHOEBE_TEMP_DIR);
 		}
 
-  PHOEBE = create_PHOEBE ();
-  gtk_widget_show (PHOEBE);
+	PHOEBE = create_PHOEBE ();
+	gtk_widget_show (PHOEBE);
 
 	/* If warning window is created, be sure it's on top of main PHOEBE window: */
 	if (GTK_IS_WINDOW (warning_window))
@@ -282,22 +282,22 @@ void phoebe_init ()
 		}
 
 	if (file_exists (PHOEBE_CONFIG)) chdir (PHOEBE_DATA_DIR);
-  PHOEBE_open_keyword_file     = create_PHOEBE_open_keyword_file ();
+	PHOEBE_open_keyword_file     = create_PHOEBE_open_keyword_file ();
 	PHOEBE_plot_to_file_selector = create_PHOEBE_plot_to_file_selector ();
-  PHOEBE_open_data_file        = create_PHOEBE_open_data_file ();
+	PHOEBE_open_data_file        = create_PHOEBE_open_data_file ();
 	PHOEBE_file_selector         = create_PHOEBE_file_selector ();
 
 	if (file_exists (PHOEBE_CONFIG)) chdir (PHOEBE_BASE_DIR);
 
-  PHOEBE_calculate_grid        = create_PHOEBE_calculate_grid ();
+	PHOEBE_calculate_grid        = create_PHOEBE_calculate_grid ();
 	PHOEBE_calculate_grid_edit_parameters
 	                             = create_PHOEBE_calculate_grid_edit_parameters ();
 
-  PHOEBE_calculate_phsv        = create_PHOEBE_calculate_phsv ();
-  PHOEBE_calculate_pcsv        = create_PHOEBE_calculate_pcsv ();
+	PHOEBE_calculate_phsv        = create_PHOEBE_calculate_phsv ();
+	PHOEBE_calculate_pcsv        = create_PHOEBE_calculate_pcsv ();
 
-  PHOEBE_plot_lc               = create_PHOEBE_plot_lc ();
-  PHOEBE_plot_rv               = create_PHOEBE_plot_rv ();
+	PHOEBE_plot_lc               = create_PHOEBE_plot_lc ();
+	PHOEBE_plot_rv               = create_PHOEBE_plot_rv ();
 	PHOEBE_plot_to_file          = create_PHOEBE_plot_to_file ();
 	PHOEBE_ld_interpolation      = create_PHOEBE_ld_interpolation ();
 	PHOEBE_dc                    = create_PHOEBE_dc ();
@@ -326,8 +326,8 @@ void phoebe_init ()
 	set_clist_justifications ();
 
 	if (file_exists (PHOEBE_CONFIG)) chdir (PHOEBE_BASE_DIR);
-  PHOEBE_configuration        = create_PHOEBE_configuration ();
-  PHOEBE_configuration_browse = create_PHOEBE_configuration_browse ();
+	PHOEBE_configuration        = create_PHOEBE_configuration ();
+	PHOEBE_configuration_browse = create_PHOEBE_configuration_browse ();
 
 	/* If LD interpolation switch is set on, set the interpolation button sen-  */
 	/* sitive:                                                                  */
@@ -391,8 +391,9 @@ void phoebe_init ()
 	else
 		phoebe_warning ("file atmcofplanck.dat not found!");
 
-	/* Finally, set the window title to a generic form:                         */
-	gtk_window_set_title (GTK_WINDOW (PHOEBE), "PHOEBE: PHysics Of Eclipsing BinariEs");
+	/* Finally, set the window title to a generic form:                       */
+	sprintf (working_str, "PHOEBE %s", PHOEBE_VERSION_NUMBER);
+	gtk_window_set_title (GTK_WINDOW (PHOEBE), working_str);
 
 	print_to_status_bar ("PHOEBE Started...");
 

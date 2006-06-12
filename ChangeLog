@@ -1,6 +1,9 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-06-12: - File->New connected to the actual reset function. So far the
+              menu item didn't do anything, now it calls the default para-
+              meter file.
 2006-06-11: - Upon request of Petr Harmanec, 3rd light can now be entered
               in percents of total light instead of internal flux units.
               This required a slight modification of the GUI appearence,
@@ -19,6 +22,8 @@ PHOEBE Project ChangeLog:
               is not too complicated and I will think how to facilitate it
               in future. Note however that these design decisions will hit
               only the new version (0.30), this one will not be modified.
+            - PHOEBE window title now contains the version number. This
+              may help identify problems more easily.
 2006-06-06: - New WD (2005 version) binaries have replaced the older 2004
               version. The arrays have been resized to encompass 9000 data
               points and up to 60 surface elements.

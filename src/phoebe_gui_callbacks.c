@@ -231,6 +231,21 @@ void on_component_pcsv_calculate_button_clicked (GtkButton *button, gpointer use
 	gtk_widget_show (PHOEBE_calculate_pcsv);
 	}
 
+void on_menu_bar_file_new_activated (GtkMenuItem *menuitem, gpointer user_data)
+	{
+	GtkWidget *warning_window;
+
+	warning_window = create_warning_window (
+		"PHOEBE Question",
+		"Reset all settings?",
+		"By resetting all unsaved data will be lost.",
+		"Are you sure?",
+		on_warning_on_new_ok_button_clicked,
+		gtk_widget_destroy);
+
+	gtk_object_set_data (GTK_OBJECT (PHOEBE), "warning_window", warning_window);
+	}
+
 void on_menu_bar_file_exit_activated (GtkMenuItem *menuitem, gpointer user_data)
 	{
 	GtkWidget *warning_window;
@@ -256,6 +271,35 @@ void on_menu_bar_file_import_from_dci_activate (GtkMenuItem *menuitem, gpointer 
 void on_menu_bar_file_export_to_dci_activate (GtkMenuItem *menuitem, gpointer user_data)
 	{
 	phoebe_warning ("not implemented");
+	}
+
+void on_warning_on_new_ok_button_clicked (GtkWidget *widget, gpointer user_data)
+	{
+	/* This function resets PHOEBE parameters to default values:              */
+
+	char filename_string[255];
+	char *filename = filename_string;
+
+	GtkWidget *warning_window = lookup_widget (PHOEBE, "warning_window");
+
+	GtkWidget *notice_window;
+
+	sprintf (filename, "%s/default.phoebe", PHOEBE_DEFAULTS_DIR);
+
+	if (file_exists (filename))
+		{
+		open_keyword_file (filename);
+		sprintf (PHOEBE_KEYWORD_FILENAME, "Undefined");
+		print_to_status_bar ("PHOEBE reset complete.");
+		}
+	else
+		notice_window = create_notice_window (
+			"PHOEBE Notice",
+			"PHOEBE Notice: Defaults file cannot be found",
+			"The defaults file, \"default.phoebe\", resides in PHOEBE defaults directory.", "Please verify the path to the defaults directory in Settings->Configuration menu.",
+			 gtk_widget_destroy);
+
+	gtk_widget_destroy (warning_window);
 	}
 
 void on_warning_on_exit_ok_button_clicked (GtkWidget *widget, gpointer user_data)

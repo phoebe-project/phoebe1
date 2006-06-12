@@ -9009,6 +9009,9 @@ create_PHOEBE (void)
   gtk_signal_connect (GTK_OBJECT (PHOEBE), "delete_event",
                       GTK_SIGNAL_FUNC (on_menu_bar_file_exit_activated),
                       NULL);
+  gtk_signal_connect (GTK_OBJECT (menu_bar_file_new), "activate",
+                      GTK_SIGNAL_FUNC (on_menu_bar_file_new_activated),
+                      NULL);
   gtk_signal_connect (GTK_OBJECT (menu_bar_file_open), "activate",
                       GTK_SIGNAL_FUNC (on_open_button_clicked),
                       NULL);

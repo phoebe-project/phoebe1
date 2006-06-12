@@ -23,6 +23,7 @@ void on_ipb_switch_toggled (GtkToggleButton *togglebutton, gpointer user_data);
 
 void on_menu_bar_settings_configure_clicked (GtkMenuItem *menuitem, gpointer user_data);
 void on_save_as_button_clicked (GtkMenuItem *menuitem, gpointer user_data);
+void on_menu_bar_file_new_activated (GtkMenuItem *menuitem, gpointer user_data);
 void on_menu_bar_file_exit_activated (GtkMenuItem *menuitem, gpointer user_data);
 void on_menu_bar_file_import_from_dci_activate (GtkMenuItem *menuitem, gpointer user_data);
 void on_menu_bar_file_export_to_dci_activate (GtkMenuItem *menuitem, gpointer user_data);
@@ -51,6 +52,7 @@ void on_configuration_save_button_clicked (GtkButton *button, gpointer user_data
 void on_warning_no_configuration_ok_button_clicked (GtkButton *button, gpointer user_data);
 void on_warning_keyword_file_exists_ok_button_clicked (GtkWidget *widget, gpointer user_data);
 void on_warning_configuration_file_exists_ok_button_clicked (GtkWidget *widget, gpointer user_data);
+void on_warning_on_new_ok_button_clicked (GtkWidget *widget, gpointer user_data);
 void on_warning_on_exit_ok_button_clicked (GtkWidget *widget, gpointer user_data);
 void on_warning_confirm_on_save_ok_button_clicked (GtkWidget *widget, gpointer user_data);
 
