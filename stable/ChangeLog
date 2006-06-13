@@ -1,6 +1,11 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-06-13: - Code beautification done in plot_lc_plot () while searching
+              for the segfault problem that was reported. This will now be
+              committed to see whether the problem is fixed; there was a
+              double free () call that could have been triggered under
+              special circumstances (chosen_filter variable not set).
 2006-06-12: - File->New connected to the actual reset function. So far the
               menu item didn't do anything, now it calls the default para-
               meter file.

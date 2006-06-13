@@ -1358,7 +1358,7 @@ int read_in_experimental_lc_data (int curve, PHOEBE_data *data, int indep, int d
 	if (strcmp (PHOEBE_lc_data[curve].column2, "Magnitude") == 0) magnitude = 1; else magnitude = 0;
 
 	if (!file_exists (PHOEBE_lc_data[curve].filename)) {
-		notice_window = create_notice_window ("PHOEBE Notice", "Observed data filename not found", "PHOEBE cannot find the file containing observed data.", "Please check your settings in the Data tab.", gtk_widget_destroy);
+		notice_window = create_notice_window ("PHOEBE Notice", "A file with observations not found", "PHOEBE cannot find the file containing observed data.", "Please check your settings in the Data tab.", gtk_widget_destroy);
 		data->ptsno = 0;
 		return;
 	}
