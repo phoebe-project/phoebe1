@@ -574,12 +574,15 @@ void create_3d_image_plot_using_sm (PHOEBE_plot_device device, char *filename, P
 	}
 
 void create_lc_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PHOEBE_data synthetic_data, PHOEBE_data experimental_data, int indep, int dep, int grid, int box, double x_offset, double y_offset, double zoom, int plot_synthetic, int plot_experimental)
-	{
-	#ifdef PHOEBE_GNUPLOT_SUPPORT
+{
+#ifdef PHOEBE_GNUPLOT_SUPPORT
 	int i;
 
-	/* Plot limits; values are assigned in case this function would ever be     */
-	/* called with both plot_synthetic and plot_experimental switches off.      */
+	/*
+	 * Plot limits; values are assigned in case this function would ever be
+	 * called with both plot_synthetic and plot_experimental switches off.
+	 */
+
 	double xmin = 0.0, xmax = 0.0, ymin = 0.0, ymax = 0.0;
 
 	FILE *plot_file;
@@ -591,279 +594,236 @@ void create_lc_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 	char line[255];
 	int	tmpfd0, tmpfd1, tmpfd2;
 
-	/* If the output is ascii table, write it out now and exit:                 */
-	if (device == ascii)
-		{
+	/* If the output is ascii table, write it out now and exit:               */
+	if (device == ascii) {
 		plot_file = fopen (filename, "w");
-		if (plot_synthetic == 1)
-			{
+		if (plot_synthetic == 1) {
 			fprintf (plot_file, "# indep\t# dep\t# weight\n");
 			for (i = 0; i < synthetic_data.ptsno; i++)
 				fprintf (plot_file, "%lf\t%lf\t%lf\n", synthetic_data.indep[i], synthetic_data.dep[i], synthetic_data.weight[i]);
-			}
-		if (plot_experimental == 1)
-			{
+		}
+		if (plot_experimental == 1) {
 			fprintf (plot_file, "# indep\t\t# dep\t\t# weight\n");
 			for (i = 0; i < experimental_data.ptsno; i++)
 				fprintf (plot_file, "%lf\t%lf\t%lf\n", experimental_data.indep[i], experimental_data.dep[i], experimental_data.weight[i]);
-			}
+		}
 		fclose (plot_file);
 		return;
-		}
+	}
 
-	/* Open temporary data file(s) for output   */
-	if (plot_synthetic == 1 && plot_experimental == 1)
-		{
+	/* Open temporary data file(s) for output:                                */
+	if (plot_synthetic == 1 && plot_experimental == 1) {
 		sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
-		if ((tmpfd1=mkstemp(name1))==-1)
-                        {
-        		phoebe_warning ("cannot create temporary file: exiting plot") ;
-        		return ;
-                        }
+		if ( (tmpfd1 = mkstemp (name1)) == -1) {
+			phoebe_warning ("cannot create temporary file: exiting plot");
+			return;
+		}
 
 		/* Write data to this file  */
-		for (i=0 ; i<synthetic_data.ptsno; i++)
-                        {
-        		sprintf(line, "%lf\t%lf\t%lf\n", synthetic_data.indep[i], synthetic_data.dep[i], synthetic_data.weight[i]) ;
+		for (i=0 ; i<synthetic_data.ptsno; i++) {
+			sprintf(line, "%lf\t%lf\t%lf\n", synthetic_data.indep[i], synthetic_data.dep[i], synthetic_data.weight[i]) ;
 			write(tmpfd1, line, strlen(line));
-                        }
-       	    	close(tmpfd1) ;
+		}
+		close(tmpfd1) ;
 
 		sprintf(name2, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
-	    	if ((tmpfd2=mkstemp(name2))==-1)
-                        {
-        		phoebe_warning ("cannot create temporary file: exiting plot") ;
-        		return ;
-                        }
-
-	    	/* Write data to this file  */
-    		for (i=0 ; i<experimental_data.ptsno; i++)
-                        {
-        		sprintf(line, "%lf\t%lf\t%lf\n", experimental_data.indep[i], experimental_data.dep[i], experimental_data.weight[i]);
-			write(tmpfd2, line, strlen(line));
-            		}
-	    	close(tmpfd1) ;
-
+		if ( (tmpfd2 = mkstemp (name2)) == -1) {
+			phoebe_warning ("cannot create temporary file: exiting plot") ;
+			return;
 		}
-	else
-		{
+
+		/* Write data to this file  */
+		for (i=0 ; i<experimental_data.ptsno; i++) {
+			sprintf(line, "%lf\t%lf\t%lf\n", experimental_data.indep[i], experimental_data.dep[i], experimental_data.weight[i]);
+			write(tmpfd2, line, strlen(line));
+		}
+		close(tmpfd1) ;
+
+	}
+	else {
 		sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
-	    	if ((tmpfd1=mkstemp(name1))==-1)
-			{
-        		phoebe_warning ("cannot create temporary file: exiting plot") ;
-        		return ;
-			}
+		if ((tmpfd1=mkstemp(name1))==-1) {
+			phoebe_warning ("cannot create temporary file: exiting plot") ;
+			return;
+		}
 
-		if (plot_synthetic ==1 )
-			{
+		if (plot_synthetic == 1) {
 	 	   	/* Write data to this file  */
-    			for (i=0 ; i<synthetic_data.ptsno; i++)
-				{
-        			sprintf(line, "%lf\t%lf\t%lf\n", synthetic_data.indep[i], synthetic_data.dep[i], synthetic_data.weight[i]) ;
+			for (i=0 ; i<synthetic_data.ptsno; i++) {
+				sprintf(line, "%lf\t%lf\t%lf\n", synthetic_data.indep[i], synthetic_data.dep[i], synthetic_data.weight[i]) ;
 				write(tmpfd1, line, strlen(line));
-				}
-		    	close(tmpfd1) ;
 			}
+		    close(tmpfd1) ;
+		}
 
-		if (plot_experimental ==1 )
-			{
-		    	/* Write data to this file  */
-    			for (i=0 ; i<experimental_data.ptsno; i++)
-				{
+		if (plot_experimental == 1) {
+			/* Write data to this file  */
+			for (i=0 ; i<experimental_data.ptsno; i++) {
 				sprintf (line, "%lf\t%lf\t%lf\n", experimental_data.indep[i], experimental_data.dep[i], experimental_data.weight[i]);
 				write(tmpfd1, line, strlen(line));
-				}
-		    	close(tmpfd1) ;
-  			}
-		}
+			}
+		    close(tmpfd1) ;
+  		}
+	}
 
-    	/* Open temporary file for gnuplot commands   */
+	/* Open temporary file for gnuplot commands   */
 	sprintf(name0, "%s/gnuplot-i-gnu-XXXXXX", PHOEBE_TEMP_DIR);
-    	if ((tmpfd0=mkstemp(name0))==-1)
-		{
-        	phoebe_warning ("cannot create temporary file: exiting plot") ;
-        	return ;
-	    	}
+	if ((tmpfd0=mkstemp(name0))==-1) {
+		phoebe_warning ("cannot create temporary file: exiting plot");
+		return;
+	}
 
-    	/* Write commands to this file  */
-        if (device == x11)
-                sprintf(line, "set size 0.8,0.53; set terminal pbm small color\n");
-        if (device == eps)
-                {
-                sprintf(line, "set output \"%s\"\n",filename);
-                write(tmpfd0, line, strlen(line));
-                sprintf(line, "set terminal postscript eps enhanced colour \n");
-                }
-        if (device == xpm)
-                {
-                sprintf(line, "set output \"%s\"\n",filename);
-                write(tmpfd0, line, strlen(line));
-                sprintf(line, "set terminal pbm small color\n");
-                }
-        if (device == ppm)
-                {
-                sprintf(line, "set output \"%s\"\n",filename);
-                write(tmpfd0, line, strlen(line));
-                sprintf(line, "set terminal pbm small color\n");
-                }
-        if (device == png)
-                {
-                sprintf(line, "set output \"%s\"\n",filename);
-                write(tmpfd0, line, strlen(line));
-                sprintf(line, "set terminal png small color\n");
-                }
+	/* Write commands to this file  */
+	if (device == x11)
+		sprintf(line, "set size 0.8,0.53; set terminal pbm small color\n");
+	if (device == eps) {
+		sprintf(line, "set output \"%s\"\n",filename);
+		write(tmpfd0, line, strlen(line));
+		sprintf(line, "set terminal postscript eps enhanced colour \n");
+	}
+	if (device == xpm) {
+		sprintf(line, "set output \"%s\"\n",filename);
+		write(tmpfd0, line, strlen(line));
+		sprintf(line, "set terminal pbm small color\n");
+	}
+	if (device == ppm) {
+		sprintf(line, "set output \"%s\"\n",filename);
+		write(tmpfd0, line, strlen(line));
+		sprintf(line, "set terminal pbm small color\n");
+	}
+	if (device == png) {
+		sprintf(line, "set output \"%s\"\n",filename);
+		write(tmpfd0, line, strlen(line));
+		sprintf(line, "set terminal png small color\n");
+	}
 	write(tmpfd0, line, strlen(line));
 
-        sprintf(line, "set mxtics\n");
+	sprintf(line, "set mxtics\n");
 	write(tmpfd0, line, strlen(line));
-        sprintf(line, "set mytics\n");
+	sprintf(line, "set mytics\n");
 	write(tmpfd0, line, strlen(line));
 
-	/* Calculate and set plotting limits:                                       */
+	/* Calculate and set plotting limits:                                     */
 	calculate_plot_limits (synthetic_data, experimental_data, &xmin, &ymin, &xmax, &ymax, plot_synthetic, plot_experimental, x_offset, y_offset, zoom);
-	if (dep == 8)        /* Magnitudes */
-                {
-                if (!isnan(xmin) && !isnan(xmax) && !isinf(xmax) && !isinf(xmin))
-                        {
-                        sprintf (line,"set xrange[%f:%f]\n",xmin,xmax);
-		        write(tmpfd0, line, strlen(line));
-                        }
-                if (!isnan(ymin) && !isnan(ymax) && !isinf(ymax) && !isinf(ymin))
-                        {
-                        sprintf (line,"set yrange[%f:%f]\n",ymax,ymin);
-        		write(tmpfd0, line, strlen(line));
-                        }
-                }
-	else                 /* Fluxes     */
-                {
-                if (!isnan(xmin) && !isnan(xmax) && !isinf(xmax) && !isinf(xmin))
-                        {
-                        sprintf (line,"set xrange[%f:%f]\n",xmin,xmax);
-        		write(tmpfd0, line, strlen(line));
-                        }
-                if (!isnan(ymin) && !isnan(ymax) && !isinf(ymax) && !isinf(ymin))
-                        {
-                        sprintf (line,"set yrange[%f:%f]\n",ymin,ymax);
-	        	write(tmpfd0, line, strlen(line));
-                        }
-                }
-	if (box  == 1) /* just xy-axes */
-                {
-                sprintf (line,"set border 3\n");
+	if (dep == 8) {       /* Magnitudes */
+		if (!isnan(xmin) && !isnan(xmax) && !isinf(xmax) && !isinf(xmin)) {
+			sprintf (line,"set xrange[%f:%f]\n",xmin,xmax);
+			write(tmpfd0, line, strlen(line));
+		}
+		if (!isnan(ymin) && !isnan(ymax) && !isinf(ymax) && !isinf(ymin)) {
+			sprintf (line,"set yrange[%f:%f]\n",ymax,ymin);
+			write(tmpfd0, line, strlen(line));
+		}
+	}
+	else {                /* Fluxes     */
+		if (!isnan(xmin) && !isnan(xmax) && !isinf(xmax) && !isinf(xmin)) {
+			sprintf (line,"set xrange[%f:%f]\n",xmin,xmax);
+			write(tmpfd0, line, strlen(line));
+		}
+		if (!isnan(ymin) && !isnan(ymax) && !isinf(ymax) && !isinf(ymin)) {
+			sprintf (line,"set yrange[%f:%f]\n",ymin,ymax);
+			write(tmpfd0, line, strlen(line));
+		}
+	}
+	if (box == 1) { /* just xy-axes */
+		sprintf (line,"set border 3\n");
 		write(tmpfd0, line, strlen(line));
-                sprintf (line,"set xtics border nomirror\n");
+		sprintf (line,"set xtics border nomirror\n");
 		write(tmpfd0, line, strlen(line));
-                sprintf (line,"set ytics border nomirror\n");
+		sprintf (line,"set ytics border nomirror\n");
 		write(tmpfd0, line, strlen(line));
-                }
-	if (box  == 0) /* box */
-                {
-                sprintf (line,"set border 31\n");
+	}
+	if (box  == 0) { /* box */
+		sprintf (line,"set border 31\n");
 		write(tmpfd0, line, strlen(line));
-                sprintf (line,"set xtics border mirror\n");
+		sprintf (line,"set xtics border mirror\n");
 		write(tmpfd0, line, strlen(line));
-                sprintf (line,"set ytics border mirror\n");
+		sprintf (line,"set ytics border mirror\n");
 		write(tmpfd0, line, strlen(line));
-                }
+	}
 
-	if (grid == 1) /* grid */
-                {
-                sprintf (line,"set grid nomxtics nomytics lt 0\n");
+	if (grid == 1) { /* grid */
+		sprintf (line,"set grid nomxtics nomytics lt 0\n");
 		write(tmpfd0, line, strlen(line));
-                }
-	if (grid == 2) /* fine grid */
-                {
-                sprintf (line,"set grid xtics ytics mxtics mytics lt 0\n");
+	}
+	if (grid == 2) { /* fine grid */
+		sprintf (line,"set grid xtics ytics mxtics mytics lt 0\n");
 		write(tmpfd0, line, strlen(line));
-                }
+	}
 
-	if (indep == 1)
-		{
-                sprintf (line,"set xlabel \"HJD\"\n");
+	if (indep == 1) {
+		sprintf (line,"set xlabel \"HJD\"\n");
 		write(tmpfd0, line, strlen(line));
-		}
-	if (indep == 2)
-		{
-                sprintf (line,"set xlabel \"Phase\"\n");
+	}
+	if (indep == 2) {
+		sprintf (line,"set xlabel \"Phase\"\n");
 		write(tmpfd0, line, strlen(line));
-		}
-	if (  dep == 3)
-		{
-                sprintf (line,"set ylabel \"Primary Star Flux\"\n");
+	}
+	if (  dep == 3) {
+		sprintf (line,"set ylabel \"Primary Star Flux\"\n");
 		write(tmpfd0, line, strlen(line));
-		}
-	if (  dep == 4)
-		{
-                sprintf (line,"set ylabel \"Secondary Star Flux\"\n");
+	}
+	if (  dep == 4) {
+		sprintf (line,"set ylabel \"Secondary Star Flux\"\n");
 		write(tmpfd0, line, strlen(line));
-		}
-	if (  dep == 5)
-		{
-                sprintf (line,"set ylabel \"Total Flux\"\n");
+	}
+	if (  dep == 5) {
+		sprintf (line,"set ylabel \"Total Flux\"\n");
 		write(tmpfd0, line, strlen(line));
-		}
-	if (  dep == 6)
-		{
-                sprintf (line,"set ylabel \"Normalized Flux\"\n");
+	}
+	if (  dep == 6) {
+		sprintf (line,"set ylabel \"Normalized Flux\"\n");
 		write(tmpfd0, line, strlen(line));
-		}
-	if (  dep == 8)
-		{
-                sprintf (line,"set ylabel \"Magnitude\"\n");
+	}
+	if (  dep == 8) {
+		sprintf (line,"set ylabel \"Magnitude\"\n");
 		write(tmpfd0, line, strlen(line));
-		}
+	}
 
-	if (plot_synthetic == 1 && plot_experimental == 1)
-		{
-	        sprintf(line,"plot \"%s\"  t\"\" with points lt 3 lw 1 pt 6, \"%s\" t \"\" with lines 1\n",name2,name1);
+	if (plot_synthetic == 1 && plot_experimental == 1) {
+		sprintf(line,"plot \"%s\"  t\"\" with points lt 3 lw 1 pt 6, \"%s\" t \"\" with lines 1\n",name2,name1);
 		write(tmpfd1, line, strlen(line));
-		}
-	else
-		{
-		if (plot_synthetic == 1)
-			{
-		        sprintf(line,"plot \"%s\" t \"\" with lines 1\n",name1);
+	}
+	else {
+		if (plot_synthetic == 1) {
+			sprintf(line,"plot \"%s\" t \"\" with lines 1\n",name1);
 			write(tmpfd1, line, strlen(line));
-			}
-		if (plot_experimental == 1)
-			{
-		        sprintf(line,"plot \"%s\" t \"\" with points lt 3 lw 1 pt 6\n",name1);
-			write(tmpfd1, line, strlen(line));
-			}
 		}
+		if (plot_experimental == 1) {
+			sprintf(line,"plot \"%s\" t \"\" with points lt 3 lw 1 pt 6\n",name1);
+			write(tmpfd1, line, strlen(line));
+		}
+	}
 
-        sprintf(line, "set output\n");
+	sprintf(line, "set output\n");
 	write(tmpfd1, line, strlen(line));
-        sprintf(line, "quit\n");
+	sprintf(line, "quit\n");
 	write(tmpfd1, line, strlen(line));
 
-        sprintf (outfile, "%s/phoebe_lc_%03d.xpm", PHOEBE_TEMP_DIR,
-                scan_temporary_directory_for_lci_file_index ("phoebe_lc"));
+	sprintf (outfile, "%s/phoebe_lc_%03d.xpm", PHOEBE_TEMP_DIR,
+		scan_temporary_directory_for_lci_file_index ("phoebe_lc"));
 
-        if (device == x11)
-                {
-                phoebe_debug ("device=x11\n");
-                sprintf(line,"gnuplot \"%s\" | ppmtoxpm > %s",name0,outfile);
-                }
-        else
-                {
-                phoebe_debug ("device!=x11\n");
-                sprintf(line,"gnuplot \"%s\"",name0);
-                }
+	if (device == x11) {
+		phoebe_debug ("device=x11\n");
+		sprintf(line,"gnuplot \"%s\" | ppmtoxpm > %s",name0,outfile);
+	}
+	else {
+		phoebe_debug ("device!=x11\n");
+		sprintf(line,"gnuplot \"%s\"",name0);
+	}
 
 	system(line);
 	remove(name0);
-        if (plot_synthetic == 1 && plot_experimental == 1)
-                {
-                remove(name1);
-                remove(name2);
-                }
-        else
-                {
-        	remove(name1);
-                }
-	#endif
-        }
+
+	if (plot_synthetic == 1 && plot_experimental == 1) {
+		remove(name1);
+		remove(name2);
+	}
+	else {
+		remove(name1);
+	}
+#endif
+}
 
 void create_rv_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PHOEBE_data synthetic_data, PHOEBE_data experimental_data, int indep, int dep, int grid, int box, double x_offset, double y_offset, double zoom, int plot_synthetic, int plot_experimental)
         {

@@ -45,11 +45,11 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 
 	int chosen_filter;
 
-	int INDEP;     /* This switch determines the independent variable:          */
+	int INDEP;   /* This switch determines the independent variable:          */
                  /*   INDEP = 1 .. heliocentric julian date                   */
                  /*   INDEP = 2 .. phase                                      */
 
-	int DEP;       /* This switch determines the dependent variable:            */
+	int DEP;     /* This switch determines the dependent variable:            */
                  /*   DEP = 3 .. normalized primary star flux                 */
                  /*   DEP = 4 .. normalized secondary star flux               */
                  /*   DEP = 5 .. normalized total flux (from both stars)      */
@@ -57,40 +57,40 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
                  /*   DEP = 8 .. MZEROed total magnitude (from both stars)    */
                  /*   DEP = 9 .. light curve residuals                        */
 
-	int BOX;       /* This switch determines how does SuperMongo limit plots:   */
+	int BOX;     /* This switch determines how does SuperMongo limit plots:   */
                  /*   BOX = 0 .. draw ticked axes (x and y)                   */
                  /*   BOX = 1 .. draw ticked box                              */
 
-	int GRID;      /* This switch determines what kind of gridding is used:     */
+	int GRID;    /* This switch determines what kind of gridding is used:     */
                  /*   GRID = 0 .. no gridding                                 */
                  /*   GRID = 1 .. coarse grid                                 */
                  /*   GRID = 2 .. fine grid                                   */
 
-	int DATA;      /* This switch determines whether the user wants to plot ex- */
-	               /* perimental data:                                          */
+	int DATA;    /* This switch determines whether the user wants to plot ex- */
+	             /* perimental data:                                          */
                  /*   DATA = 0 .. do not plot experimental data               */
                  /*   DATA = 1 .. plot experimental data                      */
 
-	int MODEL;     /* This switch determines whether the user wants to plot     */
-	               /* synthetic data:                                           */
+	int MODEL;   /* This switch determines whether the user wants to plot     */
+	             /* synthetic data:                                           */
                  /*   MODEL = 0 .. do not plot synthetic data                 */
                  /*   MODEL = 1 .. plot synthetic data                        */
 
-	int ALIASING;  /* This switch determines if the phases are to be aliased to */
+	int ALIASING;/* This switch determines if the phases are to be aliased to */
                  /* a wider/narrower range or not.                            */
-								 /*   ALIASING = 0 .. don't use aliasing, always [-0.5, 0.5]  */
+				 /*   ALIASING = 0 .. don't use aliasing, always [-0.5, 0.5]  */
                  /*   ALIASING = 1 .. use aliasing to [PHSTRT, PHSTOP].       */
 
-	int RESIDUALS; /* This switch determines whether the plot should contain    */
-                 /* overlapped synthetic and experimental data or should it   */
-								 /* calculate residuals and plot them against INDEP:          */
-								 /*   RESIDUALS = 0 .. don't calculate/plot residuals         */
-								 /*   RESIDUALS = 1 .. calculate/plot residuals               */
+	int RESIDUALS; /* This switch determines whether the plot should contain  */
+                   /* overlapped synthetic and experimental data or should it */
+				   /* calculate residuals and plot them against INDEP:        */
+				   /*   RESIDUALS = 0 .. don't calculate/plot residuals       */
+				   /*   RESIDUALS = 1 .. calculate/plot residuals             */
 
 	int REDDENING; /* This switch determines if the reddening/extinction effect */
-                 /* should be compensated for input magnitudes:               */
-								 /*   REDDENING = 0 .. don't remove reddening from input data */
-								 /*   REDDENING = 1 .. remove reddening from input data       */
+                   /* should be compensated for input magnitudes:               */
+				   /*   REDDENING = 0 .. don't remove reddening from input data */
+				   /*   REDDENING = 1 .. remove reddening from input data       */
 
 	double chi2 = 0.0;
 
@@ -107,15 +107,13 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 	/* or the "None Specified" entry. If the filter name is defined, we have to */
 	/* initialize the wavelength-dependent parameters based on that filter for  */
 	/* synthetic LC generation. If not, we assume the default values.           */
-	i = 0;
 	readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_data_combo_box_entry");
 	readout_str = gtk_entry_get_text (GTK_ENTRY (readout_widget));
 
-	if (strcmp (readout_str, "None Specified") == 0) chosen_filter = -1;
-	else {
-		while (strcmp (readout_str, PHOEBE_lc_data[i].filter) != 0) i++;
-		chosen_filter = i;
-	}
+	chosen_filter = -1;
+	for (i = 0; i < switches.NLC; i++)
+		if (strcmp (readout_str, PHOEBE_lc_data[i].filter) == 0)
+			chosen_filter = i;
 	phoebe_debug ("chosen filter number:       %d\n", chosen_filter);
 
 	/* If the filter is not specified (chosen_filter == -1), we read in the de- */
@@ -137,7 +135,7 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 		}
 	else mono = read_in_wl_dependent_parameters (readout_str);
 
-	/* Read out the phase settings from LC Plot Window: */
+	/* Read out phase settings from LC Plot Window: */
 	readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_vertexes_value");
 	VERTEXES = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (readout_widget));
 	readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_phstrt_value");
@@ -196,12 +194,17 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 
 	phoebe_debug ("plot observed data:     %d\n", DATA);
 
-	/* Is the data switch turned on, but we have no input files?                */
-	if ( (chosen_filter == -1) && (DATA == 1) )
-		{
-		warning_window = create_notice_window ("PHOEBE Notice", "Observed data plot failure", "You should supply observed data to PHOEBE in the", "main window's Data tab. Until then observed data cannot be plotted.", gtk_widget_destroy);
+	/* Is the data switch turned on, but we have no input files?              */
+	if ( (chosen_filter == -1) && (DATA == 1) ) {
+		warning_window = create_notice_window (
+			"PHOEBE Notice",
+			"Observational data passband problem",
+			"You must assign a passband to observational data in the main",
+			"window's Data tab. Until then data plotting will be disabled.",
+			gtk_widget_destroy);
 		DATA = 0;
-		}
+		phoebe_debug ("*** passbands are not assigned to observations, turning off data plots.\n");
+	}
 
 	/* Do we want data aliasing:                                                */
 	readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_aliasing_switch");
@@ -225,7 +228,16 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 	phoebe_debug ("de-reddening on:            %d\n", REDDENING);
 
 	/* We don't want experimental data to be plotted against individual fluxes: */
-	if ( (DEP == 3) || (DEP == 4) ) DATA = 0;
+	if ( (DEP == 3) || (DEP == 4) ) {
+		warning_window = create_notice_window (
+			"PHOEBE Notice",
+			"Invalid plot request",
+			"You have requested to plot observational data of individual",
+			"star fluxes, which cannot be done. Omitting data plotting.",
+			gtk_widget_destroy);
+		DATA = 0;
+		phoebe_debug ("*** cannot plot observational data for individual fluxes, turning off data plot.\n");
+	}
 
 	/* Do we want to plot synthetic data?                                       */
 	readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_synthetic_lightcurve");
@@ -284,27 +296,21 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 		if (MODEL != 0) plot_update_info (1, params);
 		}
 
-	if (DATA == 1)
-		{
+	if (DATA == 1) {
 		/* If we want to plot experimental data, we will first read in the values */
 		/* from a file according to indep and dep switches:                       */
 		read_in_experimental_lc_data (chosen_filter, &experimental_data, INDEP, DEP);
 
-		/* If an error occured, ptsno value is 0. In that case we don't want any  */
-		/* experimental data present in our work, otherwise we expect segfault.   */
-		if (experimental_data.ptsno == 0)
-			{
-			free (experimental_data.indep);
-			free (experimental_data.dep);
-			free (experimental_data.weight);
-			DATA = 0;
-			}
+		/* If an error occured, ptsno value is 0 and we need to abort; notice */
+		/* window will be created by the read_in_experimental_lc_data ()      */
+		/* function, so no need to do it here.                                */
+		if (experimental_data.ptsno == 0) DATA = 0;
 
 		/* Write out the number of points to plotting status window: */
 		readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_lc), "plot_lc_chi2_ptsno_value");
 		sprintf (working_str, "%d", experimental_data.ptsno);
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
-		}
+	}
 
 	/* If we plot both experimental and synthetic data, we can calculate chi2;  */
 	/* if we plot residuals, we must prepare them here:                         */
@@ -344,29 +350,26 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 		create_lc_plot_using_gnuplot (device, filename, synthetic_data, experimental_data, INDEP, DEP, GRID, BOX, LC_X_OFFSET, LC_Y_OFFSET, LC_ZOOM_FACTOR, MODEL, DATA);
 
 	/* Put a plot to the screen if device is x11: */
-	if (device == x11)
-		{
+	if (device == x11) {
 		readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_image_frame");
 		sprintf (working_str, "phoebe_lc_%03d.xpm", scan_temporary_directory_for_lci_file_index ("phoebe_lc"));
 		draw_image_to_screen (readout_widget, working_str);
-		}
+	}
 
 	/* Free all memory that we don't need anymore, but only the ones that were  */
 	/* phoebe_malloc()ed:                                                       */
 	free_memory_allocated_for_spots (&spots);
 
-	if (MODEL == 1)
-		{
+	if (MODEL == 1) {
 		free (synthetic_data.indep);
 		free (synthetic_data.dep);
 		free (synthetic_data.weight);
-		}
-	if (DATA == 1)
-		{
+	}
+	if (DATA == 1) {
 		free (experimental_data.indep);
 		free (experimental_data.dep);
 		free (experimental_data.weight);
-		}
+	}
 
 	phoebe_debug ("leaving 'plot_lc_plot ()' function.\n");
 	}
