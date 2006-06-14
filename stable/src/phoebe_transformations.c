@@ -191,10 +191,17 @@ void transform_magnitude_sigma_to_flux_sigma (double mag_sigma, double flux_sigm
 	}
 
 void get_plot_limits_of_data (PHOEBE_data data, double *xmin, double *ymin, double *xmax, double *ymax)
-	{
-	/* This function scans data and finds (x_min, y_min), (x_max, y_max) values */
+{
+	/*
+	 * This function scans data and finds (x_min, y_min), (x_max, y_max) values.
+	 */
 
 	int i;
+
+	*xmin = 0; *xmax = 0;
+	*ymin = 0; *ymax = 0;
+
+	if (data.ptsno == 0) return;
 
 	*xmin = data.indep[0]; *xmax = data.indep[0];
 	*ymin = data.dep[0];   *ymax = data.dep[0];
@@ -208,7 +215,7 @@ void get_plot_limits_of_data (PHOEBE_data data, double *xmin, double *ymin, doub
 		}
 
 	return;
-	}
+}
 
 void calculate_residuals (PHOEBE_data *set1, PHOEBE_data *set2)
 	{
