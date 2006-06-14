@@ -206,13 +206,12 @@ void get_plot_limits_of_data (PHOEBE_data data, double *xmin, double *ymin, doub
 	*xmin = data.indep[0]; *xmax = data.indep[0];
 	*ymin = data.dep[0];   *ymax = data.dep[0];
 	
-	for (i = 1; i < data.ptsno; i++)
-		{
+	for (i = 1; i < data.ptsno; i++) {
 		if (*xmin > data.indep[i]) *xmin = data.indep[i];
 		if (*xmax < data.indep[i]) *xmax = data.indep[i];
 		if (*ymin > data.dep[i]  ) *ymin = data.dep[i];
 		if (*ymax < data.dep[i]  ) *ymax = data.dep[i];
-		}
+	}
 
 	return;
 }
