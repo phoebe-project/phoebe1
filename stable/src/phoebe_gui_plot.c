@@ -408,11 +408,11 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 
 	int chosen_filter;
 
-	int INDEP;     /* This switch determines the independent variable:          */
+	int INDEP;   /* This switch determines the independent variable:          */
                  /*   INDEP = 1 .. heliocentric julian date                   */
                  /*   INDEP = 2 .. phase                                      */
 
-	int DEP;       /* This switch determines the dependent variable:            */
+	int DEP;     /* This switch determines the dependent variable:            */
                  /*   DEP = 3 .. normalized primary RV curve                  */
                  /*   DEP = 4 .. normalized secondary RV curve                */
                  /*   DEP = 5 .. primary star eclipse proximity corrections   */
@@ -421,35 +421,37 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
                  /*   DEP = 8 .. secondary RV curve in km/s                   */
                  /*   DEP = 9 .. both RV curves in km/s                       */
 
-	int BOX;       /* This switch determines how does SuperMongo limit plots:   */
+	int BOX;     /* This switch determines how does SuperMongo limit plots:   */
                  /*   BOX = 0 .. draw ticked axes (x and y)                   */
                  /*   BOX = 1 .. draw ticked box                              */
 
-	int GRID;      /* This switch determines what kind of gridding is used:     */
+	int GRID;    /* This switch determines what kind of gridding is used:     */
                  /*   GRID = 0 .. no gridding                                 */
                  /*   GRID = 1 .. coarse grid                                 */
                  /*   GRID = 2 .. fine grid                                   */
 
-	int DATA;      /* This switch determines whether the user wants to plot ex- */
-	               /* perimental data:                                          */
+	int DATA;    /* This switch determines whether the user wants to plot ex- */
+	             /* perimental data:                                          */
                  /*   DATA = 0 .. do not plot experimental data               */
                  /*   DATA = 1 .. plot experimental data                      */
 
-	int MODEL;     /* This switch determines whether the user wants to plot     */
-	               /* synthetic data:                                           */
+	int MODEL;   /* This switch determines whether the user wants to plot     */
+	             /* synthetic data:                                           */
                  /*   MODEL = 0 .. do not plot synthetic data                 */
                  /*   MODEL = 1 .. plot synthetic data                        */
 
-	int ALIASING;  /* This switch determines if the phases are to be aliased to */
+	int ALIASING;
+	             /* This switch determines if the phases are to be aliased to */
                  /* a wider/narrower range or not.                            */
-								 /*   ALIASING = 0 .. don't use aliasing, always [-0.5, 0.5]  */
+				 /*   ALIASING = 0 .. don't use aliasing, always [-0.5, 0.5]  */
                  /*   ALIASING = 1 .. use aliasing to [PHSTRT, PHSTOP].       */
 
-	int RESIDUALS; /* This switch determines whether the plot should contain    */
+	int RESIDUALS;
+	             /* This switch determines whether the plot should contain    */
                  /* overlapped synthetic and experimental data or should it   */
-								 /* calculate residuals and plot them against INDEP:          */
-								 /*   RESIDUALS = 0 .. don't calculate/plot residuals         */
-								 /*   RESIDUALS = 1 .. calculate/plot residuals               */
+				 /* calculate residuals and plot them against INDEP:          */
+				 /*   RESIDUALS = 0 .. don't calculate/plot residuals         */
+				 /*   RESIDUALS = 1 .. calculate/plot residuals               */
 
 	int rvno = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (lookup_widget (PHOEBE, "data_rv_no_value")));
 
@@ -472,15 +474,16 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 	readout_widget = lookup_widget (PHOEBE_plot_rv, "plot_rv_data_combo_box_entry");
 	readout_str = gtk_entry_get_text (GTK_ENTRY (readout_widget));
 
-	if (strcmp (readout_str, "None Specified") == 0) chosen_filter = -1;
-	else {
-		while (strcmp (readout_str, PHOEBE_rv_data[i].filter) != 0) i++;
-		chosen_filter = i;
-	}
+	chosen_filter = -1;
+	for (i = 0; i < switches.IFVC1 + switches.IFVC2; i++)
+		if (strcmp (readout_str, PHOEBE_rv_data[i].filter) == 0)
+			chosen_filter = i;
+	phoebe_debug ("chosen filter number:       %d\n", chosen_filter);
 
 	/* If the filter is not specified (chosen_filter == -1), we read in the de- */
 	/* faults, else we read in filter-dependent parameters:                     */
 	if (chosen_filter == -1) {
+		phoebe_warning ("No filter selected: assuming default Johnson V (550nm) filter.\n");
 		mono.WLA   = 550.0;
 		mono.IBAND = 7;
 		mono.HLA   = 10.0;
@@ -538,14 +541,14 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		return;
 	}
 
-	/* Do we want to have a gridded plot? If so, set GRID to 1 or 2:            */
+	/* Do we want to have a gridded plot? If so, set GRID to 1 or 2:          */
 	GRID = 0;
 	readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_fine_gridlines");
 	if (GTK_TOGGLE_BUTTON (readout_widget)->active) GRID = 2;
 	readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_coarse_gridlines");
 	if ( (GTK_TOGGLE_BUTTON (readout_widget)->active) && GRID != 2) GRID = 1;
 
-	/* What kind of plot border would we like? Boxed or axes?                   */
+	/* What kind of plot border would we like? Boxed or axes?                 */
 	readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_draw_box");
 	if (GTK_TOGGLE_BUTTON (readout_widget)->active == TRUE) BOX = 0;
 	else BOX = 1;
@@ -627,12 +630,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			/* If an error occured, ptsno value is 0. In that case we don't want    */
 			/* any experimental data present in our work, otherwise we expect the   */
 			/* program to segfault.                                                 */
-			if (experimental_rv1_data.ptsno == 0) {
-				free (experimental_rv1_data.indep);
-				free (experimental_rv1_data.dep);
-				free (experimental_rv1_data.weight);
-				DATA = 0;
-			}
+			if (experimental_rv1_data.ptsno == 0) DATA = 0;
 
 			sprintf (working_str, "%d", experimental_rv1_data.ptsno);
 		}
@@ -643,12 +641,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			/* If an error occured, ptsno value is 0. In that case we don't want    */
 			/* any experimental data present in our work, otherwise we expect the   */
 			/* program to segfault.                                                 */
-			if (experimental_rv2_data.ptsno == 0) {
-				free (experimental_rv2_data.indep);
-				free (experimental_rv2_data.dep);
-				free (experimental_rv2_data.weight);
-				DATA = 0;
-			}
+			if (experimental_rv2_data.ptsno == 0) DATA = 0;
 
 			sprintf (working_str, "%d", experimental_rv2_data.ptsno);
 		}
@@ -657,12 +650,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			read_in_experimental_rv_data (0, &experimental_rv1_data, INDEP, DEP, 1.0);
 			read_in_experimental_rv_data (1, &experimental_rv2_data, INDEP, DEP, 1.0);
 
-			if ( (experimental_rv1_data.ptsno == 0) || (experimental_rv2_data.ptsno == 0) ) {
-				free (experimental_rv1_data.indep);   free (experimental_rv2_data.indep);
-				free (experimental_rv1_data.dep); 		free (experimental_rv2_data.dep);
-				free (experimental_rv1_data.weight);	free (experimental_rv2_data.weight);
-				DATA = 0;
-			}
+			if ( (experimental_rv1_data.ptsno == 0) || (experimental_rv2_data.ptsno == 0) ) DATA = 0;
 
 			sprintf (working_str, "%d", experimental_rv1_data.ptsno + experimental_rv2_data.ptsno);
 		}
@@ -674,6 +662,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 	/* If we plot both experimental and synthetic data, we can calculate chi2:  */
 	if ( (DATA == 1) && (MODEL == 1) && (DEP != 5) && (DEP != 6 ) )
 		{
+		/* First let's compute the weighted sigma value: */
 		if ( (DEP == 3) || (DEP == 7) || (DEP == 9) )
 			chi2_rv1 = calculate_chi2 (synthetic_rv1_data, experimental_rv1_data, 1.0, 1);
 		if ( (DEP == 4) || (DEP == 8) || (DEP == 9) )
@@ -689,6 +678,7 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_chi2_weighted_sigma_value");
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
 
+		/* Next let's compute the unweighted sigma value: */
 		chi2_rv1 = chi2_rv2 = 0.0;
 		if ( (DEP == 3) || (DEP == 7) || (DEP == 9) )
 			chi2_rv1 = calculate_chi2 (synthetic_rv1_data, experimental_rv1_data, 1.0, 0);
