@@ -7,6 +7,9 @@ PHOEBE Project ChangeLog:
               a stale printf () debugging statement that printed out the
               filter index to the terminal. All of these problems were
               fixed. Many thanks to Maja Vuckovic for pointing this out!
+            - Function plot_rv_plot () has been cleaned a bit upon the
+              bug report from Todd Vaccaro. I didn't manage to reproduce
+              it here, but I hope that this fool-proofing will help.
 2006-06-14: - Fool-proofing done in get_plot_limits_of_data () function.
 2006-06-13: - Code beautification done in plot_lc_plot () while searching
               for the segfault problem that was reported. This will now be
