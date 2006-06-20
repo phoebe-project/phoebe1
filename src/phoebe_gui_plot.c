@@ -621,7 +621,6 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 		}
 
 	if (DATA == 1) {
-		printf ("filter: %d\n", chosen_filter);
 		if ( ( DEP == 3 ) || ( DEP == 7 ) ) {
 			read_in_experimental_rv_data (chosen_filter, &experimental_rv1_data, INDEP, DEP, 1.0);
 
@@ -1296,8 +1295,8 @@ void plot_update_info (int DESTINATION, PHOEBE_calculated_parameters params)
 		"plot_rv_info_mass_s_label",
 		"plot_rv_info_radius_p_label",
 		"plot_rv_info_radius_s_label",
-		"plot_lc_info_lum_p_label",
-		"plot_lc_info_lum_s_label",
+		"plot_rv_info_lum_p_label",
+		"plot_rv_info_lum_s_label",
 		"plot_rv_info_mbol_p_label",
 		"plot_rv_info_mbol_s_label",
 		"plot_rv_info_logg_p_label",
