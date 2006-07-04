@@ -5,6 +5,10 @@ PHOEBE Project ChangeLog:
               readout that caused bad values to be read for spot parameters.
               Fixed. This is a very important fix, so a new release is in
               order: PHOEBE 0.29c is out!
+            - Another bugfix... Mike Sallman reported a problem of plotting
+              to png files with gnuplot; gnuplot specs have changed and I
+              haven't noticed this before. This one is going to enter the
+              0.29d once more important bugfixes show up.
 2006-06-21: - PHOEBE 0.29b released!
               Hopefully this will be the last release of the old branch.
 2006-06-20: - RV plotting window was missing "Lum:" entries in the info

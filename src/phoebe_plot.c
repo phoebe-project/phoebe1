@@ -694,7 +694,7 @@ void create_lc_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 	if (device == png) {
 		sprintf(line, "set output \"%s\"\n",filename);
 		write(tmpfd0, line, strlen(line));
-		sprintf(line, "set terminal png small color\n");
+		sprintf(line, "set terminal png small\n");
 	}
 	write(tmpfd0, line, strlen(line));
 
@@ -982,7 +982,7 @@ void create_rv_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
                 {
                 sprintf(line, "set output \"%s\"\n",filename);
                 write(tmpfd0, line, strlen(line));
-                sprintf(line, "set terminal png small color\n");
+                sprintf(line, "set terminal png small\n");
                 }
 	write(tmpfd0, line, strlen(line));
 
@@ -1246,7 +1246,7 @@ void create_chi2_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, 
                 {
                 sprintf(line, "set output \"%s\"\n",filename);
                 write(tmpfd0, line, strlen(line));
-                sprintf(line, "set terminal png small color\n");
+                sprintf(line, "set terminal png small\n");
                 }
         write(tmpfd0, line, strlen(line));
         
@@ -1386,7 +1386,7 @@ void create_3d_image_plot_using_gnuplot (PHOEBE_plot_device device, char *filena
 		{
 		sprintf(line, "set output \"%s\"\n",filename);
 		write(tmpfd0, line, strlen(line));
-		sprintf(line, "set size ratio -1; set terminal png small color\n");
+		sprintf(line, "set size ratio -1; set terminal png small\n");
 		}
 	write(tmpfd0, line, strlen(line));
 
