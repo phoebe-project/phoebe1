@@ -1,7 +1,7 @@
-PHOEBE-0.29b TOPLEVEL DOCUMENTATION                             June 21, 2006
+PHOEBE-0.29c TOPLEVEL DOCUMENTATION                              July 4, 2006
 -----------------------------------------------------------------------------
 
-Hello and thank you for your interest in the Friday 13th version of PHOEBE. :)
+Hello and thank you for your interest in PHOEBE. :)
 
 THINGS YOU NEED TO KNOW
 -----------------------
@@ -166,6 +166,12 @@ this means that you have newer autoutils suite. Please run:
   autoreconf --force --install
 
 and then repeat the generic installation steps given above.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.29c USERS
+-------------------------------------------
+
+A very dangerous bug creeped into the 0.29b release. It caused the erroneaus
+spot parameter readouts from parameter files. This has now been fixed.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.29 USERS
 ------------------------------------------
