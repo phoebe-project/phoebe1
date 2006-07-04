@@ -1,6 +1,12 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-07-04: - Ethem Derman discovered a very nasty bug in parameter file
+              readout that caused bad values to be read for spot parameters.
+              Fixed. This is a very important fix, so a new release is in
+              order: PHOEBE 0.29c is out!
+2006-06-21: - PHOEBE 0.29b released!
+              Hopefully this will be the last release of the old branch.
 2006-06-20: - RV plotting window was missing "Lum:" entries in the info
               table. Because of that PHOEBE reported "Widget not found"
               issue when RV curves were plotted. Additionally, there was
