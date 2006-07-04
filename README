@@ -1,4 +1,4 @@
-PHOEBE-0.29a TOPLEVEL DOCUMENTATION                          January 31, 2006
+PHOEBE-0.29b TOPLEVEL DOCUMENTATION                             June 21, 2006
 -----------------------------------------------------------------------------
 
 Hello and thank you for your interest in the Friday 13th version of PHOEBE. :)
@@ -35,7 +35,8 @@ To successfully set up PHOEBE, you need:
     * Debian Etch          no issues
     * Debian Sid           no issues
     * Ubuntu 5.04 (Hoary)  no issues
-    * Ubuntu 5.10 (Breezy) no issues  (development platform)
+    * Ubuntu 5.10 (Breezy) no issues
+    * Ubuntu 6.06 (Dapper) no issues  (development platform)
     * Linux Redhat 7.2     no issues
     * Linux Redhat 7.3     no issues
     * Linux Redhat 8.0     no issues
@@ -48,6 +49,7 @@ To successfully set up PHOEBE, you need:
     * Linux SUSE 9.0       no issues
     * Gentoo Linux 2004    no issues
     * Mandrake 9.1         no issues
+    * MS Windows (Cygwin)  WD compiling necessary
 
   If you ran PHOEBE successfully on a different platform, please inform the
   author.

@@ -820,25 +820,6 @@ void open_keyword_file (const char *filename)
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "ld_monochromatic_rv_info_list")), readout_int-1, 4, value_str);
 			}
 
-		if (strcmp (keyword_str, "SPOT1_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_spot_1_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "SPOT2_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_spot_2_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLAT1_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_xlat1_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLAT1_DEL")   == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_step_value", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLONG1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_xlong1_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLONG1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_step_value", value_str, keyword_file);
-		if (strcmp (keyword_str, "RADSP1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_radsp1_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "RADSP1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_step_value", value_str, keyword_file);
-		if (strcmp (keyword_str, "TEMSP1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_temsp1_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "TEMSP1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_step_value", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLAT2_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_xlat2_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLAT2_DEL")   == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_step_value", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLONG2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_xlong2_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "XLONG2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_step_value", value_str, keyword_file);
-		if (strcmp (keyword_str, "RADSP2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_radsp2_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "RADSP2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_step_value", value_str, keyword_file);
-		if (strcmp (keyword_str, "TEMSP2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_temsp2_adjust", value_str, keyword_file);
-		if (strcmp (keyword_str, "TEMSP2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_step_value", value_str, keyword_file);
-
 		/* **************************** SURFACE TAB ***************************** */
 
 		if (strcmp (keyword_str, "ALB1")        == 0) get_from_keyword_file (PHOEBE, "surface_alb1_value", value_str, keyword_file);
@@ -864,49 +845,68 @@ void open_keyword_file (const char *filename)
 		if (strcmp (keyword_str, "NSPOTSPRIM")  == 0) get_from_keyword_file (PHOEBE, "spots_sprim_value", value_str, keyword_file);
 		if (strcmp (keyword_str, "NSPOTSSEC")   == 0) get_from_keyword_file (PHOEBE, "spots_ssec_value", value_str, keyword_file);
 
-		if (strncmp (keyword_str, "XLAT1", 5) == 0)
+		if (strcmp (keyword_str, "SPOT1_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_spot_1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "SPOT2_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_spot_2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT1_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_xlat1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT1_DEL")   == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_xlong1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_radsp1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP1_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_temsp1_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP1_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp1_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT2_ADJ")   == 0) get_from_keyword_file (PHOEBE, "spots_xlat2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLAT2_DEL")   == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_latsp2_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_xlong2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "XLONG2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_longsp2_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_radsp2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "RADSP2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_radsp2_step_value", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP2_ADJ")  == 0) get_from_keyword_file (PHOEBE, "spots_temsp2_adjust", value_str, keyword_file);
+		if (strcmp (keyword_str, "TEMSP2_DEL")  == 0) get_from_keyword_file (PHOEBE_fitting_quickbar, "fitting_quickbar_temsp2_step_value", value_str, keyword_file);
+
+		if (strncmp (keyword_str, "XLAT1", 5) == 0 && keyword_str[5] != '_')
 			{
 			sscanf (keyword_str, "XLAT1%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_primary_info_list")), readout_int-1, 1, value_str);
 			}
 
-		if (strncmp (keyword_str, "XLONG1", 6) == 0)
+		if (strncmp (keyword_str, "XLONG1", 6) == 0 && keyword_str[6] != '_')
 			{
 			sscanf (keyword_str, "XLONG1%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_primary_info_list")), readout_int-1, 2, value_str);
 			}
 
-		if (strncmp (keyword_str, "RADSP1", 6) == 0)
+		if (strncmp (keyword_str, "RADSP1", 6) == 0 && keyword_str[6] != '_')
 			{
 			sscanf (keyword_str, "RADSP1%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_primary_info_list")), readout_int-1, 3, value_str);
 			}
 
-		if (strncmp (keyword_str, "TEMSP1", 6) == 0)
+		if (strncmp (keyword_str, "TEMSP1", 6) == 0 && keyword_str[6] != '_')
 			{
 			sscanf (keyword_str, "TEMSP1%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_primary_info_list")), readout_int-1, 4, value_str);
 			}
 
-		if (strncmp (keyword_str, "XLAT2", 5) == 0)
+		if (strncmp (keyword_str, "XLAT2", 5) == 0 && keyword_str[5] != '_')
 			{
 			sscanf (keyword_str, "XLAT2%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_secondary_info_list")), readout_int-1, 1, value_str);
 			}
 
-		if (strncmp (keyword_str, "XLONG2", 6) == 0)
+		if (strncmp (keyword_str, "XLONG2", 6) == 0 && keyword_str[6] != '_')
 			{
 			sscanf (keyword_str, "XLONG2%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_secondary_info_list")), readout_int-1, 2, value_str);
 			}
 
-		if (strncmp (keyword_str, "RADSP2", 6) == 0)
+		if (strncmp (keyword_str, "RADSP2", 6) == 0 && keyword_str[6] != '_')
 			{
 			sscanf (keyword_str, "RADSP2%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_secondary_info_list")), readout_int-1, 3, value_str);
 			}
 
-		if (strncmp (keyword_str, "TEMSP2", 6) == 0)
+		if (strncmp (keyword_str, "TEMSP2", 6) == 0 && keyword_str[6] != '_')
 			{
 			sscanf (keyword_str, "TEMSP2%d", &readout_int);
 			gtk_clist_set_text (GTK_CLIST (lookup_widget (PHOEBE, "spots_secondary_info_list")), readout_int-1, 4, value_str);

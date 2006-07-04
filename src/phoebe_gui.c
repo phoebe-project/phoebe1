@@ -14397,12 +14397,6 @@ create_PHOEBE_about (void)
   GtkWidget *about_tomaz_label;
   GtkWidget *about_tomaz_email_label;
   GtkWidget *about_tomaz_work_label;
-  GtkWidget *about_michael_work_label;
-  GtkWidget *about_michael_email_label;
-  GtkWidget *about_michael_label;
-  GtkWidget *about_dirk_label;
-  GtkWidget *about_dirk_email_label;
-  GtkWidget *about_dirk_work_label;
   GtkWidget *about_ok_button;
   GtkWidget *about_contribute_frame;
   GtkWidget *about_contribute_label;
@@ -14466,7 +14460,7 @@ create_PHOEBE_about (void)
   gtk_container_set_border_width (GTK_CONTAINER (about_author_frame), 5);
   gtk_frame_set_shadow_type (GTK_FRAME (about_author_frame), GTK_SHADOW_IN);
 
-  about_author_table = gtk_table_new (9, 2, TRUE);
+  about_author_table = gtk_table_new (5, 2, TRUE);
   gtk_widget_ref (about_author_table);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_author_table", about_author_table,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -14553,66 +14547,6 @@ create_PHOEBE_about (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (about_tomaz_work_label), 0, 0.5);
 
-  about_michael_work_label = gtk_label_new ("(GnuPlot implementation, bug fixes)");
-  gtk_widget_ref (about_michael_work_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_michael_work_label", about_michael_work_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (about_michael_work_label);
-  gtk_table_attach (GTK_TABLE (about_author_table), about_michael_work_label, 0, 1, 8, 9,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (about_michael_work_label), 0, 0.5);
-
-  about_michael_email_label = gtk_label_new ("bauer@sternwarte.uni-erlangen.de");
-  gtk_widget_ref (about_michael_email_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_michael_email_label", about_michael_email_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (about_michael_email_label);
-  gtk_table_attach (GTK_TABLE (about_author_table), about_michael_email_label, 0, 1, 7, 8,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (about_michael_email_label), 0, 0.5);
-
-  about_michael_label = gtk_label_new ("Michael Bauer");
-  gtk_widget_ref (about_michael_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_michael_label", about_michael_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (about_michael_label);
-  gtk_table_attach (GTK_TABLE (about_author_table), about_michael_label, 0, 1, 6, 7,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (about_michael_label), 0, 0.5);
-
-  about_dirk_label = gtk_label_new ("Dirk Terrell");
-  gtk_widget_ref (about_dirk_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_dirk_label", about_dirk_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (about_dirk_label);
-  gtk_table_attach (GTK_TABLE (about_author_table), about_dirk_label, 1, 2, 6, 7,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (about_dirk_label), 0, 0.5);
-
-  about_dirk_email_label = gtk_label_new ("terrell@boulder.swri.edu");
-  gtk_widget_ref (about_dirk_email_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_dirk_email_label", about_dirk_email_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (about_dirk_email_label);
-  gtk_table_attach (GTK_TABLE (about_author_table), about_dirk_email_label, 1, 2, 7, 8,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (about_dirk_email_label), 0, 0.5);
-
-  about_dirk_work_label = gtk_label_new ("(Scientific evaluation, bug fixes)");
-  gtk_widget_ref (about_dirk_work_label);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_dirk_work_label", about_dirk_work_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (about_dirk_work_label);
-  gtk_table_attach (GTK_TABLE (about_author_table), about_dirk_work_label, 1, 2, 8, 9,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (about_dirk_work_label), 0, 0.5);
-
   about_ok_button = gtk_button_new_with_label ("OK");
   gtk_widget_ref (about_ok_button);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_ok_button", about_ok_button,
@@ -14633,7 +14567,7 @@ create_PHOEBE_about (void)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (about_contribute_frame), 5);
 
-  about_contribute_label = gtk_label_new ("Want to contribute?\n\nThere are three ways in which you may contribute to PHOEBE:\n\n- as an evaluator: if you have experience in eclipsing binaries and WD2003 \n- as a programmer: if you have experience in C/GTK+ programming          \n- as a writer: if you have experience in writing documentation and tutorials\n\nIf any of the above appeals to you, please contact the author!");
+  about_contribute_label = gtk_label_new ("Want to contribute?\n\nThere are many ways in which you may contribute to PHOEBE:\n\n- as an evaluator: if you have experience in eclipsing binaries and WD2003 \n- as a programmer: if you have experience in C/GTK+ programming          \n- as a writer: if you have experience in writing documentation and tutorials\n\nIf any of the above appeals to you, please contact the author!");
   gtk_widget_ref (about_contribute_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE_about), "about_contribute_label", about_contribute_label,
                             (GtkDestroyNotify) gtk_widget_unref);

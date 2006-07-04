@@ -28,14 +28,14 @@
 ########################################################################
 
 # Put a revision line in configure script:
-	AC_REVISION($revision: 0.29a $)
+	AC_REVISION($revision: 0.29b $)
 
 # Initialize configure.in for autoconf:
 	AC_INIT(src/main.c)
 	AC_CONFIG_AUX_DIR(autoconfig)
 
 # Initialize configure.in for automake:
-	AM_INIT_AUTOMAKE(phoebe,0.29a)
+	AM_INIT_AUTOMAKE(phoebe,0.29b)
 	AM_CONFIG_HEADER(src/config.h)
 
 # Check for system programs:
