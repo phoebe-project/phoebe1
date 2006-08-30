@@ -25,7 +25,7 @@ int read_in_synthetic_rv_data    (char *filename, PHOEBE_data *data, PHOEBE_calc
 int read_in_experimental_rv_data (int curve, PHOEBE_data *data, int indep, int dep, double requested_vunit);
 int read_in_3d_image_data        (char *filename, PHOEBE_data *data);
 
-int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *correlation_matrix);
+int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *correlation_matrix, int el3_switch);
 
 int read_in_data_file_specifics ();
 

@@ -746,7 +746,10 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 
 	/* If it is given in percents, transform it to fluxes:                    */
 	if (el3_switch == 0) {
-		mono.EL3 *= (mono.HLA + mono.CLA) / 4.0 / 3.1415926;
+		if (mono.EL3 >= 0.999)
+			mono.EL3 = 0.0;
+		else
+			mono.EL3 *= (mono.HLA + mono.CLA) / 4.0 / 3.1415926 / (1.0 - mono.EL3);
 	}
 
 	/* 5. Opacity function:                                                     */
@@ -788,7 +791,7 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 	return mono;
 	}
 
-int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *correlation_matrix)
+int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *correlation_matrix, int el3_switch)
 	{
 	/* This function opens the given DCO file from temp directory and reads in  */
 	/* all available information to the variable passed as the argument.        */
@@ -824,7 +827,7 @@ int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *c
 				i++;
 				}
 			}
-		if (strcmp (working_str, " Sums of squares of residuals for separate curves, including only individual weights\n") == 0)
+		if (strstr (working_str, "Sums of squares of residuals for separate curves, including only individual weights") != NULL)
 			{
 			fgets (working_str, 255, dcout);      /* Skip an empty line in DCO file */
 			fgets (working_str, 255, dcout);      /* Skip a header line in DCO file */
@@ -832,7 +835,7 @@ int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *c
 				fscanf (dcout, "%*d %d %lf", &dco_record->points_no[i], &dco_record->chi2[i]);
 			}
 
-		if (strcmp (working_str, "       CORRELATION COEFFICIENTS\n") == 0)
+		if (strstr (working_str, "CORRELATION COEFFICIENTS") != NULL)
 			{
 			fgets (working_str, 255, dcout);      /* Skip an empty line in DCO file */
 
@@ -846,11 +849,11 @@ int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *c
 					fscanf (dcout, "%lf", &correlation_matrix[j*i+k]);
 			}
 
-		if (strcmp (working_str, "                      Input-Output in D Format\n") == 0)
+		if (strstr (working_str, "Input-Output in D Format") != NULL)
 			{
 			fgets (working_str, 255, dcout);      /* Skip an empty line in DCO file */
 			fgets (working_str, 255, dcout);      /* Skip a header line in DCO file */
-			i = 0;
+			i = 0; j = 0;
 			while (fscanf (dcout, "%d %d %lf %lf %lf %lf", &dco_record->param_no[i], &dco_record->curve_no[i], &dco_record->original_value[i], &dco_record->correction[i], &dco_record->modified_value[i], &dco_record->sigma[i]) == 6)
 				{
 				/* If we adjusted temperatures, we have to modify the units:          */
@@ -869,6 +872,15 @@ int read_in_dco_values (char *filename, PHOEBE_dco_record *dco_record, double *c
 					dco_record->modified_value[i] *= 100.0;
 					dco_record->sigma[i] *= 100.0;
 					}
+				/* If there is 3rd light present, we need to tweak the        */
+				/* corrections to L1 determined by DC:                        */
+				if ( el3_switch == 1 && dco_record->param_no[i] == 31 ) {
+					double x = dco_record->L3[j] / (dco_record->L1[j] + dco_record->L2[j] + dco_record->L3[j]);
+					dco_record->correction[i] *= (1-x);
+					dco_record->modified_value[i] = dco_record->original_value[i] + dco_record->correction[i];
+					j++;
+				}
+
 				i++;
 				}
 			}
