@@ -2441,7 +2441,7 @@ void populate_dc_parameters_info_list ()
 					L2 = atof (readout_str);
 					gtk_clist_get_text (GTK_CLIST (lookup_widget (PHOEBE, "luminosities_el3_info_list")), j, 1, &readout_str);
 					L3 = atof (readout_str);
-					L3 *= (L1 + L2)/4.0/3.1415926;
+					L3 *= (L1 + L2)/4.0/3.1415926/(1.0-L3);
 					sprintf (el3_str, "%lf", L3);
 					sprintf (entry[0], "%s [%d]", keyword[i], j+1);
 					sprintf (entry[1], "%s", el3_str);
@@ -2499,6 +2499,7 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 	char **dc_cm_list_column;
 	char **dc_levels;
 	double window_width, window_height;
+	int el3_switch;
 
 	char arg1[255], arg2[255], arg3[255], arg4[255];
 	char *argv[4] = {arg1, arg2, arg3, arg4};
@@ -2581,9 +2582,17 @@ void on_dc_calculate_button_clicked (GtkButton *button, gpointer user_data)
 	/* Initialize the correlation matrix space:                                 */
 	correlation_matrix = phoebe_malloc (i*i * sizeof (*correlation_matrix));
 
-	read_in_dco_values (working_str, &dco_record, correlation_matrix);
+	/* If 3rd light is given in % and *not* fitted, and if L1s are fitted,    */
+	/* DC corrections need to be modified; that's why we need this:           */
+	readout_widget = lookup_widget (PHOEBE, "luminosities_el3_flux_switch");
+	if (GTK_TOGGLE_BUTTON (readout_widget)->active) el3_switch = 0; else el3_switch = 1;
+	readout_widget = lookup_widget (PHOEBE, "luminosities_el3_adjust");
+	if (GTK_TOGGLE_BUTTON (readout_widget)->active) el3_switch = 0;
+
+	read_in_dco_values (working_str, &dco_record, correlation_matrix, el3_switch);
 
 	/* 1. step: update parameter values:                                        */
+	readout_widget = lookup_widget (PHOEBE_dc, "dc_parameters_info_list");
 	for (j = 0; j < i; j++)
 		{
 		/* If we fitted any of the double precision parameters, we have to print  */
@@ -2920,6 +2929,7 @@ void on_dc_update_corrections_button_clicked (GtkButton *button, gpointer user_d
 						L2 = atof (readout_str);
 						gtk_clist_get_text (GTK_CLIST (par_list), i, 3, &readout_str);
 						L3 = atof (readout_str);
+						/* L3 is returned in flux, but we need percentages:   */
 						L3 *= 4.0*3.1415926/(L1 + L2 + 4.0*3.1415926*L3);
 						sprintf (el3_str, "%lf", L3);
 						readout_widget = lookup_widget (PHOEBE, "luminosities_el3_info_list");

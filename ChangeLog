@@ -1,6 +1,10 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-08-17: - Corrections computed for passband luminosities by DC were
+              overestimated if there is a significant 3rd light presence
+              in the system and it was given in percents. Fixed; many
+              thanks to Petr Harmanec for pointing this out!
 2006-07-04: - Ethem Derman discovered a very nasty bug in parameter file
               readout that caused bad values to be read for spot parameters.
               Fixed. This is a very important fix, so a new release is in
