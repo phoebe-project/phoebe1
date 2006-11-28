@@ -11,6 +11,11 @@ IMPORTANT: THIS TODO FILE IS OBSOLETE, SINCE PHOEBE DEVELOPMENT IS MOVED
                             | PHOEBE TO-DO LIST: |
                             ----------------------
 
+Homepage:
+--------------------------------------------------------------------------------
+* Stress that 0.30 scripter is functional and the 0.30 GUI is not
+* Stress that API is *the* document for getting started with 0.30 scripter
+
 configure.in, Makefile.am:
 --------------------------------------------------------------------------------
 * Add SM devices installation script to Makefile.am.
@@ -55,6 +60,7 @@ Plotting:
 
 Fitting:
 --------------------------------------------------------------------------------
+* Add spot parameters to parametric cross-section plots
 * Create a before/after picture so the user may compare the before/after
   solution.
 * In case of DC divergence the output is poor. Enhance it.

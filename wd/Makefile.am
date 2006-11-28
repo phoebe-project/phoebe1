@@ -24,7 +24,7 @@ phoebewddir = $(datadir)/phoebe/wd
 phoebewd_SCRIPTS = lc \
                    dc
 phoebewd_DATA =    atmcof.dat \
-                   atmcofplanck.dat \
+                   phoebe_atmcofplanck.dat \
 		   ChangeLog.PHOEBE
 
 EXTRA_DIST = $(phoebewd_SCRIPTS) $(phoebewd_DATA)
