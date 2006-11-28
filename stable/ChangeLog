@@ -1,6 +1,11 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2006-11-27: - Upon request of Yilen Gomez, H passband intensities added
+              to atmcofplanck.dat. In order to distinguish between the
+              two, the name of this auxiliary file has been changed both
+              in PHOEBE, as well as in the WD source, to
+              phoebe_atmcofplanck.dat.
 2006-08-17: - Corrections computed for passband luminosities by DC were
               overestimated if there is a significant 3rd light presence
               in the system and it was given in percents. Fixed; many

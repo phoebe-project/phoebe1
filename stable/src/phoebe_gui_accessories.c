@@ -381,15 +381,15 @@ void phoebe_init ()
 	else
 		phoebe_warning ("file atmcof.dat not found!");
 
-	sprintf (dest_str,   "%s/atmcofplanck.dat", PHOEBE_TEMP_DIR);
-	sprintf (source_str, "%s/atmcofplanck.dat", PHOEBE_LC_DIR);
+	sprintf (dest_str,   "%s/phoebe_atmcofplanck.dat", PHOEBE_TEMP_DIR);
+	sprintf (source_str, "%s/phoebe_atmcofplanck.dat", PHOEBE_LC_DIR);
 	if (file_exists (source_str))
 		{
 		if (!file_exists (dest_str))
 			symlink (source_str, dest_str);
 		}
 	else
-		phoebe_warning ("file atmcofplanck.dat not found!");
+		phoebe_warning ("file phoebe_atmcofplanck.dat not found!");
 
 	/* Finally, set the window title to a generic form:                       */
 	sprintf (working_str, "PHOEBE %s", PHOEBE_VERSION_NUMBER);

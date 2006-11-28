@@ -685,6 +685,8 @@ PHOEBE_wl_dependent_parameters read_in_wl_dependent_parameters (char *filter)
 	if (strncmp (filter, "523nm (Vt)", 10) == 0) mono.IBAND = 24;
 	if (strncmp (filter, "505nm (Hp)", 10) == 0) mono.IBAND = 25;
 
+	if (strncmp (filter, "1620nm (H)", 10) == 0) mono.IBAND = 26;
+
 	if (strncmp (filter, "861nm (RVIJ)", 12) == 0) {
 		phoebe_warning ("861nm filter not supported by WD2003, Johnson I adopted.\n");
 		mono.IBAND = 9;
