@@ -94,9 +94,9 @@ create_PHOEBE (void)
   GtkWidget *data_spectra_no_label;
   GtkObject *data_spectra_no_value_adj;
   GtkWidget *data_spectra_no_value;
+  GtkWidget *data_zero_magnitude_label;
   GtkObject *data_zero_magnitude_value_adj;
   GtkWidget *data_zero_magnitude_value;
-  GtkWidget *data_zero_magnitude_label;
   GtkWidget *data_tab_label;
   GtkWidget *system_related_frame;
   GtkWidget *system_related_main_box;
@@ -1593,6 +1593,7 @@ create_PHOEBE (void)
   gtk_table_attach (GTK_TABLE (data_table), data_lc_no_value, 1, 2, 2, 3,
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_lc_no_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (data_lc_no_value), GTK_UPDATE_IF_VALID);
 
   data_rv_no_label = gtk_label_new ("RV Curves:");
@@ -1613,6 +1614,7 @@ create_PHOEBE (void)
   gtk_table_attach (GTK_TABLE (data_table), data_rv_no_value, 3, 4, 2, 3,
                     (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_rv_no_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (data_rv_no_value), GTK_UPDATE_IF_VALID);
 
   data_spectra_no_label = gtk_label_new ("Spectra:");
@@ -1639,18 +1641,6 @@ create_PHOEBE (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_spectra_no_value), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (data_spectra_no_value), GTK_UPDATE_IF_VALID);
 
-  data_zero_magnitude_value_adj = gtk_adjustment_new (10, -50, 50, 0.01, 0.1, 1);
-  data_zero_magnitude_value = gtk_spin_button_new (GTK_ADJUSTMENT (data_zero_magnitude_value_adj), 0, 1);
-  gtk_widget_ref (data_zero_magnitude_value);
-  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_zero_magnitude_value", data_zero_magnitude_value,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (data_zero_magnitude_value);
-  gtk_table_attach (GTK_TABLE (data_table), data_zero_magnitude_value, 3, 4, 10, 11,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 15, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_zero_magnitude_value), TRUE);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (data_zero_magnitude_value), GTK_UPDATE_IF_VALID);
-
   data_zero_magnitude_label = gtk_label_new ("Zero Magnitude for Flux Normalization:");
   gtk_widget_ref (data_zero_magnitude_label);
   gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_zero_magnitude_label", data_zero_magnitude_label,
@@ -1660,6 +1650,17 @@ create_PHOEBE (void)
                     (GtkAttachOptions) (GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (data_zero_magnitude_label), 0, 0.5);
+
+  data_zero_magnitude_value_adj = gtk_adjustment_new (10, -50, 50, 0.1, 0.1, 1);
+  data_zero_magnitude_value = gtk_spin_button_new (GTK_ADJUSTMENT (data_zero_magnitude_value_adj), 0, 1);
+  gtk_widget_ref (data_zero_magnitude_value);
+  gtk_object_set_data_full (GTK_OBJECT (PHOEBE), "data_zero_magnitude_value", data_zero_magnitude_value,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (data_zero_magnitude_value);
+  gtk_table_attach (GTK_TABLE (data_table), data_zero_magnitude_value, 3, 4, 10, 11,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (data_zero_magnitude_value), TRUE);
 
   data_tab_label = gtk_label_new ("Data");
   gtk_widget_ref (data_tab_label);
