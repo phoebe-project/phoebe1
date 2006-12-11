@@ -477,7 +477,7 @@ void open_keyword_file (const char *filename)
 		if (value_str == NULL)
 			{
 			/* If the keyword doesn't have '=', it will be skipped.                 */
-			sprintf (working_str, "keyword %s in file %s invalid.", keyword_str, filename);
+			sprintf (working_str, "keyword %s in file %s invalid.\n", keyword_str, filename);
 			phoebe_warning (working_str);
 			continue;
 			}

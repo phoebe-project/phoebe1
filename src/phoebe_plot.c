@@ -615,7 +615,7 @@ void create_lc_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 	if (plot_synthetic == 1 && plot_experimental == 1) {
 		sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
 		if ( (tmpfd1 = mkstemp (name1)) == -1) {
-			phoebe_warning ("cannot create temporary file: exiting plot");
+			phoebe_warning ("cannot create temporary file: exiting plot.\n");
 			return;
 		}
 
@@ -628,7 +628,7 @@ void create_lc_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 
 		sprintf(name2, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
 		if ( (tmpfd2 = mkstemp (name2)) == -1) {
-			phoebe_warning ("cannot create temporary file: exiting plot") ;
+			phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
 			return;
 		}
 
@@ -643,7 +643,7 @@ void create_lc_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 	else {
 		sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
 		if ((tmpfd1=mkstemp(name1))==-1) {
-			phoebe_warning ("cannot create temporary file: exiting plot") ;
+			phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
 			return;
 		}
 
@@ -669,7 +669,7 @@ void create_lc_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 	/* Open temporary file for gnuplot commands   */
 	sprintf(name0, "%s/gnuplot-i-gnu-XXXXXX", PHOEBE_TEMP_DIR);
 	if ((tmpfd0=mkstemp(name0))==-1) {
-		phoebe_warning ("cannot create temporary file: exiting plot");
+		phoebe_warning ("cannot create temporary file: exiting plot.\n");
 		return;
 	}
 
@@ -875,7 +875,7 @@ void create_rv_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 		sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
 		if ((tmpfd1=mkstemp(name1))==-1)
 			{
-			phoebe_warning ("cannot create temporary file: exiting plot") ;
+			phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
 			return ;
 			}
 
@@ -897,7 +897,7 @@ void create_rv_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 		sprintf(name2, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
 		if ((tmpfd2=mkstemp(name2))==-1)
 			{
-        		phoebe_warning ("cannot create temporary file: exiting plot") ;
+        		phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
         		return ;
 			}
 
@@ -915,7 +915,7 @@ void create_rv_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 		sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
 	    	if ((tmpfd1=mkstemp(name1))==-1)
 			{
-			phoebe_warning ("cannot create temporary file: exiting plot");
+			phoebe_warning ("cannot create temporary file: exiting plot.\n");
         		return ;
 			}
 
@@ -953,7 +953,7 @@ void create_rv_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, PH
 	sprintf(name0, "%s/gnuplot-i-gnu-XXXXXX", PHOEBE_TEMP_DIR);
     	if ((tmpfd0=mkstemp(name0))==-1)
 		{
-        	phoebe_warning ("cannot create temporary file: exiting plot") ;
+        	phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
         	return ;
 	    	}
 
@@ -1196,7 +1196,7 @@ void create_chi2_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, 
 	sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
     	if ((tmpfd1=mkstemp(name1))==-1)
 		{
-       		phoebe_warning ("cannot create temporary file: exiting plot") ;
+       		phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
        		return ;
                 }
 
@@ -1217,7 +1217,7 @@ void create_chi2_plot_using_gnuplot (PHOEBE_plot_device device, char *filename, 
 	sprintf(name0, "%s/gnuplot-i-gnu-XXXXXX", PHOEBE_TEMP_DIR);
     	if ((tmpfd0=mkstemp(name0))==-1)
 		{
-        	phoebe_warning ("cannot create temporary file: exiting plot") ;
+        	phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
         	return ;
 	    	}
 
@@ -1335,7 +1335,7 @@ void create_3d_image_plot_using_gnuplot (PHOEBE_plot_device device, char *filena
 	sprintf(name1, "%s/gnuplot-i-XXXXXX", PHOEBE_TEMP_DIR);
 	if ((tmpfd1=mkstemp(name1))==-1)
 		{
-		phoebe_warning ("cannot create temporary file: exiting plot") ;
+		phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
 		return ;
 		}
 
@@ -1357,7 +1357,7 @@ void create_3d_image_plot_using_gnuplot (PHOEBE_plot_device device, char *filena
 	sprintf(name0, "%s/gnuplot-i-gnu-XXXXXX", PHOEBE_TEMP_DIR);
 	if ((tmpfd0=mkstemp(name0))==-1)
 		{
-		phoebe_warning ("cannot create temporary file: exiting plot") ;
+		phoebe_warning ("cannot create temporary file: exiting plot.\n") ;
 		return ;
 		}
 

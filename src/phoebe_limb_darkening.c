@@ -77,7 +77,7 @@ PHOEBE_vector read_in_ld_coeficients (char *input_filter, int T, double lg, doub
 	if (strncmp (input_filter, "861nm (RVIJ)", 12) == 0) sprintf (current_filter, "858" );
 
 	/* Falling back to unsupported:                                             */
-	if (strcmp (current_filter, "Unsupported") == 0) phoebe_warning ("LD tables do not contain information for this filter!");
+	if (strcmp (current_filter, "Unsupported") == 0) phoebe_warning ("LD tables do not contain information for this filter!\n");
 
 	/* First, let us create a string containing a VanHamme filename:            */
 
