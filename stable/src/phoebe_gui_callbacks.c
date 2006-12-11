@@ -270,7 +270,7 @@ void on_menu_bar_file_import_from_dci_activate (GtkMenuItem *menuitem, gpointer 
 
 void on_menu_bar_file_export_to_dci_activate (GtkMenuItem *menuitem, gpointer user_data)
 	{
-	phoebe_warning ("not implemented");
+	phoebe_warning ("not implemented, sorry...\n");
 	}
 
 void on_warning_on_new_ok_button_clicked (GtkWidget *widget, gpointer user_data)
@@ -1162,7 +1162,7 @@ void on_ld_interpolation_update_button_clicked (GtkButton *button, gpointer user
 
 void on_ld_interpolation_update_all_button_clicked (GtkButton *button, gpointer user_data)
 	{
-	phoebe_warning ("Function not implemented yet.");
+	phoebe_warning ("Function not implemented yet.\n");
 	}
 
 void on_menu_bar_about_clicked (GtkMenuItem *menuitem, gpointer user_data)

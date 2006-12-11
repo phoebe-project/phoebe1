@@ -26,7 +26,7 @@ double calculate_chi2 (PHOEBE_data synthetic_data, PHOEBE_data experimental_data
 	/* First let's do some error checking:                                      */
 	if ( (synthetic_data.ptsno <= 1) || (experimental_data.ptsno <= 1) )
 		{
-		phoebe_warning ("calculate_chi2 routine called with vectors that have dimension <= 1.");
+		phoebe_warning ("calculate_chi2 routine called with vectors that have dimension <= 1.\n");
 		return -1.0;
 		}
 
