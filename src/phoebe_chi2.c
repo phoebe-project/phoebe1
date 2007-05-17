@@ -8,12 +8,12 @@ double calculate_chi2 (PHOEBE_data synthetic_data, PHOEBE_data experimental_data
 	{
 	/* This function interpolates synthetic curve and experimental data points  */
 	/* and calculates standard deviation depending on the type integer:         */
-  /*                                                                          */
+	/*                                                                          */
 	/*   type = 0   ...   standard deviation with no weighting applied          */
 	/*   type = 1   ...   standard deviation with weighting applied             */
 	/*   type = 2   ...   chi2 with no weighting applied                        */
 	/*   type = 3   ...   chi2 with weighting applied                           */
-  /*                                                                          */
+	/*                                                                          */
 	/* If the function returns a negative value, it means something went wrong. */
 
 	int i, j;

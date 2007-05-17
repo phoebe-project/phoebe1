@@ -312,6 +312,10 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 		gtk_label_set_text (GTK_LABEL (readout_widget), working_str);
 	}
 
+	/* Align the data with the desired phase span:                            */
+	if (DATA == 1)
+		shift_interval (&experimental_data, curve.PHSTRT, curve.PHSTOP);
+
 	/* If we plot both experimental and synthetic data, we can calculate chi2;  */
 	/* if we plot residuals, we must prepare them here:                         */
 	if ( (DATA == 1) && (MODEL == 1) )
@@ -630,9 +634,10 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			/* If an error occured, ptsno value is 0. In that case we don't want    */
 			/* any experimental data present in our work, otherwise we expect the   */
 			/* program to segfault.                                                 */
-			if (experimental_rv1_data.ptsno == 0) DATA = 0;
-
-			sprintf (working_str, "%d", experimental_rv1_data.ptsno);
+			if (experimental_rv1_data.ptsno == 0)
+				DATA = 0;
+			else
+				shift_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
 		}
 
 		if ( ( DEP == 4 ) || ( DEP == 8 ) ) {
@@ -641,7 +646,10 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			/* If an error occured, ptsno value is 0. In that case we don't want    */
 			/* any experimental data present in our work, otherwise we expect the   */
 			/* program to segfault.                                                 */
-			if (experimental_rv2_data.ptsno == 0) DATA = 0;
+			if (experimental_rv2_data.ptsno == 0)
+				DATA = 0;
+			else
+				shift_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
 
 			sprintf (working_str, "%d", experimental_rv2_data.ptsno);
 		}
@@ -650,7 +658,12 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 			read_in_experimental_rv_data (0, &experimental_rv1_data, INDEP, DEP, 1.0);
 			read_in_experimental_rv_data (1, &experimental_rv2_data, INDEP, DEP, 1.0);
 
-			if ( (experimental_rv1_data.ptsno == 0) || (experimental_rv2_data.ptsno == 0) ) DATA = 0;
+			if ( (experimental_rv1_data.ptsno == 0) || (experimental_rv2_data.ptsno == 0) )
+				DATA = 0;
+			else {
+				shift_interval (&experimental_rv1_data, curve.PHSTRT, curve.PHSTOP);
+				shift_interval (&experimental_rv2_data, curve.PHSTRT, curve.PHSTOP);
+			}
 
 			sprintf (working_str, "%d", experimental_rv1_data.ptsno + experimental_rv2_data.ptsno);
 		}
