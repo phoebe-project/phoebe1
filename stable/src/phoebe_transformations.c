@@ -64,6 +64,32 @@ void transform_absolute_error_to_weight (PHOEBE_data *data)
 		data->weight[i] = 0.1 + (9.9-0.1)/(maxweight-minweight)*(data->weight[i]-minweight);
 	}
 
+void shift_interval (PHOEBE_data *data, double phmin, double phmax)
+{
+	/* This function shifts the contents of data phases so that they are cen- */
+	/* tered on the [phmin, phmax] interval. We need this for better results  */
+	/* if aliasing is not turned on.                                          */
+
+	int i;
+	double center = (phmin+phmax)/2.0;
+	int factor = center / 1;
+	double cphase;
+
+	if (factor == 0)
+		cphase = center;
+	else
+		cphase = fmod (center, (double) factor);
+
+	for (i = 0; i < data->ptsno; i++) {
+		if (data->indep[i] >= -0.5000000001 && data->indep[i] < cphase-0.5000000001)
+			data->indep[i] += factor+1;
+		else
+			data->indep[i] += factor;
+	}
+
+	return;
+}
+
 void alias_phase_to_interval (PHOEBE_data *data, double phmin, double phmax)
 	{
 	/* This function redimensiones the array of data phases by aliasing points  */

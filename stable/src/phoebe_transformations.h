@@ -14,6 +14,7 @@ void remove_reddening_from_data         (PHOEBE_data *data, double lambda, doubl
 void remove_reddening_from_fluxes       (PHOEBE_data *data, double lambda, double R, double EBV);
 void normalize_rv_to_orbit              (PHOEBE_data *data, double sma, double period);
 
+void shift_interval (PHOEBE_data *data, double phmin, double phmax);
 void alias_phase_to_interval (PHOEBE_data *data, double phmin, double phmax);
 
 void transform_flux_sigma_to_magnitude_sigma (double flux_sigma, double mag_sigma);
