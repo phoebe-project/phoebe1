@@ -5,6 +5,11 @@ This ChangeLog applies to WD version 2005-10-28.
 
 --------------------------------------------------------------------------------
 
+2007-05-30:
+
+*****	Parameter version of WD accepted by upstream and is now used with
+	Nmax=100.
+
 2006-06-07:
 
 *****	Commented lines 266 and 267 of the lcflop source file. These two lines
