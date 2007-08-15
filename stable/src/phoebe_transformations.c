@@ -120,7 +120,7 @@ void alias_phase_to_interval (PHOEBE_data *data, double phmin, double phmax)
 	/* Now make a loop that does the actual aliasing:                           */
 	for (i = 0; i < new_data.ptsno; i++)
 		{
-		for (j = (int) (phmin - 1); j <= (int) (phmax + 1); j++)
+		for (j = (int) (phmin - 1.0); j <= (int) (phmax + 1.0); j++)
 			{
 			if ( (new_data.indep[i] + j > phmin) && (new_data.indep[i] + j < phmax) )
 				{
