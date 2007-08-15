@@ -142,7 +142,8 @@ void plot_lc_plot (PHOEBE_plot_device device, char *filename)
 	curve.PHSTRT = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
 	readout_widget = lookup_widget (PHOEBE_plot_lc, "plot_lc_phend_value");
 	curve.PHSTOP = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
-	curve.PHIN = (curve.PHSTOP - curve.PHSTRT) / (VERTEXES - 1);
+	curve.PHIN = (curve.PHSTOP - curve.PHSTRT) / VERTEXES;
+	curve.PHSTOP += 1e-6; /* To have the last vertex included */
 	curve.HJDST = main.HJD0 + main.PERIOD * curve.PHSTRT;
 	curve.HJDSP = main.HJD0 + main.PERIOD * curve.PHSTOP;
 	curve.HJDIN = main.PERIOD * curve.PHIN;
@@ -509,7 +510,8 @@ void plot_rv_plot (PHOEBE_plot_device device, char *filename)
 	curve.PHSTRT = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
 	readout_widget = lookup_widget (GTK_WIDGET (PHOEBE_plot_rv), "plot_rv_phend_value");
 	curve.PHSTOP = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
-	curve.PHIN = (curve.PHSTOP - curve.PHSTRT) / (VERTEXES - 1);
+	curve.PHIN = (curve.PHSTOP - curve.PHSTRT) / VERTEXES;
+	curve.PHSTOP += 1e-6; /* To have the last vertex included */
 	curve.HJDST = main.HJD0 + main.PERIOD * curve.PHSTRT;
 	curve.HJDSP = main.HJD0 + main.PERIOD * curve.PHSTOP;
 	curve.HJDIN = main.PERIOD * curve.PHIN;

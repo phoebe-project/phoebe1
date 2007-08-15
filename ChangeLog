@@ -1,6 +1,18 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2007-08-15: - The computation of residuals on aliased phase points left
+              the outermost observed point intact because the last
+              synthetic phase point was sometimes missing (numerical
+              rounding problem). Fixed. Many thanks to Patricia Lampens
+              for pointing this out.
+2007-05-17: - Phase alignment between phased observational data (always
+              on the [-0.5,0.5] interval) and synthetic data (depending on
+              the settings in the plotting windows) was off if data aliasing
+              is turned off. This caused a wrong value of chi2 to be
+              computed, and a useless plot to be shown if the phase range
+              was changed from the default. This has now been fixed for both
+              LC and RV plots.
 2006-12-10: - All phoebe_warning () calls reviewed and all missing 
               newlines were added.
             - Two arrays in LC and DC that were containing Legendre
