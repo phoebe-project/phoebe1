@@ -3310,26 +3310,46 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			readout_widget = lookup_widget (PHOEBE, phsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, pcsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		for (i = 0; i < 4; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, cla[i]);
@@ -3339,11 +3359,19 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, ld[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		for (i = 0; i < 4; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, the[i]);
@@ -3362,30 +3390,50 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			readout_widget = lookup_widget (PHOEBE, phsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		/* 1. Surface potential PCSV isn't constrained:                           */
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, pcsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		/* 2. Gravity brightening GR2 isn't constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		/* 3. Bolometric albedo ALB2 isn't constrained:                           */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		/* 4. Secondary temperature TAVC isn't constrained:                       */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		/* 5. Secondary star luminosities CLA are constrained:                    */
 		for (i = 0; i < 4; i++)
 			{
@@ -3397,12 +3445,20 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
 		/* 6. Limb darkening coefficients X2A and Y2A aren't constrained:         */
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, ld[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 		/* 7. The duration of eclipse for X-Ray binaries is constrained:          */
 		for (i = 0; i < 4; i++)
 			{
@@ -3423,6 +3479,10 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
 
 		/* 1. Surface potential PCSV isn't constrained:                           */
 		for (i = 0; i < 7; i++)
@@ -3430,24 +3490,44 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			readout_widget = lookup_widget (PHOEBE, pcsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 2. Gravity brightening GR2 isn't constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 3. Bolometric albedo ALB2 isn't constrained:                           */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 4. Secondary temperature TAVC isn't constrained:                       */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 5. Secondary star luminosities CLA are constrained:                    */
 		for (i = 0; i < 4; i++)
 			{
@@ -3459,12 +3539,22 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 6. Limb darkening coefficients X2A and Y2A aren't constrained:         */
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, ld[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 7. The duration of eclipse for X-Ray binaries is constrained:          */
 		for (i = 0; i < 4; i++)
 			{
@@ -3484,6 +3574,10 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			readout_widget = lookup_widget (PHOEBE, phsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
 
 		/* 1. Surface potential PCSV is constrained:                              */
 		for (i = 0; i < 7; i++)
@@ -3492,24 +3586,44 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 2. Gravity brightening GR2 isn't constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 3. Bolometric albedo ALB2 isn't constrained:                           */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 4. Secondary temperature TAVC isn't constrained:                       */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 5. Secondary star luminosities CLA are constrained:                    */
 		for (i = 0; i < 4; i++)
 			{
@@ -3521,12 +3635,22 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 6. Limb darkening coefficients X2A and Y2A aren't constrained:         */
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, ld[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 7. The duration of eclipse for X-Ray binaries is constrained:          */
 		for (i = 0; i < 4; i++)
 			{
@@ -3547,6 +3671,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 1. Surface potential PCSV is constrained:                              */
 		for (i = 0; i < 7; i++)
 			{
@@ -3554,24 +3683,44 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 2. Gravity brightening GR2 is not constrained:                         */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 3. Bolometric albedo ALB2 is not constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 4. Secondary temperature TAVC is not constrained:                      */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 5. Secondary star luminosities CLA are constrained:                    */
 		for (i = 0; i < 4; i++)
 			{
@@ -3583,6 +3732,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 6. Limb darkening coefficients X2A and Y2A are constrained:            */
 		for (i = 0; i < 7; i++)
 			{
@@ -3590,6 +3744,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 7. The duration of eclipse for X-Ray binaries is constrained:          */
 		for (i = 0; i < 4; i++)
 			{
@@ -3609,6 +3768,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			readout_widget = lookup_widget (PHOEBE, phsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 1. Surface potential PCSV is constrained:                              */
 		for (i = 0; i < 7; i++)
 			{
@@ -3616,6 +3780,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 2. Gravity brightening GR2 is constrained:                             */
 		for (i = 0; i < 6; i++)
 			{
@@ -3623,6 +3792,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 3. Bolometric albedo ALB2 is constrained:                              */
 		for (i = 0; i < 6; i++)
 			{
@@ -3630,6 +3804,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 4. Secondary temperature TAVC is constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
@@ -3637,6 +3816,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 5. Secondary star luminosities CLA are constrained:                    */
 		for (i = 0; i < 4; i++)
 			{
@@ -3648,6 +3832,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 6. Limb darkening coefficients X2A and Y2A are constrained:            */
 		for (i = 0; i < 7; i++)
 			{
@@ -3655,6 +3844,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 7. The duration of eclipse for X-Ray binaries is constrained:          */
 		for (i = 0; i < 4; i++)
 			{
@@ -3674,6 +3868,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			readout_widget = lookup_widget (PHOEBE, phsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 1. Surface potential PCSV is constrained:                              */
 		for (i = 0; i < 7; i++)
 			{
@@ -3681,24 +3880,44 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 2. Gravity brightening GR2 isn't constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 3. Bolometric albedo ALB2 isn't constrained:                           */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 4. Secondary temperature TAVC isn't constrained:                       */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 5. Secondary star luminosities CLA are constrained:                    */
 		for (i = 0; i < 4; i++)
 			{
@@ -3710,12 +3929,22 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 6. Limb darkening coefficients X2A and Y2A aren't constrained:         */
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, ld[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 7. The duration of eclipse for X-Ray binaries is constrained:          */
 		for (i = 0; i < 4; i++)
 			{
@@ -3735,6 +3964,11 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			readout_widget = lookup_widget (PHOEBE, phsv[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_phsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 1. Surface potential PCSV is constrained:                              */
 		for (i = 0; i < 7; i++)
 			{
@@ -3742,24 +3976,44 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			if (i == 0) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (readout_widget), FALSE);
 			gtk_widget_set_sensitive (readout_widget, FALSE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_switch");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_pcsv_step_value");
+			gtk_widget_set_sensitive (readout_widget, FALSE);
+
 		/* 2. Gravity brightening GR2 isn't constrained:                          */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, gr2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_gr2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 3. Bolometric albedo ALB2 isn't constrained:                           */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, alb2[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_alb2_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 4. Secondary temperature TAVC isn't constrained:                       */
 		for (i = 0; i < 6; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, tavc[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_tavc_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 5. Secondary star luminosities CLA aren't constrained:                 */
 		for (i = 0; i < 4; i++)
 			{
@@ -3770,12 +4024,22 @@ void on_data_model_entry_changed (GtkEditable *editable, gpointer user_data)
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_cla_value");
 			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_cla_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 6. Limb darkening coefficients X2A and Y2A aren't constrained:         */
 		for (i = 0; i < 7; i++)
 			{
 			readout_widget = lookup_widget (PHOEBE, ld[i]);
 			gtk_widget_set_sensitive (readout_widget, TRUE);
 			}
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_switch");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+			readout_widget = lookup_widget (PHOEBE_fitting_quickbar, "fitting_quickbar_x2a_step_value");
+			gtk_widget_set_sensitive (readout_widget, TRUE);
+
 		/* 7. The duration of eclipse for X-Ray binaries isn't constrained:       */
 		for (i = 0; i < 4; i++)
 			{
