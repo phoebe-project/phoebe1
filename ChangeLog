@@ -1,6 +1,8 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2007-08-16: - Check buttons and spin buttons in the Fitting QuickBar were
+              not properly shaded for different morphology types. Fixed.
 2007-08-15: - The computation of residuals on aliased phase points left
               the outermost observed point intact because the last
               synthetic phase point was sometimes missing (numerical
