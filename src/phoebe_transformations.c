@@ -43,8 +43,14 @@ void transform_absolute_error_to_weight (PHOEBE_data *data)
 
 	int i;
 
-	double minweight = 1.0/pow(data->weight[0],2);
-	double maxweight = 1.0/pow(data->weight[0],2);
+	double minweight = data->weight[0];
+	double maxweight = data->weight[0];
+	
+	for (i = 1; i < data->ptsno; i++)
+		{
+		if (minweight > data->weight[i]) minweight = data->weight[i];
+		if (maxweight < data->weight[i]) maxweight = data->weight[i];
+		}
 
 	if (maxweight - minweight < 1e-5)
 		{
@@ -53,15 +59,13 @@ void transform_absolute_error_to_weight (PHOEBE_data *data)
 		return;
 		}
 
+	maxweight = 1.0/minweight/minweight;
+	minweight = 1.0/maxweight/maxweight;
 	for (i = 0; i < data->ptsno; i++)
 		{
 		data->weight[i] = 1.0/data->weight[i]/data->weight[i];
-		if (data->weight[i] < minweight) minweight = data->weight[i];
-		if (data->weight[i] > maxweight) maxweight = data->weight[i];
-		}
-
-	for (i = 0; i < data->ptsno; i++)
 		data->weight[i] = 0.1 + (9.9-0.1)/(maxweight-minweight)*(data->weight[i]-minweight);
+		}
 	}
 
 void shift_interval (PHOEBE_data *data, double phmin, double phmax)
