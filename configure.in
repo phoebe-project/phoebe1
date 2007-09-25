@@ -28,7 +28,7 @@
 ########################################################################
 
 # Put a revision line in configure script:
-	AC_REVISION($revision: custom $)
+	AC_REVISION($revision: 0.29d $)
 
 # Initialize configure.in for autoconf:
 	AC_INIT(src/main.c)
