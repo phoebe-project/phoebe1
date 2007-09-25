@@ -1,6 +1,11 @@
 PHOEBE Project ChangeLog:
 ----------------------------------------------------------------------------
 
+2007-09-25: - PHOEBE 0.29d released!
+            - The transformation of individual weights from standard 
+              deviation to weight was *always* returning 1.0 because of the
+              causal loop. Fixed. Many thanks to Carla Maceroni for pointing
+              this out!
 2007-08-20: - Synced with WD upstream to version 2007-08-15.
 2007-08-16: - Check buttons and spin buttons in the Fitting QuickBar were
               not properly shaded for different morphology types. Fixed.

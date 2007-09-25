@@ -1,4 +1,4 @@
-PHOEBE-0.29c TOPLEVEL DOCUMENTATION                              July 4, 2006
+PHOEBE-0.29d TOPLEVEL DOCUMENTATION                        September 25, 2007
 -----------------------------------------------------------------------------
 
 Hello and thank you for your interest in PHOEBE. :)
@@ -6,17 +6,17 @@ Hello and thank you for your interest in PHOEBE. :)
 THINGS YOU NEED TO KNOW
 -----------------------
 
-PHOEBE is currently in its testing phase, which means that you may download
-PHOEBE freely, but you are kindly asked to let the author know of you using
-this software. You may freely share PHOEBE with others as long as no changes
-are imposed on the code. For further information please read the GNU/GPL li-
-cence in PHOEBE documentation. If you do feel you need to change the code,
-be sure to distribute it only if the original version along with exact chan-
-ging policy is attached.
+This is a stable PHOEBE release. It is old. It is ancient. All the development
+effort is going into the new 0.30 version. Use this version to get reliable
+results, however at the expense of manual labor.
 
-Wilson-Devinney WD2004 code is distributed along with this version of PHOEBE
-for testing purposes only. If you are new to WD2004, please contact Robert E.
-Wilson, University of Florida, and let him know that you use his software.
+You may share, distribute and modify PHOEBE to your liking. For further
+information on PHOEBE licensing please read the GNU/GPL licence in PHOEBE
+documentation.
+
+Wilson-Devinney WD2007 code is distributed along with this version of PHOEBE
+for testing purposes only. If you are new to WD, please contact R. E. Wilson,
+University of Florida, and let him know that you use his software.
 
 REQUIREMENTS
 ------------
@@ -36,7 +36,9 @@ To successfully set up PHOEBE, you need:
     * Debian Sid           no issues
     * Ubuntu 5.04 (Hoary)  no issues
     * Ubuntu 5.10 (Breezy) no issues
-    * Ubuntu 6.06 (Dapper) no issues  (development platform)
+    * Ubuntu 6.06 (Dapper) no issues
+    * Ubuntu 6.10 (Edgy)   no issues
+    * Ubuntu 7.04 (Feisty) no issues (development platform)
     * Linux Redhat 7.2     no issues
     * Linux Redhat 7.3     no issues
     * Linux Redhat 8.0     no issues
@@ -45,8 +47,11 @@ To successfully set up PHOEBE, you need:
     * Linux Fedora Core 2  no issues
     * Linux Fedora Core 3  no issues
     * Linux Fedora Core 4  no issues
+    * Linux Fedora Core 5  no issues
+    * Linux Fedora Core 6  no issues
     * Linux SUSE 8.2       no issues
     * Linux SUSE 9.0       no issues
+    * Linux SUSE 10.0      no issues
     * Gentoo Linux 2004    no issues
     * Mandrake 9.1         no issues
     * MS Windows (Cygwin)  WD compiling necessary
@@ -116,31 +121,25 @@ PHOEBE may be obtained by two common ways:
    This method is preferable for casual users. I will do my best to support
    your work with stable releases.
 
-2. By checking out the daily version from anonymous CVS:
-
-   Login:
-
-     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository login
-
-   [ hit <ENTER> for password ]
+2. By checking out the daily version from anonymous SVN:
 
    The main program:
 
-     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout phoebe
+     svn checkout https://phoebe.svn.sourceforge.net/svnroot/phoebe/stable
 
    The bleeding-edge development version:
 
-     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout phoebe-dev
+     svn checkout https://phoebe.svn.sourceforge.net/svnroot/phoebe/devel
 
    Documentation (optional):
 
-     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout documentation
+     svn checkout https://phoebe.svn.sourceforge.net/svnroot/phoebe/docs
 
    Van Hamme limb darkening tables (optional):
 
-     cvs -d :pserver:anonymous@dioniz.fiz.uni-lj.si:/repository checkout catalogs/ld
+     svn checkout https://phoebe.svn.sourceforge.net/svnroot/phoebe/cats
 
-   This method is preferable for testing users and contributors. Please note
+   This method is preferred for testing users and contributors. Please note
    that the development version might not work, it might not even compile.
    If you want the latest updates that are considered for the stable
    distribution, use the main program rather than the bleeding edge.
@@ -166,6 +165,13 @@ this means that you have newer autoutils suite. Please run:
   autoreconf --force --install
 
 and then repeat the generic installation steps given above.
+
+IMPORTANT NOTICE FOR PRE-PHOEBE-0.29d USERS
+-------------------------------------------
+
+There is a nasty bug in 0.29c version that does not transform individual
+weights from standard deviation properly - the weights were always set to
+1.0 if standard deviation was used as input.
 
 IMPORTANT NOTICE FOR PRE-PHOEBE-0.29c USERS
 -------------------------------------------
@@ -321,9 +327,10 @@ For comments, postcards, bugs, postcards, requests or postcards don't hesitate
 to contact the author:
 
 	Andrej Prsa
-	Jadranska 19
-	SI-1000 Ljubljana
-	Tel: +386-1-476-65-67
-	andrej.prsa@fmf.uni-lj.si
+	Villanova University
+	800 E Lancaster Ave,
+	Villanova, PA 19085
+	Tel: +1 (610) 519-4887
+	andrej.prsa@villanova.edu
 
 For the list of contributors, please take a look at the top-level AUTHORS file.
