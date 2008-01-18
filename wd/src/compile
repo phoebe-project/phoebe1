@@ -1,0 +1,3 @@
+g77 -ffortran-bounds-check atmx.f bbl.f binnum.f cloud.f conjph.f dgmprd.f dminv.f dura.f ellone.f fourls.f gabs.f jdph.f kepler.f lc.f lcr.f legendre.f light.f linpro.f lum.f lump.f mlrg.f modlog.f nekmin.f olump.f planckint.f rangau.f ranuni.f rddata.f ring.f romq.f sincos.f spot.f square.f surfas.f volume.f -o lc
+g77 -ffortran-bounds-check atmx.f bbl.f binnum.f cloud.f conjph.f dc.f dgmprd.f dminv.f dura.f ellone.f fourls.f gabs.f jdph.f kepler.f lcr.f legendre.f light.f linpro.f lum.f lump.f mlrg.f modlog.f nekmin.f olump.f planckint.f rangau.f ranuni.f rddata.f ring.f romq.f sincos.f spot.f square.f surfas.f volume.f -o dc
+
