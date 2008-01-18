@@ -1534,7 +1534,7 @@ void on_synthetic_grid_nodes_value_changed (GtkEditable *editable, gpointer user
 void on_synthetic_grid_edit_entry_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *grid_list = lookup_widget (PHOEBE_calculate_grid, "synthetic_grid_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (grid_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (grid_list)->selection))->data);
 
 	GtkWidget *readout_widget;
 	char *readout_str;
@@ -1587,7 +1587,7 @@ gboolean on_synthetic_grid_list_double_clicked (GtkWidget *widget, GdkEvent *eve
 void on_synthetic_grid_parameters_ok_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *grid_list = lookup_widget (PHOEBE_calculate_grid, "synthetic_grid_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (grid_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (grid_list)->selection))->data);
 
 	GtkWidget *readout_widget;
 	double readout_dbl;
@@ -1632,7 +1632,7 @@ void on_synthetic_grid_parameters_cancel_button_clicked (GtkButton *button, gpoi
 void on_data_lc_edit_data_entry_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *lc_list = lookup_widget (PHOEBE, "data_lc_info_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (lc_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (lc_list)->selection))->data);
 
 	GtkWidget *readout_widget;
 
@@ -1671,7 +1671,7 @@ gboolean on_data_lc_info_double_clicked (GtkWidget *widget, GdkEvent *event, gpo
 void on_data_rv_edit_data_entry_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *rv_list = lookup_widget (PHOEBE, "data_rv_info_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (rv_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (rv_list)->selection))->data);
 
 	GtkWidget *readout_widget;
 
@@ -1711,7 +1711,7 @@ void on_data_rv_file_ok_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *rv_list = lookup_widget (PHOEBE, "data_rv_info_list");
 
-	int selected_row = (int) ((GList *) (GTK_CLIST (rv_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (rv_list)->selection))->data);
 
 	read_in_data_file_info (PHOEBE_assign_rv_data_file, &PHOEBE_rv_data[selected_row]);
 
@@ -1738,7 +1738,7 @@ void on_data_file_ok_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *lc_list = lookup_widget (PHOEBE, "data_lc_info_list");
 
-	int selected_row = (int) ((GList *) (GTK_CLIST (lc_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (lc_list)->selection))->data);
 
 	read_in_data_file_info (PHOEBE_assign_data_file, &PHOEBE_lc_data[selected_row]);
 
@@ -1788,7 +1788,7 @@ void on_luminosities_lc_edit_entry_button_clicked (GtkButton *button, gpointer u
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (lc_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (lc_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_filter_value");
 	gtk_clist_get_text (GTK_CLIST (lc_list), selected_row, 0, &readout_str);
@@ -1830,7 +1830,7 @@ void on_assign_lc_luminosity_ok_button_clicked (GtkButton *button, gpointer user
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (lc_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (lc_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_lc_luminosity, "assign_lc_luminosity_hla_value");
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
@@ -1893,7 +1893,7 @@ void on_luminosities_el3_edit_entry_button_clicked (GtkButton *button, gpointer 
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (el3_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (el3_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_el3, "assign_el3_filter_value");
 	gtk_clist_get_text (GTK_CLIST (el3_list), selected_row, 0, &readout_str);
@@ -1924,7 +1924,7 @@ void on_assign_el3_ok_button_clicked (GtkButton *button, gpointer user_data)
 	char *working_str = working_string;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (el3_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (el3_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_el3, "assign_el3_el3_value");
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
@@ -1964,7 +1964,7 @@ void on_ld_monochromatic_lc_edit_entry_button_clicked (GtkButton *button, gpoint
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (ld_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (ld_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_ld_monochromatic_lc, "assign_ld_monochromatic_lc_filter_value");
 	gtk_clist_get_text (GTK_CLIST (ld_list), selected_row, 0, &readout_str);
@@ -2003,7 +2003,7 @@ void on_assign_ld_monochromatic_lc_ok_button_clicked (GtkButton *button, gpointe
 	char *working_str = working_string;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (ld_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (ld_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_ld_monochromatic_lc, "assign_ld_monochromatic_lc_x1a_value");
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
@@ -2054,7 +2054,7 @@ void on_luminosities_weighting_edit_entry_button_clicked (GtkButton *button, gpo
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (w_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (w_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_weighting, "assign_weighting_weighting_list_entry");
 	gtk_clist_get_text (GTK_CLIST (w_list), selected_row, 1, &readout_str);
@@ -2077,7 +2077,7 @@ void on_spots_edit_primary_button_clicked (GtkButton *button, gpointer user_data
 	{
 	GtkWidget *readout_widget;
 	GtkWidget *sp_list = lookup_widget (PHOEBE, "spots_primary_info_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (sp_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (sp_list)->selection))->data);
 	char *readout_str;
 	
 	readout_widget = lookup_widget (PHOEBE_assign_primary_spots, "assign_spots_xlat_value");
@@ -2113,7 +2113,7 @@ void on_spots_edit_secondary_button_clicked (GtkButton *button, gpointer user_da
 	{
 	GtkWidget *readout_widget;
 	GtkWidget *sp_list = lookup_widget (PHOEBE, "spots_secondary_info_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (sp_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (sp_list)->selection))->data);
 	char *readout_str;
 	
 	readout_widget = lookup_widget (PHOEBE_assign_secondary_spots, "assign_spots_xlat_value");
@@ -2145,7 +2145,7 @@ void on_assign_weighting_ok_button_clicked  (GtkButton *button, gpointer user_da
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (w_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (w_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_weighting, "assign_weighting_weighting_list_entry");
 	readout_str = gtk_entry_get_text (GTK_ENTRY (readout_widget));
@@ -2179,7 +2179,7 @@ void on_ld_monochromatic_rv_edit_entry_button_clicked (GtkButton *button, gpoint
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (ld_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (ld_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_ld_monochromatic_rv, "assign_ld_monochromatic_rv_filter_value");
 	gtk_clist_get_text (GTK_CLIST (ld_list), selected_row, 0, &readout_str);
@@ -2218,7 +2218,7 @@ void on_assign_ld_monochromatic_rv_ok_button_clicked (GtkButton *button, gpointe
 	char *working_str = working_string;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (ld_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (ld_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_ld_monochromatic_rv, "assign_ld_monochromatic_rv_x1a_value");
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
@@ -4385,7 +4385,7 @@ void on_assign_primary_spots_ok_button_clicked (GtkButton *button, gpointer user
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (sp_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (sp_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_primary_spots, "assign_spots_xlat_value");
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
@@ -4429,7 +4429,7 @@ void on_assign_secondary_spots_ok_button_clicked (GtkButton *button, gpointer us
 	char *readout_str;
 
 	/* Let's find the selected row:                                             */
-	selected_row = (int) ((GList *) (GTK_CLIST (sp_list)->selection))->data;
+	selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (sp_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_assign_secondary_spots, "assign_spots_xlat_value");
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (readout_widget));
@@ -4632,7 +4632,7 @@ void on_scripter_update_action_button_clicked (GtkButton *button, gpointer user_
 
 	if (GTK_CLIST (script_list)->rows == 0) return;       /* Nothing to delete. */
 
-	selected_row  = (int) ((GList *) (GTK_CLIST (script_list)->selection))->data;
+	selected_row  = GPOINTER_TO_INT (((GList *) (GTK_CLIST (script_list)->selection))->data);
 
 	readout_widget = lookup_widget (PHOEBE_scripter, "scripter_action_list");
 	gtk_label_get (GTK_LABEL(GTK_BIN(readout_widget)->child), &readout_str);
@@ -4661,14 +4661,14 @@ void on_scripter_delete_action_button_clicked (GtkButton *button, gpointer user_
 
 	if (GTK_CLIST (script_list)->rows == 0) return;       /* Nothing to delete. */
 
-	selected_row  = (int) ((GList *) (GTK_CLIST (script_list)->selection))->data;
+	selected_row  = GPOINTER_TO_INT (((GList *) (GTK_CLIST (script_list)->selection))->data);
 	gtk_clist_remove (GTK_CLIST (script_list), selected_row);
 	}
 
 void on_scripter_move_action_up_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *script_list = lookup_widget (PHOEBE_scripter, "scripter_info_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (script_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (script_list)->selection))->data);
 
 	/* This call's legality is taken care of in GTK+. Thus, we just call it:    */
 	gtk_clist_swap_rows (GTK_CLIST (script_list), selected_row, selected_row - 1);
@@ -4677,7 +4677,7 @@ void on_scripter_move_action_up_button_clicked (GtkButton *button, gpointer user
 void on_scripter_move_action_down_button_clicked (GtkButton *button, gpointer user_data)
 	{
 	GtkWidget *script_list = lookup_widget (PHOEBE_scripter, "scripter_info_list");
-	int selected_row = (int) ((GList *) (GTK_CLIST (script_list)->selection))->data;
+	int selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (script_list)->selection))->data);
 
 	/* This call's legality is taken care of in GTK+. Thus, we just call it:    */
 	gtk_clist_swap_rows (GTK_CLIST (script_list), selected_row, selected_row + 1);

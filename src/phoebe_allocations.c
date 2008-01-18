@@ -962,9 +962,9 @@ int read_in_data_file_info (GtkWidget *parent, PHOEBE_data_record *input)
 	/* First, let's see what record are we editing, because we don't want to    */
 	/* compare filter's name against itself:                                    */
 	if (parent == PHOEBE_assign_data_file)
-		selected_row = (int) ((GList *) (GTK_CLIST (lookup_widget (PHOEBE, "data_lc_info_list"))->selection))->data;
+		selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (lookup_widget (PHOEBE, "data_lc_info_list"))->selection))->data);
 	if (parent == PHOEBE_assign_rv_data_file)
-		selected_row = (int) ((GList *) (GTK_CLIST (lookup_widget (PHOEBE, "data_rv_info_list"))->selection))->data;
+		selected_row = GPOINTER_TO_INT (((GList *) (GTK_CLIST (lookup_widget (PHOEBE, "data_rv_info_list"))->selection))->data);
 
 	i = 0;
 	while (i < lc_no)

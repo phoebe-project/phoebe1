@@ -5,6 +5,10 @@ This ChangeLog applies to WD version 2007-08-15.
 
 --------------------------------------------------------------------------------
 
+2007-12-07:
+
+*****	Increased the number of data points from 10000 to 50000.
+
 2007-08-15:
 
 *****   Synced with upstream to version 2007-08-15.
