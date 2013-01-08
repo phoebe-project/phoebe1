@@ -1,41 +1,26 @@
-*---------*
-| AUTHOR: |
-*---------*
+Developement, user design, documentation (in order of appearence):
 
 	Andrej Prsa
-	University of Ljubljana, Dept. of Astrophysics
+	Villanova University, Dept. of Astronomy & Astrophysics
+	800 E Lancaster Ave
+	Villanova, PA 19085
+	andrej.prsa@villanova.edu
+
+	Gal Matijevic
+	University of Ljubljana, Dept. of Physics
 	Jadranska 19
-	1000 Ljubljana
-	Slovenia
-	Home: +386-1-540-27-84
-	Work: +386-1-540-13-53
-	andrej.prsa@fmf.uni-lj.si
+	SI-1000 Ljubljana
+	Slovenia, EU
 
-*---------------*
-| CONTRIBUTORS: |
-*---------------*
+	Olivera Latkovic
+	Belgrade Astronomical Observatory
+	Volgina 7
+	11160 Belgrade
+	Serbia
 
-	Science evaluation:
+	Patrick Wils
 
-	* Tomaz Zwitter (Science evaluation)
-	  University of Ljubljana, Dept. of Astrophysics
-	  Jadranska 19
-	  1000 Ljubljana
-		Slovenia
-	  Tel: +386-1-476-65-44	
-	  tomaz.zwitter@fmf.uni-lj.si
+Contributors:
 
-	* Michael Bauer (GNUPlot Implementation, bug fixes)
-	  Sternwartstr. 7
-	  96049 Bamberg
-	  Germany
-	  Home: +49-9131-123428
-	  Work: +49-951-9522216
-	  bauer@sternwarte.uni-erlangen.de
-
-	* Dirk Terrell (LD tables add-on, science evaluation)
-	  Southwest Research Institute
-	  1050 Walnut St., Suite 400
-	  Boulder, CO 80302 USA
-	  Tel: 303-546-9670
-	  terrell@boulder.swri.edu
+	Dirk Terrell
+	Tomaz Zwitter
