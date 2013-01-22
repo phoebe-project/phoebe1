@@ -127,6 +127,7 @@ typedef enum GUI_minimizer_feedback_model_columns {
 
 typedef enum GUI_statistics_treeview_columns {
 	CURVE_COL_NAME,
+	CURVE_COL_TYPE,
 	CURVE_COL_NPOINTS,
 	CURVE_COL_U_RES,
 	CURVE_COL_I_RES,
@@ -176,6 +177,8 @@ int gui_para_lc_coefficents_edit		();
 int gui_para_rv_coefficents_edit 		();
 int gui_data_lc_treeview_remove			();
 int gui_data_rv_treeview_remove			();
+
+void gui_update_stats_in_fitting_tab ();
 
 int gui_set_treeview_value              (GtkTreeModel *model, int col_id, int row_id, double value);
 int gui_update_cla_value                (int row);

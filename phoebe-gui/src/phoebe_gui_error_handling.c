@@ -17,9 +17,13 @@ char *phoebe_gui_error (int code)
 
 	switch (code) {
 		case GUI_ERROR_GENERIC_ERROR:
-			return "unknown error occured in the GUI.\n";
+			return "unknown error occured in the GUI.";
+		case GUI_ERROR_NO_DATA:
+			return "no data are available.";
+		case GUI_ERROR_NO_DATA_SELECTED:
+			return "no data are selected.";
 		case GUI_ERROR_NO_CURVE_MARKED_FOR_PLOTTING:
-			return "no curve is selected for plotting.\n";
+			return "no curve is selected for plotting.";
 		default:
 			return phoebe_error (code);
 	}

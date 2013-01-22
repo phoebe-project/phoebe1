@@ -526,7 +526,7 @@ G_MODULE_EXPORT void on_phoebe_data_lc_seedgen_button_clicked (GtkToolButton *to
 
 void on_phoebe_potential_parameter_value_changed (GtkSpinButton *spinbutton, gpointer user_data)
 {
-	int status = 0;
+	int status;
 
 	GtkWidget *phoebe_para_sys_rm_spinbutton = gui_widget_lookup("phoebe_para_sys_rm_spinbutton")->gtk;
 	GtkWidget *phoebe_para_orb_ecc_spinbutton = gui_widget_lookup("phoebe_para_orb_ecc_spinbutton")->gtk;
@@ -547,6 +547,7 @@ void on_phoebe_potential_parameter_value_changed (GtkSpinButton *spinbutton, gpo
 //	printf("\nq = %f, e = %f, f1 = %f\n", q, e, F);
 
 	status = phoebe_calculate_critical_potentials(q, F, e, &L1, &L2);
+	if (status != SUCCESS) /* handle */ ;
 
 //	printf("L1 = %f, L2 = %f\n", L1, L2);
 
@@ -850,10 +851,10 @@ void *gui_nms_fitting_thread (void *args)
 void gui_on_fitting_finished (int status)
 {
 	/* Called after the minimization procedure finished */
-	GtkTreeView 	*phoebe_fitt_mf_treeview = GTK_TREE_VIEW(gui_widget_lookup("phoebe_fitt_first_treeview")->gtk);
-	GtkTreeView	*phoebe_fitt_second_treeview = GTK_TREE_VIEW(gui_widget_lookup("phoebe_fitt_second_treeview")->gtk);
+	GtkTreeView *phoebe_fitt_mf_treeview = GTK_TREE_VIEW(gui_widget_lookup("phoebe_fitt_first_treeview")->gtk);
+	GtkTreeView	*phoebe_fitt_datastats_treeview = GTK_TREE_VIEW(gui_widget_lookup("phoebe_fitt_datastats_treeview")->gtk);
 	GtkLabel	*phoebe_fitt_feedback_label = GTK_LABEL(gui_widget_lookup("phoebe_fitt_feedback_label")->gtk);
-	GtkTreeModel 	*model;
+	GtkTreeModel *model;
 	GtkTreeIter iter;
 	PHOEBE_curve *curve;
 	int index;
@@ -880,7 +881,7 @@ void gui_on_fitting_finished (int status)
 			return;
 	}
 
-	sprintf (status_message, "%s: %s", method, phoebe_gui_error (status));
+	snprintf (status_message, 255, "%s: %s", method, phoebe_gui_error (status));
 	status_message[strlen(status_message)-1] = '\0';
 	gtk_label_set_text (phoebe_fitt_feedback_label, status_message);
 	gui_status (status_message);
@@ -889,7 +890,7 @@ void gui_on_fitting_finished (int status)
 		PHOEBE_array *lc, *rv;
 		int lcno, rvno;
 
-		sprintf (status_message, "%s: done %d iterations in %f seconds; cost function value: %f", method, feedback->iters, feedback->cputime, feedback->cfval);
+		snprintf (status_message, 255, "%s: done %d iterations in %f seconds; cost function value: %f", method, feedback->iters, feedback->cputime, feedback->cfval);
 		gtk_label_set_text (phoebe_fitt_feedback_label, status_message);
 
 		/* Results treeview: */
@@ -920,7 +921,7 @@ void gui_on_fitting_finished (int status)
 		}
 
 		/* Statistics treeview: */
-		model = gtk_tree_view_get_model (phoebe_fitt_second_treeview);
+		model = gtk_tree_view_get_model (phoebe_fitt_datastats_treeview);
 		gtk_list_store_clear (GTK_LIST_STORE (model));
 
 		lc = phoebe_active_curves_get (PHOEBE_CURVE_LC); if (lc) lcno = lc->dim; else lcno = 0;
@@ -1237,7 +1238,9 @@ void on_phoebe_data_lc_add_button_clicked (GtkButton *button, gpointer user_data
 G_MODULE_EXPORT
 void on_phoebe_data_lc_edit_button_clicked (GtkButton *button, gpointer user_data)
 {
-    gui_data_lc_treeview_edit ();
+    int status = gui_data_lc_treeview_edit ();
+    if (status != SUCCESS)
+		gui_status (phoebe_concatenate_strings ("GUI notice: ", phoebe_gui_error (status), NULL));
 }
 
 G_MODULE_EXPORT
@@ -2030,6 +2033,7 @@ void on_phoebe_file_open_menuitem_activate (GtkMenuItem *menuitem, gpointer user
 	if( status == SUCCESS ){
 		gui_reinit_treeviews();
 		gui_set_values_to_widgets();
+		gui_update_stats_in_fitting_tab ();
 	}
 	else
 		printf ("%s", phoebe_gui_error (status));
@@ -2207,9 +2211,10 @@ G_MODULE_EXPORT void on_phoebe_open_toolbutton_clicked (GtkToolButton *toolbutto
 {
 	int status = gui_open_parameter_file ();
 
-	if( status == SUCCESS ){
+	if (status == SUCCESS) {
 		gui_reinit_treeviews();
 		gui_set_values_to_widgets();
+		gui_update_stats_in_fitting_tab ();
 	}
 	else
 		printf ("%s", phoebe_gui_error (status));
