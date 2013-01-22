@@ -157,7 +157,7 @@ int gui_init_widgets ()
 	gui_widget_add ("phoebe_sidesheet_fit_treeview",					phoebe_sidesheet_fit_treeview,																			0, 					GUI_WIDGET_VALUE, 		NULL, NULL);
 
 	gui_widget_add ("phoebe_fitt_first_treeview",                       glade_xml_get_widget(phoebe_window, "phoebe_fitt_first_treeview"),                                      0,                  GUI_WIDGET_VALUE,       NULL, NULL);
-	gui_widget_add ("phoebe_fitt_second_treeview",                      glade_xml_get_widget(phoebe_window, "phoebe_fitt_second_treeview"),                                     0,                  GUI_WIDGET_VALUE,       NULL, NULL);
+	gui_widget_add ("phoebe_fitt_datastats_treeview",                      glade_xml_get_widget(phoebe_window, "phoebe_fitt_datastats_treeview"),                                     0,                  GUI_WIDGET_VALUE,       NULL, NULL);
 	gui_widget_add ("phoebe_fitt_third_treeview",                       gui_fit_lum_treeview,                                                                                   0,                  GUI_WIDGET_VALUE,       NULL, NULL);
 
 	gui_widget_add ("phoebe_lc_plot_treeview",					        phoebe_lc_plot_treeview,																				0, 					GUI_WIDGET_VALUE, 		NULL, NULL);

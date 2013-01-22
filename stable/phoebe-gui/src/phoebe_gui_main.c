@@ -52,6 +52,7 @@ int parse_startup_line (int argc, char *argv[])
 			else {
 				gui_reinit_treeviews ();
 				gui_set_values_to_widgets ();
+				gui_update_stats_in_fitting_tab ();
 				PHOEBE_FILEFLAG = TRUE;
 				PHOEBE_FILENAME = strdup (argv[i]);
 			}
