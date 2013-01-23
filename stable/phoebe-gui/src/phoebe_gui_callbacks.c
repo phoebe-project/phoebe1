@@ -1324,7 +1324,9 @@ G_MODULE_EXPORT void on_phoebe_load_rv_filechooserbutton_selection_changed (GtkF
 void
 on_phoebe_data_rv_edit_button_clicked (GtkButton *button, gpointer user_data)
 {
-	gui_data_rv_treeview_edit();
+    int status = gui_data_rv_treeview_edit ();
+    if (status != SUCCESS)
+		gui_status (phoebe_concatenate_strings ("GUI notice: ", phoebe_gui_error (status), NULL));
 }
 
 void
