@@ -989,16 +989,20 @@ bool gui_plot_set_color (GUI_plot_data *data, gchar *colorname)
 
 int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 {
+	/*
+	 * This function does the plotting.
+	 */
+	
 	int i, j;
 	double x, y, aspect;
 	bool needs_ticks = FALSE;
 
 #ifndef __MINGW32__
+/*
 	cairo_pattern_t *circle, *cross;
 	double CIRCLE_RADIUS = 2.0;
 
 	if (!redirect) {
-		/* Get the symbols ready: */
 		cairo_push_group (data->canvas);
 		cairo_set_source_rgb (data->canvas, 0, 0, 1);
 		cairo_arc (data->canvas, 2, 2, CIRCLE_RADIUS, 0, 2*M_PI);
@@ -1015,15 +1019,16 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 		cairo_stroke_preserve (data->canvas);
 		cross = cairo_pop_group (data->canvas);
 	}
+*/
 #endif
 	
 	if (data->ptype == GUI_PLOT_MESH && data->request[0].model) {
 		if (redirect)
 			fprintf (redirect, "# Mesh plot -- plane of sky (v, w) coordinates at phase %lf:\n", data->request[0].phase);
 		else {
-			cairo_set_source_rgb (data->canvas, 0, 0, 1);
+			cairo_set_source_rgb (data->canvas, 0.2, 0.2, 0.2);
 #ifndef __MINGW32__
-			cairo_set_source (data->canvas, circle);
+//			cairo_set_source (data->canvas, circle);
 #endif
 		}
 		
@@ -1038,25 +1043,16 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 			if (!gui_plot_yvalue (data, data->request[0].model->dep->val[j], &y)) continue;
 			
 			if (!redirect) {
-#ifdef __MINGW32__
-				cairo_move_to (data->canvas, x, y); 
-				cairo_arc (data->canvas, x, y, 2.0, 0, 2*M_PI);
-#else
-				cairo_save (data->canvas);
-				cairo_translate (data->canvas, x, y);
-				cairo_set_source (data->canvas, circle);
-				cairo_paint (data->canvas);
-				cairo_restore (data->canvas);
-#endif
+				cairo_rectangle (data->canvas, (int) x, (int) y, 1, 1);
+				cairo_stroke (data->canvas);
 			}
 			else
 				fprintf (redirect, "% lf\t% lf\n", data->request[0].model->indep->val[j], data->request[0].model->dep->val[j]);
 		}
 
-		if (!redirect) {
-			cairo_stroke (data->canvas);
+		if (!redirect)
 			needs_ticks = TRUE;
-		}
+
 	}
 
 	if (data->ptype == GUI_PLOT_LC || data->ptype == GUI_PLOT_RV) {
@@ -1075,43 +1071,24 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 					if (!redirect) {
 						if (data->request[i].query->flag->val.iarray[j] == PHOEBE_DATA_REGULAR
 						||  data->request[i].query->flag->val.iarray[j] == PHOEBE_DATA_ALIASED) {
-#ifdef __MINGW32__
-							cairo_move_to (data->canvas, x, y); 
-							cairo_arc (data->canvas, x, y, 2.0, 0, 2*M_PI);
-#else
-							cairo_save (data->canvas);
-							cairo_translate (data->canvas, x-CIRCLE_RADIUS, y-CIRCLE_RADIUS);
-							cairo_set_source (data->canvas, circle);
-							cairo_paint (data->canvas);
-							cairo_restore (data->canvas);
-#endif
+							cairo_rectangle (data->canvas, (int) x, (int) y, 1, 1);
+							cairo_stroke (data->canvas);
 						}
 						else if (data->request[i].query->flag->val.iarray[j] == PHOEBE_DATA_DELETED ||
 						         data->request[i].query->flag->val.iarray[j] == PHOEBE_DATA_DELETED_ALIASED) {
-#ifdef __MINGW32__
 							cairo_move_to (data->canvas, x-2, y-2); 
 							cairo_line_to (data->canvas, x+2, y+2); 
 							cairo_move_to (data->canvas, x+2, y-2);
 							cairo_line_to (data->canvas, x-2, y+2); 
-#else
-							cairo_save (data->canvas);
-							cairo_translate (data->canvas, x, y);
-							cairo_set_source (data->canvas, cross);
-							cairo_paint (data->canvas);
-							cairo_restore (data->canvas);
-#endif
+							cairo_stroke (data->canvas);
 						}
 					}
 					else
 						fprintf (redirect, "%lf\t%lf\n", data->request[i].query->indep->val[j], data->request[i].query->dep->val[j] + data->request[i].offset);
 				}
 
-				if (!redirect) {
-#ifdef __MINGW32__
-					cairo_stroke (data->canvas);
-#endif
+				if (!redirect)
 					needs_ticks = TRUE;
-				}
 			}
 
 			if (data->request[i].model) {
