@@ -997,40 +997,11 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 	double x, y, aspect;
 	bool needs_ticks = FALSE;
 
-#ifndef __MINGW32__
-/*
-	cairo_pattern_t *circle, *cross;
-	double CIRCLE_RADIUS = 2.0;
-
-	if (!redirect) {
-		cairo_push_group (data->canvas);
-		cairo_set_source_rgb (data->canvas, 0, 0, 1);
-		cairo_arc (data->canvas, 2, 2, CIRCLE_RADIUS, 0, 2*M_PI);
-		cairo_stroke_preserve (data->canvas);
-		cairo_fill (data->canvas);
-		circle = cairo_pop_group (data->canvas);
-
-		cairo_push_group (data->canvas);
-		cairo_set_source_rgb (data->canvas, 1, 0, 0);
-		cairo_move_to (data->canvas, -2, -2);
-		cairo_line_to (data->canvas, +2, +2);
-		cairo_move_to (data->canvas, +2, -2);
-		cairo_line_to (data->canvas, -2, +2);
-		cairo_stroke_preserve (data->canvas);
-		cross = cairo_pop_group (data->canvas);
-	}
-*/
-#endif
-	
 	if (data->ptype == GUI_PLOT_MESH && data->request[0].model) {
 		if (redirect)
 			fprintf (redirect, "# Mesh plot -- plane of sky (v, w) coordinates at phase %lf:\n", data->request[0].phase);
-		else {
+		else
 			cairo_set_source_rgb (data->canvas, 0.2, 0.2, 0.2);
-#ifndef __MINGW32__
-//			cairo_set_source (data->canvas, circle);
-#endif
-		}
 		
 		aspect = gui_plot_height (data)/gui_plot_width (data);
 		data->y_ll = aspect*data->x_ll;
