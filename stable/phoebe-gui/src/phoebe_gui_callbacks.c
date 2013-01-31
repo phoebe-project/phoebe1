@@ -245,11 +245,12 @@ void on_plot_save_button_clicked (GtkButton *button, gpointer user_data)
 	return;
 }
 
-G_MODULE_EXPORT void on_plot_clear_button_clicked (GtkButton *button, gpointer user_data)
+G_MODULE_EXPORT
+void on_plot_clear_button_clicked (GtkButton *button, gpointer user_data)
 {
 	GUI_plot_data *data = (GUI_plot_data *) user_data;
-	gui_plot_clear_canvas (data);
-	return;
+	data->clear_graph = TRUE;
+	gui_plot_area_refresh (data);
 }
 
 G_MODULE_EXPORT void on_plot_save_data_button_clicked (GtkButton *button, gpointer user_data)
