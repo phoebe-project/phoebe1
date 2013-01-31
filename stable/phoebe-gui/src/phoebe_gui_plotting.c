@@ -1116,13 +1116,13 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 		}
 		
 		cairo_set_source_rgb (data->canvas, 0.1, 0.1, 0.1);
-		cairo_set_line_width (data->canvas, 1);
 
 		/* Compute the ticks and margins: */
 		gui_plot_compute_ticks (data);
 		gui_plot_compute_lmargin (data);
 
 		/* Plot the graph box: */
+		cairo_set_line_width (data->canvas, 1);
 		cairo_rectangle (data->canvas, data->layout->lmargin, data->layout->tmargin, data->width - data->layout->lmargin - data->layout->rmargin, data->height - data->layout->tmargin - data->layout->bmargin);
 		cairo_stroke (data->canvas);
 
@@ -1205,6 +1205,8 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 				else {
 					if (gui_plot_set_color (data, data->request[i].syncolor) == FALSE) 
 						cairo_set_source_rgb (data->canvas, 1, 0, 0);
+					cairo_set_line_width (data->canvas, 1.0);
+					cairo_set_dash (data->canvas, 0, 0, 0);
 				}
 
 				for (j = 0; j < data->request[i].model->indep->dim; j++) {
