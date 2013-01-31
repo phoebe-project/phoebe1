@@ -112,6 +112,6 @@ int  gui_plot_area_init       (GtkWidget *area, GtkWidget *button);
 int  gui_plot_area_draw       (GUI_plot_data *data, FILE *redirect);
 int  gui_plot_area_refresh    (GUI_plot_data *data);
 int  gui_plot_compute_lmargin (GUI_plot_data *data);
-int  gui_plot_compute_ticks   (GUI_plot_data *data, double llx, double ulx, double lly, double uly);
+int  gui_plot_compute_ticks   (GUI_plot_data *data);
 void gui_plot_xticks          (GUI_plot_data *data);
 void gui_plot_yticks          (GUI_plot_data *data);
