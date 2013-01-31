@@ -25,7 +25,7 @@
 #define max(a,b) ((a) > (b) ? (a) : (b))
 #endif
 
-#define gui_plot_width(x) (x->width - 2 * x->layout->xmargin - x->leftmargin - x->layout->rmargin)
+#define gui_plot_width(x) (x->width - 2 * x->layout->xmargin - x->layout->lmargin - x->layout->rmargin)
 #define gui_plot_height(x) (x->height - 2 * x->layout->ymargin - x->layout->tmargin - x->layout->bmargin)
 
 static const double dash_coarse_grid[] = { 4.0, 1.0 };
@@ -35,7 +35,7 @@ GUI_plot_layout *gui_plot_layout_new ()
 {
 	GUI_plot_layout *layout = phoebe_malloc (sizeof (*layout));
 
-	layout->lmargin = 10;
+	layout->lmargin = 30;
 	layout->rmargin = 10;
 	layout->tmargin = 10;
 	layout->bmargin = 30;
@@ -48,6 +48,18 @@ GUI_plot_layout *gui_plot_layout_new ()
 
 	layout->x_tick_length = layout->xmargin - 2;
 	layout->y_tick_length = layout->ymargin - 2;
+
+	layout->txfirst = -0.6;
+	layout->txspacing = 0.2;
+	layout->txmajor = 7;
+	layout->txminor = 2;
+	sprintf (layout->txfmt, "%%0.1f");
+
+	layout->tyfirst = 0.0;
+	layout->tyspacing = 0.1;
+	layout->tymajor = 11;
+	layout->tyminor = 1;
+	sprintf (layout->tyfmt, "%%0.1f");
 
 	return layout;
 }
@@ -68,31 +80,36 @@ GUI_plot_data *gui_plot_data_new ()
 	GUI_plot_data *data = phoebe_malloc (sizeof (*data));
 
 	data->layout       = gui_plot_layout_new ();
-	data->canvas       = NULL;
 	data->request      = NULL;
+	data->ptype        = GUI_PLOT_UNDEFINED;
+	data->container    = NULL;
+	data->canvas       = NULL;
 	data->objno        = 0;
-	data->leftmargin   = data->layout->lmargin;
 	data->y_min        = 0.0;
 	data->y_max        = 1.0;
+	data->y_bottom     = data->y_min;
+	data->y_top        = data->y_max;
 	data->select_zoom  = FALSE;
+	data->clear_graph  = FALSE;
 	data->block_signal = FALSE;
 
 	return data;
 }
 
 int gui_plot_data_free (GUI_plot_data *data)
-{
+{	
 #warning IMPLEMENT gui_plot_data_free FUNCTION
+	
 	return SUCCESS;
 }
 
 bool gui_plot_xvalue (GUI_plot_data *data, double value, double *x)
 {
 	double xmin = data->x_left;
-	if (value < xmin) return FALSE;
+	if (value < xmin-1e-5) return FALSE;
 	double xmax = data->x_right;
-	if (value > xmax) return FALSE;
-	*x = data->leftmargin + data->layout->xmargin + (value - xmin) * gui_plot_width(data)/(xmax - xmin);
+	if (value > xmax+1e-5) return FALSE;
+	*x = data->layout->lmargin + data->layout->xmargin + (value - xmin) * gui_plot_width(data)/(xmax - xmin);
 	return TRUE;
 }
 
@@ -107,12 +124,37 @@ bool gui_plot_yvalue (GUI_plot_data *data, double value, double *y)
 
 void gui_plot_coordinates_from_pixels (GUI_plot_data *data, double xpix, double ypix, double *xval, double *yval)
 {
-	*xval = data->x_left + (data->x_right - data->x_left) * (xpix - (data->leftmargin + data->layout->xmargin))/gui_plot_width(data);
+	/** 
+	 * gui_plot_coordinates_from_pixels:
+	 * @data: plotting structure
+	 * @xpix: passed screen x coordinate
+	 * @ypix: passed screen y coordinate
+	 * @xval: placeholder for the graph x coordinate
+	 * @yval: placeholder for the graph y coordinate
+	 * 
+	 * This function takes the (x,y) point in screen coordinates (pixels) and
+	 * computes the (x,y) point in graph coordinates.
+	 */
+
+	*xval = data->x_left + (data->x_right - data->x_left) * (xpix - (data->layout->lmargin + data->layout->xmargin))/gui_plot_width(data);
 	*yval = data->y_top - (data->y_top - data->y_bottom) * (ypix - (data->layout->tmargin+data->layout->ymargin))/gui_plot_height(data);
 }
 
 bool gui_plot_tick_values (double low_value, double high_value, double *first_tick, double *tick_spacing, int *ticks, int *minorticks, char format[])
 {
+	/**
+	 * gui_plot_tick_values:
+	 * @low_value: lower graph limit
+	 * @high_value: upper graph limit
+	 * @first_tick: first tick value
+	 * @tick_spacing: spacing between major ticks
+	 * @ticks: number of ticks
+	 * @minor_ticks: number of minor ticks
+	 * @format: assigned format based on value
+	 * 
+	 * Determines the optimal positioning of ticks.
+	 */
+
 	int logspacing, factor;
 	double spacing;
 	if (low_value > high_value) {
@@ -145,54 +187,99 @@ bool gui_plot_tick_values (double low_value, double high_value, double *first_ti
 	*first_tick = floor(low_value/spacing) * spacing;
 	*ticks = ceil((high_value-low_value)/spacing) + 2;
 	sprintf(format, "%%.%df", (logspacing > 0) ? 0 : -logspacing);
-	//printf("ticks = %d, format = %s, first_tick = %lf, spacing = %lf, factor = %d, logspacing = %d\n", *ticks, format, *first_tick, spacing, factor, logspacing);
 	return TRUE;
 }
 
-void gui_plot_clear_canvas (GUI_plot_data *data)
+int gui_plot_compute_ticks (GUI_plot_data *data, double llx, double ulx, double lly, double uly)
 {
-	GtkWidget *widget = data->container;
+	/**
+	 * gui_plot_compute_ticks:
+	 * @data: plot data
+	 * @llx: lower graph limit on the x-axis
+	 * @ulx: upper graph limit on the x-axis
+	 * @lly: lower graph limit on the y-axis
+	 * @uly: upper graph limit on the y-axis
+	 * 
+	 * Computes all tick properties for both axes and stores them in the
+	 * data->layout structure.
+	 */
 
-	//PHOEBE_column_type dtype;
-	int ticks, minorticks;
-	double first_tick, tick_spacing;
-	double x, ymin, ymax;
-	char format[20], label[20];
-	cairo_text_extents_t te;
+	int logspacing, factor;
+	double spacing;
 
-	if (data->canvas)
-		cairo_destroy (data->canvas);
+	/* x-axis tics: */
+	if (llx > ulx) {
+		/* Swap values if necessary: */
+		double t = ulx; ulx = llx; llx = t;
+	}
 
-	data->canvas = gdk_cairo_create (widget->window);
-	data->width  = widget->allocation.width;
-	data->height = widget->allocation.height;
+	logspacing = floor(log10(ulx-llx)) - 1;
+	if (logspacing < -9) logspacing = -9;
 
-	cairo_set_source_rgb (data->canvas, 0, 0, 0);
-	cairo_set_line_width (data->canvas, 1);
+	factor = ceil((ulx-llx)/pow(10, logspacing + 1));
+	if (factor > 5) {
+		logspacing++;
+		factor = 1;
+		data->layout->txminor = 2;
+	}
+	else {
+		if ( (factor == 3) || (factor == 4) )
+			factor = 5;
+		data->layout->txminor = factor;
+	}
+	data->layout->txspacing = factor*pow(10, logspacing);
+	data->layout->txfirst = floor(llx/data->layout->txspacing)*data->layout->txspacing;
+	data->layout->txmajor = ceil((ulx-llx)/data->layout->txspacing)+2;
+	sprintf(data->layout->txfmt, "%%0.%df", (logspacing > 0) ? 0 : -logspacing);
 
-	/* Determine the lowest and highest y value that will be plotted: */
-	data->leftmargin = data->layout->lmargin;
-	//phoebe_column_get_type (&dtype, data->y_request);
-	gui_plot_coordinates_from_pixels (data, 0, data->layout->tmargin, &x, &ymax);
-	gui_plot_coordinates_from_pixels (data, 0, data->height - data->layout->bmargin, &x, &ymin);
-	//gui_plot_tick_values ( ((dtype == PHOEBE_COLUMN_MAGNITUDE) ? ymax : ymin), ((dtype == PHOEBE_COLUMN_MAGNITUDE) ? ymin : ymax), &first_tick, &tick_spacing, &ticks, &minorticks, format);
-	gui_plot_tick_values ( ymin, ymax, &first_tick, &tick_spacing, &ticks, &minorticks, format);
+	/* y-axis tics: */
+	if (lly > uly) {
+		double t = uly; uly = lly; lly = t;
+	}
 
-	// Calculate how large the y labels will be
+	logspacing = floor(log10(uly-lly)) - 1;
+	if (logspacing < -9) logspacing = -9;
+
+	factor = ceil((uly-lly)/pow(10, logspacing + 1));
+	if (factor > 5) {
+		logspacing++;
+		factor = 1;
+		data->layout->tyminor = 2;
+	}
+	else {
+		if ( (factor == 3) || (factor == 4) )
+			factor = 5;
+		data->layout->tyminor = factor;
+	}
+	data->layout->tyspacing = factor*pow(10, logspacing);
+	data->layout->tyfirst = floor(lly/data->layout->tyspacing)*data->layout->tyspacing;
+	data->layout->tymajor = ceil((uly-lly)/data->layout->tyspacing)+2;
+	sprintf(data->layout->tyfmt, "%%0.%df", (logspacing > 0) ? 0 : -logspacing);
+
+	return SUCCESS;
+}
+
+int gui_plot_compute_lmargin (GUI_plot_data *data)
+{
+	/**
+	 * gui_plot_compute_lmargin:
+	 * @data: plot data
+	 * 
+	 * Computes left plot margin based on the ytick label sizes.
+	 */
+
+	cairo_text_extents_t extents;
+	char label[20];
+	
 	cairo_select_font_face (data->canvas, "monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 	cairo_set_font_size (data->canvas, 12);
 
-	sprintf(label, format, ymin);
-	cairo_text_extents (data->canvas, label, &te);
-	if (te.width + te.x_bearing + data->layout->label_lmargin + data->layout->label_rmargin > data->leftmargin) data->leftmargin = te.width + te.x_bearing + data->layout->label_lmargin + data->layout->label_rmargin;
-	sprintf(label, format, ymax);
-	cairo_text_extents (data->canvas, label, &te);
-	if (te.width + te.x_bearing + data->layout->label_lmargin + data->layout->label_rmargin > data->leftmargin) data->leftmargin = te.width + te.x_bearing + data->layout->label_lmargin + data->layout->label_rmargin;
+	/* We set the label to the largest possible number. This should be revisited. */
+	sprintf (label, data->layout->tyfmt, data->layout->tyfirst+(data->layout->tymajor-1)*data->layout->tyspacing);
+	cairo_text_extents (data->canvas, label, &extents);
+	data->layout->lmargin = extents.width + extents.x_bearing + data->layout->label_lmargin + data->layout->label_rmargin;
 
-	cairo_rectangle (data->canvas, data->leftmargin, data->layout->tmargin, data->width - data->leftmargin - data->layout->rmargin, data->height - data->layout->tmargin - data->layout->bmargin);
-	cairo_stroke (data->canvas);
-
-	return;
+	return SUCCESS;
 }
 
 gboolean on_plot_area_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
@@ -216,7 +303,6 @@ gboolean on_plot_area_expose_event (GtkWidget *widget, GdkEventExpose *event, gp
 	gdk_window_set_cursor (GDK_WINDOW (widget->window), cursor);
 	gdk_cursor_destroy (cursor);
 
-	gui_plot_clear_canvas (data);
 	gui_plot_area_draw (data, NULL);
 
 	return FALSE;
@@ -785,56 +871,58 @@ int gui_plot_area_refresh (GUI_plot_data *data)
 
 void gui_plot_xticks (GUI_plot_data *data)
 {
-	int i, j, ticks, minorticks;
-	double x, first_tick, tick_spacing, value;
-	//double xmin, xmax, y;
-	char format[20];
+	/**
+	 * gui_plot_xticks:
+	 * @data: plot data
+	 *
+	 * Plots xticks based on the layout data. Note that the layout needs to be
+	 * determined first by calling @gui_plot_compute_ticks.
+	 */
+	
+	int i, j;
+	double x, value;
 	char label[20];
 	cairo_text_extents_t te;
 	
-	// Determine the lowest and highest x value that will be plotted
-	//gui_plot_coordinates_from_pixels (data, data->leftmargin, 0, &xmin, &y);
-	//gui_plot_coordinates_from_pixels (data, data->width - data->layout->rmargin, 0, &xmax, &y);
-
-	if (!gui_plot_tick_values (data->x_left, data->x_right, &first_tick, &tick_spacing, &ticks, &minorticks, format))
-		return;
-
-	cairo_set_source_rgb (data->canvas, 0.0, 0.0, 0.0);
+	cairo_set_source_rgb (data->canvas, 0.1, 0.1, 0.1);
 	cairo_select_font_face (data->canvas, "monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 	cairo_set_font_size (data->canvas, 12);
 
-	for (i = 0; i < ticks; i++) {
-		value = first_tick + i * tick_spacing;
+	for (i = 0; i < data->layout->txmajor; i++) {
+		value = data->layout->txfirst + i * data->layout->txspacing;
 		if (!gui_plot_xvalue (data, value, &x)) continue;
 
-		// Top tick
+		/* Top tick */
 		cairo_move_to (data->canvas, x, data->layout->tmargin);
 		cairo_rel_line_to (data->canvas, 0, data->layout->x_tick_length);
-		// Bottom tick
+
+		/* Bottom tick */
 		cairo_move_to (data->canvas, x, data->height - data->layout->bmargin);
 		cairo_rel_line_to (data->canvas, 0, - data->layout->x_tick_length);
+
 		cairo_stroke (data->canvas);
 
 		if (data->coarse_grid) {
 			cairo_set_line_width (data->canvas, 0.5);
-			cairo_set_dash(data->canvas, dash_coarse_grid, sizeof(dash_coarse_grid) / sizeof(dash_coarse_grid[0]), 0);
+			cairo_set_dash (data->canvas, dash_coarse_grid, sizeof(dash_coarse_grid) / sizeof(dash_coarse_grid[0]), 0);
 			cairo_move_to (data->canvas, x, data->layout->tmargin);
 			cairo_line_to (data->canvas, x, data->height - data->layout->bmargin);
 			cairo_stroke (data->canvas);
 		}
 
-		// Print the label
-		sprintf(label, format, value);
+		/* Print the label */
+		sprintf (label, data->layout->txfmt, value);
 		cairo_text_extents (data->canvas, label, &te);
 		cairo_move_to (data->canvas, x - te.width/2 - te.x_bearing, data->height - te.height + te.y_bearing);
 		cairo_show_text (data->canvas, label);
 		cairo_stroke (data->canvas);
 	}
 
-	// Minor ticks
-	for (i = 0; i < ticks - 1; i++) {
-		for (j = 1; j < minorticks; j++) {
-			if (!gui_plot_xvalue (data, first_tick + (minorticks * i + j) * tick_spacing/minorticks, &x)) continue;
+	/* Minor ticks */
+	for (i = 0; i < data->layout->txmajor - 1; i++) {
+		for (j = 1; j < data->layout->txminor; j++) {
+			value = data->layout->txfirst + (data->layout->txminor * i + j) * data->layout->txspacing/data->layout->txminor;
+			if (!gui_plot_xvalue (data, value, &x)) continue;
 
 			cairo_move_to (data->canvas, x, data->layout->tmargin);
 			cairo_rel_line_to (data->canvas, 0, data->layout->x_tick_length/2);
@@ -855,58 +943,64 @@ void gui_plot_xticks (GUI_plot_data *data)
 
 void gui_plot_yticks (GUI_plot_data *data)
 {
-	int i, j, ticks, minorticks;
-	double y, first_tick, tick_spacing, value;
-	//double ymin, ymax, x;
-	char format[20];
+	/**
+	 * gui_plot_yticks:
+	 * @data: plot data
+	 *
+	 * Plots yticks based on the layout data. Note that the layout needs to be
+	 * determined first by calling @gui_plot_compute_ticks.
+	 */
+
+	int i, j;
+	double y, value;
 	char label[20];
 	cairo_text_extents_t te;
-	PHOEBE_column_type dtype;
-	
-	// Determine the lowest and highest y value that will be plotted
-	//gui_plot_coordinates_from_pixels (data, 0, data->layout->tmargin, &x, &ymax);
-	//gui_plot_coordinates_from_pixels (data, 0, data->height - data->layout->bmargin, &x, &ymin);
 
+/*
+	PHOEBE_column_type dtype;
 	phoebe_column_get_type (&dtype, data->y_request);
-	//if (!gui_plot_tick_values ( ((dtype == PHOEBE_COLUMN_MAGNITUDE) ? ymax : ymin), ((dtype == PHOEBE_COLUMN_MAGNITUDE) ? ymin : ymax), &first_tick, &tick_spacing, &ticks, &minorticks, format))
 	if (!gui_plot_tick_values ( data->y_bottom, data->y_top, &first_tick, &tick_spacing, &ticks, &minorticks, format))
 		return;
-
-	cairo_set_source_rgb (data->canvas, 0.0, 0.0, 0.0);
+*/
+	cairo_set_source_rgb (data->canvas, 0.1, 0.1, 0.1);
 	cairo_select_font_face (data->canvas, "monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
 	cairo_set_font_size (data->canvas, 12);
 
-	for (i = 0; i < ticks; i++) {
-		value = first_tick + i * tick_spacing;
+	for (i = 0; i < data->layout->tymajor; i++) {
+		value = data->layout->tyfirst + i * data->layout->tyspacing;
 		if (!gui_plot_yvalue (data, value, &y)) continue;
 
-		// Left tick
-		cairo_move_to (data->canvas, data->leftmargin, y);
+		/* Left tick */
+		cairo_move_to (data->canvas, data->layout->lmargin, y);
 		cairo_rel_line_to (data->canvas, data->layout->y_tick_length, 0);
-		// Right tick
+
+		/* Right tick */
 		cairo_move_to (data->canvas, data->width - data->layout->rmargin, y);
 		cairo_rel_line_to (data->canvas, - data->layout->y_tick_length, 0);
+
 		cairo_stroke (data->canvas);
 
 		if (data->coarse_grid) {
 			cairo_set_line_width (data->canvas, 0.5);
 			cairo_set_dash(data->canvas, dash_coarse_grid, sizeof(dash_coarse_grid) / sizeof(dash_coarse_grid[0]), 0);
-			cairo_move_to (data->canvas, data->leftmargin, y);
+			cairo_move_to (data->canvas, data->layout->lmargin, y);
 			cairo_line_to (data->canvas, data->width - data->layout->rmargin, y);
 			cairo_stroke (data->canvas);
 		}
 
-		// Print the label
-		sprintf(label, format, value);
+		/* Print the label */
+		sprintf(label, data->layout->tyfmt, value);
 		cairo_text_extents (data->canvas, label, &te);
-		cairo_move_to (data->canvas, data->leftmargin - te.width - te.x_bearing - data->layout->label_rmargin, y - te.height/2 - te.y_bearing);
+		cairo_move_to (data->canvas, data->layout->lmargin - te.width - te.x_bearing - data->layout->label_rmargin, y - te.height/2 - te.y_bearing);
 		cairo_show_text (data->canvas, label);
 	}
-	// Minor ticks
-	for (i = 0; i < ticks - 1; i++) {
-		for (j = 1; j < minorticks; j++) {
-			if (!gui_plot_yvalue (data, first_tick + (minorticks * i + j) * tick_spacing/minorticks, &y)) continue;
-			cairo_move_to (data->canvas, data->leftmargin, y);
+
+	/* Minor ticks */
+	for (i = 0; i < data->layout->tymajor-1; i++) {
+		for (j = 1; j < data->layout->tyminor; j++) {
+			value = data->layout->tyfirst + (data->layout->tyminor * i + j) * data->layout->tyspacing/data->layout->tyminor;
+			if (!gui_plot_yvalue (data, value, &y)) continue;
+			cairo_move_to (data->canvas, data->layout->lmargin, y);
 			cairo_rel_line_to (data->canvas, data->layout->y_tick_length/2, 0);
 			cairo_move_to (data->canvas, data->width - data->layout->rmargin, y);
 			cairo_rel_line_to (data->canvas, -data->layout->y_tick_length/2, 0);
@@ -915,7 +1009,7 @@ void gui_plot_yticks (GUI_plot_data *data)
 			if (data->fine_grid) {
 				cairo_set_line_width (data->canvas, 0.5);
 				cairo_set_dash(data->canvas, dash_fine_grid, sizeof(dash_fine_grid) / sizeof(dash_fine_grid[0]), 0);
-				cairo_move_to (data->canvas, data->leftmargin, y);
+				cairo_move_to (data->canvas, data->layout->lmargin, y);
 				cairo_line_to (data->canvas, data->width - data->layout->rmargin, y);
 				cairo_stroke (data->canvas);
 			}
@@ -989,13 +1083,51 @@ bool gui_plot_set_color (GUI_plot_data *data, gchar *colorname)
 
 int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 {
-	/*
-	 * This function does the plotting.
+	/**
+	 * gui_plot_area_draw:
+	 * @data: plot data
+	 * @redirect: NULL for plotting to screen, otherwise file descriptor
+	 * 
+	 * The main plotting function. All data fields must be assigned before
+	 * calling this function as it only plots, nothing else.
+	 * 
+	 * Returns: #PHOEBE_error_code.
 	 */
 	
 	int i, j;
 	double x, y, aspect;
-	bool needs_ticks = FALSE;
+
+	if (!redirect) {
+		data->canvas = gdk_cairo_create (data->container->window);
+
+		data->width  = data->container->allocation.width;
+		data->height = data->container->allocation.height;
+
+		if (data->clear_graph) {
+			/* Reset the graph to default values: */
+			data->x_left = -0.6; data->x_right = 0.6;
+			data->y_bottom = 0.0; data->y_top = 1.0;
+		}
+		
+		cairo_set_source_rgb (data->canvas, 0.1, 0.1, 0.1);
+		cairo_set_line_width (data->canvas, 1);
+
+		/* Compute left margin based on labels and store it in data->layout: */
+		gui_plot_compute_lmargin (data);
+
+		/* Plot the graph box: */
+		cairo_rectangle (data->canvas, data->layout->lmargin, data->layout->tmargin, data->width - data->layout->lmargin - data->layout->rmargin, data->height - data->layout->tmargin - data->layout->bmargin);
+		cairo_stroke (data->canvas);
+
+		/* Plot x- and y-axes: */
+		gui_plot_xticks (data);
+		gui_plot_yticks (data);
+
+		if (data->clear_graph) {
+			data->clear_graph = FALSE;
+			return SUCCESS;
+		}
+	}
 
 	if (data->ptype == GUI_PLOT_MESH && data->request[0].model) {
 		if (redirect)
@@ -1020,12 +1152,11 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 			else
 				fprintf (redirect, "% lf\t% lf\n", data->request[0].model->indep->val[j], data->request[0].model->dep->val[j]);
 		}
-
-		if (!redirect)
-			needs_ticks = TRUE;
-
 	}
 
+//	printf ("x_ll = %f, x_ul = %f, y_ll = %f, y_ul = %f\n", data->x_ll, data->x_ul, data->y_ll, data->y_ul);
+//	gui_plot_compute_ticks (data, data->x_ll, data->x_ul, data->y_ll, data->y_ul);
+	
 	if (data->ptype == GUI_PLOT_LC || data->ptype == GUI_PLOT_RV) {
 		for (i = 0; i < data->objno; i++) {
 			if (data->request[i].query) {
@@ -1057,9 +1188,6 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 					else
 						fprintf (redirect, "%lf\t%lf\n", data->request[i].query->indep->val[j], data->request[i].query->dep->val[j] + data->request[i].offset);
 				}
-
-				if (!redirect)
-					needs_ticks = TRUE;
 			}
 
 			if (data->request[i].model) {
@@ -1068,8 +1196,10 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 
 				if (redirect)
 					fprintf (redirect, "# Synthetic data set %d:\n", i);
-				else if (gui_plot_set_color (data, data->request[i].syncolor) == FALSE) 
-					cairo_set_source_rgb (data->canvas, 1, 0, 0);
+				else {
+					if (gui_plot_set_color (data, data->request[i].syncolor) == FALSE) 
+						cairo_set_source_rgb (data->canvas, 1, 0, 0);
+				}
 
 				for (j = 0; j < data->request[i].model->indep->dim; j++) {
 					x_in_plot = gui_plot_xvalue (data, data->request[i].model->indep->val[j], &x);
@@ -1103,16 +1233,12 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 
 				if (!redirect) {
 					cairo_stroke (data->canvas);
-					needs_ticks = TRUE;
 				}
 			}
 		}
 	}
 
-	if (needs_ticks && !redirect) {
-		gui_plot_xticks (data);
-		gui_plot_yticks (data);
-	}
+	cairo_destroy (data->canvas);
 
 	return SUCCESS;
 }

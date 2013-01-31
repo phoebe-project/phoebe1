@@ -6,16 +6,26 @@
 #include <phoebe/phoebe.h>
 
 typedef struct GUI_plot_layout {
-	int lmargin;           /* left plot margin in pixels                      */
-	int rmargin;           /* right plot margin in pixels                     */
-	int tmargin;           /* top plot margin in pixels                       */
-	int bmargin;           /* bottom plot margin in pixels                    */
+	int lmargin;           /* left plot margin in pixels */
+	int rmargin;           /* right plot margin in pixels */
+	int tmargin;           /* top plot margin in pixels */
+	int bmargin;           /* bottom plot margin in pixels */
 	int xmargin;           /* x-spacing between the plot border and the graph */
 	int ymargin;           /* y-spacing between the plot border and the graph */
-	int label_lmargin;     /* spacing between the frame and the y-axis label  */
-	int label_rmargin;     /* spacing between the y-axis label and the graph  */
-	int x_tick_length;     /* major x-tick length in pixels                   */
-	int y_tick_length;     /* major y-tick length in pixels                   */
+	int label_lmargin;     /* spacing between the frame and the y-axis label */
+	int label_rmargin;     /* spacing between the y-axis label and the graph */
+	int x_tick_length;     /* major x-tick length in pixels */
+	int y_tick_length;     /* major y-tick length in pixels */
+	double txfirst;        /* first x-tic value */
+	double tyfirst;        /* first y-tic value */
+	double txspacing;      /* x-tic spacing */
+	double tyspacing;      /* y-tic spacing */
+	int txmajor;           /* number of major tics on the x-axis */
+	int tymajor;           /* number of major tics on the y-axis */
+	int txminor;           /* number of minor tics on the x-axis */
+	int tyminor;           /* number of minor tics on the y-axis */
+	char txfmt[20];        /* x-tic label format */
+	char tyfmt[20];        /* y-tic label format */
 } GUI_plot_layout;
 
 GUI_plot_layout *gui_plot_layout_new  ();
@@ -72,7 +82,6 @@ typedef struct GUI_plot_data {
 	GtkWidget         *cp_widget;    /* Widget to be connected to closest psb. */
 	GtkWidget         *cx_widget;    /* Widget to be connected to closest x pt */
 	GtkWidget         *cy_widget;    /* Widget to be connected to closest y pt */
-	double             leftmargin;   /* The value of left margin               */
 	bool               select_zoom;  /* Indicates whether a rectangle to zoom in is being drawn */
 	double             select_x;     /* Window x value at which zoom started   */
 	double             select_y;     /* Window y value at which zoom started   */
@@ -81,6 +90,7 @@ typedef struct GUI_plot_data {
 	double             y_top;        /* Current top y value                    */
 	double             y_bottom;     /* Current bottom y value                 */
 	bool               block_signal; /* Whether the row-changed signal should be blocked */
+	bool               clear_graph;  /* should graph be cleared */
 } GUI_plot_data;
 
 GUI_plot_data *gui_plot_data_new ();
@@ -97,9 +107,10 @@ void     on_plot_treeview_row_deleted       (GtkTreeModel *model, GtkTreePath *p
 
 /* Plot functions */
 
-int  gui_plot_area_init    (GtkWidget *area, GtkWidget *button);
-int  gui_plot_area_draw    (GUI_plot_data *data, FILE *redirect);
-int  gui_plot_area_refresh (GUI_plot_data *data);
-void gui_plot_xticks       (GUI_plot_data *data);
-void gui_plot_yticks       (GUI_plot_data *data);
-void gui_plot_clear_canvas (GUI_plot_data *data);
+int  gui_plot_area_init       (GtkWidget *area, GtkWidget *button);
+int  gui_plot_area_draw       (GUI_plot_data *data, FILE *redirect);
+int  gui_plot_area_refresh    (GUI_plot_data *data);
+int  gui_plot_compute_lmargin (GUI_plot_data *data);
+int  gui_plot_compute_ticks   (GUI_plot_data *data, double llx, double ulx, double lly, double uly);
+void gui_plot_xticks          (GUI_plot_data *data);
+void gui_plot_yticks          (GUI_plot_data *data);
