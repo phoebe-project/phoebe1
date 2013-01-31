@@ -101,6 +101,7 @@ int            gui_plot_data_free ();
 gboolean on_plot_area_expose_event          (GtkWidget *widget, GdkEventExpose *event, gpointer user_data);
 gboolean on_plot_area_toggle_delete_button_clicked (GtkMenuItem *item, gpointer user_data);
 void     on_plot_button_clicked             (GtkButton *button, gpointer user_data);
+void     on_plot_coarse_grid_toggled        (GtkToggleButton *togglebutton, gpointer user_data);
 void     on_lc_plot_treeview_row_changed    (GtkTreeModel *tree_model, GtkTreePath *path, GtkTreeIter *iter, gpointer user_data);
 void     on_rv_plot_treeview_row_changed    (GtkTreeModel *tree_model, GtkTreePath *path, GtkTreeIter *iter, gpointer user_data);
 void     on_plot_treeview_row_deleted       (GtkTreeModel *model, GtkTreePath *path, gpointer user_data);

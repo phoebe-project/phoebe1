@@ -1243,6 +1243,36 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 	return SUCCESS;
 }
 
+void on_plot_coarse_grid_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+{
+	/**
+	 * on_plot_coarse_grid_toggled:
+	 * @togglebutton: source toggle button
+	 * @user_data: plot data
+	 * 
+	 * Toggles the coarse grid switch and replots.
+	 */
+	
+	GUI_plot_data *data = (GUI_plot_data *) user_data;
+	data->coarse_grid = gtk_toggle_button_get_active (togglebutton);
+	gui_plot_area_refresh (data);
+}
+
+void on_plot_fine_grid_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+{
+	/**
+	 * on_plot_fine_grid_toggled:
+	 * @togglebutton: source toggle button
+	 * @user_data: plot data
+	 * 
+	 * Toggles the fine grid switch and replots.
+	 */
+	
+	GUI_plot_data *data = (GUI_plot_data *) user_data;
+	data->fine_grid = gtk_toggle_button_get_active (togglebutton);
+	gui_plot_area_refresh (data);
+}
+
 void on_plot_treeview_row_changed (GtkTreeModel *tree_model, GUI_plot_data *data, int col_plot_obs, int col_plot_syn, int col_plot_obs_color, int col_plot_syn_color, int col_plot_offset)
 {
 	/*
@@ -1416,11 +1446,11 @@ int gui_plot_area_init (GtkWidget *area, GtkWidget *button)
 
 		widget = (GtkWidget *) g_object_get_data (G_OBJECT (button), "coarse_grid_switch");
 		data->coarse_grid = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-		g_signal_connect (widget, "toggled", G_CALLBACK (on_toggle_button_value_toggled), &(data->coarse_grid));
+		g_signal_connect (widget, "toggled", G_CALLBACK (on_plot_coarse_grid_toggled), data);
 
 		widget = (GtkWidget *) g_object_get_data (G_OBJECT (button), "fine_grid_switch");
 		data->fine_grid = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-		g_signal_connect (widget, "toggled", G_CALLBACK (on_toggle_button_value_toggled), &(data->fine_grid));
+		g_signal_connect (widget, "toggled", G_CALLBACK (on_plot_fine_grid_toggled), data);
 
 		widget = (GtkWidget *) g_object_get_data (G_OBJECT (button), "controls_left");
 		g_signal_connect (widget, "clicked", G_CALLBACK (on_plot_controls_left_button_clicked), data);
