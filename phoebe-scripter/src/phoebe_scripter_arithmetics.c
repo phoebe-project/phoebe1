@@ -95,6 +95,10 @@ int scripter_ast_values_add (scripter_ast_value *out, scripter_ast_value val1, s
 					}
 					out->value.spectrum->data->range[i] = val2.value.spectrum->data->range[i];
 				break;
+				case type_curve:
+					phoebe_scripter_output ("operator '+' is ambiguous for curves.\n");
+					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
+				break;
 				case type_minfeedback:
 					phoebe_scripter_output ("operator '+' cannot act on minimizer feedback, aborting.\n");
 					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
@@ -181,6 +185,10 @@ int scripter_ast_values_add (scripter_ast_value *out, scripter_ast_value val1, s
 					}
 					out->value.spectrum->data->range[i] = val2.value.spectrum->data->range[i];
 				break;
+				case type_curve:
+					phoebe_scripter_output ("operator '+' is ambiguous for curves.\n");
+					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
+				break;
 				case type_minfeedback:
 					phoebe_scripter_output ("operator '+' cannot act on minimizer feedback, aborting.\n");
 					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
@@ -255,6 +263,10 @@ int scripter_ast_values_add (scripter_ast_value *out, scripter_ast_value val1, s
 				break;
 				case type_spectrum:
 					phoebe_scripter_output ("operator '+' cannot act between strings and spectra, aborting.\n");
+					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
+				break;
+				case type_curve:
+					phoebe_scripter_output ("operator '+' is ambiguous for curves.\n");
 					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
 				break;
 				case type_minfeedback:
@@ -343,6 +355,10 @@ int scripter_ast_values_add (scripter_ast_value *out, scripter_ast_value val1, s
 				break;
 				case type_spectrum:
 					phoebe_scripter_output ("operator '+' cannot act between arrays and spectra, aborting.\n");
+					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
+				break;
+				case type_curve:
+					phoebe_scripter_output ("operator '+' is ambiguous for curves.\n");
 					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
 				break;
 				case type_minfeedback:
@@ -542,6 +558,10 @@ int scripter_ast_values_add (scripter_ast_value *out, scripter_ast_value val1, s
 					phoebe_scripter_output ("operator '+' cannot act between arrays and spectra, aborting.\n");
 					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
 				break;
+				case type_curve:
+					phoebe_scripter_output ("operator '+' is ambiguous for curves.\n");
+					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
+				break;
 				case type_minfeedback:
 					phoebe_scripter_output ("operator '+' cannot act on minimizer feedback, aborting.\n");
 					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
@@ -553,6 +573,10 @@ int scripter_ast_values_add (scripter_ast_value *out, scripter_ast_value val1, s
 					printf ("exception handler invoked in scripter_ast_values_add (), please report this!\n");			
 				break;
 			}
+		break;
+		case type_curve:
+			phoebe_scripter_output ("operator '+' is ambiguous for curves.\n");
+			return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
 		break;
 		case type_spectrum:
 			switch (val2.type) {
@@ -601,6 +625,10 @@ int scripter_ast_values_add (scripter_ast_value *out, scripter_ast_value val1, s
 						phoebe_scripter_output ("%s", phoebe_scripter_error (status));
 						return status;
 					}
+				break;
+				case type_curve:
+					phoebe_scripter_output ("operator '+' is ambiguous for curves.\n");
+					return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
 				break;
 				case type_minfeedback:
 					phoebe_scripter_output ("operator '+' cannot act on minimizer feedback, aborting.\n");
@@ -656,6 +684,11 @@ int scripter_ast_values_subtract (scripter_ast_value *out, scripter_ast_value va
 
 	if (val1.type == type_string || val2.type == type_string) {
 		phoebe_scripter_output ("operator '-' cannot act on strings, aborting.\n");
+		return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
+	}
+
+	if (val1.type == type_curve || val2.type == type_curve) {
+		phoebe_scripter_output ("operator '-' is ambiguous for curves, aborting.\n");
 		return ERROR_SCRIPTER_INCOMPATIBLE_OPERANDS;
 	}
 
