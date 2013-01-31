@@ -89,6 +89,8 @@ GUI_plot_data *gui_plot_data_new ()
 	data->y_max        = 1.0;
 	data->y_bottom     = data->y_min;
 	data->y_top        = data->y_max;
+	data->y_ll         = data->y_min;
+	data->y_ul         = data->y_max;
 	data->select_zoom  = FALSE;
 	data->clear_graph  = FALSE;
 	data->block_signal = FALSE;
@@ -190,7 +192,7 @@ bool gui_plot_tick_values (double low_value, double high_value, double *first_ti
 	return TRUE;
 }
 
-int gui_plot_compute_ticks (GUI_plot_data *data, double llx, double ulx, double lly, double uly)
+int gui_plot_compute_ticks (GUI_plot_data *data)
 {
 	/**
 	 * gui_plot_compute_ticks:
@@ -205,7 +207,10 @@ int gui_plot_compute_ticks (GUI_plot_data *data, double llx, double ulx, double 
 	 */
 
 	int logspacing, factor;
-	double spacing;
+	double llx = data->x_ll;
+	double ulx = data->x_ul;
+	double lly = data->y_ll;
+	double uly = data->y_ul;
 
 	/* x-axis tics: */
 	if (llx > ulx) {
@@ -251,6 +256,7 @@ int gui_plot_compute_ticks (GUI_plot_data *data, double llx, double ulx, double 
 			factor = 5;
 		data->layout->tyminor = factor;
 	}
+
 	data->layout->tyspacing = factor*pow(10, logspacing);
 	data->layout->tyfirst = floor(lly/data->layout->tyspacing)*data->layout->tyspacing;
 	data->layout->tymajor = ceil((uly-lly)/data->layout->tyspacing)+2;
@@ -1112,7 +1118,8 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 		cairo_set_source_rgb (data->canvas, 0.1, 0.1, 0.1);
 		cairo_set_line_width (data->canvas, 1);
 
-		/* Compute left margin based on labels and store it in data->layout: */
+		/* Compute the ticks and margins: */
+		gui_plot_compute_ticks (data);
 		gui_plot_compute_lmargin (data);
 
 		/* Plot the graph box: */
@@ -1155,7 +1162,6 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 	}
 
 //	printf ("x_ll = %f, x_ul = %f, y_ll = %f, y_ul = %f\n", data->x_ll, data->x_ul, data->y_ll, data->y_ul);
-//	gui_plot_compute_ticks (data, data->x_ll, data->x_ul, data->y_ll, data->y_ul);
 	
 	if (data->ptype == GUI_PLOT_LC || data->ptype == GUI_PLOT_RV) {
 		for (i = 0; i < data->objno; i++) {
