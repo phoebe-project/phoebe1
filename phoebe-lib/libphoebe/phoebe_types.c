@@ -2773,7 +2773,7 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	 */
 
 	int i, j;
-	int mpage;
+	int mpage, lcno, rvno;
 	int jdphs;
 	int status;
 
@@ -2794,6 +2794,44 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	if (!nodes)
 		return ERROR_VECTOR_NOT_INITIALIZED;
 
+	switch (dtype) {
+		case PHOEBE_COLUMN_FLUX:
+		case PHOEBE_COLUMN_MAGNITUDE:
+			mpage = 1;
+		break;
+		case PHOEBE_COLUMN_PRIMARY_RV:
+		case PHOEBE_COLUMN_SECONDARY_RV:
+			mpage = 2;
+		break;
+		case PHOEBE_COLUMN_INVALID:
+			return ERROR_COLUMN_INVALID;
+		break;
+		default:
+			phoebe_lib_error ("exception handler invoked by dtype switch in phoebe_curve_compute (), please report this!\n");
+			return ERROR_EXCEPTION_HANDLER_INVOKED;
+	}
+
+	/* Make sure that the index points to a valid curve: */
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lcno"), &lcno);
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lcno"), &rvno);
+
+	if (mpage == 1 && (index < 0 || index >= lcno))
+		return ERROR_UNINITIALIZED_CURVE;
+	if (mpage == 2 && (index < 0 || index >= rvno))
+		return ERROR_UNINITIALIZED_CURVE;
+
+	switch (mpage) {
+		case 1:
+			curve->type = PHOEBE_CURVE_LC;
+		break;
+		case 2:
+			curve->type = PHOEBE_CURVE_RV;
+		break;
+		default:
+			phoebe_lib_error("exception handler invoked by mpage in phoebe_curve_compute().");
+			return ERROR_EXCEPTION_HANDLER_INVOKED;
+	}
+		
 	switch (itype) {
 		case PHOEBE_COLUMN_HJD:
 			jdphs = 1;
@@ -2806,31 +2844,6 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 		break;
 		default:
 			phoebe_lib_error ("exception handler invoked by itype switch in phoebe_curve_compute (), please report this!\n");
-			return ERROR_EXCEPTION_HANDLER_INVOKED;
-	}
-
-	switch (dtype) {
-		case PHOEBE_COLUMN_FLUX:
-			mpage = 1;
-			curve->type = PHOEBE_CURVE_LC;
-		break;
-		case PHOEBE_COLUMN_MAGNITUDE:
-			mpage = 1;
-			curve->type = PHOEBE_CURVE_LC;
-		break;
-		case PHOEBE_COLUMN_PRIMARY_RV:
-			mpage = 2;
-			curve->type = PHOEBE_CURVE_RV;
-		break;
-		case PHOEBE_COLUMN_SECONDARY_RV:
-			mpage = 2;
-			curve->type = PHOEBE_CURVE_RV;
-		break;
-		case PHOEBE_COLUMN_INVALID:
-			return ERROR_COLUMN_INVALID;
-		break;
-		default:
-			phoebe_lib_error ("exception handler invoked by dtype switch in phoebe_curve_compute (), please report this!\n");
 			return ERROR_EXCEPTION_HANDLER_INVOKED;
 	}
 
@@ -2902,7 +2915,7 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 			return ERROR_EXCEPTION_HANDLER_INVOKED;
 	}
 
-	remove (lcin);
+//	remove (lcin);
 	free (lcin);
 
 	if (fti && mpage == 1) {
