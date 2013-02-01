@@ -120,6 +120,7 @@ bool phoebe_parameter_is_within_limits (PHOEBE_parameter *par);
 PHOEBE_parameter_list *phoebe_parameter_list_reverse         (PHOEBE_parameter_list *c, PHOEBE_parameter_list *p);
 PHOEBE_parameter_list *phoebe_parameter_list_get_marked_tba  ();
 int                    phoebe_parameter_list_sort_marked_tba (PHOEBE_parameter_list *list);
+int                    phoebe_parameter_list_free            (PHOEBE_parameter_list *list);
 
 /* ***************************   Third light   ****************************** */
 

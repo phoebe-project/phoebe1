@@ -1506,6 +1506,28 @@ bool phoebe_parameter_is_within_limits (PHOEBE_parameter *par)
 	return TRUE;
 }
 
+int phoebe_parameter_list_free (PHOEBE_parameter_list *list)
+{
+	/**
+	 * phoebe_parameter_list_free:
+	 * @list: #PHOEBE_parameter_list to be freed.
+	 * 
+	 * Frees all linked list elements.
+	 * 
+	 * Returns: #PHOEBE_error_code.
+	 */
+
+	PHOEBE_parameter_list *prev = NULL;
+
+	while (list) {
+		prev = list;
+		list = prev->next;
+		free (prev);
+	}
+
+	return SUCCESS;
+}
+
 PHOEBE_parameter_list *phoebe_parameter_list_get_marked_tba ()
 {
 	/*
@@ -1754,6 +1776,8 @@ int phoebe_parameter_table_free (PHOEBE_parameter_table *table)
 		prev->next = list->next;
 
 	free (list);
+
+	phoebe_parameter_list_free (table->lists.marked_tba);
 
 	free (table);
 
