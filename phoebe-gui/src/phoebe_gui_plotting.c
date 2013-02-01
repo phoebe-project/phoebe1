@@ -1246,7 +1246,8 @@ int gui_plot_area_draw (GUI_plot_data *data, FILE *redirect)
 		}
 	}
 
-	cairo_destroy (data->canvas);
+	if (!redirect)
+		cairo_destroy (data->canvas);
 
 	return SUCCESS;
 }
