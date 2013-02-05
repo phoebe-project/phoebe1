@@ -216,7 +216,7 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, integer *r
 	int wd_model;
 	double params[14];
 	char *phoebe_model;
-	
+
 	wd_lc (atmcof, atmcofplanck, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params);
 	
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
@@ -890,7 +890,7 @@ int phoebe_cf_compute (double *cfval, PHOEBE_cost_function cf, PHOEBE_vector *sy
 	 * Computes the cost function value @cfval of the passed cost function
 	 * @cf. The residuals are computed from vectors @syndep and @obsdep. If
 	 * the cost function is weighted, each residual is multiplied by the
-	 * inverse square of the individual @obsweight value. Since the residuals
+	 * inverse square of the individual @obssig value. Since the residuals
 	 * for different curves are usually compared, a scaling constant @scale
 	 * can be used to renormalize the data. The @scale is usually computed as
 	 * 4\pi/(L1+L2+4\piL3).
@@ -915,7 +915,7 @@ int phoebe_cf_compute (double *cfval, PHOEBE_cost_function cf, PHOEBE_vector *sy
 	double  w = 0.0;
 
 	/* First let's do some error checking: */
-	if (!syndep || !obsdep || syndep->dim <= 1 || obsdep->dim <= 1)
+	if (!syndep || !obsdep || syndep->dim < 1 || obsdep->dim < 1)
 		return ERROR_CHI2_INVALID_DATA;
 
 	if ( (cf == PHOEBE_CF_WEIGHTED_STANDARD_DEVIATION || cf == PHOEBE_CF_CHI2) && !obssig )
