@@ -95,21 +95,21 @@ PHOEBE_vector *phoebe_vector_new_from_column (char *filename, int col)
 
 		if (!fgets (line, 254, input)) break;
 
-		/* Remove the trailing newline (unix or dos):                         */
+		/* Remove the trailing newline (unix or dos): */
 		line[strlen(line)-1] = '\0';
 		if (strchr (line, 13) != NULL) (strchr (line, 13))[0] = '\0';
 
-		/* Remove comments (if any):                                          */
+		/* Remove comments (if any): */
 		if (strchr (line, '#') != NULL) (strchr (line, '#'))[0] = '\0';
 
-		/* Remove any leading whitespaces and empty lines:                    */
+		/* Remove any leading whitespaces and empty lines: */
 		while ( (delimeter[0] == ' ' || delimeter[0] == '\t') && delimeter[0] != '\0') delimeter++;
 		if (delimeter[0] == '\0') {
 			linecount++;
 			continue;
 		}
 
-		for (i = 1; i < col; i++) {
+		for (i = 0; i < col; i++) {
 			while (delimeter[0] != ' ' && delimeter[0] != '\t' && delimeter[0] != '\0') delimeter++;
 			while ( (delimeter[0] == ' ' || delimeter[0] == '\t') && delimeter[0] != '\0') delimeter++;
 			if (delimeter[0] == '\0') {
