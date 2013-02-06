@@ -264,7 +264,10 @@ c      45   LSST i     LSST science book
 c      46   LSST z     LSST science book
 c      47   LSST y3    LSST science book
 c      48   LSST y4    LSST science book
-
+      do 15067 i=1,ifrmax
+      theta(i)=0.d0
+      rho(i)=0.d0
+15067 continue
       ot=1.d0/3.d0
       pi=dacos(-1.d0)
       clight=2.99792458d5
@@ -331,7 +334,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $el3,opsf,zero,factor,wl,binwm1,sc1,sl1,wll1,ewid1,depth1,
      $kks,binwm2,sc2,sl2,wll2,ewid2,depth2,xlat,xlong,radsp,temsp,
      $xcl,ycl,zcl,rcl,op1,fcl,edens,xmue,encl,lpimax,ispmax,iclmax)
-
       if(mpage.ne.9) goto 414
       close(15)
       close(16)
