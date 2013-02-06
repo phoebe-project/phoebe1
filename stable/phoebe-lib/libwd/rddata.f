@@ -32,8 +32,6 @@
 
       if(mpage.eq.9) return
 
-  414 continue
-
       read(15,649) jdphs,hjd0,period,dpdt,pshift,stdev,noise,seed
       read(15,217) hjdst,hjdsp,hjdin,phstrt,phstop,phin,phn
       read(15,  1) mode,ipb,ifat1,ifat2,n1,n2,perr0,dperdt,the,vunit

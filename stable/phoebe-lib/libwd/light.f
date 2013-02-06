@@ -680,7 +680,8 @@ c    of accuracy for distorted stars without those terms. See notes.
       SOMJ=SOMJ*DELFI
       SUMJ=SUMJ*DELFI
       SOM=SOM+SOMJ
-  136 SUM=SUM+SUMJ
+      SUM=SUM+SUMJ
+  136 continue
       if(mpage.eq.5) return
       IF(TEST.LE..0625d0) GOTO 120
       SOMHOT=SOM*DELTH

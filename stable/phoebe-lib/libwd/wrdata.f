@@ -40,9 +40,12 @@
       return
   127 continue
 
-      if(mpage.eq.1) write(16,3) hjd,phas,htt,cool,total,tot,d,smagg
-      if(mpage.eq.2) write(16,93) hjd,phas,vsum1,vsum2,vra1,vra2,vkm1,
-     $vkm2
+      if(mpage.eq.1) then
+        write(16,3) hjd,phas,htt,cool,total,tot,d,smagg
+      endif
+      if(mpage.eq.2) then
+        write(16,93) hjd,phas,vsum1,vsum2,vra1,vra2,vkm1,vkm2
+      endif
 
       ns1=1
       ns2=2

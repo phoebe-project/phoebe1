@@ -15,10 +15,10 @@ c
       jjmax=ml*ml                                                        
       nobsml=nobs*ml                                                     
       nobmpl=nobs*mpl                                                    
-      do 90 i=1,nobs                                                     
-      obs(i)=1.d0                                                        
+      do 90 i=1,nobs
+      obs(i)=1.d0
       iz=nobsml+i                                                        
-      obs(iz)=ro(i)                                                      
+      obs(iz)=ro(i)
       if(nth.eq.0) goto 90                                               
       ic=i+nobs                                                          
       is=i+nobmpl                                                        
@@ -78,7 +78,8 @@ c
       do 51 i=2,mpl                                                      
       aa(i)=out(i)                                                       
       ipl=i+nth                                                          
-   51 bb(i)=out(ipl)                                                     
+      bb(i)=out(ipl)                                                     
+   51 continue
       aa(1)=out(1)                                                       
       bb(1)=0.d0                                                         
       return                                                             
