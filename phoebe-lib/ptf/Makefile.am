@@ -36,13 +36,13 @@ phoebeptf_DATA = 2mass_j.ptf                 \
                  cousins.R                   \
                  cousins.I                   \
                  IRAC.ch1.ptf                \
-                 geneva_1962_b1.txt          \
-                 geneva_1962_b2.txt          \
-                 geneva_1962_b.txt           \
-                 geneva_1962_g.txt           \
-                 geneva_1962_u.txt           \
-                 geneva_1962_v1.txt          \
-                 geneva_1962_v.txt           \
+                 genevaB1.ptf                \
+                 genevaB2.ptf                \
+                 genevaB.ptf                 \
+                 genevaG.ptf                 \
+                 genevaU.ptf                 \
+                 genevaV1.ptf                \
+                 genevaV.ptf                 \
                  tycho.bT                    \
                  tycho.vT                    \
                  hipparcos_1989_hp.txt       \
