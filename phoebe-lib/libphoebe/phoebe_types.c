@@ -2813,7 +2813,7 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 
 	/* Make sure that the index points to a valid curve: */
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lcno"), &lcno);
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lcno"), &rvno);
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_rvno"), &rvno);
 
 	if (mpage == 1 && (index < 0 || index >= lcno))
 		return ERROR_UNINITIALIZED_CURVE;
