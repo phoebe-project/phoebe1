@@ -1,5 +1,6 @@
       subroutine dc(atmtab,pltab,L3perc,knobs,indeps,fluxes,weights,
-     $              nph,delph,corrs,stdevs,chi2s,cormat,ccla,cfval)
+     $              nph,delph,corrs,stdevs,chi2s,cormat,ccla,cfval,
+     $              args)
 
 c  This is the Differential Corrections Main Program.
 c
@@ -151,10 +152,18 @@ c         ccla   ..   computed CLA values
 c        cfval   ..   cost function value (global goodness-of-fit value)
 c          nph   ..   finite time integration oversampling rate
 c        delph   ..   finite time integration cadence
+c         args   ..   an array of passed parameters (arguments):
+c
+c                     args( 1) = phase shift
+c                     args( 2) = inclination
+c
+c                     Incorporating args was necessary to circumvent
+c                     rounding problems in WD when using I/O.
 c
       integer L3perc,knobs(*),nph
       double precision indeps(*),fluxes(*),weights(*),cfval,delph
       double precision corrs(*),stdevs(*),chi2s(*),cormat(*),ccla(*)
+      double precision args(*)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
       dimension rv(igsmax),grx(igsmax),gry(igsmax),grz(igsmax),
@@ -625,6 +634,11 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       READ(15,702)E,A,F1,F2,VGA,XINCL,GR1,GR2,abunin
       READ(15,706) TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,xbol1,xbol2,ybol1,
      $ybol2
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
+c     Override the read-in values with passed values:
+      pshift=args(1)
+      xincl=args(2)
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
       acm=6.960d10*a
       nn1=n1
       CALL SINCOS(1,N1,N1,SNTHH,CSTHH,SNFIH,CSFIH,MMSAVH)
