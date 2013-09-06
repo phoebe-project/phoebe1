@@ -214,10 +214,14 @@ bool phoebe_pcsv_constrained (int wd_model)
 void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos)
 {
 	int wd_model;
+    double args[2];
 	double params[14];
 	char *phoebe_model;
 
-	wd_lc (atmcof, atmcofplanck, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params);
+    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_pshift"), &args[0]);
+    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_incl"),   &args[1]);
+
+	wd_lc (atmcof, atmcofplanck, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args);
 	
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
