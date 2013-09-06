@@ -1,5 +1,5 @@
       subroutine lc(atmtab,pltab,lcin,request,vertno,L3perc,indeps,deps,
-     +              skycoy,skycoz,params)
+     +              skycoy,skycoz,params,args)
 c
 c  Main program for computing light and radial velocity curves,
 c      line profiles, and images
@@ -120,6 +120,9 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extensions:
 c
+c       atmtab   ..   model atmosphere filename
+c        pltab   ..   blackbody atmosphere filename
+c         lcin   ..   input lci filename
 c      request   ..   what do we want to compute:
 c                       1  ..  light curve
 c                       2  ..  primary RV curve
@@ -135,7 +138,6 @@ c         deps   ..   an array of computed values (fluxes or RVs)
 c       skycoy   ..   an array of y-coordinates of the plane of sky
 c       skycoz   ..   an array of z-coordinates of the plane of sky
 c       params   ..   an array of computed parameters:
-c         lcin   ..   input lci filename
 c
 c                     params( 1) = L1     star 1 passband luminosity
 c                     params( 2) = L2     star 2 passband luminosity
@@ -152,8 +154,17 @@ c                     params(12) = SBR2   star 2 polar surface brightness
 c                     params(13) = phsv   star 1 potential
 c                     params(14) = pcsv   star 2 potential
 c
+c         args   ..   an array of passed parameters (arguments):
+c
+c                     args( 1) = phase shift
+c                     args( 2) = inclination
+c
+c                     Incorporating args was necessary to circumvent
+c                     rounding problems in WD when using I/O.
+
       integer request,vertno
-      double precision indeps(*),deps(*),skycoy(*),skycoz(*),params(*)
+      double precision indeps(*),deps(*),skycoy(*),skycoz(*),params(*),
+     $args(*)
       character lcin*(*)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
@@ -334,6 +345,11 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $el3,opsf,zero,factor,wl,binwm1,sc1,sl1,wll1,ewid1,depth1,
      $kks,binwm2,sc2,sl2,wll2,ewid2,depth2,xlat,xlong,radsp,temsp,
      $xcl,ycl,zcl,rcl,op1,fcl,edens,xmue,encl,lpimax,ispmax,iclmax)
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
+c     Override the read-in values with passed values:
+      pshift=args(1)
+      xincl=args(2)
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
       if(mpage.ne.9) goto 414
       close(15)
       close(16)
