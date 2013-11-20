@@ -31,6 +31,7 @@ int parse_startup_line (int argc, char *argv[])
 			printf ("  -v, --version       ..  display PHOEBE version and exit\n");
 			printf ("\n");
 			phoebe_quit ();
+			exit(0);
 		}
 
 		if ( (strcmp (argv[i],  "-v"      ) == 0) ||
@@ -38,6 +39,7 @@ int parse_startup_line (int argc, char *argv[])
 			printf ("\n%s, %s\n", PHOEBE_GUI_RELEASE_NAME, PHOEBE_GUI_RELEASE_DATE);
 			printf ("  Send comments and/or requests to phoebe-discuss@lists.sourceforge.net\n\n");
 			phoebe_quit ();
+			exit(0);
 		}
 
 		if ( argv[i][0] != '-' ) {

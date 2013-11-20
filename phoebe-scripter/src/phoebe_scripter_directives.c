@@ -710,6 +710,7 @@ int scripter_directive_quit (scripter_ast_list *args)
 	if ( ( c  == 'y' ) || (c == 'Y') ) {
 		scripter_quit ();
 		phoebe_quit ();
+		exit(0);
 	}
 
 	return SUCCESS;

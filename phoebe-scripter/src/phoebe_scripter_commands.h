@@ -5,6 +5,7 @@
 
 int scripter_register_all_commands ();
 
+scripter_ast_value scripter_testcmd                       (scripter_ast_list *args);
 scripter_ast_value scripter_open_parameter_file           (scripter_ast_list *args);
 scripter_ast_value scripter_save_parameter_file           (scripter_ast_list *args);
 scripter_ast_value scripter_set_parameter_value           (scripter_ast_list *args);

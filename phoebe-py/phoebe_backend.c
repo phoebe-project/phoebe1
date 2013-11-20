@@ -2,7 +2,7 @@
 #include <phoebe/phoebe.h>
 
 
-static PyObject *phoebeInit (PyObject *self, PyObject *args)
+static PyObject *phoebeInit(PyObject *self, PyObject *args)
 {
 	int status = phoebe_init();
 	if (status != SUCCESS) {
@@ -13,7 +13,7 @@ static PyObject *phoebeInit (PyObject *self, PyObject *args)
 	return Py_BuildValue ("i", status);
 }
 
-static PyObject *phoebeConfigure (PyObject *self, PyObject *args)
+static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
 {
 	int status = phoebe_configure();
 	if (status != SUCCESS) {
@@ -22,6 +22,12 @@ static PyObject *phoebeConfigure (PyObject *self, PyObject *args)
 	}
 
 	return Py_BuildValue ("i", status);
+}
+
+static PyObject *phoebeQuit(PyObject *self, PyObject *args)
+{
+    int status = phoebe_quit();
+    return Py_BuildValue("i", status);
 }
 
 static PyObject *phoebeParameter (PyObject *self, PyObject *args)
@@ -111,6 +117,7 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 static PyMethodDef PhoebeMethods[] = {
 	{"init",             phoebeInit,       METH_VARARGS, "Initialize PHOEBE backend"},
 	{"configure",        phoebeConfigure,  METH_VARARGS, "Configure all internal PHOEBE structures"},
+	{"quit",             phoebeQuit,       METH_VARARGS, "Quit PHOEBE"},
 	{"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
 	{NULL,               NULL,             0,            NULL}
 };

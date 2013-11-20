@@ -90,7 +90,59 @@ int scripter_register_all_commands ()
 	/* Other auxiliary commands: */
 	scripter_command_register ("prompt",                       scripter_prompt);
 
+	scripter_command_register ("testcmd", scripter_testcmd);
+	
 	return SUCCESS;
+}
+
+scripter_ast_value scripter_testcmd (scripter_ast_list *args)
+{
+	scripter_ast_value *vals;
+	scripter_ast_value out;
+
+	double chi2, psigma;
+	int index, lcno, rvno, lexp;
+	char *readout_str;
+
+	PHOEBE_curve *syncurve;
+	PHOEBE_curve *obs;
+
+	int status = scripter_command_args_evaluate (args, &vals, 1, 1, type_int);
+
+	printf ("entering testcmd().\n");
+	
+	if (status != SUCCESS) {
+		out.type = type_void;
+		return out;
+	}
+
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lcno"), &lcno);
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_rvno"), &rvno);
+
+	index = vals[0].value.i;
+
+	obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_LC, index-1);
+	phoebe_curve_transform (obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
+
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_sigma"), index-1, &psigma);
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), index-1, &readout_str);
+	lexp = intern_get_level_weighting_id (readout_str);
+
+	syncurve = phoebe_curve_new ();
+	phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX);
+
+	status = phoebe_cf_compute (&chi2, PHOEBE_CF_CHI2, syncurve->dep, obs->dep, obs->weight, 1.0, lexp, 1.0);
+
+	phoebe_curve_free (obs);
+	phoebe_curve_free (syncurve);
+
+	scripter_ast_value_array_free (vals, 1);
+	out.type = type_double;
+	out.value.d = chi2;
+
+	printf ("leaving testcmd().\n");
+	
+	return out;
 }
 
 scripter_ast_value scripter_open_parameter_file (scripter_ast_list *args)
