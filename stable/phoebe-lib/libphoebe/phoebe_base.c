@@ -420,5 +420,5 @@ int phoebe_quit ()
 	/* Free parameter table: */
 	phoebe_parameter_table_free (PHOEBE_pt);
 
-	exit (0);
+	return(SUCCESS);
 }

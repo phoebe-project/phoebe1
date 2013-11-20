@@ -47,6 +47,7 @@ int parse_startup_line (int argc, char *argv[])
 			printf ("  --config-dir dir/   ..  use dir/ as configuration directory\n");
 			printf ("\n");
 			phoebe_quit ();
+			exit(0);
 		}
 
 		if ( (strcmp (argv[i],  "-v"      ) == 0) ||
@@ -54,6 +55,7 @@ int parse_startup_line (int argc, char *argv[])
 			printf ("\n%s %s\n", PHOEBE_SCRIPTER_RELEASE_NAME, PHOEBE_SCRIPTER_RELEASE_DATE);
 			printf ("  Send comments and/or requests to phoebe-discuss@lists.sourceforge.net\n\n");
 			phoebe_quit ();
+			exit(0);
 		}
 
 		if ( (strcmp (argv[i],  "-c"        ) == 0) ||
@@ -78,6 +80,7 @@ int parse_startup_line (int argc, char *argv[])
 				printf ("\n");
 				phoebe_warning ("there is no argument given to the '-e' switch.\n\n");
 				phoebe_quit ();
+				exit(0);
 			}
 
 			/* Otherwise let's read in the script's name:                           */
@@ -242,6 +245,7 @@ int scripter_main_loop ()
 			free (line);
 			scripter_quit ();
 			phoebe_quit ();
+			exit(0);
 		}
 		else if (strlen(line) > 0)
 			add_history (line);

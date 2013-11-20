@@ -62,6 +62,7 @@ int main (int argc, char *argv[])
 			printf ("\n");
 			phoebe_warning ("cannot open script %s, aborting.\n\n", PHOEBE_args.SCRIPT_NAME);
 			phoebe_quit ();
+			exit(0);
 		}
 
 		phoebe_debug ("  script to be executed: %s.\n", PHOEBE_args.SCRIPT_NAME);
@@ -85,6 +86,7 @@ int main (int argc, char *argv[])
 		phoebe_warning (phoebe_scripter_error (status));
 		scripter_quit ();
 		phoebe_quit ();
+		exit(0);
 	}
 	
 	phoebe_debug ("  entering the main scripter loop.\n");

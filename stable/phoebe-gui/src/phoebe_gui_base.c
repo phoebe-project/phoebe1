@@ -101,6 +101,7 @@ int phoebe_gui_quit ()
 {
 	gui_free_widgets ();
 	phoebe_quit ();
+	exit(0);
 
 	return SUCCESS;
 }
