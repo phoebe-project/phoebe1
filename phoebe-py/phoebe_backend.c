@@ -30,6 +30,117 @@ static PyObject *phoebeQuit(PyObject *self, PyObject *args)
     return Py_BuildValue("i", status);
 }
 
+static PyObject *phoebeOpen(PyObject *self, PyObject *args)
+{
+    char *fname;
+    int status;
+    
+    PyArg_ParseTuple(args, "s", &fname);
+    status = phoebe_open_parameter_file(fname);
+	if (status != SUCCESS) {
+		printf ("%s", phoebe_error (status));
+		return NULL;
+	}
+
+	return Py_BuildValue ("i", status);
+}
+
+static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
+{
+    int index, status, lexp;
+    double cf, sigma;
+    char *rstr;
+    
+    PHOEBE_curve *obs, *syn;
+    
+    PyArg_ParseTuple(args, "%d", &index);
+    
+    obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_LC, index);
+    phoebe_curve_transform (obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
+    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_sigma"), index, &sigma);
+    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), index, &rstr);
+	lexp = intern_get_level_weighting_id (rstr);
+    
+    syn = phoebe_curve_new ();
+    phoebe_curve_compute (syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX);
+    
+    status = phoebe_cf_compute (&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
+    if (status != SUCCESS) {
+		printf ("%s", phoebe_error (status));
+		return NULL;
+	}
+	
+	return Py_BuildValue ("d", cf);
+}
+
+static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
+{
+    int index, status;
+    char *parname, *parval;
+    PHOEBE_parameter *par;
+    
+    PyArg_ParseTuple(args, "ss|i", &parname, &parval, &index);
+    par = phoebe_parameter_lookup(parname);
+    switch (par->type) {
+        case TYPE_INT:
+            status = phoebe_parameter_set_value(par, atoi(parval));
+            break;
+        case TYPE_DOUBLE:
+            status = phoebe_parameter_set_value(par, atof(parval));
+            break;
+        case TYPE_DOUBLE_ARRAY:
+            status = phoebe_parameter_set_value(par, atof(parval), index);
+            break;
+        default:
+            status = 0;
+            printf("not yet implemented, sorry.\n");
+            break;
+    }
+    
+    if (status != SUCCESS) {
+		printf ("%s", phoebe_error (status));
+		return NULL;
+	}
+	
+	return Py_BuildValue ("i", status);
+}
+
+static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
+{
+    int index, status;
+    char *parname;
+    double val;
+    PHOEBE_parameter *par;
+
+    PyArg_ParseTuple(args, "s|i", &parname, &index);
+    par = phoebe_parameter_lookup(parname);
+    switch (par->type) {
+        case TYPE_INT: {
+            int ival;
+            status = phoebe_parameter_get_value(par, &ival);
+            val = ival;
+            break;
+        }
+        case TYPE_DOUBLE:
+            status = phoebe_parameter_get_value(par, &val);
+            break;
+        case TYPE_DOUBLE_ARRAY:
+            status = phoebe_parameter_get_value(par, index, &val);
+            break;
+        default:
+            status = 0;
+            printf("not yet implemented, sorry.\n");
+            break;
+    }
+
+    if (status != SUCCESS) {
+		printf ("%s", phoebe_error (status));
+		return NULL;
+	}
+	
+	return Py_BuildValue ("d", val);
+}
+
 static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 {
 	/**
@@ -118,6 +229,10 @@ static PyMethodDef PhoebeMethods[] = {
 	{"init",             phoebeInit,       METH_VARARGS, "Initialize PHOEBE backend"},
 	{"configure",        phoebeConfigure,  METH_VARARGS, "Configure all internal PHOEBE structures"},
 	{"quit",             phoebeQuit,       METH_VARARGS, "Quit PHOEBE"},
+	{"open",             phoebeOpen,       METH_VARARGS, "Open PHOEBE parameter file"},
+	{"cfval",            phoebeCFVal,      METH_VARARGS, "Compute a cost function value of the passed curve"},
+    {"setpar",           phoebeSetPar,     METH_VARARGS, "Set the value of the parameter"},
+    {"getpar",           phoebeGetPar,     METH_VARARGS, "Get the value of the parameter"},
 	{"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
 	{NULL,               NULL,             0,            NULL}
 };
