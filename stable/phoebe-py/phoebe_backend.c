@@ -172,6 +172,41 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 	return Py_BuildValue ("d", val);
 }
 
+static PyObject *phoebeLC(PyObject *self, PyObject *args)
+{
+    int index, tlen, i, status;
+    PyObject *obj, *ret;
+    char *rstr;
+    
+    PHOEBE_column_type itype;
+    PHOEBE_vector *indep;
+    PHOEBE_curve *curve;
+    
+    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj))
+        return NULL;
+    
+    tlen = PyTuple_Size(obj);
+    indep = phoebe_vector_new();
+    phoebe_vector_alloc(indep, tlen);
+    for (i = 0; i < tlen; i++)
+        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
+    
+    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
+	status = phoebe_column_get_type (&itype, rstr);
+	
+	curve = phoebe_curve_new();
+	status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX);
+
+    ret = PyTuple_New(tlen);
+    for (i = 0; i < tlen; i++)
+        PyTuple_SetItem(ret, i, Py_BuildValue("d", curve->dep->val[i]));
+
+	phoebe_curve_free(curve);
+	phoebe_vector_free(indep);
+
+    return ret;
+}
+
 static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 {
 	/**
@@ -266,6 +301,7 @@ static PyMethodDef PhoebeMethods[] = {
     {"setpar",           phoebeSetPar,     METH_VARARGS, "Set the value of the parameter"},
     {"getpar",           phoebeGetPar,     METH_VARARGS, "Get the value of the parameter"},
     {"setlim",           phoebeSetLim,     METH_VARARGS, "Set parameter limits"},
+    {"lc",               phoebeLC,         METH_VARARGS, "Compute light curve"},
 	{"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
 	{NULL,               NULL,             0,            NULL}
 };
