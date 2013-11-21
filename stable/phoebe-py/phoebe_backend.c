@@ -45,6 +45,20 @@ static PyObject *phoebeOpen(PyObject *self, PyObject *args)
 	return Py_BuildValue ("i", status);
 }
 
+static PyObject *phoebeCheck(PyObject *self, PyObject *args)
+{
+    char *parname;
+    PHOEBE_parameter *par;
+    
+    PyArg_ParseTuple(args, "s", &parname);
+    par = phoebe_parameter_lookup(parname);
+    
+    if (phoebe_parameter_is_within_limits(par))
+        return Py_BuildValue("i", 1);
+    else
+        return Py_BuildValue("i", 0);
+}
+
 static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 {
     int index, status, lexp;
@@ -53,7 +67,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
     
     PHOEBE_curve *obs, *syn;
     
-    PyArg_ParseTuple(args, "%d", &index);
+    PyArg_ParseTuple(args, "d", &index);
     
     obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_LC, index);
     phoebe_curve_transform (obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
@@ -73,23 +87,40 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 	return Py_BuildValue ("d", cf);
 }
 
+static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
+{
+    int status;
+    char *parname;
+    double parmin, parmax;
+    PHOEBE_parameter *par;
+    
+    PyArg_ParseTuple(args, "sdd", &parname, &parmin, &parmax);
+    
+    par = phoebe_parameter_lookup(parname);
+    status = phoebe_parameter_set_limits(par, parmin, parmax);
+    if (status != SUCCESS) {
+		printf ("%s", phoebe_error (status));
+		return NULL;
+	}
+	
+	return Py_BuildValue ("i", status);
+}
+
 static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 {
     int index, status;
-    char *parname, *parval;
+    char *parname;
+    double val;
     PHOEBE_parameter *par;
     
-    PyArg_ParseTuple(args, "ss|i", &parname, &parval, &index);
+    PyArg_ParseTuple(args, "sd|i", &parname, &val, &index);
     par = phoebe_parameter_lookup(parname);
     switch (par->type) {
-        case TYPE_INT:
-            status = phoebe_parameter_set_value(par, atoi(parval));
-            break;
         case TYPE_DOUBLE:
-            status = phoebe_parameter_set_value(par, atof(parval));
+            status = phoebe_parameter_set_value(par, val);
             break;
         case TYPE_DOUBLE_ARRAY:
-            status = phoebe_parameter_set_value(par, atof(parval), index);
+            status = phoebe_parameter_set_value(par, val, index);
             break;
         default:
             status = 0;
@@ -231,8 +262,10 @@ static PyMethodDef PhoebeMethods[] = {
 	{"quit",             phoebeQuit,       METH_VARARGS, "Quit PHOEBE"},
 	{"open",             phoebeOpen,       METH_VARARGS, "Open PHOEBE parameter file"},
 	{"cfval",            phoebeCFVal,      METH_VARARGS, "Compute a cost function value of the passed curve"},
+    {"check",            phoebeCheck,      METH_VARARGS, "Check whether the parameter is within bounds"},
     {"setpar",           phoebeSetPar,     METH_VARARGS, "Set the value of the parameter"},
     {"getpar",           phoebeGetPar,     METH_VARARGS, "Get the value of the parameter"},
+    {"setlim",           phoebeSetLim,     METH_VARARGS, "Set parameter limits"},
 	{"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
 	{NULL,               NULL,             0,            NULL}
 };
