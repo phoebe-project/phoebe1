@@ -1,5 +1,6 @@
 #include <Python.h>
 #include <phoebe/phoebe.h>
+#include <string.h>
 
 
 static PyObject *phoebeInit(PyObject *self, PyObject *args)
@@ -63,21 +64,38 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 {
     int index, status, lexp;
     double cf, sigma;
-    char *rstr;
+    char *rstr, *ctype;
     
     PHOEBE_curve *obs, *syn;
     
-    PyArg_ParseTuple(args, "d", &index);
+    PyArg_ParseTuple(args, "si", &ctype, &index);
     
-    obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_LC, index);
-    phoebe_curve_transform (obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_sigma"), index, &sigma);
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), index, &rstr);
-	lexp = intern_get_level_weighting_id (rstr);
-    
-    syn = phoebe_curve_new ();
-    phoebe_curve_compute (syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX);
-    
+    if (strcmp(ctype, "lc") == 0 || strcmp(ctype, "LC") == 0) {
+        obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_LC, index);
+        phoebe_curve_transform (obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
+        phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_sigma"), index, &sigma);
+        phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), index, &rstr);
+	    lexp = intern_get_level_weighting_id (rstr);
+        
+        syn = phoebe_curve_new ();
+        phoebe_curve_compute (syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX);
+    }
+
+    else if (strcmp(ctype, "rv") == 0 || strcmp(ctype, "RV") == 0) {
+        obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_RV, index);
+        phoebe_curve_transform (obs, obs->itype, obs->dtype, PHOEBE_COLUMN_SIGMA);
+        phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_rv_sigma"), index, &sigma);
+        lexp = 0;
+
+        syn = phoebe_curve_new ();
+        phoebe_curve_compute (syn, obs->indep, index, obs->itype, obs->dtype);
+    }
+
+    else {
+        printf("passed curve type %s is invalid, aborting.", ctype);
+        return NULL;
+    }
+
     status = phoebe_cf_compute (&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
     if (status != SUCCESS) {
 		printf ("%s", phoebe_error (status));
@@ -174,7 +192,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
-    int index, tlen, i, status;
+    int index, tlen, i;
     PyObject *obj, *ret;
     char *rstr;
     
@@ -192,10 +210,10 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
     
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
-	status = phoebe_column_get_type (&itype, rstr);
+	phoebe_column_get_type (&itype, rstr);
 	
 	curve = phoebe_curve_new();
-	status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX);
+	phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX);
 
     ret = PyTuple_New(tlen);
     for (i = 0; i < tlen; i++)
