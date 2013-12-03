@@ -11,8 +11,10 @@ phoebe.open("test.phoebe")
 pot1 = phoebe.getpar("phoebe_pot1")
 print "Original pot1 value:", pot1
 
-# Compute the cost function for passband 0:
-print "Cost function:", phoebe.cfval(0)
+# Compute the cost function for all passbands:
+print "LC  cost function:", phoebe.cfval("lc", 0)
+print "RV1 cost function:", phoebe.cfval("rv", 0)
+print "RV2 cost function:", phoebe.cfval("rv", 1)
 
 # Set parameter limits:
 phoebe.setlim("phoebe_pot1", 3.0, 5.0)
@@ -24,8 +26,8 @@ print "How about now:        ", phoebe.check("phoebe_pot1")
 
 if not phoebe.check("phoebe_pot1"):
     print "Penalize cost function"
-    print "      before:", phoebe.cfval(0)
-    print "       after:", (1-phoebe.check("phoebe_pot1"))*(1+(phoebe.getpar("phoebe_pot1")-pot1)**2)**10*phoebe.cfval(0)
+    print "      before:", phoebe.cfval("lc", 0)
+    print "       after:", (1-phoebe.check("phoebe_pot1"))*(1+(phoebe.getpar("phoebe_pot1")-pot1)**2)**10*phoebe.cfval("lc", 0)
 
 # This is a must:
 phoebe.quit()
