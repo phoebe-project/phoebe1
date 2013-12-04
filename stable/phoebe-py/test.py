@@ -12,9 +12,13 @@ pot1 = phoebe.getpar("phoebe_pot1")
 print "Original pot1 value:", pot1
 
 # Compute the cost function for all passbands:
-print "LC  cost function:", phoebe.cfval("lc", 0)
-print "RV1 cost function:", phoebe.cfval("rv", 0)
-print "RV2 cost function:", phoebe.cfval("rv", 1)
+sigLC  = phoebe.getpar("phoebe_lc_sigma", 0)
+sigRV1 = phoebe.getpar("phoebe_rv_sigma", 0)
+sigRV2 = phoebe.getpar("phoebe_rv_sigma", 1)
+
+print "LC  cost function:", phoebe.cfval("lc", 0)/sigLC**2
+print "RV1 cost function:", phoebe.cfval("rv", 0)/sigRV1**2
+print "RV2 cost function:", phoebe.cfval("rv", 1)/sigRV2**2
 
 # Set parameter limits:
 phoebe.setlim("phoebe_pot1", 3.0, 5.0)
