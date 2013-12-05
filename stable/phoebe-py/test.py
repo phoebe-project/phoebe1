@@ -11,6 +11,9 @@ phoebe.open("test.phoebe")
 pot1 = phoebe.getpar("phoebe_pot1")
 print "Original pot1 value:", pot1
 
+pmin, pmax = phoebe.getlim("phoebe_pot1")
+print "Original limits:", pmin, pmax
+
 # Compute the cost function for all passbands:
 sigLC  = phoebe.getpar("phoebe_lc_sigma", 0)
 sigRV1 = phoebe.getpar("phoebe_rv_sigma", 0)
@@ -22,6 +25,9 @@ print "RV2 cost function:", phoebe.cfval("rv", 1)/sigRV2**2
 
 # Set parameter limits:
 phoebe.setlim("phoebe_pot1", 3.0, 5.0)
+
+pmin, pmax = phoebe.getlim("phoebe_pot1")
+print "New limits:", pmin, pmax
 
 # Use the 'check' method to see if the parameter is within bounds:
 print "Is pot1 within bounds:", phoebe.check("phoebe_pot1")
