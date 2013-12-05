@@ -124,6 +124,25 @@ static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
 	return Py_BuildValue ("i", status);
 }
 
+static PyObject *phoebeGetLim(PyObject *self, PyObject *args)
+{
+    int status;
+    char *parname;
+    double parmin, parmax;
+    PHOEBE_parameter *par;
+    
+    PyArg_ParseTuple(args, "s", &parname);
+    
+    par = phoebe_parameter_lookup(parname);
+    status = phoebe_parameter_get_limits(par, &parmin, &parmax);
+    if (status != SUCCESS) {
+		printf ("%s", phoebe_error (status));
+		return NULL;
+	}
+	
+	return Py_BuildValue ("(d,d)", parmin, parmax);
+}
+
 static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 {
     int index, status;
@@ -319,6 +338,7 @@ static PyMethodDef PhoebeMethods[] = {
     {"setpar",           phoebeSetPar,     METH_VARARGS, "Set the value of the parameter"},
     {"getpar",           phoebeGetPar,     METH_VARARGS, "Get the value of the parameter"},
     {"setlim",           phoebeSetLim,     METH_VARARGS, "Set parameter limits"},
+    {"getlim",           phoebeGetLim,     METH_VARARGS, "Get parameter limits"},
     {"lc",               phoebeLC,         METH_VARARGS, "Compute light curve"},
 	{"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
 	{NULL,               NULL,             0,            NULL}
