@@ -2,27 +2,26 @@
 #include <phoebe/phoebe.h>
 #include <string.h>
 
-
 static PyObject *phoebeInit(PyObject *self, PyObject *args)
 {
-	int status = phoebe_init();
-	if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
+    int status = phoebe_init();
+    if (status != SUCCESS) {
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
 
-	return Py_BuildValue ("i", status);
+    return Py_BuildValue ("i", status);
 }
 
 static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
 {
-	int status = phoebe_configure();
-	if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
+    int status = phoebe_configure();
+    if (status != SUCCESS) {
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
 
-	return Py_BuildValue ("i", status);
+    return Py_BuildValue ("i", status);
 }
 
 static PyObject *phoebeQuit(PyObject *self, PyObject *args)
@@ -38,12 +37,12 @@ static PyObject *phoebeOpen(PyObject *self, PyObject *args)
     
     PyArg_ParseTuple(args, "s", &fname);
     status = phoebe_open_parameter_file(fname);
-	if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
+    if (status != SUCCESS) {
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
 
-	return Py_BuildValue ("i", status);
+    return Py_BuildValue ("i", status);
 }
 
 static PyObject *phoebeCheck(PyObject *self, PyObject *args)
@@ -75,7 +74,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         phoebe_curve_transform (obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
         phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_sigma"), index, &sigma);
         phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), index, &rstr);
-	    lexp = intern_get_level_weighting_id (rstr);
+        lexp = intern_get_level_weighting_id (rstr);
         
         syn = phoebe_curve_new ();
         phoebe_curve_compute (syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX);
@@ -98,11 +97,11 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 
     status = phoebe_cf_compute (&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
     if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
-	
-	return Py_BuildValue ("d", cf);
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
+    
+    return Py_BuildValue ("d", cf);
 }
 
 static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
@@ -117,11 +116,11 @@ static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
     par = phoebe_parameter_lookup(parname);
     status = phoebe_parameter_set_limits(par, parmin, parmax);
     if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
-	
-	return Py_BuildValue ("i", status);
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
+    
+    return Py_BuildValue ("i", status);
 }
 
 static PyObject *phoebeGetLim(PyObject *self, PyObject *args)
@@ -136,11 +135,11 @@ static PyObject *phoebeGetLim(PyObject *self, PyObject *args)
     par = phoebe_parameter_lookup(parname);
     status = phoebe_parameter_get_limits(par, &parmin, &parmax);
     if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
-	
-	return Py_BuildValue ("(d,d)", parmin, parmax);
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
+    
+    return Py_BuildValue ("(d,d)", parmin, parmax);
 }
 
 static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
@@ -166,11 +165,11 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
     }
     
     if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
-	
-	return Py_BuildValue ("i", status);
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
+    
+    return Py_BuildValue ("i", status);
 }
 
 static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
@@ -202,11 +201,83 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
     }
 
     if (status != SUCCESS) {
-		printf ("%s", phoebe_error (status));
-		return NULL;
-	}
-	
-	return Py_BuildValue ("d", val);
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
+    
+    return Py_BuildValue ("d", val);
+}
+
+static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
+{
+    int lcno, rvno, i;
+    char *ldname, *pbname;
+    PHOEBE_passband *passband;
+    LD_model ldmodel;
+    double T1, T2, logg1, logg2, met1, met2;
+    double xld, yld;
+    
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lcno"), &lcno);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rvno"), &rvno);
+
+    /* LD model: */
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_model"), &ldname);
+    ldmodel = phoebe_ld_model_type(ldname);
+    
+    //~ printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
+    
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff1"), &T1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff2"), &T2);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_logg1"), &logg1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_logg2"), &logg2);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_met1"),  &met1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_met2"),  &met2);
+    
+    //~ printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
+    
+    /* Bolometric LD coefficients first: */
+    passband = phoebe_passband_lookup("Bolometric:3000A-10000A");
+    phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
+    //~ printf("Primary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_xbol1"), xld);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_ybol1"), yld);
+    
+    phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
+    //~ printf("Secondary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_xbol2"), xld);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_ybol2"), yld);
+
+    /* LC coefficients next: */
+    for (i = 0; i < lcno; i++) {
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_filter"), i, &pbname);
+        passband = phoebe_passband_lookup(pbname);
+        phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
+        //~ printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcx1"), i, xld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcy1"), i, yld);
+
+        phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
+        //~ printf("Secondary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcx2"), i, xld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcy2"), i, yld);
+    }
+
+    /* RV coefficients next: */
+    for (i = 0; i < rvno; i++) {
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rv_filter"), i, &pbname);
+        passband = phoebe_passband_lookup(pbname);
+        phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
+        //~ printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvx1"), xld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvy1"), yld);
+
+        phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
+        //~ printf("Secondary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvx2"), xld);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvy2"), yld);
+    }
+
+    return Py_BuildValue("i", 0.0);
 }
 
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
@@ -229,124 +300,125 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
     
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
-	phoebe_column_get_type (&itype, rstr);
-	
-	curve = phoebe_curve_new();
-	phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX);
+    phoebe_column_get_type (&itype, rstr);
+    
+    curve = phoebe_curve_new();
+    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX);
 
     ret = PyTuple_New(tlen);
     for (i = 0; i < tlen; i++)
         PyTuple_SetItem(ret, i, Py_BuildValue("d", curve->dep->val[i]));
 
-	phoebe_curve_free(curve);
-	phoebe_vector_free(indep);
+    phoebe_curve_free(curve);
+    phoebe_vector_free(indep);
 
     return ret;
 }
 
 static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 {
-	/**
-	 * phoebeParameter:
-	 * 
-	 * Packs all PHOEBE_parameter properties into a list to be parsed in
-	 * python into the parameter class. The following fields are parsed:
-	 *
-	 *   parameter->qualifier
-	 *   parameter->description
-	 *   parameter->kind
-	 *   parameter->format
-	 */
-	
-	PyObject *list;
-	PHOEBE_parameter *par;
-	char *qualifier;
-	int i;
-	
-	PyArg_ParseTuple (args, "s", &qualifier);
-	par = phoebe_parameter_lookup (qualifier);
-	if (!par) return Py_BuildValue ("");
-	
-	list = PyList_New (8);
+    /**
+     * phoebeParameter:
+     * 
+     * Packs all PHOEBE_parameter properties into a list to be parsed in
+     * python into the parameter class. The following fields are parsed:
+     *
+     *   parameter->qualifier
+     *   parameter->description
+     *   parameter->kind
+     *   parameter->format
+     */
+    
+    PyObject *list;
+    PHOEBE_parameter *par;
+    char *qualifier;
+    int i;
+    
+    PyArg_ParseTuple (args, "s", &qualifier);
+    par = phoebe_parameter_lookup (qualifier);
+    if (!par) return Py_BuildValue ("");
+    
+    list = PyList_New (8);
 
-	PyList_SetItem (list, 0, Py_BuildValue ("s", par->qualifier));
-	PyList_SetItem (list, 1, Py_BuildValue ("s", par->description));
-	PyList_SetItem (list, 2, Py_BuildValue ("i", par->kind));
-	PyList_SetItem (list, 3, Py_BuildValue ("s", par->format));
-	PyList_SetItem (list, 4, Py_BuildValue ("d", par->min));
-	PyList_SetItem (list, 5, Py_BuildValue ("d", par->max));
-	PyList_SetItem (list, 6, Py_BuildValue ("d", par->step));
+    PyList_SetItem (list, 0, Py_BuildValue ("s", par->qualifier));
+    PyList_SetItem (list, 1, Py_BuildValue ("s", par->description));
+    PyList_SetItem (list, 2, Py_BuildValue ("i", par->kind));
+    PyList_SetItem (list, 3, Py_BuildValue ("s", par->format));
+    PyList_SetItem (list, 4, Py_BuildValue ("d", par->min));
+    PyList_SetItem (list, 5, Py_BuildValue ("d", par->max));
+    PyList_SetItem (list, 6, Py_BuildValue ("d", par->step));
 
-	switch (par->type) {
-		case TYPE_INT:
-			PyList_SetItem (list, 7, Py_BuildValue ("i", par->value.i));
-		break;
-		case TYPE_BOOL:
-			PyList_SetItem (list, 7, Py_BuildValue ("b", par->value.b));
-		break;
-		case TYPE_DOUBLE:
-			PyList_SetItem (list, 7, Py_BuildValue ("d", par->value.d));
-		break;
-		case TYPE_STRING:
-			PyList_SetItem (list, 7, Py_BuildValue ("s", par->value.str));
-		break;
-		case TYPE_INT_ARRAY: {
-			int i;
-			PyObject *array = PyList_New (par->value.array->dim);
-			for (i = 0; i < par->value.array->dim; i++)
-				PyList_SetItem (array, i, Py_BuildValue ("i", par->value.array->val.iarray));
-			PyList_SetItem (list, 7, array);
-		}
-		break;
-		case TYPE_BOOL_ARRAY: {
-			PyObject *array = PyList_New (par->value.array->dim);
-			for (i = 0; i < par->value.array->dim; i++)
-				PyList_SetItem (array, i, Py_BuildValue ("b", par->value.array->val.barray));
-			PyList_SetItem (list, 7, array);
-		}
-		break;
-		case TYPE_DOUBLE_ARRAY: {
-			PyObject *array = PyList_New (par->value.array->dim);
-			for (i = 0; i < par->value.array->dim; i++)
-				PyList_SetItem (array, i, Py_BuildValue ("d", par->value.array->val.darray));
-			PyList_SetItem (list, 7, array);
-		}
-		break;
-		case TYPE_STRING_ARRAY: {
-			PyObject *array = PyList_New (par->value.array->dim);
-			for (i = 0; i < par->value.array->dim; i++)
-				PyList_SetItem (array, i, Py_BuildValue ("s", par->value.array->val.strarray));
-			PyList_SetItem (list, 7, array);
-		}
-		break;
-		default:
-			/* If we end up here, yell and scream! */
-			printf ("exception encountered in phoebe_backend.c, phoebeParameter().\n");
-		break;
-	}
+    switch (par->type) {
+        case TYPE_INT:
+            PyList_SetItem (list, 7, Py_BuildValue ("i", par->value.i));
+        break;
+        case TYPE_BOOL:
+            PyList_SetItem (list, 7, Py_BuildValue ("b", par->value.b));
+        break;
+        case TYPE_DOUBLE:
+            PyList_SetItem (list, 7, Py_BuildValue ("d", par->value.d));
+        break;
+        case TYPE_STRING:
+            PyList_SetItem (list, 7, Py_BuildValue ("s", par->value.str));
+        break;
+        case TYPE_INT_ARRAY: {
+            int i;
+            PyObject *array = PyList_New (par->value.array->dim);
+            for (i = 0; i < par->value.array->dim; i++)
+                PyList_SetItem (array, i, Py_BuildValue ("i", par->value.array->val.iarray));
+            PyList_SetItem (list, 7, array);
+        }
+        break;
+        case TYPE_BOOL_ARRAY: {
+            PyObject *array = PyList_New (par->value.array->dim);
+            for (i = 0; i < par->value.array->dim; i++)
+                PyList_SetItem (array, i, Py_BuildValue ("b", par->value.array->val.barray));
+            PyList_SetItem (list, 7, array);
+        }
+        break;
+        case TYPE_DOUBLE_ARRAY: {
+            PyObject *array = PyList_New (par->value.array->dim);
+            for (i = 0; i < par->value.array->dim; i++)
+                PyList_SetItem (array, i, Py_BuildValue ("d", par->value.array->val.darray));
+            PyList_SetItem (list, 7, array);
+        }
+        break;
+        case TYPE_STRING_ARRAY: {
+            PyObject *array = PyList_New (par->value.array->dim);
+            for (i = 0; i < par->value.array->dim; i++)
+                PyList_SetItem (array, i, Py_BuildValue ("s", par->value.array->val.strarray));
+            PyList_SetItem (list, 7, array);
+        }
+        break;
+        default:
+            /* If we end up here, yell and scream! */
+            printf ("exception encountered in phoebe_backend.c, phoebeParameter().\n");
+        break;
+    }
 
-	return list;
+    return list;
 }
 
 static PyMethodDef PhoebeMethods[] = {
-	{"init",             phoebeInit,       METH_VARARGS, "Initialize PHOEBE backend"},
-	{"configure",        phoebeConfigure,  METH_VARARGS, "Configure all internal PHOEBE structures"},
-	{"quit",             phoebeQuit,       METH_VARARGS, "Quit PHOEBE"},
-	{"open",             phoebeOpen,       METH_VARARGS, "Open PHOEBE parameter file"},
-	{"cfval",            phoebeCFVal,      METH_VARARGS, "Compute a cost function value of the passed curve"},
+    {"init",             phoebeInit,       METH_VARARGS, "Initialize PHOEBE backend"},
+    {"configure",        phoebeConfigure,  METH_VARARGS, "Configure all internal PHOEBE structures"},
+    {"quit",             phoebeQuit,       METH_VARARGS, "Quit PHOEBE"},
+    {"open",             phoebeOpen,       METH_VARARGS, "Open PHOEBE parameter file"},
+    {"cfval",            phoebeCFVal,      METH_VARARGS, "Compute a cost function value of the passed curve"},
     {"check",            phoebeCheck,      METH_VARARGS, "Check whether the parameter is within bounds"},
     {"setpar",           phoebeSetPar,     METH_VARARGS, "Set the value of the parameter"},
     {"getpar",           phoebeGetPar,     METH_VARARGS, "Get the value of the parameter"},
     {"setlim",           phoebeSetLim,     METH_VARARGS, "Set parameter limits"},
     {"getlim",           phoebeGetLim,     METH_VARARGS, "Get parameter limits"},
+    {"updateLD",         phoebeUpdateLD,   METH_VARARGS, "Update limb darkening coefficients"},
     {"lc",               phoebeLC,         METH_VARARGS, "Compute light curve"},
-	{"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
-	{NULL,               NULL,             0,            NULL}
+    {"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
+    {NULL,               NULL,             0,            NULL}
 };
 
 PyMODINIT_FUNC initphoebeBackend (void)
 {
-	PyObject *backend = Py_InitModule ("phoebeBackend", PhoebeMethods);
-	if (!backend)
-		return;
+    PyObject *backend = Py_InitModule ("phoebeBackend", PhoebeMethods);
+    if (!backend)
+        return;
 }
