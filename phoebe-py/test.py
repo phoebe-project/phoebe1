@@ -7,6 +7,24 @@ phoebe.configure()
 # Open parameter file:
 phoebe.open("test.phoebe")
 
+# Original LD coefficients:
+xbol1 = phoebe.getpar("phoebe_ld_xbol1")
+ybol1 = phoebe.getpar("phoebe_ld_ybol1")
+xbol2 = phoebe.getpar("phoebe_ld_xbol2")
+ybol2 = phoebe.getpar("phoebe_ld_ybol2")
+print "Original bolometric LD coefficients:", xbol1, ybol1, xbol2, ybol2
+
+# Update limb darkening coefficients:
+phoebe.updateLD()
+
+xbol1 = phoebe.getpar("phoebe_ld_xbol1")
+ybol1 = phoebe.getpar("phoebe_ld_ybol1")
+xbol2 = phoebe.getpar("phoebe_ld_xbol2")
+ybol2 = phoebe.getpar("phoebe_ld_ybol2")
+print " Updated bolometric LD coefficients:", xbol1, ybol1, xbol2, ybol2
+
+exit()
+
 # Get parameter value:
 pot1 = phoebe.getpar("phoebe_pot1")
 print "Original pot1 value:", pot1
