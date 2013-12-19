@@ -158,6 +158,10 @@ c         args   ..   an array of passed parameters (arguments):
 c
 c                     args( 1) = phase shift
 c                     args( 2) = inclination
+c                     args( 3) = bolometric LD coefficient x1
+c                     args( 4) = bolometric LD coefficient y1
+c                     args( 5) = bolometric LD coefficient x2
+c                     args( 6) = bolometric LD coefficient y2
 c
 c                     Incorporating args was necessary to circumvent
 c                     rounding problems in WD when using I/O.
@@ -349,6 +353,10 @@ ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     Override the read-in values with passed values:
       pshift=args(1)
       xincl=args(2)
+      xbol1=args(3)
+      ybol1=args(4)
+      xbol2=args(5)
+      ybol2=args(6)
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
       if(mpage.ne.9) goto 414
       close(15)

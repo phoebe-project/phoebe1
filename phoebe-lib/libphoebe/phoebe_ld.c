@@ -847,7 +847,7 @@ int phoebe_ld_get_coefficients (LD_model ldlaw, PHOEBE_passband *passband, doubl
 		PHOEBE_vector **vec;
 	} fv;
 
-	phoebe_debug ("entering phoebe_get_ld_coefficients () function.\n");
+	phoebe_debug ("entering phoebe_ld_get_coefficients () function.\n");
 
 	phoebe_config_entry_get ("PHOEBE_LD_INTERN", &ld_intern);
 
