@@ -34,7 +34,7 @@
     4 format(4I2,2I4,F13.6,D12.5,F7.5,F8.2)
     5 format(F6.5,D13.6,2F10.4,F10.4,F9.3,2F7.3,F7.2)
     6 format(2(F7.4,1X),2F7.3,3D13.6,4F7.3)
-    7 format(I3,2F10.5,4F7.3,F8.4,D10.4,F8.3,F8.4,F9.6)
+    7 format(I3,2F10.5,4F10.6,F8.4,D10.4,F8.3,F8.4,F9.6)
     8 format(4F9.5)
     9 format(1X,F4.0)
    10 format(F4.0)
