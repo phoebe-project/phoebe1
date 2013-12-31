@@ -112,8 +112,8 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         }
         Lpb = num/denom;
 
-        for (i = 0; i < syn->dep->dim; i++)
-            printf("%lf %lf %lf %lf\n", syn->indep->val[i], obs->dep->val[i], syn->dep->val[i], Lpb*syn->dep->val[i]);
+        //~ for (i = 0; i < syn->dep->dim; i++)
+            //~ printf("%lf %lf %lf %lf\n", syn->indep->val[i], obs->dep->val[i], syn->dep->val[i], Lpb*syn->dep->val[i]);
         
         cf = 0.0;
         for (i = 0; i < syn->dep->dim; i++)
