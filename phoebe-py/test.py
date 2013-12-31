@@ -23,8 +23,6 @@ xbol2 = phoebe.getpar("phoebe_ld_xbol2")
 ybol2 = phoebe.getpar("phoebe_ld_ybol2")
 print " Updated bolometric LD coefficients:", xbol1, ybol1, xbol2, ybol2
 
-exit()
-
 # Get parameter value:
 pot1 = phoebe.getpar("phoebe_pot1")
 print "Original pot1 value:", pot1
@@ -32,14 +30,15 @@ print "Original pot1 value:", pot1
 pmin, pmax = phoebe.getlim("phoebe_pot1")
 print "Original limits:", pmin, pmax
 
-# Compute the cost function for all passbands:
-sigLC  = phoebe.getpar("phoebe_lc_sigma", 0)
-sigRV1 = phoebe.getpar("phoebe_rv_sigma", 0)
-sigRV2 = phoebe.getpar("phoebe_rv_sigma", 1)
+# Let's try automatic passband luminosity computation:
+print "Without passband luminosity computed: ", phoebe.cfval("lc", 0, 0)
+print "With passband luminosity computed: ", phoebe.cfval("lc", 0, 1)
 
-print "LC  cost function:", phoebe.cfval("lc", 0)/sigLC**2
-print "RV1 cost function:", phoebe.cfval("rv", 0)/sigRV1**2
-print "RV2 cost function:", phoebe.cfval("rv", 1)/sigRV2**2
+exit()
+
+print "LC  cost function:", phoebe.cfval("lc", 0)
+print "RV1 cost function:", phoebe.cfval("rv", 0)
+print "RV2 cost function:", phoebe.cfval("rv", 1)
 
 # Set parameter limits:
 phoebe.setlim("phoebe_pot1", 3.0, 5.0)
