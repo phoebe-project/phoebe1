@@ -61,13 +61,14 @@ static PyObject *phoebeCheck(PyObject *self, PyObject *args)
 
 static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 {
-    int index, status, lexp;
-    double cf, sigma;
+    int i, index, status, lexp, scale;
+    double cf, sigma, num, denom, Lpb;
     char *rstr, *ctype;
     
     PHOEBE_curve *obs, *syn;
     
-    PyArg_ParseTuple(args, "si", &ctype, &index);
+    scale = 0;
+    PyArg_ParseTuple(args, "si|i", &ctype, &index, &scale);
     
     if (strcmp(ctype, "lc") == 0 || strcmp(ctype, "LC") == 0) {
         obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_LC, index);
@@ -95,10 +96,28 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    status = phoebe_cf_compute (&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
-    if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
-        return NULL;
+    if (scale == 0) {
+        status = phoebe_cf_compute (&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
+        if (status != SUCCESS) {
+            printf ("%s", phoebe_error (status));
+            return NULL;
+        }
+    }
+    else {
+        num = 0.0;
+        denom = 0.0;
+        for (i = 0; i < syn->dep->dim; i++) {
+            num += syn->dep->val[i]*obs->dep->val[i]/obs->weight->val[i]/obs->weight->val[i];
+            denom += syn->dep->val[i]*syn->dep->val[i]/obs->weight->val[i]/obs->weight->val[i];
+        }
+        Lpb = num/denom;
+
+        for (i = 0; i < syn->dep->dim; i++)
+            printf("%lf %lf %lf %lf\n", syn->indep->val[i], obs->dep->val[i], syn->dep->val[i], Lpb*syn->dep->val[i]);
+        
+        cf = 0.0;
+        for (i = 0; i < syn->dep->dim; i++)
+            cf += (obs->dep->val[i]-Lpb*syn->dep->val[i])*(obs->dep->val[i]-Lpb*syn->dep->val[i]);
     }
     
     return Py_BuildValue ("d", cf);
