@@ -117,7 +117,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         
         cf = 0.0;
         for (i = 0; i < syn->dep->dim; i++)
-            cf += (obs->dep->val[i]-Lpb*syn->dep->val[i])*(obs->dep->val[i]-Lpb*syn->dep->val[i]);
+            cf += (obs->dep->val[i]-Lpb*syn->dep->val[i])*(obs->dep->val[i]-Lpb*syn->dep->val[i])/obs->weight->val[i]/obs->weight->val[i];
     }
     
     return Py_BuildValue ("d", cf);
