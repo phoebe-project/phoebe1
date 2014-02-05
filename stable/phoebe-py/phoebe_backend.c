@@ -171,6 +171,9 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
     PyArg_ParseTuple(args, "sd|i", &parname, &val, &index);
     par = phoebe_parameter_lookup(parname);
     switch (par->type) {
+        case TYPE_INT:
+            status = phoebe_parameter_set_value(par, (int) val);
+            break;
         case TYPE_DOUBLE:
             status = phoebe_parameter_set_value(par, val);
             break;
@@ -204,8 +207,11 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
         case TYPE_INT: {
             int ival;
             status = phoebe_parameter_get_value(par, &ival);
-            val = ival;
-            break;
+            if (status != SUCCESS) {
+                printf ("%s", phoebe_error (status));
+                return NULL;
+            }
+            return Py_BuildValue ("i", ival);
         }
         case TYPE_DOUBLE:
             status = phoebe_parameter_get_value(par, &val);
@@ -315,8 +321,10 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
     
-    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj))
+    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
+        printf("parsing failed.\n");
         return NULL;
+    }
     
     tlen = PyTuple_Size(obj);
     indep = phoebe_vector_new();
