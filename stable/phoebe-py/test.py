@@ -7,6 +7,12 @@ phoebe.configure()
 # Open parameter file:
 phoebe.open("test.phoebe")
 
+# Get data from phoebe:
+x, y, z = phoebe.data("lc", 0)
+print("First 5 data points from the LC file:")
+for i in range(5):
+    print("%12.6f"*3 % (x[i], y[i], z[i]))
+
 # Original LD coefficients:
 xbol1 = phoebe.getpar("phoebe_ld_xbol1")
 ybol1 = phoebe.getpar("phoebe_ld_ybol1")
@@ -33,8 +39,6 @@ print "Original limits:", pmin, pmax
 # Let's try automatic passband luminosity computation:
 print "Without passband luminosity computed: ", phoebe.cfval("lc", 0, 0)
 print "With passband luminosity computed: ", phoebe.cfval("lc", 0, 1)
-
-exit()
 
 print "LC  cost function:", phoebe.cfval("lc", 0)
 print "RV1 cost function:", phoebe.cfval("rv", 0)

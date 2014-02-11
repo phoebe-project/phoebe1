@@ -311,6 +311,44 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     return Py_BuildValue("i", 0);
 }
 
+static PyObject *phoebeData(PyObject *self, PyObject *args)
+{
+    int i, cidx;
+    char *ctype;
+    PHOEBE_curve *curve;
+    PyObject *x, *y, *z, *ret;
+    
+    if (!PyArg_ParseTuple(args, "si", &ctype, &cidx)) {
+        printf("parsing failed.\n");
+        return NULL;
+    }
+    
+    if (strcmp(ctype, "lc") == 0 || strcmp(ctype, "LC") == 0) {
+        curve = phoebe_curve_new_from_pars(PHOEBE_CURVE_LC, cidx);
+    }
+    else {
+        curve = phoebe_curve_new_from_pars(PHOEBE_CURVE_RV, cidx);
+    }
+    
+    phoebe_curve_transform(curve, curve->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
+
+    x = PyTuple_New(curve->indep->dim);
+    y = PyTuple_New(curve->dep->dim);
+    z = PyTuple_New(curve->weight->dim);
+    for (i = 0; i < curve->indep->dim; i++) {
+        PyTuple_SetItem(x, i, Py_BuildValue("d", curve->indep->val[i]));
+        PyTuple_SetItem(y, i, Py_BuildValue("d", curve->dep->val[i]));
+        PyTuple_SetItem(z, i, Py_BuildValue("d", curve->weight->val[i]));
+    }
+    phoebe_curve_free(curve);
+    
+    ret = PyTuple_New(3);
+    PyTuple_SetItem(ret, 0, x);
+    PyTuple_SetItem(ret, 1, y);
+    PyTuple_SetItem(ret, 2, z);
+    return ret;
+}
+
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
     int index, tlen, i;
@@ -445,6 +483,7 @@ static PyMethodDef PhoebeMethods[] = {
     {"getlim",           phoebeGetLim,     METH_VARARGS, "Get parameter limits"},
     {"updateLD",         phoebeUpdateLD,   METH_VARARGS, "Update limb darkening coefficients"},
     {"lc",               phoebeLC,         METH_VARARGS, "Compute light curve"},
+    {"data",             phoebeData,       METH_VARARGS, "Return light or RV curve data"},
     {"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
     {NULL,               NULL,             0,            NULL}
 };
