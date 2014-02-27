@@ -29,6 +29,16 @@ xbol2 = phoebe.getpar("phoebe_ld_xbol2")
 ybol2 = phoebe.getpar("phoebe_ld_ybol2")
 print " Updated bolometric LD coefficients:", xbol1, ybol1, xbol2, ybol2
 
+# Compute a radial velocity curve:
+phs = tuple([-0.5+float(i)/29 for i in range(30)])
+rv1 = phoebe.rv1(phs, 0)
+rv2 = phoebe.rv2(phs, 1)
+print("Computed RV curves:")
+for i in range(len(rv1)):
+    print phs[i], rv1[i], rv2[i]
+
+exit()
+
 # Get parameter value:
 pot1 = phoebe.getpar("phoebe_pot1")
 print "Original pot1 value:", pot1

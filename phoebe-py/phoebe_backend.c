@@ -386,6 +386,84 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     return ret;
 }
 
+static PyObject *phoebeRV1(PyObject *self, PyObject *args)
+{
+    int index, tlen, i, status;
+    PyObject *obj, *ret;
+    char *rstr;
+    
+    PHOEBE_column_type itype;
+    PHOEBE_vector *indep;
+    PHOEBE_curve *curve;
+    
+    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
+        printf("parsing failed.\n");
+        return NULL;
+    }
+    
+    tlen = PyTuple_Size(obj);
+    indep = phoebe_vector_new();
+    phoebe_vector_alloc(indep, tlen);
+    for (i = 0; i < tlen; i++)
+        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
+    
+    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
+    phoebe_column_get_type (&itype, rstr);
+    
+    curve = phoebe_curve_new();
+    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_PRIMARY_RV);
+    if (status != SUCCESS) {
+        printf("%s", phoebe_error(status));
+        return NULL;
+    }
+
+    ret = PyTuple_New(tlen);
+    for (i = 0; i < tlen; i++)
+        PyTuple_SetItem(ret, i, Py_BuildValue("d", curve->dep->val[i]));
+
+    phoebe_curve_free(curve);
+    phoebe_vector_free(indep);
+
+    return ret;
+}
+
+static PyObject *phoebeRV2(PyObject *self, PyObject *args)
+{
+    int index, tlen, i;
+    PyObject *obj, *ret;
+    char *rstr;
+    
+    PHOEBE_column_type itype;
+    PHOEBE_vector *indep;
+    PHOEBE_curve *curve;
+    
+    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
+        printf("parsing failed.\n");
+        return NULL;
+    }
+    
+    tlen = PyTuple_Size(obj);
+    indep = phoebe_vector_new();
+    phoebe_vector_alloc(indep, tlen);
+    for (i = 0; i < tlen; i++)
+        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
+    
+    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
+    phoebe_column_get_type (&itype, rstr);
+    
+    curve = phoebe_curve_new();
+    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_SECONDARY_RV);
+
+    ret = PyTuple_New(tlen);
+    for (i = 0; i < tlen; i++)
+        PyTuple_SetItem(ret, i, Py_BuildValue("d", curve->dep->val[i]));
+
+    phoebe_curve_free(curve);
+    phoebe_vector_free(indep);
+
+    return ret;
+}
+
 static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 {
     /**
@@ -483,6 +561,8 @@ static PyMethodDef PhoebeMethods[] = {
     {"getlim",           phoebeGetLim,     METH_VARARGS, "Get parameter limits"},
     {"updateLD",         phoebeUpdateLD,   METH_VARARGS, "Update limb darkening coefficients"},
     {"lc",               phoebeLC,         METH_VARARGS, "Compute light curve"},
+    {"rv1",              phoebeRV1,        METH_VARARGS, "Compute primary radial velocity curve"},
+    {"rv2",              phoebeRV2,        METH_VARARGS, "Compute secondary radial velocity curve"},
     {"data",             phoebeData,       METH_VARARGS, "Return light or RV curve data"},
     {"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
     {NULL,               NULL,             0,            NULL}
