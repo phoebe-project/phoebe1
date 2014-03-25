@@ -21,4 +21,4 @@ AM_CFLAGS = -Wall $(EXTRA_WARNING_COMPILER_FLAG) -g \
 	-DGLADE_PIXMAP_DIR=\"$(prefix)/share/phoebe/gui/pixmaps\"
 
 phoebe_gui_LDADD = @GTK_LIBS@ @LIBGLADE_LIBS@
-phoebe_gui_LDFLAGS = -export-dynamic
+phoebe_gui_LDFLAGS = -rdynamic
