@@ -6,6 +6,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
+/* Define to 1 if you have the `m' library (-lm). */
+#undef HAVE_LIBM
+
 /* Define to 1 if you have the `phoebe' library (-lphoebe). */
 #undef HAVE_LIBPHOEBE
 
@@ -56,12 +59,6 @@
 
 /* Define if verbose debugging is required: */
 #undef PHOEBE_DEBUG_SUPPORT
-
-/* Define if GNUPlot version is linked against libgd (supports "size"): */
-#undef PHOEBE_GUI_GNUPLOT_LIBGD
-
-/* Define if GNUPlot is supported: */
-#undef PHOEBE_GUI_GNUPLOT_SUPPORT
 
 /* PHOEBE release date */
 #undef PHOEBE_GUI_RELEASE_DATE

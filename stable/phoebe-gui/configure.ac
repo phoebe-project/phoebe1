@@ -77,8 +77,10 @@
       exit
     fi
 
-  # Check for pkg-config:
+  # Check for math library:
+  AC_CHECK_LIB([m],[cos])
 
+  # Check for pkg-config:
   AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
   if test "$PKG_CONFIG" = "no" ; then
       echo ""
@@ -139,40 +141,6 @@
     exit
   fi
 
-# GNUPlot support:
-  AC_ARG_ENABLE(gnuplot,
-      [  --enable-gnuplot        Enable gnuplot for drawing graphs (default=yes)],
-      [ac_enable_gnuplot=yes], [ac_enable_gnuplot=yes])
-  AC_DEFUN([AC_PROG_GNUPLOT], [AC_PATH_PROG(GNUPLOT,gnuplot)])
-  AC_PROG_GNUPLOT
-  if test -n "$GNUPLOT"; then
-    AC_DEFINE(PHOEBE_GUI_GNUPLOT_SUPPORT, 1, Define if GNUPlot is supported:)
-
-    # The following test checks whether gnuplot supports keyword 'picsize'
-    # for png images (depends what png library gnuplot is linked against)
-    # by attempting to create a test png:
-
-    echo "set terminal png small picsize 590 310" > testgp.gp
-    echo "set output \"testgp.png\"" >> testgp.gp
-    echo "plot x" >> testgp.gp
-    echo "set output" >> testgp.gp
-
-    $GNUPLOT testgp.gp > /dev/null 2>&1
-    if test -s "testgp.png"; then
-      gnuplot="gnuplot (with libpng)"
-    else
-      AC_DEFINE(PHOEBE_GUI_GNUPLOT_LIBGD, 1, Define if GNUPlot version is linked against libgd (supports "size"):)
-      gnuplot="gnuplot (with libgd)"
-    fi
-    rm -rf testgp.gp testgp.png
-  fi
-
-# Concatenate all supporting plotting programs into $plotters:
-  plotters=$gnuplot
-  if test x"$plotters" = x; then
-    plotters="none"
-  fi
-
   # Do we have update-mime-database and update-desktop-database:
   AC_CHECK_PROG(have_update_mime_database, [update-mime-database], [yes])
   AC_CHECK_PROG(have_update_database_database, [update-database-database], [yes])
@@ -231,6 +199,5 @@
   echo "C compiler used:                  $CC"
   echo "Top-level install directory:      $prefix"
   echo "PHOEBE GUI binary goes to:        $prefix/bin"
-  echo "Supported plotting packages:      $plotters"
   echo "Verbose debugging messages:       $debugstate"
   echo ""
