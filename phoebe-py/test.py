@@ -37,6 +37,30 @@ print("Computed RV curves:")
 for i in range(len(rv1)):
     print phs[i], rv1[i], rv2[i]
 
+# Try parameter role reversal for primary <--> secondary:
+print("# Star role reversal:")
+phs = tuple([-0.5+float(i)/100 for i in range(101)])
+lc1 = phoebe.lc(phs, 0)
+
+print "hla=", phoebe.getpar("phoebe_plum1", 0)
+print "cla=", phoebe.getpar("phoebe_plum2", 0)
+print "pot1=", phoebe.getpar("phoebe_pot1")
+print "pot2=", phoebe.getpar("phoebe_pot2")
+print "T1=", phoebe.getpar("phoebe_teff1")
+print "T2=", phoebe.getpar("phoebe_teff2")
+print "q=", phoebe.getpar("phoebe_rm")
+phoebe.role_reverse()
+phoebe.setpar("phoebe_hla", phoebe.getpar("phoebe_plum2"), 0)
+lc2 = phoebe.lc(phs, 0)
+print "hla=", phoebe.getpar("phoebe_hla", 0)
+print "cla=", phoebe.getpar("phoebe_cla", 0)
+print "pot1=", phoebe.getpar("phoebe_pot1")
+print "pot2=", phoebe.getpar("phoebe_pot2")
+print "T1=", phoebe.getpar("phoebe_teff1")
+print "T2=", phoebe.getpar("phoebe_teff2")
+print "q=", phoebe.getpar("phoebe_rm")
+for x in zip(phs, lc1, lc2):
+    print("%f\t%f\t%f" % (x[0], x[1], x[2]))
 exit()
 
 # Get parameter value:

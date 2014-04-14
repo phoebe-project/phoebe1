@@ -30,6 +30,82 @@ static PyObject *phoebeQuit(PyObject *self, PyObject *args)
     return Py_BuildValue("i", status);
 }
 
+static PyObject *phoebeRoleReverse(PyObject *self, PyObject *args)
+{
+    int lcno, rvno, i;
+    double pot1, pot2, pot1n, pot2n, q, pshift, perr0, c1, c2;
+
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_pot1"), &pot1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_pot2"), &pot2);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rm"), &q);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_pshift"), &pshift);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_perr0"), &perr0);
+    
+    pot1n = pot2/q + (q-1)/2/q;
+    pot2n = pot1/q + (q-1)/2/q;
+    q = 1/q;
+    pshift = pshift > 0.5 ? pshift - 0.5 : pshift + 0.5;
+    perr0 = perr0 > 3.1415926 ? perr0 - 3.1415926 : perr0 + 3.1415926;
+    
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lcno"), &lcno);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rvno"), &rvno);
+    
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_pot1"), pot1n);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_pot2"), pot2n);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_rm"), q);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_pshift"), pshift);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_perr0"), perr0);
+
+    for (i = 0; i < lcno; i++) {
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_hla"), i, &c1);
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_cla"), i, &c2);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_hla"), i, c2);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_cla"), i, c1);
+
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_lcx1"), i, &c1);
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_lcx2"), i, &c2);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcx1"), i, c2);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcx2"), i, c1);
+
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_lcy1"), i, &c1);
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_lcy2"), i, &c2);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcy1"), i, c2);
+        phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcy2"), i, c1);
+    }
+
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff1"), &c1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff2"), &c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_teff1"), c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_teff2"), c1);
+
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f1"), &c1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f2"), &c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_f1"), c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_f2"), c1);
+    
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_alb1"), &c1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_alb2"), &c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_alb1"), c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_alb2"), c1);
+
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_grb1"), &c1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_grb2"), &c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_grb1"), c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_grb2"), c1);
+
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_xbol1"), &c1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_xbol2"), &c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_xbol1"), c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_xbol2"), c1);
+
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_ybol1"), &c1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_ybol2"), &c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_ybol1"), c2);
+    phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_ybol2"), c1);
+
+    return Py_BuildValue ("");
+}
+
 static PyObject *phoebeOpen(PyObject *self, PyObject *args)
 {
     char *fname;
@@ -549,22 +625,23 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 }
 
 static PyMethodDef PhoebeMethods[] = {
-    {"init",             phoebeInit,       METH_VARARGS, "Initialize PHOEBE backend"},
-    {"configure",        phoebeConfigure,  METH_VARARGS, "Configure all internal PHOEBE structures"},
-    {"quit",             phoebeQuit,       METH_VARARGS, "Quit PHOEBE"},
-    {"open",             phoebeOpen,       METH_VARARGS, "Open PHOEBE parameter file"},
-    {"cfval",            phoebeCFVal,      METH_VARARGS, "Compute a cost function value of the passed curve"},
-    {"check",            phoebeCheck,      METH_VARARGS, "Check whether the parameter is within bounds"},
-    {"setpar",           phoebeSetPar,     METH_VARARGS, "Set the value of the parameter"},
-    {"getpar",           phoebeGetPar,     METH_VARARGS, "Get the value of the parameter"},
-    {"setlim",           phoebeSetLim,     METH_VARARGS, "Set parameter limits"},
-    {"getlim",           phoebeGetLim,     METH_VARARGS, "Get parameter limits"},
-    {"updateLD",         phoebeUpdateLD,   METH_VARARGS, "Update limb darkening coefficients"},
-    {"lc",               phoebeLC,         METH_VARARGS, "Compute light curve"},
-    {"rv1",              phoebeRV1,        METH_VARARGS, "Compute primary radial velocity curve"},
-    {"rv2",              phoebeRV2,        METH_VARARGS, "Compute secondary radial velocity curve"},
-    {"data",             phoebeData,       METH_VARARGS, "Return light or RV curve data"},
-    {"parameter",        phoebeParameter,  METH_VARARGS, "Return a list of parameter properties"},
+    {"init",             phoebeInit,        METH_VARARGS, "Initialize PHOEBE backend"},
+    {"configure",        phoebeConfigure,   METH_VARARGS, "Configure all internal PHOEBE structures"},
+    {"quit",             phoebeQuit,        METH_VARARGS, "Quit PHOEBE"},
+    {"open",             phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
+    {"cfval",            phoebeCFVal,       METH_VARARGS, "Compute a cost function value of the passed curve"},
+    {"check",            phoebeCheck,       METH_VARARGS, "Check whether the parameter is within bounds"},
+    {"setpar",           phoebeSetPar,      METH_VARARGS, "Set the value of the parameter"},
+    {"getpar",           phoebeGetPar,      METH_VARARGS, "Get the value of the parameter"},
+    {"setlim",           phoebeSetLim,      METH_VARARGS, "Set parameter limits"},
+    {"getlim",           phoebeGetLim,      METH_VARARGS, "Get parameter limits"},
+    {"updateLD",         phoebeUpdateLD,    METH_VARARGS, "Update limb darkening coefficients"},
+    {"lc",               phoebeLC,          METH_VARARGS, "Compute light curve"},
+    {"rv1",              phoebeRV1,         METH_VARARGS, "Compute primary radial velocity curve"},
+    {"rv2",              phoebeRV2,         METH_VARARGS, "Compute secondary radial velocity curve"},
+    {"data",             phoebeData,        METH_VARARGS, "Return light or RV curve data"},
+    {"parameter",        phoebeParameter,   METH_VARARGS, "Return a list of parameter properties"},
+    {"role_reverse",     phoebeRoleReverse, METH_VARARGS, "Reverses the role of the primary and the secondary"},
     {NULL,               NULL,             0,            NULL}
 };
 
