@@ -7,6 +7,12 @@ phoebe.configure()
 # Open parameter file:
 phoebe.open("test.phoebe")
 
+# Get parameter values:
+print phoebe.getpar("phoebe_indep")
+
+# Set parameter values:
+phoebe.setpar("phoebe_indep", "Time (HJD)")
+
 # Get data from phoebe:
 x, y, z = phoebe.data("lc", 0)
 print("First 5 data points from the LC file:")
