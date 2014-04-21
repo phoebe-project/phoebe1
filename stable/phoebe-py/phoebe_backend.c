@@ -121,6 +121,21 @@ static PyObject *phoebeOpen(PyObject *self, PyObject *args)
     return Py_BuildValue ("i", status);
 }
 
+static PyObject *phoebeSave(PyObject *self, PyObject *args)
+{
+    char *fname;
+    int status;
+    
+    PyArg_ParseTuple(args, "s", &fname);
+    status = phoebe_save_parameter_file(fname);
+    if (status != SUCCESS) {
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
+
+    return Py_BuildValue ("i", status);
+}
+
 static PyObject *phoebeCheck(PyObject *self, PyObject *args)
 {
     char *parname;
@@ -241,21 +256,52 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 {
     int index, status;
     char *parname;
-    double val;
+    PyObject *parval;
     PHOEBE_parameter *par;
     
-    PyArg_ParseTuple(args, "sd|i", &parname, &val, &index);
+    PyArg_ParseTuple(args, "sO|i", &parname, &parval, &index);
     par = phoebe_parameter_lookup(parname);
     switch (par->type) {
-        case TYPE_INT:
+        case TYPE_INT: {
+			int val;
+			if (!PyInt_Check(parval)) {
+				printf("error: integer value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyInt_AS_LONG(parval);
             status = phoebe_parameter_set_value(par, (int) val);
             break;
-        case TYPE_DOUBLE:
+		}
+        case TYPE_DOUBLE: {
+			double val;
+			if (!PyFloat_Check(parval)) {
+				printf("error: float value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyFloat_AS_DOUBLE(parval);
             status = phoebe_parameter_set_value(par, val);
             break;
-        case TYPE_DOUBLE_ARRAY:
+		}
+		case TYPE_STRING: {
+			char *val;
+			if (!PyString_Check(parval)) {
+				printf("error: string value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyString_AS_STRING(parval);
+			status = phoebe_parameter_set_value(par, val);
+			break;
+		}
+        case TYPE_DOUBLE_ARRAY: {
+			double val;
+			if (!PyFloat_Check(parval)) {
+				printf("error: float value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyFloat_AS_DOUBLE(parval);
             status = phoebe_parameter_set_value(par, val, index);
             break;
+		}
         default:
             status = 0;
             printf("not yet implemented, sorry.\n");
@@ -292,6 +338,15 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
         case TYPE_DOUBLE:
             status = phoebe_parameter_get_value(par, &val);
             break;
+        case TYPE_STRING: {
+			const char *strval;
+			status = phoebe_parameter_get_value(par, &strval);
+            if (status != SUCCESS) {
+                printf ("%s", phoebe_error (status));
+                return NULL;
+            }
+            return Py_BuildValue ("s", strval);
+		}
         case TYPE_DOUBLE_ARRAY:
             status = phoebe_parameter_get_value(par, index, &val);
             break;
@@ -629,6 +684,7 @@ static PyMethodDef PhoebeMethods[] = {
     {"configure",        phoebeConfigure,   METH_VARARGS, "Configure all internal PHOEBE structures"},
     {"quit",             phoebeQuit,        METH_VARARGS, "Quit PHOEBE"},
     {"open",             phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
+    {"save",             phoebeSave,        METH_VARARGS, "Save PHOEBE parameter file"},
     {"cfval",            phoebeCFVal,       METH_VARARGS, "Compute a cost function value of the passed curve"},
     {"check",            phoebeCheck,       METH_VARARGS, "Check whether the parameter is within bounds"},
     {"setpar",           phoebeSetPar,      METH_VARARGS, "Set the value of the parameter"},
