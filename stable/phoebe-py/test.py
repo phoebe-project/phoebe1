@@ -8,10 +8,18 @@ phoebe.configure()
 phoebe.open("test.phoebe")
 
 # Get parameter values:
-print phoebe.getpar("phoebe_indep")
+print "Original:"
+print "phoebe_indep:", phoebe.getpar("phoebe_indep")
+print "phoebe_atm1_switch:", phoebe.getpar("phoebe_atm1_switch")
 
 # Set parameter values:
 phoebe.setpar("phoebe_indep", "Time (HJD)")
+phoebe.setpar("phoebe_atm1_switch", False)
+
+# Get parameter values:
+print "Modified:"
+print "phoebe_indep:", phoebe.getpar("phoebe_indep")
+print "phoebe_atm1_switch:", phoebe.getpar("phoebe_atm1_switch")
 
 # Get data from phoebe:
 x, y, z = phoebe.data("lc", 0)
