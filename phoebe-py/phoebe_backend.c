@@ -309,7 +309,17 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 				return NULL;
 			}
 			val = PyFloat_AS_DOUBLE(parval);
-            status = phoebe_parameter_set_value(par, val, index);
+            status = phoebe_parameter_set_value(par, index, val);
+            break;
+		}
+        case TYPE_STRING_ARRAY: {
+			char *val;
+			if (!PyString_Check(parval)) {
+				printf("error: string value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyString_AS_STRING(parval);
+            status = phoebe_parameter_set_value(par, index, val);
             break;
 		}
         default:
@@ -369,6 +379,15 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
         case TYPE_DOUBLE_ARRAY:
             status = phoebe_parameter_get_value(par, index, &val);
             break;
+        case TYPE_STRING_ARRAY: {
+			const char *strval;
+			status = phoebe_parameter_get_value(par, index, &strval);
+            if (status != SUCCESS) {
+                printf ("%s", phoebe_error (status));
+                return NULL;
+            }
+            return Py_BuildValue ("s", strval);
+		}
         default:
             status = 0;
             printf("not yet implemented, sorry.\n");
