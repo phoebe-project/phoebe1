@@ -11,6 +11,7 @@
 #include "phoebe_error_handling.h"
 #include "phoebe_fortran_interface.h"
 #include "phoebe_global.h"
+#include "phoebe_model.h"
 #include "phoebe_parameters.h"
 #include "phoebe_spectra.h"
 #include "phoebe_types.h"
@@ -168,6 +169,39 @@ int phoebe_interpolate (int N, double *x, double *lo, double *hi, PHOEBE_type ty
 	free (powers);
 
 	return SUCCESS;
+}
+
+int phoebe_calculate_loggs(double pot1, double pot2, double sma, double P, double e, double q, double F1, double F2, double *logg1, double *logg2)
+{
+    /**
+     * phoebe_calculate_loggs:
+     * 
+     * @logg1: placeholder for log(g1)
+     * @logg2: placeholder for log(g2)
+     * 
+     * Calculates surface gravity for both stars based on the surface potential.
+     */
+     
+    double rp1, rp2, r1, r2, M1, M2;
+     
+    /* First we need to compute the radii at periastron (d=1-e): */
+    rp1 = phoebe_compute_polar_radius(pot1, 1-e, q);
+    r1 = sma*phoebe_compute_radius(rp1, q, 1-e, F1, 0, 0);
+     
+    pot2 = pot2/q + 0.5*(q-1)/q;
+    q = 1./q;
+     
+    rp2 = phoebe_compute_polar_radius(pot2, 1-e, q);
+    r2 = sma*phoebe_compute_radius(rp2, q, 1-e, F2, 0, 0);
+
+    /* Next we need to compute the masses: */
+    phoebe_calculate_masses(sma, P, q, &M1, &M2);
+    
+    /* Finally, compute log(g)s: */
+    *logg1 = log10(100*6.673e-11*M1*1.989e30/(r1*696000000.)/(r1*696000000.));
+    *logg2 = log10(100*6.673e-11*M2*1.989e30/(r2*696000000.)/(r2*696000000.));
+    
+    return SUCCESS;
 }
 
 bool phoebe_phsv_constrained (int wd_model)

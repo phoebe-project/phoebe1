@@ -49,6 +49,7 @@ int phoebe_calculate_gamma_correction (double *gamma, PHOEBE_curve *syn, PHOEBE_
 double phoebe_calculate_pot1   (double D, double q, double r, double F, double lambda, double nu);
 double phoebe_calculate_pot2   (double D, double q, double r, double F, double lambda, double nu);
 int    phoebe_calculate_masses (double sma, double P, double q, double *M1, double *M2);
+int    phoebe_calculate_loggs  (double pot1, double pot2, double sma, double P, double e, double q, double F1, double F2, double *logg1, double *logg2);
 
 int phoebe_calculate_critical_potentials (double q, double F, double e, double *L1crit, double *L2crit);
 int phoebe_compute_critical_phases       (double *pp, double *scp, double *icp, double *anp, double *dnp, double perr0, double ecc, double pshift);
