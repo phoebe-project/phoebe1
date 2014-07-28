@@ -409,6 +409,7 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     PHOEBE_passband *passband;
     LD_model ldmodel;
     double T1, T2, logg1, logg2, met1, met2;
+    double pot1, pot2, sma, P, e, q, F1, F2;
     double xld, yld;
     
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lcno"), &lcno);
@@ -422,10 +423,19 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff1"), &T1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff2"), &T2);
-    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_logg1"), &logg1);
-    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_logg2"), &logg2);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_met1"),  &met1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_met2"),  &met2);
+
+    /* Compute surface gravities: */
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_pot1"),  &pot1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_pot2"),  &pot2);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_sma"),  &sma);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_period"),  &P);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ecc"),  &e);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rm"),  &q);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f1"),  &F1);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f2"),  &F2);
+    phoebe_calculate_loggs(pot1, pot2, sma, P, e, q, F1, F2, &logg1, &logg2);
     
     //~ printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
     
