@@ -35,6 +35,9 @@ int PHOEBE_CONFIRM_ON_SAVE;
 int PHOEBE_CONFIRM_ON_QUIT;
 int PHOEBE_WARN_ON_SYNTHETIC_SCATTER;
 
+double *PHOEBE_plcof_table;
+double *PHOEBE_atmcof_table;
+
 int phoebe_config_populate ()
 {
 	/**
@@ -55,50 +58,56 @@ int phoebe_config_populate ()
 	char path[255];
 	getcwd(path, sizeof(path));
 
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_BASE_DIR",      path);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_BASE_DIR",      path);
 	sprintf(buffer, "%s\\defaults", path);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_DEFAULTS_DIR",  buffer);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_TEMP_DIR",      getenv("TEMP"));
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_DEFAULTS_DIR",  buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_TEMP_DIR",      getenv("TEMP"));
 	sprintf(buffer, "%s\\data", path);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_DATA_DIR",      buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_DATA_DIR",      buffer);
 	sprintf(buffer, "%s\\ptf", path);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_PTF_DIR",       buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_PTF_DIR",       buffer);
 
-	phoebe_config_entry_add (TYPE_BOOL,   "PHOEBE_LD_SWITCH",     TRUE);
+	phoebe_config_entry_add(TYPE_BOOL,   "PHOEBE_LD_SWITCH",     TRUE);
 	sprintf(buffer, "%s\\ld", path);
-	phoebe_config_entry_add (TYPE_BOOL,   "PHOEBE_LD_INTERN",     TRUE);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_LD_DIR",        buffer);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_LD_VH_DIR",     buffer);
+	phoebe_config_entry_add(TYPE_BOOL,   "PHOEBE_LD_INTERN",     TRUE);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_LD_DIR",        buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_LD_VH_DIR",     buffer);
 
-	phoebe_config_entry_add (TYPE_BOOL,   "PHOEBE_KURUCZ_SWITCH", FALSE);
+	phoebe_config_entry_add(TYPE_BOOL,   "PHOEBE_KURUCZ_SWITCH", FALSE);
 	sprintf(buffer, "%s\\kurucz", path);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_KURUCZ_DIR",    buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_KURUCZ_DIR",    buffer);
 	sprintf(buffer, "%s\\plugins", path);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_PLUGINS_DIR",    buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_PLUGINS_DIR",    buffer);
+
+    /* Should atmcofplanck.dat and atmcof.dat be loaded into memory? */
+    phoebe_config_entry_add(TYPE_BOOL, "LOAD_ATM_TO_MEMORY", FALSE);
 #else
 	/* Linux & Mac: */
-	sprintf (buffer, "%s/share/phoebe", PHOEBE_TOP_DIR);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_BASE_DIR",      buffer);
-	sprintf (buffer, "%s/share/phoebe/defaults", PHOEBE_TOP_DIR);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_DEFAULTS_DIR",  buffer);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_TEMP_DIR",      "/tmp");
-	sprintf (buffer, "%s/share/phoebe/data", PHOEBE_TOP_DIR);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_DATA_DIR",      buffer);
-	sprintf (buffer, "%s/share/phoebe/ptf", PHOEBE_TOP_DIR);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_PTF_DIR",       buffer);
+	sprintf(buffer, "%s/share/phoebe", PHOEBE_TOP_DIR);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_BASE_DIR",      buffer);
+	sprintf(buffer, "%s/share/phoebe/defaults", PHOEBE_TOP_DIR);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_DEFAULTS_DIR",  buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_TEMP_DIR",      "/tmp");
+	sprintf(buffer, "%s/share/phoebe/data", PHOEBE_TOP_DIR);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_DATA_DIR",      buffer);
+	sprintf(buffer, "%s/share/phoebe/ptf", PHOEBE_TOP_DIR);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_PTF_DIR",       buffer);
 
-	phoebe_config_entry_add (TYPE_BOOL,   "PHOEBE_LD_SWITCH",     FALSE);
-	sprintf (buffer, "%s/share/phoebe/ld", PHOEBE_TOP_DIR);
-	phoebe_config_entry_add (TYPE_BOOL,   "PHOEBE_LD_INTERN",     TRUE);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_LD_DIR",        buffer);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_LD_VH_DIR",     buffer);
+	phoebe_config_entry_add(TYPE_BOOL,   "PHOEBE_LD_SWITCH",     FALSE);
+	sprintf(buffer, "%s/share/phoebe/ld", PHOEBE_TOP_DIR);
+	phoebe_config_entry_add(TYPE_BOOL,   "PHOEBE_LD_INTERN",     TRUE);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_LD_DIR",        buffer);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_LD_VH_DIR",     buffer);
 
-	phoebe_config_entry_add (TYPE_BOOL,   "PHOEBE_KURUCZ_SWITCH", FALSE);
-	sprintf (buffer, "%s/share/phoebe/kurucz", PHOEBE_TOP_DIR);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_KURUCZ_DIR",    buffer);
+	phoebe_config_entry_add(TYPE_BOOL,   "PHOEBE_KURUCZ_SWITCH", FALSE);
+	sprintf(buffer, "%s/share/phoebe/kurucz", PHOEBE_TOP_DIR);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_KURUCZ_DIR",    buffer);
 
-	sprintf (buffer, "%s/lib/phoebe/plugins", PHOEBE_TOP_DIR);
-	phoebe_config_entry_add (TYPE_STRING, "PHOEBE_PLUGINS_DIR",   buffer);
+	sprintf(buffer, "%s/lib/phoebe/plugins", PHOEBE_TOP_DIR);
+	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_PLUGINS_DIR",   buffer);
+    
+    /* Should atmcofplanck.dat and atmcof.dat be loaded into memory? */
+    phoebe_config_entry_add(TYPE_BOOL, "LOAD_ATM_TO_MEMORY", TRUE);
 #endif
 
 	return SUCCESS;

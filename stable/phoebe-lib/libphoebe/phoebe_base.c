@@ -73,6 +73,10 @@ int intern_phoebe_variables_init ()
 
 	PHOEBE_ld_table      = NULL;
 
+    /* Initialize the atmosphere tables: */
+    PHOEBE_plcof_table   = NULL;
+    PHOEBE_atmcof_table  = NULL;
+
 	PHOEBE_spectra_repository.no = 0;
 	PHOEBE_spectra_repository.prop = NULL;
 
@@ -147,6 +151,79 @@ int phoebe_init ()
 	return SUCCESS;
 }
 
+int phoebe_load_atm_tables(char *plfile, char *atmfile)
+{
+    /**
+     * phoebe_load_atm_tables:
+     * @plfile: filename of the Planck atmosphere table
+     * @atmfile: filename of the Kurucz atmosphere table
+     * 
+     * Load atmosphere tables into memory, and stores them into global
+     * variables #PHOEBE_plcof_table and #PHOEBE_atmcof_table.
+     * 
+     * Returns: #PHOEBE_error_code.
+     */ 
+
+    int row, mem;
+    char rstr[255], *ptr;
+    FILE *tab;
+
+    /* Free any old instances of the tables */
+    free(PHOEBE_plcof_table);
+    free(PHOEBE_atmcof_table);
+
+	phoebe_config_entry_get ("LOAD_ATM_TO_MEMORY", &mem);
+    if (mem == FALSE) {
+        PHOEBE_plcof_table = NULL;
+        PHOEBE_atmcof_table = NULL;
+        return SUCCESS;
+    }
+
+    PHOEBE_plcof_table  = phoebe_malloc(48*50*sizeof(*PHOEBE_plcof_table));
+    PHOEBE_atmcof_table = phoebe_malloc(48*19*11*48*sizeof(*PHOEBE_atmcof_table));
+
+    row = 0;
+    tab = fopen(plfile, "r");
+    while (TRUE) {
+        fgets(rstr, 255, tab);
+        if (feof(tab)) break;
+        ptr = rstr;
+        while (*ptr != '\0') {
+            if (*ptr == 'D') *ptr = 'E';
+            ptr++;
+        }
+        sscanf(rstr, "%le %le %le %le %le %le %le %le %le %le",
+            &PHOEBE_plcof_table[10*row+0], &PHOEBE_plcof_table[10*row+1], &PHOEBE_plcof_table[10*row+2],
+            &PHOEBE_plcof_table[10*row+3], &PHOEBE_plcof_table[10*row+4], &PHOEBE_plcof_table[10*row+5],
+            &PHOEBE_plcof_table[10*row+6], &PHOEBE_plcof_table[10*row+7], &PHOEBE_plcof_table[10*row+8],
+            &PHOEBE_plcof_table[10*row+9]);
+        row++;
+    }
+    fclose(tab);
+    
+    row = 0;
+    tab = fopen(atmfile, "r");
+    while (TRUE) {
+        fgets(rstr, 255, tab);
+        if (feof(tab)) break;
+        ptr = rstr;
+        while (*ptr != '\0') {
+            if (*ptr == 'D') *ptr = 'E';
+            ptr++;
+        }
+        sscanf(rstr, "%lf %lf %le %le %le %le %le %le %le %le %le %le",
+            &PHOEBE_atmcof_table[12*row+0], &PHOEBE_atmcof_table[12*row+ 1], &PHOEBE_atmcof_table[12*row+ 2],
+            &PHOEBE_atmcof_table[12*row+3], &PHOEBE_atmcof_table[12*row+ 4], &PHOEBE_atmcof_table[12*row+ 5],
+            &PHOEBE_atmcof_table[12*row+6], &PHOEBE_atmcof_table[12*row+ 7], &PHOEBE_atmcof_table[12*row+ 8],
+            &PHOEBE_atmcof_table[12*row+9], &PHOEBE_atmcof_table[12*row+10], &PHOEBE_atmcof_table[12*row+11]);
+        row++;
+    }
+    fclose(tab);
+    
+    return SUCCESS;
+}
+
+
 int phoebe_load_ld_tables ()
 {
 	/**
@@ -180,6 +257,27 @@ int phoebe_load_ld_tables ()
 	if (!PHOEBE_ld_table) {
 		phoebe_lib_error ("reading LD table coefficients failed, disabling readouts.\n");
 		phoebe_config_entry_set ("PHOEBE_LD_SWITCH", 0);
+	}
+
+	return SUCCESS;
+}
+
+int intern_get_atmcof_filenames (char **atmcofplanck, char **atmcof)
+{
+	char *basedir;
+
+	phoebe_config_entry_get ("PHOEBE_BASE_DIR", &basedir);
+
+	*atmcofplanck = phoebe_concatenate_strings (basedir, "/wd/phoebe_atmcofplanck.dat", NULL);
+	if (!phoebe_filename_exists (*atmcofplanck)) {
+		free (*atmcofplanck);
+		return ERROR_ATMCOFPLANCK_NOT_FOUND;
+	}
+
+	*atmcof = phoebe_concatenate_strings (basedir, "/wd/phoebe_atmcof.dat", NULL);
+	if (!phoebe_filename_exists (*atmcof)) {
+		free (*atmcof); free(*atmcofplanck);
+		return ERROR_ATMCOF_NOT_FOUND;
 	}
 
 	return SUCCESS;
@@ -354,6 +452,21 @@ int phoebe_configure ()
 		phoebe_load_ld_tables ();
 	}
 
+    phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &switch_state);
+    if (switch_state == 1) {
+        char *atmcofplanck, *atmcof;
+
+        status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
+        if (status != SUCCESS)
+            return status;
+
+        status = phoebe_load_atm_tables(atmcofplanck, atmcof);
+        free(atmcofplanck); free(atmcof);
+        
+        if (status != SUCCESS)
+            return status;
+    }
+
 	phoebe_config_entry_get ("PHOEBE_KURUCZ_SWITCH", &switch_state);
 	if (switch_state == 1) {
 		phoebe_config_entry_get ("PHOEBE_KURUCZ_DIR", &pathname);
@@ -383,42 +496,46 @@ int phoebe_quit ()
 	 */
 
 	/* Restore the original locale of the system: */
-	setlocale (LC_NUMERIC, PHOEBE_INPUT_LOCALE);
+	setlocale(LC_NUMERIC, PHOEBE_INPUT_LOCALE);
+
+    /* Free the atmosphere tables: */
+    free(PHOEBE_plcof_table);
+    free(PHOEBE_atmcof_table);
 
 	/* Free the LD table: */
-	phoebe_ld_table_free (PHOEBE_ld_table);
+	phoebe_ld_table_free(PHOEBE_ld_table);
 
 	/* Free the spectra table: */
-	phoebe_spectra_free_repository ();
+	phoebe_spectra_free_repository();
 
 	/* Free all global PHOEBE strings: */
-	free (PHOEBE_STARTUP_DIR);
-	free (PHOEBE_INPUT_LOCALE);
+	free(PHOEBE_STARTUP_DIR);
+	free(PHOEBE_INPUT_LOCALE);
 #ifdef __MINGW32__
-	if (getenv ("HOME"))
+	if(getenv ("HOME"))
 #endif
-	free (USER_HOME_DIR);
-	free (PHOEBE_HOME_DIR);
-	free (PHOEBE_CONFIG);
-	free (PHOEBE_PLOTTING_PACKAGE);
-	free (PHOEBE_VERSION_NUMBER);
-	free (PHOEBE_VERSION_DATE);
-	free (PHOEBE_PARAMETERS_FILENAME);
+	free(USER_HOME_DIR);
+	free(PHOEBE_HOME_DIR);
+	free(PHOEBE_CONFIG);
+	free(PHOEBE_PLOTTING_PACKAGE);
+	free(PHOEBE_VERSION_NUMBER);
+	free(PHOEBE_VERSION_DATE);
+	free(PHOEBE_PARAMETERS_FILENAME);
 
 	/* Free passband list: */
-	phoebe_free_passbands ();
+	phoebe_free_passbands();
 
 	/* Free constraints: */
-	phoebe_free_constraints ();
+	phoebe_free_constraints();
 
 	/* Free parameters and their options: */
-	phoebe_free_parameters ();
+	phoebe_free_parameters();
 
 	/* Free configuration entries: */
-	phoebe_config_free ();
+	phoebe_config_free();
 
 	/* Free parameter table: */
-	phoebe_parameter_table_free (PHOEBE_pt);
+	phoebe_parameter_table_free(PHOEBE_pt);
 
 	return(SUCCESS);
 }

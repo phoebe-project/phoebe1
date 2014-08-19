@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include "phoebe_accessories.h"
+#include "phoebe_base.h"
 #include "phoebe_calculations.h"
 #include "phoebe_configuration.h"
 #include "phoebe_error_handling.h"
@@ -251,7 +252,8 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, integer *r
     double args[10];
 	double params[14];
 	char *phoebe_model;
-
+    int mem;
+    
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_pshift"),   &args[ 0]);
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_incl"),     &args[ 1]);
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_xbol1"), &args[ 2]);
@@ -259,7 +261,11 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, integer *r
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_xbol2"), &args[ 4]);
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_ybol2"), &args[ 5]);
 
-	wd_lc (atmcof, atmcofplanck, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args);
+    phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &mem);
+    if (mem == TRUE)
+        wd_lc("", PHOEBE_plcof_table, "", PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args);
+    else
+        wd_lc(atmcofplanck, NULL, atmcof, NULL, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args);
 	
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
@@ -284,27 +290,6 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, integer *r
 		phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_pot2"), params[13]);
 	
 	return;
-}
-
-int get_atmcof_filenames (char **atmcof, char **atmcofplanck)
-{
-	char *basedir;
-
-	phoebe_config_entry_get ("PHOEBE_BASE_DIR", &basedir);
-
-	*atmcof = phoebe_concatenate_strings (basedir, "/wd/phoebe_atmcof.dat", NULL);
-	if (!phoebe_filename_exists (*atmcof)) {
-		free (*atmcof);
-		return ERROR_ATMCOF_NOT_FOUND;
-	}
-
-	*atmcofplanck = phoebe_concatenate_strings (basedir, "/wd/phoebe_atmcofplanck.dat", NULL);
-	if (!phoebe_filename_exists (*atmcofplanck)) {
-		free (*atmcof); free (*atmcofplanck);
-		return ERROR_ATMCOFPLANCK_NOT_FOUND;
-	}
-
-	return SUCCESS;
 }
 
 int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin)
@@ -334,7 +319,7 @@ int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char 
 	if (indep->dim == 0)
 		return ERROR_VECTOR_IS_EMPTY;
 
-	status = get_atmcof_filenames (&atmcof, &atmcofplanck);
+	status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
 	if (status != SUCCESS)
 		return status;
 
@@ -387,7 +372,7 @@ int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *
 	if (indep->dim == 0)
 		return ERROR_VECTOR_IS_EMPTY;
 
-	status = get_atmcof_filenames (&atmcof, &atmcofplanck);
+	status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
 	if (status != SUCCESS)
 		return status;
 
@@ -432,7 +417,7 @@ int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *
 	if (indep->dim == 0)
 		return ERROR_VECTOR_IS_EMPTY;
 
-	status = get_atmcof_filenames (&atmcof, &atmcofplanck);
+	status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
 	if (status != SUCCESS)
 		return status;
 
@@ -481,7 +466,7 @@ int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, c
 	if (poscoy->dim != 0 || poscoz->dim != 0)
 		return ERROR_VECTOR_ALREADY_ALLOCATED;
 
-	status = get_atmcof_filenames (&atmcof, &atmcofplanck);
+	status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
 	if (status != SUCCESS)
 		return status;
 
@@ -547,7 +532,7 @@ int call_wd_to_get_logg_values (double *logg1, double *logg2)
 
 	WD_LCI_parameters wd_params;
 
-	status = get_atmcof_filenames (&atmcof, &atmcofplanck);
+	status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
 	if (status != SUCCESS)
 		return status;
 

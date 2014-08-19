@@ -1,5 +1,5 @@
-      subroutine lc(atmtab,pltab,lcin,request,vertno,L3perc,indeps,deps,
-     +              skycoy,skycoz,params,args)
+      subroutine lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,
+     +              indeps,deps,skycoy,skycoz,params,args)
 c
 c  Main program for computing light and radial velocity curves,
 c      line profiles, and images
@@ -82,10 +82,10 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Locations of the auxiliary files atmcof.dat and atmcofplanck.dat:
 c
-      character atmtab*(*),pltab*(*)
+      character atmf*(*),plf*(*)
 c
-c     parameter (atmtab='atmcof.dat')
-c     parameter ( pltab='atmcofplanck.dat')
+c     parameter (atmf='atmcof.dat')
+c     parameter (plf='atmcofplanck.dat')
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -120,8 +120,10 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extensions:
 c
-c       atmtab   ..   model atmosphere filename
-c        pltab   ..   blackbody atmosphere filename
+c         atmf   ..   model atmosphere filename
+c          plf   ..   blackbody atmosphere filename
+c       atmtab   ..   Kurucz atmosphere table
+c        pltab   ..   Planck atmosphere table
 c         lcin   ..   input lci filename
 c      request   ..   what do we want to compute:
 c                       1  ..  light curve
@@ -168,7 +170,7 @@ c                     rounding problems in WD when using I/O.
 
       integer request,vertno
       double precision indeps(*),deps(*),skycoy(*),skycoz(*),params(*),
-     $args(*)
+     $args(*),pltab(iplcof),atmtab(iatmsize)
       character lcin*(*)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
@@ -328,12 +330,27 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       glog(11)=5.0d0
       nn=100
       gau=0.d0
-      open(unit=22,file=atmtab,status='old')
-      read(22,*) grand
-      open(unit=23,file=pltab,status='old')
-      read(23,*) plcof
-      close(22)
-      close(23)
+
+      if (atmf .eq. "") then
+        do i=1,iatmsize
+          grand(i)=atmtab(i)
+        enddo
+      else
+        open(unit=22,file=atmf,status='old')
+        read(22,*) grand
+        close(22)
+      endif
+
+      if (plf .eq. "") then
+        do i=1,iplcof
+          plcof(i)=pltab(i)
+        enddo
+      else
+        open(unit=23,file=plf,status='old')
+        read(23,*) plcof
+        close(23)
+      endif
+
       open(unit=15,file=lcin,status='old')
       open(unit=16,file='lcout.active')
       ibef=0
