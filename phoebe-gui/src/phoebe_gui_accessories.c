@@ -273,37 +273,38 @@ int gui_show_configuration_dialog ()
 {
 	int status = 0;
 	
-	gchar     *glade_xml_file					= g_build_filename     	(PHOEBE_GLADE_XML_DIR, "phoebe_settings.glade", NULL);
-	gchar     *glade_pixmap_file				= g_build_filename     	(PHOEBE_GLADE_PIXMAP_DIR, "ico.png", NULL);
+	gchar     *glade_xml_file					   = g_build_filename     	(PHOEBE_GLADE_XML_DIR, "phoebe_settings.glade", NULL);
+	gchar     *glade_pixmap_file				   = g_build_filename     	(PHOEBE_GLADE_PIXMAP_DIR, "ico.png", NULL);
 	
-	GladeXML  *phoebe_settings_xml				= glade_xml_new			(glade_xml_file, NULL, NULL);
+	GladeXML  *phoebe_settings_xml				   = glade_xml_new			(glade_xml_file, NULL, NULL);
 	
-	GtkWidget *phoebe_settings_dialog			= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_dialog");
-	GtkWidget *basedir_filechooserbutton		= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_basedir_filechooserbutton");
-	GtkWidget *defaultsdir_filechooserbutton	= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_defaultsdir_filechooserbutton");
-	GtkWidget *workingdir_filechooserbutton		= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_workingdir_filechooserbutton");
-	GtkWidget *datadir_filechooserbutton		= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_datadir_filechooserbutton");
-	GtkWidget *ptfdir_filechooserbutton			= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_ptfdir_filechooserbutton");
+	GtkWidget *phoebe_settings_dialog			   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_dialog");
+	GtkWidget *basedir_filechooserbutton		   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_basedir_filechooserbutton");
+	GtkWidget *defaultsdir_filechooserbutton	   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_defaultsdir_filechooserbutton");
+	GtkWidget *workingdir_filechooserbutton		   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_workingdir_filechooserbutton");
+	GtkWidget *datadir_filechooserbutton		   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_datadir_filechooserbutton");
+	GtkWidget *ptfdir_filechooserbutton			   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_configuration_ptfdir_filechooserbutton");
 
-	GtkWidget *ld_none                          = glade_xml_get_widget  (phoebe_settings_xml, "phoebe_settings_ld_none");
-	GtkWidget *ld_internal                      = glade_xml_get_widget  (phoebe_settings_xml, "phoebe_settings_ld_internal_tables");
-	GtkWidget *ld_internal_dir		            = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_ld_internal_dir");
-	GtkWidget *ld_vanhamme						= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_ld_vanhamme_tables");
-	GtkWidget *ld_vanhamme_dir					= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_ld_vanhamme_dir");
+	GtkWidget *ld_none                             = glade_xml_get_widget  (phoebe_settings_xml, "phoebe_settings_ld_none");
+	GtkWidget *ld_internal                         = glade_xml_get_widget  (phoebe_settings_xml, "phoebe_settings_ld_internal_tables");
+	GtkWidget *ld_internal_dir		               = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_ld_internal_dir");
+	GtkWidget *ld_vanhamme						   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_ld_vanhamme_tables");
+	GtkWidget *ld_vanhamme_dir					   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_ld_vanhamme_dir");
 	
-	GtkWidget *kurucz_checkbutton				= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_kurucz_checkbutton");
-	GtkWidget *kurucz_filechooserbutton			= glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_kurucz_filechooserbutton");
+	GtkWidget *kurucz_checkbutton				   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_kurucz_checkbutton");
+	GtkWidget *kurucz_filechooserbutton			   = glade_xml_get_widget	(phoebe_settings_xml, "phoebe_settings_kurucz_filechooserbutton");
 	
-	GtkWidget *confirm_on_overwrite_checkbutton = glade_xml_get_widget (phoebe_settings_xml, "phoebe_settings_confirmation_save_checkbutton");
+	GtkWidget *confirm_on_overwrite_checkbutton    = glade_xml_get_widget (phoebe_settings_xml, "phoebe_settings_confirmation_save_checkbutton");
 	GtkWidget *beep_after_plot_and_fit_checkbutton = glade_xml_get_widget (phoebe_settings_xml, "phoebe_settings_beep_after_plot_and_fit_checkbutton");
-	GtkWidget *units_widget = glade_xml_get_widget (phoebe_settings_xml, "phoebe_settings_angle_units");
+	GtkWidget *units_widget                        = glade_xml_get_widget (phoebe_settings_xml, "phoebe_settings_angle_units");
+    GtkWidget *load_atm_to_memory_checkbutton      = glade_xml_get_widget(phoebe_settings_xml, "phoebe_settings_load_atm_to_memory_checkbutton");
+    
 	gchar     *dir;
 	gboolean   toggle;
 	gint 	   result;
 	
 	/* Connect all signals defined in the Glade file: */
 	glade_xml_signal_autoconnect (phoebe_settings_xml);
-	
 	g_object_unref (phoebe_settings_xml);
 	
 	phoebe_config_entry_get ("PHOEBE_BASE_DIR", &dir);
@@ -359,6 +360,12 @@ int gui_show_configuration_dialog ()
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (beep_after_plot_and_fit_checkbutton), 1);
 	else
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (beep_after_plot_and_fit_checkbutton), 0);
+
+	phoebe_config_entry_get ("LOAD_ATM_TO_MEMORY", &toggle);
+	if (toggle)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (load_atm_to_memory_checkbutton), 1);
+	else
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (load_atm_to_memory_checkbutton), 0);
 	
 	/* ANGLE UNITS: */
 	{
@@ -411,7 +418,7 @@ int gui_show_configuration_dialog ()
 				phoebe_config_entry_set ("PHOEBE_LD_INTERN", FALSE);
 			}
 			
-			phoebe_load_ld_tables ();
+			phoebe_load_ld_tables();
 
 			if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (kurucz_checkbutton))) {
 				phoebe_config_entry_set ("PHOEBE_KURUCZ_SWITCH", TRUE);
@@ -424,6 +431,22 @@ int gui_show_configuration_dialog ()
 				phoebe_config_entry_set ("GUI_ANGLE_UNITS", "Degrees");
 			else
 				phoebe_config_entry_set ("GUI_ANGLE_UNITS", "Radians");
+
+			if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (load_atm_to_memory_checkbutton))) {
+                char *atmcofplanck, *atmcof;
+				phoebe_config_entry_set ("LOAD_ATM_TO_MEMORY", TRUE);
+
+                status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
+                if (status != SUCCESS)
+                    return status;
+
+                status = phoebe_load_atm_tables(atmcofplanck, atmcof);
+                free(atmcofplanck); free(atmcof);
+            }
+			else {
+				phoebe_config_entry_set ("LOAD_ATM_TO_MEMORY", FALSE);
+                phoebe_load_atm_tables(NULL, NULL);
+            }
 
 			if (result == GTK_RESPONSE_YES) {
 				if (!PHOEBE_HOME_DIR || !phoebe_filename_is_directory (PHOEBE_HOME_DIR)) {

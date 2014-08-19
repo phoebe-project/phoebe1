@@ -5,9 +5,9 @@
 
 #include <stdarg.h>
 
-/* ************************************************************************** */
-/*                        Global PHOEBE setup strings:                        */
-/* ************************************************************************** */
+/* ****************************************************************** */
+/*                    Global PHOEBE setup strings:                    */
+/* ****************************************************************** */
 
 extern char *USER_HOME_DIR;
 
@@ -26,14 +26,21 @@ extern char *PHOEBE_INPUT_LOCALE;
 
 extern bool PHOEBE_INTERRUPT;
 
-/* ************************************************************************** */
-/*                    Global PHOEBE configuration options:                    */
-/* ************************************************************************** */
+/* ****************************************************************** */
+/*                Global PHOEBE configuration options:                */
+/* ****************************************************************** */
 
 extern int PHOEBE_3D_PLOT_CALLBACK_OPTION;
 extern int PHOEBE_CONFIRM_ON_SAVE;
 extern int PHOEBE_CONFIRM_ON_QUIT;
 extern int PHOEBE_WARN_ON_SYNTHETIC_SCATTER;
+
+/* ****************************************************************** */
+/*                      Global atmosphere tables:                     */
+/* ****************************************************************** */
+
+extern double *PHOEBE_plcof_table;
+extern double *PHOEBE_atmcof_table;
 
 #define PHOEBE_NUMERICAL_ACCURACY 1E-10
 

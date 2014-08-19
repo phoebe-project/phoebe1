@@ -34,7 +34,7 @@ int phoebe_join_chi2  (double *chi2, PHOEBE_vector *chi2s, PHOEBE_vector *weight
  * below should then correspond to that prototype.
  */
 
-#define wd_lc(atmtab,pltab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args) lc_(atmtab,pltab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,strlen(atmtab),strlen(pltab),strlen(lcin))
+#define wd_lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args) lc_(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,strlen(plf),strlen(atmf),strlen(lcin))
 
 int phoebe_compute_lc_using_wd  (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin);
 int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1,   PHOEBE_vector *indep, char *lcin);
