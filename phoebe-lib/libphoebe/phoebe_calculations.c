@@ -1048,11 +1048,12 @@ int phoebe_cf_compute (double *cfval, PHOEBE_cost_function cf, PHOEBE_vector *sy
 			/*
 			 * Standard (sometimes called reduced) chi2:
 			 *
-			 *   cfval = \sum_i (x_calc-x_obs)^2 / \sigma_i^2
+			 *   cfval = \sum_i (x_obs-x_calc)^2 / \sigma_i^2
 			 */
 
+            printf("syndep->dim = %d, obsdep->dim = %d\n", syndep->dim, obsdep->dim);
 			for (i = 0; i < syndep->dim; i++)
-				c2 += 1./obssig->val[i]/obssig->val[i] * (obsdep->val[i]-syndep->val[i])*(obsdep->val[i]-syndep->val[i]);
+				c2 += (obsdep->val[i]-syndep->val[i])*(obsdep->val[i]-syndep->val[i])/obssig->val[i]/obssig->val[i];
 			*cfval = c2;
 		break;
 		default:
