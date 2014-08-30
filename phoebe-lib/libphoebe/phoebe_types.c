@@ -2786,6 +2786,7 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	PHOEBE_vector *verts;
 	PHOEBE_curve  *fticurve;
 	WD_LCI_parameters params;
+    double *args;
 
 	double A;
 
@@ -2863,7 +2864,8 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	curve->passband = phoebe_passband_lookup (filter);
 
 	/* Read in all parameters and create the LCI file: */
-	status = wd_lci_parameters_get (&params, mpage, index);
+    args = phoebe_malloc(18*sizeof(args));
+	status = wd_lci_parameters_get (&params, &args, mpage, index);
 	if (status != SUCCESS) return status;
 	params.JDPHS = jdphs;
 	create_lci_file (lcin, &params);
@@ -2893,21 +2895,21 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 
 	switch (dtype) {
 		case PHOEBE_COLUMN_MAGNITUDE:
-			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin);
+			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args);
 			if (status != SUCCESS) return status;
 			apply_extinction_correction (fti ? fticurve : curve, A);
 		break;
 		case PHOEBE_COLUMN_FLUX:
-			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin);
+			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args);
 			if (status != SUCCESS) return status;
 			apply_extinction_correction (fti ? fticurve : curve, A);
 		break;
 		case PHOEBE_COLUMN_PRIMARY_RV:
-			status = phoebe_compute_rv1_using_wd (curve, nodes, lcin);
+			status = phoebe_compute_rv1_using_wd (curve, nodes, lcin, args);
 			if (status != SUCCESS) return status;
 		break;
 		case PHOEBE_COLUMN_SECONDARY_RV:
-			status = phoebe_compute_rv2_using_wd (curve, nodes, lcin);
+			status = phoebe_compute_rv2_using_wd (curve, nodes, lcin, args);
 			if (status != SUCCESS) return status;
 		break;
 		default:
@@ -2915,6 +2917,7 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 			return ERROR_EXCEPTION_HANDLER_INVOKED;
 	}
 
+    free(args);
 	remove (lcin);
 	free (lcin);
 

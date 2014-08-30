@@ -80,7 +80,10 @@ int phoebe_config_populate ()
 	phoebe_config_entry_add(TYPE_STRING, "PHOEBE_PLUGINS_DIR",    buffer);
 
     /* Should atmcofplanck.dat and atmcof.dat be loaded into memory? */
-    phoebe_config_entry_add(TYPE_BOOL, "LOAD_ATM_TO_MEMORY", FALSE);
+    phoebe_config_entry_add(TYPE_BOOL, "LOAD_ATM_TO_MEMORY", TRUE);
+
+    /* Should lcout files be written out? */
+    phoebe_config_entry_add(TYPE_BOOL, "DUMP_LCOUT_FILES", TRUE);
 #else
 	/* Linux & Mac: */
 	sprintf(buffer, "%s/share/phoebe", PHOEBE_TOP_DIR);
@@ -108,6 +111,9 @@ int phoebe_config_populate ()
     
     /* Should atmcofplanck.dat and atmcof.dat be loaded into memory? */
     phoebe_config_entry_add(TYPE_BOOL, "LOAD_ATM_TO_MEMORY", TRUE);
+
+    /* Should lcout files be written out? */
+    phoebe_config_entry_add(TYPE_BOOL, "DUMP_LCOUT_FILES", TRUE);
 #endif
 
 	return SUCCESS;

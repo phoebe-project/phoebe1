@@ -1,5 +1,5 @@
       subroutine lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,
-     +              indeps,deps,skycoy,skycoz,params,args)
+     +              indeps,deps,skycoy,skycoz,params,args,lcout)
 c
 c  Main program for computing light and radial velocity curves,
 c      line profiles, and images
@@ -82,7 +82,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Locations of the auxiliary files atmcof.dat and atmcofplanck.dat:
 c
-      character atmf*(*),plf*(*)
+      character atmf*(*),plf*(*),lcout*(*)
 c
 c     parameter (atmf='atmcof.dat')
 c     parameter (plf='atmcofplanck.dat')
@@ -164,6 +164,18 @@ c                     args( 3) = bolometric LD coefficient x1
 c                     args( 4) = bolometric LD coefficient y1
 c                     args( 5) = bolometric LD coefficient x2
 c                     args( 6) = bolometric LD coefficient y2
+c                     args( 7) = gamma velocity
+c                     args( 8) = third light
+c                     args( 9) = surface potential 1
+c                     args(10) = surface potential 2
+c                     args(11) = effective temperature 1
+c                     args(12) = effective temperature 2
+c                     args(13) = eccentricity
+c                     args(14) = argument of periastron
+c                     args(15) = mass ratio
+c                     args(16) = semi-major axis
+c                     args(17) = orbital period
+c                     args(18) = passband luminosity
 c
 c                     Incorporating args was necessary to circumvent
 c                     rounding problems in WD when using I/O.
@@ -352,7 +364,11 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       endif
 
       open(unit=15,file=lcin,status='old')
-      open(unit=16,file='lcout.active')
+      
+      if (lcout.ne."") then
+        open(unit=16,file=lcout)
+      endif
+      
       ibef=0
       nf1=1
       nf2=1
@@ -374,10 +390,24 @@ c     Override the read-in values with passed values:
       ybol1=args(4)
       xbol2=args(5)
       ybol2=args(6)
+      vga=args(7)
+      el3=args(8)
+      poth=args(9)
+      potc=args(10)
+      tavh=args(11)
+      tavc=args(12)
+      e=args(13)
+      perr0=args(14)
+      rm=args(15)
+      a=args(16)
+      period=args(17)
+      hlum=args(18)
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
       if(mpage.ne.9) goto 414
       close(15)
-      close(16)
+      if(lcout.ne."") then
+        close(16)
+      endif
       return
   414 continue
       message(1,1)=0
@@ -544,6 +574,7 @@ c
       params(14) = pcsv
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if(lcout.ne."") then
       call wrhead(ibef,nref,mref,ifsmv1,ifsmv2,icor1,icor2,
      $ld,jdphs,hjd0,period,dpdt,pshift,stdev,noise,seed,hjdst,hjdsp,
      $hjdin,phstrt,phstop,phin,phn,mode,ipb,ifat1,ifat2,n1,n2,perr0,
@@ -554,7 +585,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $kks,xlat,xlong,radsp,temsp,ncl,xcl,ycl,zcl,rcl,op1,fcl,edens,xmue,
      $encl,dens,ns1,sms1,sr1,bolm1,xlg1,ns2,sms2,sr2,bolm2,xlg2,mmsave,
      $sbrh,sbrc,sm1,sm2,phperi,pconsc,pconic,dif1,abunir,abun,mod)
-
+      endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extension:
@@ -650,15 +681,19 @@ c
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if(lcout.ne."") then
       call wrdata(hjd,phas,yskp,zskp,htt,cool,total,tot,d,smagg,
      $vsum1,vsum2,vra1,vra2,vkm1,vkm2,delv1,delwl1,wl1,fbin1,resf1,
      $delv2,delwl2,wl2,fbin2,resf2,rv,rvq,mmsave,ll1,lll1,llll1,
      $ll2,lll2,llll2)
+      endif
 
    20 CONTINUE
 
+      if(lcout.ne."") then
       call wrfoot(message,f1,f2,po,rm,f,dp,e,drdq,dodq,ii,mode,
      $mpage)
+      endif
 
       ibef=1
 

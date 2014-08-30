@@ -573,13 +573,13 @@ char *phoebe_create_temp_filename (char *templ)
 	 */
 
 	int fd = -1;
-	char *tmpdir, *tmpfname, *check;
+	char *tmpdir, *tmpfname;
 
 	phoebe_config_entry_get ("PHOEBE_TEMP_DIR", &tmpdir);
 	tmpfname = phoebe_concatenate_strings (tmpdir, "/", templ, NULL);
 
 #ifdef __MINGW32__
-	check = mktemp (tmpfname);
+	char *check = mktemp (tmpfname);
 	if (!check || strlen (check) == 0) {
 		free (tmpfname);
 		return NULL;

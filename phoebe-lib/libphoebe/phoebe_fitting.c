@@ -56,6 +56,7 @@ double phoebe_chi2_cost_function (PHOEBE_vector *adjpars, PHOEBE_nms_parameters 
 	PHOEBE_vector         *l3         = params->l3;
 
 	WD_LCI_parameters    **lcipars;
+    double **args;
 
 	calls_to_cf++;
 
@@ -95,13 +96,15 @@ double phoebe_chi2_cost_function (PHOEBE_vector *adjpars, PHOEBE_nms_parameters 
 
 	/* Read in model parameters for each curve/passband: */
 	lcipars = phoebe_malloc ( (lcno+rvno) * sizeof (*lcipars));
+    args = phoebe_malloc((lcno+rvno)*sizeof(*args));
 	for (i = 0; i < lcno; i++) {
 		lcipars[i] = phoebe_malloc (sizeof (**lcipars));
-		wd_lci_parameters_get (lcipars[i], /* MPAGE = */ 1, i);
+        args[i] = phoebe_malloc(sizeof(**args));
+		wd_lci_parameters_get (lcipars[i], &(args[i]), /* MPAGE = */ 1, i);
 	}
 	for (i = 0; i < rvno; i++) {
 		lcipars[lcno+i] = phoebe_malloc (sizeof (**lcipars));
-		wd_lci_parameters_get (lcipars[lcno+i], /* MPAGE = */ 2, i);
+		wd_lci_parameters_get (lcipars[lcno+i], &(args[i]), /* MPAGE = */ 2, i);
 	}
 
 	/* Compute theoretical light and RV curves: */
@@ -110,7 +113,7 @@ double phoebe_chi2_cost_function (PHOEBE_vector *adjpars, PHOEBE_nms_parameters 
 
 		lcin = phoebe_create_temp_filename ("phoebe_lci_XXXXXX");
 		create_lci_file (lcin, lcipars[i]);
-		phoebe_compute_lc_using_wd (curve, obs[i]->indep, lcin);
+		phoebe_compute_lc_using_wd (curve, obs[i]->indep, lcin, args[i]);
 		remove (lcin);
 		free (lcin);
 
@@ -134,7 +137,11 @@ double phoebe_chi2_cost_function (PHOEBE_vector *adjpars, PHOEBE_nms_parameters 
 		phoebe_cf_compute (&(chi2s->val[i]), PHOEBE_CF_WITH_ALL_WEIGHTS, curve->dep, obs[i]->dep, obs[i]->weight, psigma->val[i], lexp->val.iarray[i], 1.0);
 		cfval += chi2s->val[i];
 		phoebe_curve_free (curve);
+        free(lcipars[i]);
+        free(args[i]);
 	}
+    free(lcipars);
+    free(args);
 
 	return cfval;
 }

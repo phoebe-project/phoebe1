@@ -298,6 +298,7 @@ int gui_show_configuration_dialog ()
 	GtkWidget *beep_after_plot_and_fit_checkbutton = glade_xml_get_widget (phoebe_settings_xml, "phoebe_settings_beep_after_plot_and_fit_checkbutton");
 	GtkWidget *units_widget                        = glade_xml_get_widget (phoebe_settings_xml, "phoebe_settings_angle_units");
     GtkWidget *load_atm_to_memory_checkbutton      = glade_xml_get_widget(phoebe_settings_xml, "phoebe_settings_load_atm_to_memory_checkbutton");
+    GtkWidget *dump_to_lcout_checkbutton           = glade_xml_get_widget(phoebe_settings_xml, "phoebe_settings_dump_to_lcout_checkbutton");
     
 	gchar     *dir;
 	gboolean   toggle;
@@ -366,6 +367,12 @@ int gui_show_configuration_dialog ()
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (load_atm_to_memory_checkbutton), 1);
 	else
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (load_atm_to_memory_checkbutton), 0);
+
+	phoebe_config_entry_get ("DUMP_LCOUT_FILES", &toggle);
+	if (toggle)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dump_to_lcout_checkbutton), 1);
+	else
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dump_to_lcout_checkbutton), 0);
 	
 	/* ANGLE UNITS: */
 	{
@@ -447,6 +454,11 @@ int gui_show_configuration_dialog ()
 				phoebe_config_entry_set ("LOAD_ATM_TO_MEMORY", FALSE);
                 phoebe_load_atm_tables(NULL, NULL);
             }
+
+			if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dump_to_lcout_checkbutton)))
+				phoebe_config_entry_set ("DUMP_LCOUT_FILES", TRUE);
+            else
+				phoebe_config_entry_set ("DUMP_LCOUT_FILES", FALSE);
 
 			if (result == GTK_RESPONSE_YES) {
 				if (!PHOEBE_HOME_DIR || !phoebe_filename_is_directory (PHOEBE_HOME_DIR)) {
