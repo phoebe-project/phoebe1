@@ -253,10 +253,9 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *ar
 	char *phoebe_model;
     int mem, dump;
     
-    int i;
-    
     phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &mem);
-    phoebe_config_entry_get("DUMP_LCOUT_FILE", &dump);
+    phoebe_config_entry_get("DUMP_LCOUT_FILES", &dump);
+    printf("dump: %d\n", dump);
     wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "");
 	
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
