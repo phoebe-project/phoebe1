@@ -255,7 +255,7 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *ar
     
     phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &mem);
     phoebe_config_entry_get("DUMP_LCOUT_FILES", &dump);
-
+    
     wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "");
 	
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
@@ -1003,7 +1003,6 @@ int phoebe_cf_compute (double *cfval, PHOEBE_cost_function cf, PHOEBE_vector *sy
 			 *   cfval = \sum_i (x_obs-x_calc)^2 / \sigma_i^2
 			 */
 
-            printf("syndep->dim = %d, obsdep->dim = %d\n", syndep->dim, obsdep->dim);
 			for (i = 0; i < syndep->dim; i++)
 				c2 += (obsdep->val[i]-syndep->val[i])*(obsdep->val[i]-syndep->val[i])/obssig->val[i]/obssig->val[i];
 			*cfval = c2;
