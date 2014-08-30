@@ -568,7 +568,7 @@ int wd_lci_parameters_get (WD_LCI_parameters *params, double **args, int MPAGE, 
     (*args)[ 4] = params->XBOL2;
     (*args)[ 5] = params->YBOL2;
 
-    (*args)[ 6] = params->VGA;
+    (*args)[ 6] = params->VGA/100.;
     (*args)[ 7] = params->EL3;
     (*args)[ 8] = params->PHSV;
     (*args)[ 9] = params->PCSV;
