@@ -172,7 +172,7 @@ int phoebe_wd_model (char *phoebe_model)
 	return 99;
 }
 
-int wd_lci_parameters_get (WD_LCI_parameters *params, int MPAGE, int curve)
+int wd_lci_parameters_get (WD_LCI_parameters *params, double **args, int MPAGE, int curve)
 {
 	/*
 	 * This function reads out all variables that build up the LCI file. It
@@ -559,6 +559,28 @@ int wd_lci_parameters_get (WD_LCI_parameters *params, int MPAGE, int curve)
 	for (i = 0; i < params->SSEC; i++)
 		printf ("sprim: %lf %lf %lf %lf\n", params->XLAT2[i], params->XLONG2[i], params->RADSP2[i], params->TEMSP2[i]);
 */	
+
+    /* Now that we have everything in the structure, let's fill out the args array: */
+    (*args)[ 0] = params->PSHIFT;
+    (*args)[ 1] = params->INCL;
+    (*args)[ 2] = params->XBOL1;
+    (*args)[ 3] = params->YBOL1;
+    (*args)[ 4] = params->XBOL2;
+    (*args)[ 5] = params->YBOL2;
+
+    (*args)[ 6] = params->VGA;
+    (*args)[ 7] = params->EL3;
+    (*args)[ 8] = params->PHSV;
+    (*args)[ 9] = params->PCSV;
+    (*args)[10] = params->TAVH/10000.;
+    (*args)[11] = params->TAVC/10000.;
+    (*args)[12] = params->E;
+    (*args)[13] = params->PERR0;
+    (*args)[14] = params->RM;
+    (*args)[15] = params->SMA;
+    (*args)[16] = params->PERIOD;
+    (*args)[17] = params->HLA;
+
 	return SUCCESS;
 }
 

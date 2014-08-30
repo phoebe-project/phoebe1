@@ -437,7 +437,7 @@ PHOEBE_curve *phoebe_bin_data (PHOEBE_curve *data, int bins)
 	PHOEBE_curve *input, *binned;
 	
 	if (!data)
-		return ERROR_CURVE_NOT_INITIALIZED;
+		return NULL;
 	
 	input = phoebe_curve_duplicate (data);
 	

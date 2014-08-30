@@ -246,26 +246,18 @@ bool phoebe_pcsv_constrained (int wd_model)
 	}
 }
 
-void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos)
+void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *args, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos)
 {
 	int wd_model;
-    double args[10];
 	double params[14];
 	char *phoebe_model;
-    int mem;
+    int mem, dump;
     
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_pshift"),   &args[ 0]);
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_incl"),     &args[ 1]);
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_xbol1"), &args[ 2]);
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_ybol1"), &args[ 3]);
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_xbol2"), &args[ 4]);
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_ybol2"), &args[ 5]);
-
+    int i;
+    
     phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &mem);
-    if (mem == TRUE)
-        wd_lc("", PHOEBE_plcof_table, "", PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args);
-    else
-        wd_lc(atmcofplanck, NULL, atmcof, NULL, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args);
+    phoebe_config_entry_get("DUMP_LCOUT_FILE", &dump);
+    wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "");
 	
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
@@ -292,7 +284,7 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, integer *r
 	return;
 }
 
-int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin)
+int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin, double *args)
 {
 	/**
 	 * phoebe_compute_lc_using_wd:
@@ -340,14 +332,14 @@ int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char 
 	if (l3units == PHOEBE_EL3_UNITS_TOTAL_LIGHT)
 		L3perc = 1;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, &request, &nodes, &L3perc, curve->indep->val, curve->dep->val, NULL, NULL);
+	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, curve->indep->val, curve->dep->val, NULL, NULL);
 
 	free (atmcof); free (atmcofplanck);
 	
 	return SUCCESS;
 }
 
-int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *lcin)
+int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *lcin, double *args)
 {
 	/**
 	 * phoebe_compute_rv1_using_wd:
@@ -387,12 +379,12 @@ int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *
 
 	L3perc = 0;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, &request, &nodes, &L3perc, indep->val, rv1->dep->val, NULL, NULL);
+	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv1->dep->val, NULL, NULL);
 
 	return SUCCESS;
 }
 
-int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *lcin)
+int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *lcin, double *args)
 {
 	/**
 	 * phoebe_computer_rv2_using_wd:
@@ -432,12 +424,12 @@ int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *
 
 	L3perc = 0;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, &request, &nodes, &L3perc, indep->val, rv2->dep->val, NULL, NULL);
+	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv2->dep->val, NULL, NULL);
 
 	return SUCCESS;
 }
 
-int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, char *lcin, double phase)
+int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, char *lcin, double *args, double phase)
 {
 	/**
 	 * phoebe_compute_pos_using_wd:
@@ -515,51 +507,12 @@ int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, c
 	nodes   = 1;
 	L3perc  = 0;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, &request, &nodes, &L3perc, &phs, &dummy, poscoy->val, poscoz->val);
+	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, &phs, &dummy, poscoy->val, poscoz->val);
 
 	i = 0;
 	while (!isnan(poscoy->val[i]) && i < poscoy->dim) i++;
 	phoebe_vector_realloc (poscoy, i-1);
 	phoebe_vector_realloc (poscoz, i-1);
-
-	return SUCCESS;
-}
-
-int call_wd_to_get_logg_values (double *logg1, double *logg2)
-{
-	char *atmcof, *atmcofplanck, *lcin;
-	int request, nodes, L3perc, status;
-
-	WD_LCI_parameters wd_params;
-
-	status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
-	if (status != SUCCESS)
-		return status;
-
-	status = wd_lci_parameters_get (&wd_params, 2, 0);
-	if (status != SUCCESS) return status;
-
-	wd_params.JDPHS = 2;
-
-	/* Generate a unique LCI filename: */
-	lcin = phoebe_create_temp_filename ("phoebe_lci_XXXXXX");
-	if (!lcin) return ERROR_FILE_OPEN_FAILED;
-	create_lci_file (lcin, &wd_params);
-
-	double indep[1], dep[1];
-	indep[0] = 0;
-
-	request = 2;
-	nodes = 1;
-	L3perc = 0;
-
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, &request, &nodes, &L3perc, indep, dep, NULL, NULL);
-
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_logg1"),   logg1);
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_logg2"),   logg2);
-
-	remove (lcin);
-	free (lcin);
 
 	return SUCCESS;
 }

@@ -812,8 +812,10 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 		PHOEBE_vector *poscoy, *poscoz;
 		char *lcin;
 		WD_LCI_parameters *params = phoebe_malloc (sizeof (*params));
+        double *args;
 		
-		status = wd_lci_parameters_get (params, 5, 0);
+        args = phoebe_malloc(18*sizeof(*args));
+		status = wd_lci_parameters_get (params, &args, 5, 0);
 		if (status != SUCCESS) {
 			gui_notice ("Mesh computation failed", "For some mysterious reason (such as a bug in the program) parameter readout failed. Please report this.");
 			return;
@@ -825,7 +827,7 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 		
 		poscoy = phoebe_vector_new ();
 		poscoz = phoebe_vector_new ();
-		status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, data->request->phase);
+		status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, args, data->request->phase);
 		
 		data->request[0].model = phoebe_curve_new ();
 		data->request[0].model->indep = poscoy;
@@ -847,6 +849,8 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 		data->x_max = x_max;
 		data->y_min = y_min;
 		data->y_max = y_max;
+
+        free(args);
 	}
 
 	gui_plot_area_refresh (data);
