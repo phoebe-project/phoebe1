@@ -676,6 +676,7 @@ scripter_ast_value scripter_create_wd_lci_file (scripter_ast_list *args)
 	scripter_ast_value out;
 	scripter_ast_value *vals;
 	WD_LCI_parameters params;
+	double *lciargs;
 	int status;
 
 	out.type = type_void;
@@ -683,7 +684,9 @@ scripter_ast_value scripter_create_wd_lci_file (scripter_ast_list *args)
 	status = scripter_command_args_evaluate (args, &vals, 3, 3, type_string, type_int, type_int);
 	if (status != SUCCESS) return out;
 
-	status = wd_lci_parameters_get (&params, vals[1].value.i, vals[2].value.i-1);
+	lciargs = phoebe_malloc(18*sizeof(*args));
+	status = wd_lci_parameters_get (&params, &lciargs, vals[1].value.i, vals[2].value.i-1);
+	free(lciargs);
 	if (status != SUCCESS) phoebe_scripter_output ("%s", phoebe_scripter_error (status));
 	else {
 		status = create_lci_file (vals[0].value.str, &params);
@@ -2102,6 +2105,7 @@ scripter_ast_value scripter_plot_eb_using_gnuplot (scripter_ast_list *args)
 
 	scripter_plot_properties *props = NULL;
 	WD_LCI_parameters *params;
+	double *lciargs;
 
 	char *lcin;
 
@@ -2113,8 +2117,9 @@ scripter_ast_value scripter_plot_eb_using_gnuplot (scripter_ast_list *args)
 	status = scripter_command_args_evaluate (args, &vals, 1, 1, type_double);
 	if (status != SUCCESS) return out;
 
-	params = phoebe_malloc (sizeof (*params));
-	status = wd_lci_parameters_get (params, 5, 0);
+	params = phoebe_malloc(sizeof(*params));
+	lciargs = phoebe_malloc(18*sizeof(*lciargs));
+	status = wd_lci_parameters_get (params, &lciargs, 5, 0);
 	if (status != SUCCESS) {
 		phoebe_scripter_output ("%s", phoebe_scripter_error (status));
 		return out;
@@ -2125,7 +2130,7 @@ scripter_ast_value scripter_plot_eb_using_gnuplot (scripter_ast_list *args)
 
 	poscoy = phoebe_vector_new ();
 	poscoz = phoebe_vector_new ();
-	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, vals[0].value.d);
+	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, lciargs, vals[0].value.d);
 
 	props = phoebe_malloc (sizeof (*props));
 	props[index].lines = FALSE;
@@ -2133,18 +2138,19 @@ scripter_ast_value scripter_plot_eb_using_gnuplot (scripter_ast_list *args)
 	props[index].ptype = 13;
 	props[index].ltype = 3;
 
-	/* Everything is set now, let's plot the figure using gnuplot:            */
+	/* Everything is set now, let's plot the figure using gnuplot: */
 	status = plot_using_gnuplot (1, NO, &poscoy, &poscoz, props);
 	if (status != SUCCESS)
 		phoebe_scripter_output ("%s", phoebe_scripter_error (status));
 
-	/* Let's clean everything up:                                             */
+	/* Let's clean everything up: */
 	phoebe_vector_free (poscoy);
 	phoebe_vector_free (poscoz);
-	free (params);
-	free (props);
-	remove (lcin);
-	free (lcin);
+	free(params);
+	free(lciargs);
+	free(props);
+	remove(lcin);
+	free(lcin);
 
 	scripter_ast_value_array_free (vals, 1);
 
@@ -2468,6 +2474,7 @@ scripter_ast_value scripter_compute_mesh (scripter_ast_list *args)
 	PHOEBE_vector *poscoy, *poscoz;
 
 	WD_LCI_parameters *params;
+	double *lciargs;
 
 	char *lcin;
 
@@ -2480,7 +2487,9 @@ scripter_ast_value scripter_compute_mesh (scripter_ast_list *args)
 	if (status != SUCCESS) return out;
 
 	params = phoebe_malloc (sizeof (*params));
-	status = wd_lci_parameters_get (params, 5, 0);
+	lciargs = phoebe_malloc(18*sizeof(*lciargs));
+
+	status = wd_lci_parameters_get (params, &lciargs, 5, 0);
 	if (status != SUCCESS) {
 		phoebe_scripter_output ("%s", phoebe_scripter_error (status));
 		return out;
@@ -2491,7 +2500,7 @@ scripter_ast_value scripter_compute_mesh (scripter_ast_list *args)
 
 	poscoy = phoebe_vector_new ();
 	poscoz = phoebe_vector_new ();
-	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, vals[0].value.d);
+	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, lciargs, vals[0].value.d);
 
 	out.type = type_curve;
 	out.value.curve = phoebe_curve_new ();
@@ -2503,10 +2512,11 @@ scripter_ast_value scripter_compute_mesh (scripter_ast_list *args)
 		out.value.curve->weight->val[i] = 1.0;
 	}
 
-	/* Let's clean everything up:                                             */
+	/* Let's clean everything up: */
 	phoebe_vector_free (poscoy);
 	phoebe_vector_free (poscoz);
 	free (params);
+	free(lciargs);
 	remove (lcin);
 	free (lcin);
 
