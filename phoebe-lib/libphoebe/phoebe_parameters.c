@@ -232,12 +232,14 @@ int phoebe_init_parameters ()
 	phoebe_parameter_add ("phoebe_mass2",                "Secondary star mass",                                KIND_COMPUTED,   NULL,               "%lf", 0.0,   1E10,    0.0, NO, TYPE_DOUBLE,       1.0);
 	phoebe_parameter_add ("phoebe_radius1",              "Primary star radius",                                KIND_COMPUTED,   NULL,               "%lf", 0.0,   1E10,    0.0, NO, TYPE_DOUBLE,       1.0);
 	phoebe_parameter_add ("phoebe_radius2",              "Secondary star radius",                              KIND_COMPUTED,   NULL,               "%lf", 0.0,   1E10,    0.0, NO, TYPE_DOUBLE,       1.0);
-	phoebe_parameter_add ("phoebe_mbol1",                "Primary star absolute bolometric magnitude",         KIND_COMPUTED,   NULL,               "%lf", -100,    100,    0.0, NO, TYPE_DOUBLE,       0.0);
-	phoebe_parameter_add ("phoebe_mbol2",                "Secondary star absolute bolometric magnitude",       KIND_COMPUTED,   NULL,               "%lf", -100,    100,    0.0, NO, TYPE_DOUBLE,       0.0);
-	phoebe_parameter_add ("phoebe_logg1",                "Primary star surface gravity",                       KIND_COMPUTED,   NULL,               "%lf",  0.0,    100,    0.0, NO, TYPE_DOUBLE,       4.3);
+	phoebe_parameter_add ("phoebe_mbol1",                "Primary star absolute bolometric magnitude",         KIND_COMPUTED,   NULL,               "%lf", -100,   100,    0.0, NO, TYPE_DOUBLE,       0.0);
+	phoebe_parameter_add ("phoebe_mbol2",                "Secondary star absolute bolometric magnitude",       KIND_COMPUTED,   NULL,               "%lf", -100,   100,    0.0, NO, TYPE_DOUBLE,       0.0);
+	phoebe_parameter_add ("phoebe_logg1",                "Primary star surface gravity",                       KIND_COMPUTED,   NULL,               "%lf", 0.0,    100,    0.0, NO, TYPE_DOUBLE,       4.3);
 	phoebe_parameter_add ("phoebe_logg2",                "Secondary star surface gravity",                     KIND_COMPUTED,   NULL,               "%lf", 0.0,    100,    0.0, NO, TYPE_DOUBLE,       4.3);
 	phoebe_parameter_add ("phoebe_sbr1",                 "Primary star polar surface brightness",              KIND_COMPUTED,   NULL,               "%lf", 0.0,   1E10,    0.0, NO, TYPE_DOUBLE,       1.0);
 	phoebe_parameter_add ("phoebe_sbr2",                 "Secondary star polar surface brightness",            KIND_COMPUTED,   NULL,               "%lf", 0.0,   1E10,    0.0, NO, TYPE_DOUBLE,       1.0);
+	phoebe_parameter_add ("phoebe_vol1",                 "Primary star volume of a fractional radius",         KIND_COMPUTED,   NULL,               "%lf", 0.0,   1E10,    0.0, NO, TYPE_DOUBLE,       1.0);
+	phoebe_parameter_add ("phoebe_vol2",                 "Secondary star volume of a fractional radius",       KIND_COMPUTED,   NULL,               "%lf", 0.0,   1E10,    0.0, NO, TYPE_DOUBLE,       1.0);
 
 	return SUCCESS;
 }

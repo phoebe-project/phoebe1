@@ -174,18 +174,18 @@ int phoebe_wd_model (char *phoebe_model)
 
 int wd_lci_parameters_get (WD_LCI_parameters *params, double **args, int MPAGE, int curve)
 {
-	/*
+	/**
+	 * wd_lci_parameters_get:
+	 * @params: placeholder for all LCI parameters
+	 * @args: parameters to be passed to LC directly
+	 * @MPAGE: computation type
+	 * @curve: curve index
+	 * 
 	 * This function reads out all variables that build up the LCI file. It
 	 * is written in such a way that any failed step can return the error
 	 * code without memory leaks.
 	 * 
-	 * Return values:
-	 * 
-	 *   ERROR_QUALIFIER_NOT_FOUND
-	 *   ERROR_UNINITIALIZED_CURVE
-	 *   ERROR_UNSUPPORTED_MPAGE  
-	 *   ERROR_INVALID_LDLAW
-	 *   SUCCESS
+	 * Returns: #PHOEBE_error_code
 	 */
 
 	int i, status;
