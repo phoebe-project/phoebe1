@@ -249,7 +249,7 @@ bool phoebe_pcsv_constrained (int wd_model)
 void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *args, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos)
 {
 	int wd_model;
-	double params[14];
+	double params[16];
 	char *phoebe_model;
     int mem, dump;
     
@@ -270,6 +270,8 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *ar
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_logg2"),   params[ 9]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_sbr1"),    params[10]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_sbr2"),    params[11]);
+	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_vol1"),    params[14]);
+	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_vol2"),    params[15]);
 	
 	/* If morphology is constrained, update parameter values: */
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_model"), &phoebe_model);
@@ -279,7 +281,7 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *ar
 		phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_pot1"), params[12]);
 	if (phoebe_pcsv_constrained (wd_model))
 		phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_pot2"), params[13]);
-	
+    
 	return;
 }
 

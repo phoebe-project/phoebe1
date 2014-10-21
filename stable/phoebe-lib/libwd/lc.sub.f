@@ -548,6 +548,7 @@ c***************************************************************
      $hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,
      $zskp,mode,iband,ifat1,ifat2,1)
       KH=0
+c     (3/4pi)^(1/3) = .6203505d0
       rr1=.6203505d0*vol1**ot
       rr2=.6203505d0*vol2**ot
       tav1=10000.d0*tavh
@@ -572,6 +573,8 @@ c
       params(12) = sbrc
       params(13) = phsv
       params(14) = pcsv
+      params(15) = vol1
+      params(16) = vol2
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if(lcout.ne."") then
