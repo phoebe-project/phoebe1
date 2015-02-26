@@ -664,18 +664,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extension:
 c
+      write(*,*) mmsave(n1+1),mmsave(n2+1)
       if (mswitch.eq.1) then
         nc = 4
-        do 665 igsidx=1,mmsave(n1)
-          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+1)=rv(igsidx)
-          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+2)=grx(igsidx)
-          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+3)=gry(igsidx)
-          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+4)=grz(igsidx)
-          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+1)=rvq(igsidx)
-          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+2)=grxq(igsidx)
-          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+3)=gryq(igsidx)
-          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+4)=grzq(igsidx)
+        do 665 igsidx=1,mmsave(n1+1)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+1)=rv(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+2)=grx(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+3)=gry(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+4)=grz(igsidx)
   665   continue
+        do 666 igsidx=1,mmsave(n2+1)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+1)=rvq(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+2)=grxq(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+3)=gryq(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+4)=grzq(igsidx)
+  666   continue
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       HTT=HOT
