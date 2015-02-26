@@ -664,7 +664,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extension:
 c
-      write(*,*) mmsave(n1+1),mmsave(n2+1)
       if (mswitch.eq.1) then
         nc = 4
         do 665 igsidx=1,mmsave(n1+1)

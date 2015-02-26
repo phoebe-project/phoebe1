@@ -258,9 +258,6 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *ar
 
     wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "", mswitch, mesh1, mesh2);
 
-    for (i = 0; i < 342; i++)
-        printf("%f\n", mesh1[i*4+0]);
-
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_mass1"),   params[ 2]);
