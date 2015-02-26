@@ -34,12 +34,12 @@ int phoebe_join_chi2  (double *chi2, PHOEBE_vector *chi2s, PHOEBE_vector *weight
  * below should then correspond to that prototype.
  */
 
-#define wd_lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout) lc_(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout,strlen(plf),strlen(atmf),strlen(lcin),strlen(lcout))
+#define wd_lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout,mswitch,mesh1,mesh2) lc_(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout,mswitch,mesh1,mesh2,strlen(plf),strlen(atmf),strlen(lcin),strlen(lcout))
 
-int phoebe_compute_lc_using_wd  (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin, double *args);
-int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1,   PHOEBE_vector *indep, char *lcin, double *args);
-int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2,   PHOEBE_vector *indep, char *lcin, double *args);
-int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, char *lcin, double *args, double phase);
+int phoebe_compute_lc_using_wd  (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2);
+int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1,   PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2);
+int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2,   PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2);
+int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, char *lcin, double *args, double phase, double *mesh1, double *mesh2);
 
 int phoebe_calculate_plum_correction (double *alpha, PHOEBE_curve *syn, PHOEBE_curve *obs, int levweight, double l3, PHOEBE_el3_units l3units);
 int phoebe_calculate_gamma_correction (double *gamma, PHOEBE_curve *syn, PHOEBE_curve *obs);

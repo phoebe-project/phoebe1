@@ -169,7 +169,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         lexp = intern_get_level_weighting_id (rstr);
         
         syn = phoebe_curve_new ();
-        phoebe_curve_compute (syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX);
+        phoebe_curve_compute (syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
     }
 
     else if (strcmp(ctype, "rv") == 0 || strcmp(ctype, "RV") == 0) {
@@ -179,7 +179,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         lexp = 0;
 
         syn = phoebe_curve_new ();
-        phoebe_curve_compute (syn, obs->indep, index, obs->itype, obs->dtype);
+        phoebe_curve_compute (syn, obs->indep, index, obs->itype, obs->dtype, NULL, NULL);
     }
 
     else {
@@ -419,7 +419,7 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_model"), &ldname);
     ldmodel = phoebe_ld_model_type(ldname);
     
-    //~ printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
+    printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
     
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff1"), &T1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff2"), &T2);
@@ -437,7 +437,7 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f2"),  &F2);
     phoebe_calculate_loggs(pot1, pot2, sma, P, e, q, F1, F2, &logg1, &logg2);
     
-    //~ printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
+    printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
     
     /* Bolometric LD coefficients first: */
     xld = yld = 0;
@@ -528,17 +528,31 @@ static PyObject *phoebeData(PyObject *self, PyObject *args)
     return ret;
 }
 
+int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, double **field)
+{
+    int i, j;
+    PyObject *tuple = PyTuple_New(mesh->verts*mesh->elems);
+    
+    for (i = 0; i < mesh->verts; i++)
+        for (j = 0; j < mesh->elems; j++)
+            PyTuple_SetItem(tuple, i*mesh->elems+j, Py_BuildValue("d", field[i][j]));
+    PyDict_SetItem(dict, Py_BuildValue("s", key), tuple);
+
+    return SUCCESS;
+}
+
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
-    int index, tlen, i;
-    PyObject *obj, *ret;
+    int index, tlen, i, mswitch = 0;
+    PyObject *obj, *lc;
     char *rstr;
     
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
+    PHOEBE_mesh *mesh1 = NULL, *mesh2 = NULL;
     
-    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
+    if (!PyArg_ParseTuple(args, "Oi|i", &obj, &index, &mswitch) || !PyTuple_Check(obj)) {
         printf("parsing failed.\n");
         return NULL;
     }
@@ -552,17 +566,50 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
     phoebe_column_get_type (&itype, rstr);
     
+    /* If mswitch is turned on, we need to store the computed meshes. */
+    if (mswitch) {
+        mesh1 = phoebe_mesh_new();
+        mesh2 = phoebe_mesh_new();
+    }
+
     curve = phoebe_curve_new();
-    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX);
+    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX, mesh1, mesh2);
 
-    ret = PyTuple_New(tlen);
+    lc = PyTuple_New(tlen);
     for (i = 0; i < tlen; i++)
-        PyTuple_SetItem(ret, i, Py_BuildValue("d", curve->dep->val[i]));
+        PyTuple_SetItem(lc, i, Py_BuildValue("d", curve->dep->val[i]));
 
+    if (mswitch) {
+        /* Now we need to wrap this into something nice. */
+        PyObject *dict = PyDict_New();
+        PyObject *combo = PyTuple_New(2);
+        
+        intern_add_mesh_to_dict(dict, mesh1, "rad1", mesh1->rad);
+        intern_add_mesh_to_dict(dict, mesh1, "grx1", mesh1->grx);
+        intern_add_mesh_to_dict(dict, mesh1, "gry1", mesh1->gry);
+        intern_add_mesh_to_dict(dict, mesh1, "grz1", mesh1->grz);
+
+        intern_add_mesh_to_dict(dict, mesh2, "rad2", mesh2->rad);
+        intern_add_mesh_to_dict(dict, mesh2, "grx2", mesh2->grx);
+        intern_add_mesh_to_dict(dict, mesh2, "gry2", mesh2->gry);
+        intern_add_mesh_to_dict(dict, mesh2, "grz2", mesh2->grz);
+
+        phoebe_curve_free(curve);
+        phoebe_vector_free(indep);
+        phoebe_mesh_free(mesh1);
+        phoebe_mesh_free(mesh2);
+
+        PyTuple_SetItem(combo, 0, lc);
+        PyTuple_SetItem(combo, 1, dict);
+        return combo;
+    }
+    
     phoebe_curve_free(curve);
     phoebe_vector_free(indep);
+    phoebe_mesh_free(mesh1);
+    phoebe_mesh_free(mesh2);
 
-    return ret;
+    return lc;
 }
 
 static PyObject *phoebeRV1(PyObject *self, PyObject *args)
@@ -590,7 +637,7 @@ static PyObject *phoebeRV1(PyObject *self, PyObject *args)
     phoebe_column_get_type (&itype, rstr);
     
     curve = phoebe_curve_new();
-    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_PRIMARY_RV);
+    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_PRIMARY_RV, NULL, NULL);
     if (status != SUCCESS) {
         printf("%s", phoebe_error(status));
         return NULL;
@@ -631,7 +678,7 @@ static PyObject *phoebeRV2(PyObject *self, PyObject *args)
     phoebe_column_get_type (&itype, rstr);
     
     curve = phoebe_curve_new();
-    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_SECONDARY_RV);
+    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_SECONDARY_RV, NULL, NULL);
 
     ret = PyTuple_New(tlen);
     for (i = 0; i < tlen; i++)
