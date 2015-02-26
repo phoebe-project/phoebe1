@@ -27,6 +27,14 @@ print("First 5 data points from the LC file:")
 for i in range(5):
     print("%12.6f"*3 % (x[i], y[i], z[i]))
 
+# Compute a light curve with meshes exported:
+phoebe.setpar("phoebe_indep", "Phase")
+lc, mesh = phoebe.lc((0.0,), 0, 1)
+print lc
+print mesh['rad1']
+print len(mesh['rad1'])
+exit()
+
 # Original LD coefficients:
 xbol1 = phoebe.getpar("phoebe_ld_xbol1")
 ybol1 = phoebe.getpar("phoebe_ld_ybol1")

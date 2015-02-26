@@ -256,6 +256,23 @@ typedef struct PHOEBE_passband {
 
 /* **************************************************************************** */
 
+typedef struct PHOEBE_mesh {
+    int verts;
+    int elems;
+    int cols;
+    double **rad;
+    double **grx;
+    double **gry;
+    double **grz;
+} PHOEBE_mesh;
+
+PHOEBE_mesh *phoebe_mesh_new();
+int          phoebe_mesh_alloc(PHOEBE_mesh *mesh, int verts, int elems);
+int          phoebe_mesh_import(PHOEBE_mesh *mesh, double *list, int verts, int elems);
+int          phoebe_mesh_free(PHOEBE_mesh *mesh);
+
+/* **************************************************************************** */
+
 /**
  * PHOEBE_curve_type:
  * @PHOEBE_CURVE_UNDEFINED: The type of the curve is unknown.
@@ -334,7 +351,7 @@ PHOEBE_curve *phoebe_curve_new_from_pars  (PHOEBE_curve_type ctype, int index);
 PHOEBE_curve *phoebe_curve_duplicate      (PHOEBE_curve *curve);
 int           phoebe_curve_alloc          (PHOEBE_curve *curve, int dim);
 int           phoebe_curve_realloc        (PHOEBE_curve *curve, int dim);
-int           phoebe_curve_compute        (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype);
+int           phoebe_curve_compute        (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_mesh *mesh1, PHOEBE_mesh *mesh2);
 int           phoebe_curve_transform      (PHOEBE_curve *curve, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_column_type wtype);
 int           phoebe_curve_alias          (PHOEBE_curve *curve, double phmin, double phmax);
 int           phoebe_curve_set_properties (PHOEBE_curve *curve, PHOEBE_curve_type type, char *filename, PHOEBE_passband *passband, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_column_type wtype, double sigma);

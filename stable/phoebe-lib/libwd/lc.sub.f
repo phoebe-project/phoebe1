@@ -1,5 +1,6 @@
       subroutine lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,
-     +              indeps,deps,skycoy,skycoz,params,args,lcout)
+     +              indeps,deps,skycoy,skycoz,params,args,lcout,
+     +              mswitch,mesh1,mesh2)
 c
 c  Main program for computing light and radial velocity curves,
 c      line profiles, and images
@@ -179,11 +180,15 @@ c                     args(18) = passband luminosity
 c
 c                     Incorporating args was necessary to circumvent
 c                     rounding problems in WD when using I/O.
+c      mswitch   ..   should the meshes be exported to phoebe?
+c        mesh1   ..   a matrix of primary star mesh values, useful for debugging
+c        mesh2   ..   a matrix of secondary star mesh values, useful for debugging
 
-      integer request,vertno
+      integer request,vertno,mswitch
       double precision indeps(*),deps(*),skycoy(*),skycoz(*),params(*),
      $args(*),pltab(iplcof),atmtab(iatmsize)
       character lcin*(*)
+      double precision mesh1(*), mesh2(*)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
       dimension rv(igsmax),grx(igsmax),gry(igsmax),grz(igsmax),
@@ -655,7 +660,24 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $delwl2,resf1,resf2,wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,
      $hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,
      $zskp,mode,iband,ifat1,ifat2,0)
-
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c     PHOEBE extension:
+c
+      if (mswitch.eq.1) then
+        nc = 4
+        do 665 igsidx=1,mmsave(n1)
+          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+1)=rv(igsidx)
+          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+2)=grx(igsidx)
+          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+3)=gry(igsidx)
+          mesh1((idx-1)*mmsave(n1)*nc+(igsidx-1)*nc+4)=grz(igsidx)
+          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+1)=rvq(igsidx)
+          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+2)=grxq(igsidx)
+          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+3)=gryq(igsidx)
+          mesh2((idx-1)*mmsave(n2)*nc+(igsidx-1)*nc+4)=grzq(igsidx)
+  665   continue
+      endif
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       HTT=HOT
       IF(MODE.EQ.-1) HTT=0.d0
       TOTAL=HTT+COOL+EL3

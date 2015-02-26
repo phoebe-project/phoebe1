@@ -2755,7 +2755,24 @@ int phoebe_curve_realloc (PHOEBE_curve *curve, int dim)
 	return SUCCESS;
 }
 
-int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype)
+int intern_get_num_wd_elems(int N)
+{
+    /**
+     * intern_get_num_wd_elems:
+     * @N: raster size
+     * 
+     * Computes the number of surface elements WD style.
+     */
+    
+    int i, nelems = 0;
+
+    for (i = 0; i < N; i++)
+        nelems += (int)(1.3*N*sin(M_PI/2*((double)(i+1)-0.5)/N))+1;
+    
+    return nelems;
+}
+
+int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_mesh *mesh1, PHOEBE_mesh *mesh2)
 {
 	/**
 	 * phoebe_curve_compute:
@@ -2764,10 +2781,16 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	 * @index: curve index
 	 * @itype: requested independent data type (see #PHOEBE_column_type)
 	 * @dtype: requested dependent data type (see #PHOEBE_column_type)
+     * @mesh1: a pointer to the initialized #PHOEBE_mesh, or NULL
+     * @mesh2: a pointer to the initialized #PHOEBE_mesh, or NULL
 	 *
 	 * Computes the @index-th model light curve or RV curve in @nodes.
 	 * The computation is governed by the enumerated choices of @itype
-	 * and @dtype.
+	 * and @dtype. If @mesh1 or @mesh2 are not NULL, and are initialized
+     * #PHOEBE_mesh structures, this function will store all the gory
+     * details of computed meshes into these two structures. This slows
+     * down computations slightly, but is useful for debugging and/or
+     * custom plotting.
 	 *
 	 * Returns: #PHOEBE_error_code.
 	 */
@@ -2787,6 +2810,10 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	PHOEBE_curve  *fticurve;
 	WD_LCI_parameters params;
     double *args;
+
+    /* Mesh lists to be passed to WD: */
+    double *list1 = NULL, *list2 = NULL;
+    int N1, N2, nelems1, nelems2;
 
 	double A;
 
@@ -2893,23 +2920,38 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 		fticurve = phoebe_curve_duplicate (curve);
 	}
 
+    /* If a full mesh is requested, allocate the structures: */
+    if (mesh1) {
+        int ncols = 4;
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_grid_finesize1"), &N1);
+        nelems1 = intern_get_num_wd_elems(N1);
+        list1 = phoebe_malloc(fti ? verts->dim : nodes->dim * nelems1*ncols*sizeof(*list1));
+    }
+
+    if (mesh2) {
+        int ncols = 4;
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_grid_finesize2"), &N2);
+        nelems2 = intern_get_num_wd_elems(N2);
+        list2 = phoebe_malloc(fti ? verts->dim : nodes->dim * nelems2*ncols*sizeof(*list2));
+    }
+
 	switch (dtype) {
 		case PHOEBE_COLUMN_MAGNITUDE:
-			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args);
+			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args, list1, list2);
 			if (status != SUCCESS) return status;
 			apply_extinction_correction (fti ? fticurve : curve, A);
 		break;
 		case PHOEBE_COLUMN_FLUX:
-			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args);
+			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args, list1, list2);
 			if (status != SUCCESS) return status;
 			apply_extinction_correction (fti ? fticurve : curve, A);
 		break;
 		case PHOEBE_COLUMN_PRIMARY_RV:
-			status = phoebe_compute_rv1_using_wd (curve, nodes, lcin, args);
+			status = phoebe_compute_rv1_using_wd (curve, nodes, lcin, args, list1, list2);
 			if (status != SUCCESS) return status;
 		break;
 		case PHOEBE_COLUMN_SECONDARY_RV:
-			status = phoebe_compute_rv2_using_wd (curve, nodes, lcin, args);
+			status = phoebe_compute_rv2_using_wd (curve, nodes, lcin, args, list1, list2);
 			if (status != SUCCESS) return status;
 		break;
 		default:
@@ -2950,6 +2992,16 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 		for (i = 0; i < curve->dep->dim; i++)
 			curve->dep->val[i] *= 100.0;
 	}
+
+    /* If meshes were stored, convert them to user-friendly forms: */
+    if (mesh1) {
+        phoebe_mesh_import(mesh1, list1, nodes->dim, nelems1);
+        free(list1);
+    }
+    if (mesh2) {
+        phoebe_mesh_import(mesh2, list2, nodes->dim, nelems2);
+        free(list2);
+    }
 
 	return SUCCESS;
 }
@@ -3556,4 +3608,124 @@ PHOEBE_value phoebe_value_duplicate (PHOEBE_type type, PHOEBE_value val)
 	}
 
 	return copy;
+}
+
+PHOEBE_mesh *phoebe_mesh_new()
+{
+    /**
+     * phoebe_mesh_new:
+     * 
+     * Initializes a new mesh structure.
+     * 
+     * Returns: instance of a new mesh.
+     */
+    
+    PHOEBE_mesh *mesh = phoebe_malloc(sizeof(*mesh));
+    
+    mesh->verts = 0;
+    mesh->elems = 0;
+    mesh->cols  = 0;
+    
+    mesh->rad = NULL;
+    mesh->grx = NULL;
+    mesh->gry = NULL;
+    mesh->grz = NULL;
+    
+    return mesh;
+}
+
+int phoebe_mesh_alloc(PHOEBE_mesh *mesh, int verts, int elems)
+{
+    /**
+     * phoebe_mesh_alloc:
+     * @mesh: mesh to be allocated.
+     * @verts: number of vertices (timestamps) in the data curve
+     * @elems: number of surface elements on the star
+     * 
+     * Initializes memory for the mesh.
+     * 
+     * Returns: #PHOEBE_error_code.
+     */
+    
+    int i;
+    
+    mesh->verts = verts;
+    mesh->elems = elems;
+    
+    mesh->rad = phoebe_malloc(verts*sizeof(*(mesh->rad)));
+    mesh->grx = phoebe_malloc(verts*sizeof(*(mesh->grx)));
+    mesh->gry = phoebe_malloc(verts*sizeof(*(mesh->gry)));
+    mesh->grz = phoebe_malloc(verts*sizeof(*(mesh->grz)));
+    
+    for (i = 0; i < verts; i++) {
+        mesh->rad[i] = phoebe_malloc(elems*sizeof(**(mesh->rad)));
+        mesh->grx[i] = phoebe_malloc(elems*sizeof(**(mesh->grx)));
+        mesh->gry[i] = phoebe_malloc(elems*sizeof(**(mesh->gry)));
+        mesh->grz[i] = phoebe_malloc(elems*sizeof(**(mesh->grz)));
+    }
+    
+    return SUCCESS;
+}
+
+int phoebe_mesh_import(PHOEBE_mesh *mesh, double *list, int verts, int elems)
+{
+    /**
+     * phoebe_mesh_import:
+     * @mesh: initialized mesh that will be populated
+     * @list: list of mesh parameter values from WD
+     * 
+     * Traverses the list of mesh parameter values and populates the 
+     * #PHOEBE_mesh @mesh structure. Parameters are stored in the array
+     * by timestamp, then by element, then by parameter.
+     * 
+     * Returns: #PHOEBE_error_code.
+     */
+    
+    int i, j;
+    int ncols = 4;
+    
+    phoebe_mesh_alloc(mesh, verts, elems);
+    for (i = 0; i < verts; i++) {
+        for (j = 0; j < elems; j++) {
+            mesh->rad[i][j] = list[i*elems*ncols+j*ncols+1];
+            mesh->grx[i][j] = list[i*elems*ncols+j*ncols+2];
+            mesh->gry[i][j] = list[i*elems*ncols+j*ncols+3];
+            mesh->grz[i][j] = list[i*elems*ncols+j*ncols+4];
+        }
+    }
+    
+    return SUCCESS;
+}
+
+int phoebe_mesh_free(PHOEBE_mesh *mesh)
+{
+    /**
+     * phoebe_mesh_free:
+     * @mesh: mesh to be freed.
+     * 
+     * Frees memory from mesh structures and the mesh itself.
+     * 
+     * Returns: #PHOEBE_error_code.
+     */
+    
+    int i;
+    
+    if (!mesh)
+        return SUCCESS;
+        
+    for (i = 0; i < mesh->verts; i++) {
+        free(mesh->rad[i]);
+        free(mesh->grx[i]);
+        free(mesh->gry[i]);
+        free(mesh->grz[i]);
+    }
+    
+    free(mesh->rad);
+    free(mesh->grx);
+    free(mesh->gry);
+    free(mesh->grz);
+    
+    free(mesh);
+    
+    return SUCCESS;
 }

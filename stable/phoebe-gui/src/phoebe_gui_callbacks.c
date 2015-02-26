@@ -3051,7 +3051,7 @@ void on_phoebe_fitt_cfval_compute_button_clicked (GtkButton *button, gpointer us
 			/* Synthesize a theoretical curve: */
 /*
 			syncurve = phoebe_curve_new ();
-			phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX);
+			phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
 		}
 		else {
 			obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_RV, index-lcno-1);
@@ -3062,7 +3062,7 @@ void on_phoebe_fitt_cfval_compute_button_clicked (GtkButton *button, gpointer us
 			phoebe_curve_transform (obs, obs->itype, obs->dtype, PHOEBE_COLUMN_SIGMA);
 
 			syncurve = phoebe_curve_new ();
-			phoebe_curve_compute (syncurve, obs->indep, index-lcno-1, obs->itype, obs->dtype);
+			phoebe_curve_compute (syncurve, obs->indep, index-lcno-1, obs->itype, obs->dtype, NULL, NULL);
 		}
 
 		status = phoebe_cf_compute (&chi2, PHOEBE_CF_CHI2, syncurve->dep, obs->dep, obs->weight, 1.0);
