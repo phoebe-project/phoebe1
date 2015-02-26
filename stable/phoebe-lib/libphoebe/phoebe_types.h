@@ -259,11 +259,8 @@ typedef struct PHOEBE_passband {
 typedef struct PHOEBE_mesh {
     int verts;
     int elems;
-    int cols;
-    double **rad;
-    double **grx;
-    double **gry;
-    double **grz;
+    int ncols;
+    double ***mesh;
 } PHOEBE_mesh;
 
 PHOEBE_mesh *phoebe_mesh_new();

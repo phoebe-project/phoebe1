@@ -251,12 +251,15 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *ar
 	int wd_model;
 	double params[16];
 	char *phoebe_model;
-    int mem, dump;
+    int mem, dump, i;
     
     phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &mem);
     phoebe_config_entry_get("DUMP_LCOUT_FILES", &dump);
 
     wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "", mswitch, mesh1, mesh2);
+
+    for (i = 0; i < 342; i++)
+        printf("%f\n", mesh1[i*4+0]);
 
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
 	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
@@ -393,6 +396,10 @@ int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *
 
 	L3perc = 0;
 
+    /* If meshes are requested, flip the mswitch: */
+    if (mesh1 || mesh2)
+        mswitch = TRUE;
+
 	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv1->dep->val, NULL, NULL, &mswitch, mesh1, mesh2);
 
 	return SUCCESS;
@@ -441,6 +448,10 @@ int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *
 	nodes = (integer) indep->dim;
 
 	L3perc = 0;
+
+    /* If meshes are requested, flip the mswitch: */
+    if (mesh1 || mesh2)
+        mswitch = TRUE;
 
 	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv2->dep->val, NULL, NULL, &mswitch, mesh1, mesh2);
 
@@ -526,6 +537,10 @@ int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, c
 	request = 4;
 	nodes   = 1;
 	L3perc  = 0;
+
+    /* If meshes are requested, flip the mswitch: */
+    if (mesh1 || mesh2)
+        mswitch = TRUE;
 
 	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, &phs, &dummy, poscoy->val, poscoz->val, &mswitch, mesh1, mesh2);
 

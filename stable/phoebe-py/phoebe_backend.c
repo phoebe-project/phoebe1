@@ -528,14 +528,14 @@ static PyObject *phoebeData(PyObject *self, PyObject *args)
     return ret;
 }
 
-int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, double **field)
+int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, int col)
 {
     int i, j;
     PyObject *tuple = PyTuple_New(mesh->verts*mesh->elems);
     
     for (i = 0; i < mesh->verts; i++)
         for (j = 0; j < mesh->elems; j++)
-            PyTuple_SetItem(tuple, i*mesh->elems+j, Py_BuildValue("d", field[i][j]));
+            PyTuple_SetItem(tuple, i*mesh->elems+j, Py_BuildValue("d", mesh->mesh[i][j][col]));
     PyDict_SetItem(dict, Py_BuildValue("s", key), tuple);
 
     return SUCCESS;
@@ -584,15 +584,15 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         PyObject *dict = PyDict_New();
         PyObject *combo = PyTuple_New(2);
         
-        intern_add_mesh_to_dict(dict, mesh1, "rad1", mesh1->rad);
-        intern_add_mesh_to_dict(dict, mesh1, "grx1", mesh1->grx);
-        intern_add_mesh_to_dict(dict, mesh1, "gry1", mesh1->gry);
-        intern_add_mesh_to_dict(dict, mesh1, "grz1", mesh1->grz);
+        intern_add_mesh_to_dict(dict, mesh1, "rad1", 0);
+        intern_add_mesh_to_dict(dict, mesh1, "grx1", 1);
+        intern_add_mesh_to_dict(dict, mesh1, "gry1", 2);
+        intern_add_mesh_to_dict(dict, mesh1, "grz1", 3);
 
-        intern_add_mesh_to_dict(dict, mesh2, "rad2", mesh2->rad);
-        intern_add_mesh_to_dict(dict, mesh2, "grx2", mesh2->grx);
-        intern_add_mesh_to_dict(dict, mesh2, "gry2", mesh2->gry);
-        intern_add_mesh_to_dict(dict, mesh2, "grz2", mesh2->grz);
+        intern_add_mesh_to_dict(dict, mesh2, "rad2", 0);
+        intern_add_mesh_to_dict(dict, mesh2, "grx2", 1);
+        intern_add_mesh_to_dict(dict, mesh2, "gry2", 2);
+        intern_add_mesh_to_dict(dict, mesh2, "grz2", 3);
 
         phoebe_curve_free(curve);
         phoebe_vector_free(indep);
