@@ -664,19 +664,35 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extension:
 c
+c     $xx1(igsmax),xx2(igsmax),yy1(igsmax),yy2(igsmax),
+c     $zz1(igsmax),zz2(igsmax),grv1(igsmax),grv2(igsmax),rftemp(igsmax),
+c     $rf1(igsmax),rf2(igsmax),csbt1(igsmax),csbt2(igsmax),
+c
       if (mswitch.eq.1) then
-        nc = 4
+        nc = 10
         do 665 igsidx=1,mmsave(n1+1)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+1)=rv(igsidx)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+2)=grx(igsidx)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+3)=gry(igsidx)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+4)=grz(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+5)=fr1(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+6)=slump1(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+7)=glump1(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+8)=gmag1(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+9)=glog1(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+10)=csbt1(igsidx)
   665   continue
         do 666 igsidx=1,mmsave(n2+1)
           mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+1)=rvq(igsidx)
           mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+2)=grxq(igsidx)
           mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+3)=gryq(igsidx)
           mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+4)=grzq(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+5)=fr2(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+6)=slump2(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+7)=glump2(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+8)=gmag2(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+9)=glog2(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+10)=csbt2(igsidx)
   666   continue
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
