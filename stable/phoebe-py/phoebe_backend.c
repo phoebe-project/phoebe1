@@ -584,15 +584,27 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         PyObject *dict = PyDict_New();
         PyObject *combo = PyTuple_New(2);
         
-        intern_add_mesh_to_dict(dict, mesh1, "rad1", 0);
-        intern_add_mesh_to_dict(dict, mesh1, "grx1", 1);
-        intern_add_mesh_to_dict(dict, mesh1, "gry1", 2);
-        intern_add_mesh_to_dict(dict, mesh1, "grz1", 3);
+        intern_add_mesh_to_dict(dict, mesh1, "rad1",   0);
+        intern_add_mesh_to_dict(dict, mesh1, "grx1",   1);
+        intern_add_mesh_to_dict(dict, mesh1, "gry1",   2);
+        intern_add_mesh_to_dict(dict, mesh1, "grz1",   3);
+        intern_add_mesh_to_dict(dict, mesh1, "fr1",    4);
+        intern_add_mesh_to_dict(dict, mesh1, "slump1", 5);
+        intern_add_mesh_to_dict(dict, mesh1, "glump1", 6);
+        intern_add_mesh_to_dict(dict, mesh1, "gmag1",  7);
+        intern_add_mesh_to_dict(dict, mesh1, "glog1",  8);
+        intern_add_mesh_to_dict(dict, mesh1, "csbt1",  9);
 
-        intern_add_mesh_to_dict(dict, mesh2, "rad2", 0);
-        intern_add_mesh_to_dict(dict, mesh2, "grx2", 1);
-        intern_add_mesh_to_dict(dict, mesh2, "gry2", 2);
-        intern_add_mesh_to_dict(dict, mesh2, "grz2", 3);
+        intern_add_mesh_to_dict(dict, mesh2, "rad2",   0);
+        intern_add_mesh_to_dict(dict, mesh2, "grx2",   1);
+        intern_add_mesh_to_dict(dict, mesh2, "gry2",   2);
+        intern_add_mesh_to_dict(dict, mesh2, "grz2",   3);
+        intern_add_mesh_to_dict(dict, mesh2, "fr2",    4);
+        intern_add_mesh_to_dict(dict, mesh2, "slump2", 5);
+        intern_add_mesh_to_dict(dict, mesh2, "glump2", 6);
+        intern_add_mesh_to_dict(dict, mesh2, "gmag2",  7);
+        intern_add_mesh_to_dict(dict, mesh2, "glog2",  8);
+        intern_add_mesh_to_dict(dict, mesh2, "csbt2",  9);
 
         phoebe_curve_free(curve);
         phoebe_vector_free(indep);
