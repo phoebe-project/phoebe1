@@ -302,6 +302,26 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 			status = phoebe_parameter_set_value(par, val);
 			break;
 		}
+        case TYPE_INT_ARRAY: {
+			int val;
+			if (!PyInt_Check(parval)) {
+				printf("error: float value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyInt_AS_LONG(parval);
+            status = phoebe_parameter_set_value(par, index, (int) val);
+            break;
+		}
+        case TYPE_BOOL_ARRAY: {
+			int val;
+			if (!PyInt_Check(parval)) {
+				printf("error: float value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyInt_AS_LONG(parval);
+            status = phoebe_parameter_set_value(par, index, (int) val);
+            break;
+		}
         case TYPE_DOUBLE_ARRAY: {
 			double val;
 			if (!PyFloat_Check(parval)) {
@@ -376,6 +396,24 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
             }
             return Py_BuildValue ("s", strval);
 		}
+        case TYPE_INT_ARRAY: {
+            int ival;
+            status = phoebe_parameter_get_value(par, index, &ival);
+            if (status != SUCCESS) {
+                printf ("%s", phoebe_error (status));
+                return NULL;
+            }
+            return Py_BuildValue("i", ival);
+        }
+        case TYPE_BOOL_ARRAY: {
+            int bval;
+            status = phoebe_parameter_get_value(par, index, &bval);
+            if (status != SUCCESS) {
+                printf ("%s", phoebe_error (status));
+                return NULL;
+            }
+            return Py_BuildValue("i", bval);
+        }
         case TYPE_DOUBLE_ARRAY:
             status = phoebe_parameter_get_value(par, index, &val);
             break;
