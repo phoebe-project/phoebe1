@@ -26,17 +26,15 @@ c
 c     gbig=6.670d-8
 c     sunmas=1.989d33
 c     sunrad=6.9599d10
-      gbig=6.673d-8
-      sunmas=1.9884d33
-      sunrad=6.96d10
+      gbig=6.67384d-8
+      sunmas=1.988547d33
+      sunrad=6.9566d10
       psec=8.64d4*period
       acm=sunrad*smaxis
 c     pyears=period/365.2422d0
 c     aau=smaxis/214.9426d0
-      pyears=period/365.25636d0
-      aau=smaxis/214.93947d0
+c     tmass=aau**3/pyears**2
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      tmass=aau**3/pyears**2
       qf=1.d0/(1.d0+qq)
       qfm=qq*qf
       sign=-1.d0
@@ -45,10 +43,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       qf=qq*qf
       sign=1.d0
    10 continue
-      xm=tmass*qfm
-      xmo=tmass*qf
-      gbigm=gbig*xm*sunmas
-      gbigmo=gbig*xmo*sunmas
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c     PHOEBE substitution:
+c
+c     xm=tmass*qfm
+c     xmo=tmass*qf
+c     gbigm=gbig*xm*sunmas
+c     gbigmo=gbig*xmo*sunmas
+      gbigm=acm**3/psec**2*twopi**2*qfm
+      xm=gbigm/gbig/sunmas
+      gbigmo=acm**3/psec**2*twopi**2*qf
+      xmo=gbigmo/gbig/sunmas
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       rcm=rad*acm
       dcm=dd*acm
       dcmsq=dcm*dcm
