@@ -635,6 +635,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         intern_add_mesh_to_dict(dict, mesh1, "gmag1",  10);
         intern_add_mesh_to_dict(dict, mesh1, "glog1",  11);
         intern_add_mesh_to_dict(dict, mesh1, "csbt1",  12);
+        intern_add_mesh_to_dict(dict, mesh1, "tloc1",  13);
 
         intern_add_mesh_to_dict(dict, mesh2, "vcx2",   0);
         intern_add_mesh_to_dict(dict, mesh2, "vcy2",   1);
@@ -649,6 +650,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         intern_add_mesh_to_dict(dict, mesh2, "gmag2",  10);
         intern_add_mesh_to_dict(dict, mesh2, "glog2",  11);
         intern_add_mesh_to_dict(dict, mesh2, "csbt2",  12);
+        intern_add_mesh_to_dict(dict, mesh2, "tloc2",  13);
 
         phoebe_curve_free(curve);
         phoebe_vector_free(indep);

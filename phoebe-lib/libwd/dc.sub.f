@@ -164,6 +164,7 @@ c
       double precision indeps(*),fluxes(*),weights(*),cfval,delph
       double precision corrs(*),stdevs(*),chi2s(*),cormat(*),ccla(*)
       double precision args(*)
+      double precision tloc1(igsmax),tloc2(igsmax)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
       dimension rv(igsmax),grx(igsmax),gry(igsmax),grz(igsmax),
@@ -810,7 +811,7 @@ c***************************************************************
       CALL MODLOG(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVH,FR1,FR2,HLD,
      $RM,PHSV,PCSV,GR1,GR2,ALB1,ALB2,N1,N2,F1,F2,MOD,XINCL,THE,MODE,
      $SNTHH,CSTHH,SNFIH,CSFIH,GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,GLUMP1,
-     $GLUMP2,CSBT1,CSBT2,GMAG1,GMAG2,glog1,glog2)
+     $GLUMP2,CSBT1,CSBT2,GMAG1,GMAG2,glog1,glog2,tloc1,tloc2)
       call ellone(f1,dp,rm,xld,omcr(1),xldd,omd)
       rmr=1.d0/rm
       call ellone(f2,dp,rmr,xld,omcr(2),xldd,omd)
@@ -820,11 +821,11 @@ c***************************************************************
       CALL VOLUME(VOL1,RM,PHSV,DP,F1,nn1,N1,1,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVH,FR1,FR2,HLD,SNTHH,CSTHH,SNFIH,CSFIH,SUMMD
      $,SMD,GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2
-     $,GMAG1,GMAG2,glog1,glog2,GR1,1)
+     $,GMAG1,GMAG2,glog1,glog2,GR1,1,tloc1,tloc2)
       CALL VOLUME(VOL2,RM,PCSV,DP,F2,N2,N1,2,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVH,FR1,FR2,HLD,SNTHH,CSTHH,SNFIH,CSFIH,SUMMD
      $,SMD,GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2
-     $,GMAG1,GMAG2,glog1,glog2,GR2,1)
+     $,GMAG1,GMAG2,glog1,glog2,GR2,1,tloc1,tloc2)
       IF(E.EQ.0.d0) GOTO 134
       DAP=1.d0+E
       P1AP=PHSV-2.d0*E*RM/(1.d0-E*E)
@@ -832,14 +833,14 @@ c***************************************************************
       CALL VOLUME(VL1,RM,P1AP,DAP,F1,nn1,N1,1,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVH,FR1,FR2,HLD,SNTHH,CSTHH,SNFIH,CSFIH,SUMMD
      $,SMD,GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2
-     $,GMAG1,GMAG2,glog1,glog2,GR1,2)
+     $,GMAG1,GMAG2,glog1,glog2,GR1,2,tloc1,tloc2)
       DPDX1=(PHSV-P1AP)*(1.d0-E*E)*.5d0/E
       P2AP=PCSV-2.d0*E/(1.d0-E*E)
       VL2=VOL2
       CALL VOLUME(VL2,RM,P2AP,DAP,F2,N2,N1,2,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVH,FR1,FR2,HLD,SNTHH,CSTHH,SNFIH,CSFIH,SUMMD
      $,SMD,GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2
-     $,GMAG1,GMAG2,glog1,glog2,GR2,2)
+     $,GMAG1,GMAG2,glog1,glog2,GR2,2,tloc1,tloc2)
       DPDX2=(PCSV-P2AP)*(1.d0-E*E)*.5d0/E
   134 CONTINUE
       PHP=PHPER
@@ -859,7 +860,8 @@ c***************************************************************
      $delv1,delv2,
      $count1,count2,delwl1,delwl2,resf1,resf2,wl1,wl2,dvks1,dvks2,
      $tau1,tau2,emm1,emm2,hbarw1,hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,
-     $encl,edens,taug,emmg,yskp,zskp,mode,iband(i),ifat1,ifat2,1)
+     $encl,edens,taug,emmg,yskp,zskp,mode,iband(i),ifat1,ifat2,1,
+     $tloc1,tloc2)
       DEL(9)=0.d0
       DEL(15)=0.d0
       del(26)=0.d0
@@ -1383,7 +1385,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   872 CALL MODLOG(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVH,FR1,FR2,HLD,
      $RMASS,POT1,POT2,G1,G2,A1,A2,N1,N2,FF1,FF2,MOD,XINC,THE,MODE,
      $SNTHH,CSTHH,SNFIH,CSFIH,GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,GLUMP1,
-     $GLUMP2,CSBT1,CSBT2,GMAG1,GMAG2,glog1,glog2)
+     $GLUMP2,CSBT1,CSBT2,GMAG1,GMAG2,glog1,glog2,tloc1,tloc2)
       hot=0.d0
       cool=0.d0
       do 551 iph=1,nph
@@ -1400,7 +1402,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $fbin1,fbin2,delv1,delv2,count1,count2,delwl1,delwl2,resf1,resf2,
      $wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,hbarw2,xcl,ycl,zcl,
      $rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,zskp,mode,iband(ib),
-     $ifat1,ifat2,1)
+     $ifat1,ifat2,1,tloc1,tloc2)
       hot=hot+hotr/dfloat(nph)
       cool=cool+coolr/dfloat(nph)
   551 continue
@@ -1409,7 +1411,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       CALL MODLOG(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVL,FR1,FR2,HLD,
      $RMASS,POT1,POT2,G1,G2,A1,A2,N1L,N2L,FF1,FF2,MOD,XINC,THE,MODE,
      $SNTHL,CSTHL,SNFIL,CSFIL,GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,GLUMP1,
-     $GLUMP2,CSBT1,CSBT2,GMAG1,GMAG2,glog1,glog2)
+     $GLUMP2,CSBT1,CSBT2,GMAG1,GMAG2,glog1,glog2,tloc1,tloc2)
       hot=0.d0
       cool=0.d0
       do 550 iph=1,nph
@@ -1426,7 +1428,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $fbin1,fbin2,delv1,delv2,count1,count2,delwl1,delwl2,resf1,resf2,
      $wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,hbarw2,xcl,ycl,zcl,
      $rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,zskp,mode,iband(ib),
-     $ifat1,ifat2,1)
+     $ifat1,ifat2,1,tloc1,tloc2)
       hot=hot+hotr/dfloat(nph)
       cool=cool+coolr/dfloat(nph)
   550 continue

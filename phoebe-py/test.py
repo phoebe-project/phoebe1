@@ -31,8 +31,8 @@ for i in range(5):
 phoebe.setpar("phoebe_indep", "Phase")
 lc, mesh = phoebe.lc((0.0,), 0, 1)
 print lc
-print mesh['rad1']
-print len(mesh['rad1'])
+print mesh['tloc1']
+print len(mesh['tloc1'])
 exit()
 
 # Original LD coefficients:
