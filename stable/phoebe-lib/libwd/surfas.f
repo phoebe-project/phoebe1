@@ -1,46 +1,46 @@
-      SUBROUTINE SURFAS(RMASS,POTENT,N,N1,KOMP,RV,GRX,GRY,GRZ,RVQ,       
-     $GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,FF,D,SNTH,CSTH,SNFI,CSFI,GRV1,   
-     $GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,GMAG1,      
-     $GMAG2,glog1,glog2,GREXP)                                                       
-c  Version of June 9, 2004                                            
-      implicit real*8 (a-h,o-z)                                          
-      DIMENSION RV(*),GRX(*),GRY(*),GRZ(*),RVQ(*),GRXQ(*),GRYQ(*),GRZQ(* 
-     $),MMSAVE(*),FR1(*),FR2(*),HLD(*),SNTH(*),CSTH(*),SNFI(*),CSFI(*)   
-     $,GRV1(*),GRV2(*),XX1(*),YY1(*),ZZ1(*),XX2(*),YY2(*),ZZ2(*),GLUMP1  
-     $(*),GLUMP2(*),CSBT1(*),CSBT2(*),GMAG1(*),GMAG2(*),glog1(*),                 
-     $glog2(*) 
-      common /gpoles/ gplog1,gplog2 
-      common /radi/ R1H,RLH,R1C,RLC                                      
-      COMMON /misc/ X1                                                        
-      COMMON /ECCEN/e,smaxis,period,vgadum,sindum,vfdum,vfadum,vgmdum,     
-     $v1dum,v2dum,ifcdum                                                 
-      DSQ=D*D                                                            
-      RMAS=RMASS                                                         
-      IF(KOMP.EQ.2) RMAS=1.d0/RMASS                                      
-      RF=FF**2                                                           
-      RTEST=0.d0                                                         
-      IP=(KOMP-1)*(N1+1)+1                                               
-      IQ=IP-1                                                            
-      IS=0                                                               
-      ISX=(KOMP-1)*MMSAVE(IQ)                                            
-      MMSAVE(IP)=0                                                       
-      KFLAG=0                                                            
-      CALL ELLONE (FF,D,RMAS,X1,OMEGA,XL2,OM2)                           
-      IF(KOMP.EQ.2) OMEGA=RMASS*OMEGA+.5d0*(1.d0-RMASS)                  
-      X2=X1                                                              
-      IF(KOMP.EQ.2) X1=1.d0-X1                                           
-      IF(E.NE.0.d0) GOTO 43                                              
-      IF(POTENT.LT.OMEGA) CALL NEKMIN(RMASS,POTENT,X1,ZZ)                
-      IF(POTENT.LT.OMEGA) X2=1.d0-X1                                     
-   43 COMP=dfloat(3-2*KOMP)                                              
-      CMP=dfloat(KOMP-1)                                                 
-      CMPD=CMP*D                                                         
+      SUBROUTINE SURFAS(RMASS,POTENT,N,N1,KOMP,RV,GRX,GRY,GRZ,RVQ,
+     $GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,FF,D,SNTH,CSTH,SNFI,CSFI,GRV1,
+     $GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,GMAG1,
+     $GMAG2,glog1,glog2,GREXP)
+c  Version of June 9, 2004
+      implicit real*8 (a-h,o-z)
+      DIMENSION RV(*),GRX(*),GRY(*),GRZ(*),RVQ(*),GRXQ(*),GRYQ(*),GRZQ(*
+     $),MMSAVE(*),FR1(*),FR2(*),HLD(*),SNTH(*),CSTH(*),SNFI(*),CSFI(*)
+     $,GRV1(*),GRV2(*),XX1(*),YY1(*),ZZ1(*),XX2(*),YY2(*),ZZ2(*),GLUMP1
+     $(*),GLUMP2(*),CSBT1(*),CSBT2(*),GMAG1(*),GMAG2(*),glog1(*),
+     $glog2(*)
+      common /gpoles/ gplog1,gplog2
+      common /radi/ R1H,RLH,R1C,RLC
+      COMMON /misc/ X1
+      COMMON /ECCEN/e,smaxis,period,vgadum,sindum,vfdum,vfadum,vgmdum,
+     $v1dum,v2dum,ifcdum
+      DSQ=D*D
+      RMAS=RMASS
+      IF(KOMP.EQ.2) RMAS=1.d0/RMASS
+      RF=FF**2
+      RTEST=0.d0
+      IP=(KOMP-1)*(N1+1)+1
+      IQ=IP-1
+      IS=0
+      ISX=(KOMP-1)*MMSAVE(IQ)
+      MMSAVE(IP)=0
+      KFLAG=0
+      CALL ELLONE (FF,D,RMAS,X1,OMEGA,XL2,OM2)
+      IF(KOMP.EQ.2) OMEGA=RMASS*OMEGA+.5d0*(1.d0-RMASS)
+      X2=X1
+      IF(KOMP.EQ.2) X1=1.d0-X1
+      IF(E.NE.0.d0) GOTO 43
+      IF(POTENT.LT.OMEGA) CALL NEKMIN(RMASS,POTENT,X1,ZZ)
+      IF(POTENT.LT.OMEGA) X2=1.d0-X1
+   43 COMP=dfloat(3-2*KOMP)
+      CMP=dfloat(KOMP-1)
+      CMPD=CMP*D
       TESTER=CMPD+COMP*X1
-      RM1=RMASS+1.d0                                                     
-      RMS=RMASS                                                          
-      RM1S=RM1                                                           
-      IF(KOMP.NE.2) GOTO 15                                              
-      POT=POTENT/RMASS+.5d0*(RMASS-1.d0)/RMASS                           
+      RM1=RMASS+1.d0
+      RMS=RMASS
+      RM1S=RM1
+      IF(KOMP.NE.2) GOTO 15
+      POT=POTENT/RMASS+.5d0*(RMASS-1.d0)/RMASS
       RM=1.d0/RMASS                                                      
       RM1=RM+1.d0                                                        
       GOTO 20                                                            

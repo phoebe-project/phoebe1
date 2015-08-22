@@ -3,14 +3,16 @@
      $yc,GR1,GR2,SM1,SM2,TPOLH,TPOLC,SBRH,SBRC,IFAT1,IFAT2,TAVH,TAVC,
      $alb1,alb2,xbol1,xbol2,ybol1,ybol2,vol1,vol2,snth,csth,snfi,csfi,
      $tld,glump1,glump2,xx1,xx2,yy1,yy2,zz1,zz2,dint1,dint2,grv1,grv2,
-     $csbt1,csbt2,rftemp,rf1,rf2,gmag1,gmag2,glog1,glog2,mode,iband)
+     $csbt1,csbt2,rftemp,rf1,rf2,gmag1,gmag2,glog1,glog2,mode,iband,
+     $tloc1,tloc2)
 c  Version of January 8, 2003
       implicit real*8 (a-h,o-z)
       DIMENSION RV(*),GRX(*),GRY(*),GRZ(*),RVQ(*),GRXQ(*),GRYQ(*),GRZQ(*
      $),SLUMP1(*),SLUMP2(*),MMSAVE(*),FR1(*),FR2(*),HLD(*),SNTH(*),
      $CSTH(*),SNFI(*),CSFI(*),TLD(*),GLUMP1(*),GLUMP2(*),XX1(*),XX2(*)
      $,YY1(*),YY2(*),ZZ1(*),ZZ2(*),GRV1(*),GRV2(*),RFTEMP(*),RF1(*),
-     $RF2(*),CSBT1(*),CSBT2(*),GMAG1(*),GMAG2(*),glog1(*),glog2(*)
+     $RF2(*),CSBT1(*),CSBT2(*),GMAG1(*),GMAG2(*),glog1(*),glog2(*),
+     $TLOC1(*),TLOC2(*)
       dimension message(2,4)
       common /atmmessages/ message,komp
       common /coflimbdark/ xld,yld
@@ -28,27 +30,27 @@ c  Version of January 8, 2003
       CALL VOLUME(VL1,RM,POTH,DP,F1,nn1,N1,1,RV,GRX,GRY,GRZ,RVQ,GRXQ,
      $GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMM1,SM1,GRV1,
      $GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,GMAG1,GMAG2
-     $,glog1,glog2,GR1,1)
+     $,glog1,glog2,GR1,1,tloc1,tloc2)
       IF(E.EQ.0.d0) GOTO 88
       POTHD=PHSV
       IF(IFC.EQ.2) POTHD=PHSV+DPDX1*(1.d0/D-1.d0/(1.d0-E))
       CALL VOLUME(VL1,RM,POTHD,D,F1,nn1,N1,1,RV,GRX,GRY,GRZ,RVQ,GRXQ,
      $GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMM1,SM1,GRV1,
      $GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,GMAG1,GMAG2
-     $,glog1,glog2,GR1,IFC)
+     $,glog1,glog2,GR1,IFC,tloc1,tloc2)
    88 CONTINUE
       IF(IRVOL2.EQ.1) GOTO 86
       CALL VOLUME(VL2,RM,POTC,DP,F2,N2,N1,2,RV,GRX,GRY,GRZ,RVQ,GRXQ,
      $GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMM2,SM2,GRV1,
      $GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,GMAG1,GMAG2
-     $,glog1,glog2,GR2,1)
+     $,glog1,glog2,GR2,1,tloc1,tloc2)
       IF(E.EQ.0.d0) GOTO 86
       POTCD=PCSV
       IF(IFC.EQ.2) POTCD=PCSV+DPDX2*(1.d0/D-1.d0/(1.d0-E))
       CALL VOLUME(VL2,RM,POTCD,D,F2,N2,N1,2,RV,GRX,GRY,GRZ,RVQ,GRXQ,
      $GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMM2,SM2,GRV1,
      $GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,GMAG1,GMAG2
-     $,glog1,glog2,GR2,IFC)
+     $,glog1,glog2,GR2,IFC,tloc1,tloc2)
    86 CONTINUE
       TPOLH=TAVH*dsqrt(dsqrt(SM1/SUMM1))
       TPOLC=TAVC*dsqrt(dsqrt(SM2/SUMM2))
@@ -65,7 +67,7 @@ c  Version of January 8, 2003
       IF(IFAT1.NE.0) CALL atmx(tph,gplog1,iband,xintlog1,xint1)
       call lum(hlum,xh,yh,tpolh,n1,n1,1,sbrh,rv,rvq,glump1,
      $glump2,glog1,glog2,grv1,grv2,mmsave,summ1d,fr1,sm1d,ifat1,vold,rm,
-     $poth,f1,d,snth,iband)
+     $poth,f1,d,snth,iband,tloc1,tloc2)
       komp=2
       xld=xc
       yld=yc
@@ -74,7 +76,7 @@ c  Version of January 8, 2003
       sbrc=sbrh*xint2/xint1
       call lum(clum,xc,yc,tpolc,n2,n1,2,sbrt,rv,rvq,glump1,
      $glump2,glog1,glog2,grv1,grv2,mmsave,summ2d,fr2,sm2d,ifat2,vold,rm,
-     $potc,f2,d,snth,iband)
+     $potc,f2,d,snth,iband,tloc1,tloc2)
       IF(IPB.EQ.1) SBRC=SBRT
       IF(MODE.GT.0)CLUM=CLUM*SBRC/SBRT
       IF(MODE.LE.0)SBRC=SBRT

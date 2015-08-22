@@ -189,6 +189,7 @@ c        mesh2   ..   a matrix of secondary star mesh values, useful for debuggi
      $args(*),pltab(iplcof),atmtab(iatmsize)
       character lcin*(*)
       double precision mesh1(*), mesh2(*)
+      dimension tloc1(igsmax),tloc2(igsmax)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
       dimension rv(igsmax),grx(igsmax),gry(igsmax),grz(igsmax),
@@ -514,15 +515,15 @@ c***************************************************************
       CALL modlog(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,
      $rm,poth,potc,gr1,gr2,alb1,alb2,n1,n2,f1,f2,mod,xincl,the,mode,
      $snth,csth,snfi,csfi,grv1,grv2,xx1,yy1,zz1,xx2,yy2,zz2,glump1,
-     $glump2,csbt1,csbt2,gmag1,gmag2,glog1,glog2)
+     $glump2,csbt1,csbt2,gmag1,gmag2,glog1,glog2,tloc1,tloc2)
       CALL VOLUME(VOL1,RM,POTH,DP,F1,nn1,N1,1,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMMD,SMD,
      $GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,
-     $GMAG1,GMAG2,glog1,glog2,GR1,1)
+     $GMAG1,GMAG2,glog1,glog2,GR1,1,tloc1,tloc2)
       CALL VOLUME(VOL2,RM,POTC,DP,F2,N2,N1,2,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMMD,SMD,
      $GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,
-     $GMAG1,GMAG2,glog1,glog2,GR2,1)
+     $GMAG1,GMAG2,glog1,glog2,GR2,1,tloc1,tloc2)
       if(e.eq.0.d0) goto 117
       DAP=1.d0+E
       P1AP=POTH-2.d0*E*RM/(1.d0-E*E)
@@ -530,14 +531,14 @@ c***************************************************************
       CALL VOLUME(VL1,RM,P1AP,DAP,F1,nn1,N1,1,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMMD,SMD,
      $GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,
-     $GMAG1,GMAG2,glog1,glog2,GR1,2)
+     $GMAG1,GMAG2,glog1,glog2,GR1,2,tloc1,tloc2)
       DPDX1=(POTH-P1AP)*(1.d0-E*E)*.5d0/E
       P2AP=POTC-2.d0*E/(1.d0-E*E)
       VL2=VOL2
       CALL VOLUME(VL2,RM,P2AP,DAP,F2,N2,N1,2,RV,GRX,GRY,GRZ,RVQ,
      $GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMMD,SMD,
      $GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,
-     $GMAG1,GMAG2,glog1,glog2,GR2,2)
+     $GMAG1,GMAG2,glog1,glog2,GR2,2,tloc1,tloc2)
       DPDX2=(POTC-P2AP)*(1.d0-E*E)*.5d0/E
   117 CONTINUE
       PHSV=POTH
@@ -551,7 +552,7 @@ c***************************************************************
      $gmag2,glog1,glog2,fbin1,fbin2,delv1,delv2,count1,count2,delwl1,
      $delwl2,resf1,resf2,wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,
      $hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,
-     $zskp,mode,iband,ifat1,ifat2,1)
+     $zskp,mode,iband,ifat1,ifat2,1,tloc1,tloc2)
       KH=0
 c     (3/4pi)^(1/3) = .6203505d0
       rr1=.6203505d0*vol1**ot
@@ -649,7 +650,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       CALL modlog(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,
      $rm,poth,potc,gr1,gr2,alb1,alb2,n1,n2,f1,f2,mod,xincl,the,mode,
      $snth,csth,snfi,csfi,grv1,grv2,xx1,yy1,zz1,xx2,yy2,zz2,glump1,
-     $glump2,csbt1,csbt2,gmag1,gmag2,glog1,glog2)
+     $glump2,csbt1,csbt2,gmag1,gmag2,glog1,glog2,tloc1,tloc2)
       CALL BBL(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,
      $SLUMP1,SLUMP2,THETA,RHO,AA,BB,POTH,POTC,N1,N2,F1,F2,D,hlum,
      $clum,xh,xc,yh,yc,gr1,gr2,wl,sm1,sm2,tpolh,tpolc,sbrh,sbrc,
@@ -659,7 +660,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $gmag2,glog1,glog2,fbin1,fbin2,delv1,delv2,count1,count2,delwl1,
      $delwl2,resf1,resf2,wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,
      $hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,
-     $zskp,mode,iband,ifat1,ifat2,0)
+     $zskp,mode,iband,ifat1,ifat2,0,tloc1,tloc2)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extension:
@@ -668,7 +669,7 @@ c     grv1(igsmax),grv2(igsmax),rftemp(igsmax),
 c     $rf1(igsmax),rf2(igsmax),csbt1(igsmax),csbt2(igsmax),
 c
       if (mswitch.eq.1) then
-        nc = 13
+        nc = 14
         do 665 igsidx=1,mmsave(n1+1)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+1)=xx1(igsidx)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+2)=yy1(igsidx)
@@ -683,6 +684,7 @@ c
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+11)=gmag1(igsidx)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+12)=glog1(igsidx)
           mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+13)=csbt1(igsidx)
+          mesh1((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+14)=tloc1(igsidx)
   665   continue
         do 666 igsidx=1,mmsave(n2+1)
           mesh2((idx-1)*mmsave(n1+1)*nc+(igsidx-1)*nc+1)=xx2(igsidx)
@@ -698,6 +700,7 @@ c
           mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+11)=gmag2(igsidx)
           mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+12)=glog2(igsidx)
           mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+13)=csbt2(igsidx)
+          mesh2((idx-1)*mmsave(n2+1)*nc+(igsidx-1)*nc+14)=tloc2(igsidx)
   666   continue
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
