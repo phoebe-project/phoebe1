@@ -3623,7 +3623,7 @@ PHOEBE_mesh *phoebe_mesh_new()
     
     mesh->verts = 0;
     mesh->elems = 0;
-    mesh->ncols = 14;
+    mesh->ncols = 15;
     
     mesh->mesh = NULL;
     

@@ -1,10 +1,11 @@
       Subroutine lum (xlum,x,y,tpoll,n,n1,komp,sbr,rv,rvq,glump1,
      $glump2,glog1,glog2,grv1,grv2,mmsave,summ,fr,sm,ifat,vol,rm,om,
-     $f,d,snth,iband,tloc1,tloc2)
+     $f,d,snth,iband,tloc1,tloc2,xInorm1,xInorm2)
 c   Version of January 8, 2003
       implicit real*8 (a-h,o-z)
       dimension rv(*),rvq(*),mmsave(*),fr(*),snth(*),glump1(*),
-     $glump2(*),glog1(*),glog2(*),grv1(*),grv2(*),tloc1(*),tloc2(*)
+     $glump2(*),glog1(*),glog2(*),grv1(*),grv2(*),tloc1(*),tloc2(*),
+     $xInorm1(*),xInorm2(*)
       dimension message(2,4)
       common /atmmessages/ message,kompcom
       common /radi/ R1H,RLH,R1C,RLC
@@ -53,6 +54,8 @@ c   Version of January 8, 2003
       glogg=cmpp*glog1(ix)+cmp*glog2(ix)
       if(ifat.eq.0) call planckint(tlocal,iband,xinlog,xint)
       IF(IFAT.NE.0) CALL atmx(TLOCAL,glogg,iband,xinlog,xint)
+      if (KOMP.eq.1) xInorm1(ix)=xint
+      if (KOMP.eq.2) xInorm2(ix)=xint
       GRAVM=xint/polin
       di=cmpp*glump1(ix)+cmp*glump2(ix)
       DIF=DI*GRAVM

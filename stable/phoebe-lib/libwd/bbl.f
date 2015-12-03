@@ -7,7 +7,8 @@
      $csbt2,gmag1,gmag2,glog1,glog2,fbin1,fbin2,delv1,delv2,count1,
      $count2,delwl1,delwl2,resf1,resf2,wl1,wl2,dvks1,dvks2,tau1,tau2,
      $emm1,emm2,hbarw1,hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,encl,edens,
-     $taug,emmg,yskp,zskp,mode,iband,ifat1,ifat2,ifphn,tloc1,tloc2)
+     $taug,emmg,yskp,zskp,mode,iband,ifat1,ifat2,ifphn,tloc1,tloc2,
+     $xInorm1,xInorm2)
 c  Version of December 18, 2003
       implicit real*8 (a-h,o-z)
       DIMENSION RV(*),GRX(*),GRY(*),GRZ(*),RVQ(*),GRXQ(*),GRYQ(*),
@@ -15,7 +16,8 @@ c  Version of December 18, 2003
      $THETA(*),RHO(*),AA(*),BB(*),SNTH(*),CSTH(*),SNFI(*),CSFI(*),TLD(*)
      $,GLUMP1(*),GLUMP2(*),XX1(*),XX2(*),YY1(*),YY2(*),ZZ1(*),ZZ2(*),
      $GRV1(*),GRV2(*),RFTEMP(*),RF1(*),RF2(*),CSBT1(*),CSBT2(*)
-     $,GMAG1(*),GMAG2(*),glog1(*),glog2(*),TLOC1(*),TLOC2(*)
+     $,GMAG1(*),GMAG2(*),glog1(*),glog2(*),TLOC1(*),TLOC2(*),xInorm1(*),
+     $xInorm2(*)
       dimension fbin1(*),fbin2(*),delv1(*),delv2(*),count1(*),count2(*),
      $delwl1(*),delwl2(*),resf1(*),resf2(*),wl1(*),wl2(*),dvks1(*),
      $dvks2(*),tau1(*),tau2(*),hbarw1(*),hbarw2(*),taug(*),emm1(*),
@@ -76,7 +78,7 @@ c  Version of December 18, 2003
      $alb1,alb2,xbol1,xbol2,ybol1,ybol2,vol1,vol2,snth,csth,snfi,csfi,
      $tld,glump1,glump2,xx1,xx2,yy1,yy2,zz1,zz2,dint1,dint2,grv1,grv2,
      $csbt1,csbt2,rftemp,rf1,rf2,gmag1,gmag2,glog1,glog2,mode,iband,
-     $tloc1,tloc2)
+     $tloc1,tloc2,xInorm1,xInorm2)
    19 CONTINUE
       VO1=qfac*SINI*(ECOS+COSU)/EFC+VGAM
       VO2=-qfac1*SINI*(ECOS+COSU)/EFC+VGAM
