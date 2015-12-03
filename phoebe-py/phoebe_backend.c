@@ -162,24 +162,24 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
     PyArg_ParseTuple(args, "si|i", &ctype, &index, &scale);
     
     if (strcmp(ctype, "lc") == 0 || strcmp(ctype, "LC") == 0) {
-        obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_LC, index);
-        phoebe_curve_transform (obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
-        phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_sigma"), index, &sigma);
-        phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), index, &rstr);
-        lexp = intern_get_level_weighting_id (rstr);
+        obs = phoebe_curve_new_from_pars(PHOEBE_CURVE_LC, index);
+        phoebe_curve_transform(obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_sigma"), index, &sigma);
+        phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_levweight"), index, &rstr);
+        lexp = intern_get_level_weighting_id(rstr);
         
-        syn = phoebe_curve_new ();
-        phoebe_curve_compute (syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
+        syn = phoebe_curve_new();
+        phoebe_curve_compute(syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
     }
 
     else if (strcmp(ctype, "rv") == 0 || strcmp(ctype, "RV") == 0) {
-        obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_RV, index);
-        phoebe_curve_transform (obs, obs->itype, obs->dtype, PHOEBE_COLUMN_SIGMA);
-        phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_rv_sigma"), index, &sigma);
+        obs = phoebe_curve_new_from_pars(PHOEBE_CURVE_RV, index);
+        phoebe_curve_transform(obs, obs->itype, obs->dtype, PHOEBE_COLUMN_SIGMA);
+        phoebe_parameter_get_value(phoebe_parameter_lookup ("phoebe_rv_sigma"), index, &sigma);
         lexp = 0;
 
-        syn = phoebe_curve_new ();
-        phoebe_curve_compute (syn, obs->indep, index, obs->itype, obs->dtype, NULL, NULL);
+        syn = phoebe_curve_new();
+        phoebe_curve_compute(syn, obs->indep, index, obs->itype, obs->dtype, NULL, NULL);
     }
 
     else {
@@ -188,9 +188,9 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
     }
 
     if (scale == 0) {
-        status = phoebe_cf_compute (&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
+        status = phoebe_cf_compute(&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
         if (status != SUCCESS) {
-            printf ("%s", phoebe_error (status));
+            printf("%s", phoebe_error (status));
             return NULL;
         }
     }
@@ -581,6 +581,7 @@ int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, int co
 
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
+    int status;
     int index, tlen, i, mswitch = 0;
     PyObject *obj, *lc;
     char *rstr;
@@ -611,7 +612,12 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     }
 
     curve = phoebe_curve_new();
-    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX, mesh1, mesh2);
+    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX, mesh1, mesh2);
+
+    if (status != SUCCESS) {
+        printf("%s", phoebe_error(status));
+        return NULL;
+    }
 
     lc = PyTuple_New(tlen);
     for (i = 0; i < tlen; i++)
@@ -636,6 +642,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         intern_add_mesh_to_dict(dict, mesh1, "glog1",  11);
         intern_add_mesh_to_dict(dict, mesh1, "csbt1",  12);
         intern_add_mesh_to_dict(dict, mesh1, "tloc1",  13);
+        intern_add_mesh_to_dict(dict, mesh1, "Inorm1", 14);
 
         intern_add_mesh_to_dict(dict, mesh2, "vcx2",   0);
         intern_add_mesh_to_dict(dict, mesh2, "vcy2",   1);
@@ -651,6 +658,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         intern_add_mesh_to_dict(dict, mesh2, "glog2",  11);
         intern_add_mesh_to_dict(dict, mesh2, "csbt2",  12);
         intern_add_mesh_to_dict(dict, mesh2, "tloc2",  13);
+        intern_add_mesh_to_dict(dict, mesh2, "Inorm2", 14);
 
         phoebe_curve_free(curve);
         phoebe_vector_free(indep);
