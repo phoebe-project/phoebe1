@@ -57,7 +57,7 @@ c   Version of January 8, 2003
       if (KOMP.eq.1) xInorm1(ix)=xint
       if (KOMP.eq.2) xInorm2(ix)=xint
       GRAVM=xint/polin
-      di=cmpp*glump1(ix)+cmp*glump2(ix)
+      DI=cmpp*glump1(ix)+cmp*glump2(ix)
       DIF=DI*GRAVM
       DIFF=DI*GRAV
       SMJ=SMJ+DI
@@ -71,15 +71,16 @@ c   Version of January 8, 2003
       SUMJ=SUMJ*DELFI
       SUMMJ=SUMMJ*DELFI
       SM=SM+SMJ
+      SUM=SUM+SUMJ
       SUMM=SUMM+SUMMJ
-      VOL=VOL+VOLJ*DFST
-   36 SUM=SUM+SUMJ
+   36 VOL=VOL+VOLJ*DFST
       darkin=3.141592653589793d0*(1.d0-x/3.d0)
       if(ld.eq.2) darkin=darkin+.6981317d0*y
       if(ld.eq.3) darkin=darkin-.6283185d0*y
-      SBR=.25d0*XLUM/(SUM*DELTH*DARKIN)
       SM=SM*DELTH*4.d0
+      SUM=SUM*DELTH*4.d0
       SUMM=SUMM*DELTH*4.d0
+      SBR=XLUM/(SUM*DARKIN)
       VOL=VOL*1.3333333333333d0*DELTH
       IF(KR.EQ.0) RETURN
       CALL ELLONE(F,D,RM,XL1,OMD,XLD,omdum)
