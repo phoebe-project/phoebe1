@@ -54,7 +54,7 @@ c  Find the relative polar radius, R/a
       knt=0
   714 R=R+DELR                                                           
       knt=knt+1
-      tolr=1.d-6*dabs(r)
+      tolr=1.d-8*dabs(r)
       RSQ=R*R                                                            
       PAR=DSQ+RSQ                                          
       RPAR=dsqrt(PAR)                                                    
@@ -112,7 +112,7 @@ c ********************************************
       oldr=r
       knth=0
    14 R=R+DELR                                                           
-      tolr=1.d-6*dabs(r)
+      tolr=1.d-8*dabs(r)
       if(kount.lt.1) goto 170
       if(knth.gt.20) goto 170
       if(r.gt.0.d0.and.r.lt.tester) goto 170
