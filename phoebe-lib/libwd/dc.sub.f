@@ -14,7 +14,7 @@ C     ENTERED. IN SOME RARE SITUATIONS IT MAY BE POSSIBLE TO
 C     FIND A AND I SEPARATELY from velocities only. THIS COULD BE
 C     THE CASE IF THE VELOCITY PROXIMITY EFFECTS ARE IMPORTANT.
 C
-C     OTHER PROGRAM UNITS: ORBITAL S-M AXIS IN SOLAR RADII (6.9566d5 KM),
+C     OTHER PROGRAM UNITS: ORBITAL S-M AXIS IN SOLAR RADII (6.957d5 KM),
 C     PERIOD IN DAYS, PHASE IN 2 PI RADIANS, SYSTEMIC VELOCITY AND
 C     THIRD LIGHT IN SAME UNITS AS VELOCITY AND LIGHT OBSERVATIONS,
 C     INCLINATION IN DEGREES, TEMPERATURES IN 10000K., SPOT LATITUDES
@@ -536,7 +536,7 @@ ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       nf2=1
       toldis=1.d-5
       pi=dacos(-1.d0)
-      en0=6.0254d23
+      en0=6.0221409d23
       XTHA(1)=0.d0
       XTHA(2)=.5d0*PI
       XTHA(3)=.5d0*PI
@@ -641,7 +641,7 @@ c     Override the read-in values with passed values:
       pshift=args(1)
       xincl=args(2)
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
-      acm=6.9566d10*a
+      acm=6.957d10*a
       nn1=n1
       CALL SINCOS(1,N1,N1,SNTHH,CSTHH,SNFIH,CSFIH,MMSAVH)
       CALL SINCOS(2,N2,N1,SNTHH,CSTHH,SNFIH,CSFIH,MMSAVH)

@@ -29,23 +29,22 @@ c     sunmas=1.991d33
 c     sunrad=6.960d10
 c     sunmb=4.77d0
 c     yrsid=365.2564d0
-      G=6.67384d-8
       tsun=5772.d0
 c     rsunau=215.044520d0
-      sunmas=1.988547d33
-      sunrad=6.9566d10
+      GMnomSun=1.3271244e26
+      sunrad=6.957d10
       sunmb=4.74d0
 c     yrsid=365.256363d0
-      gmr=G*sunmas/sunrad**2
+      gmr=GMnomSun/sunrad**2
       sr1=r1*a
       sr2=r2*a
 c     tmass=(a/rsunau)**3/(p/yrsid)**2
 c     sm1=tmass/(1.d0+q)
 c     sm2=tmass*q/(1.d0+q)
-      sm1=(a*sunrad)**3/(p*8.64d4)**2*39.47841760435743/G/(1.d0+q)/
-     $sunmas
-      sm2=(a*sunrad)**3/(p*8.64d4)**2*39.47841760435743/G*q/(1.d0+q)/
-     $sunmas
+      sm1=(a*sunrad)**3/(p*8.64d4)**2*39.47841760435743/(1.d0+q)/
+     $GMnomSun
+      sm2=(a*sunrad)**3/(p*8.64d4)**2*39.47841760435743*q/(1.d0+q)/
+     $GMnomSun
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       bol1=(t1/tsun)**4*sr1**2
       bol2=(t2/tsun)**4*sr2**2

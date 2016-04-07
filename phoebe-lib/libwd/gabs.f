@@ -18,7 +18,7 @@ c  Output definitions:
 c   absgr is the polar acceleration due to effective gravity in cm/sec^2
 c   glog is log_10 of absgr
 c
-      twopi=6.2831853072d0
+      twopi=6.283185307180d0
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE substitution:
@@ -26,9 +26,8 @@ c
 c     gbig=6.670d-8
 c     sunmas=1.989d33
 c     sunrad=6.9599d10
-      gbig=6.67384d-8
-      sunmas=1.988547d33
-      sunrad=6.9566d10
+      GMnomSun=1.3271244e26
+      sunrad=6.957d10
       psec=8.64d4*period
       acm=sunrad*smaxis
 c     pyears=period/365.2422d0
@@ -52,9 +51,9 @@ c     xmo=tmass*qf
 c     gbigm=gbig*xm*sunmas
 c     gbigmo=gbig*xmo*sunmas
       gbigm=acm**3/psec**2*twopi**2*qfm
-      xm=gbigm/gbig/sunmas
+      xm=gbigm/GMnomSun
       gbigmo=acm**3/psec**2*twopi**2*qf
-      xmo=gbigmo/gbig/sunmas
+      xmo=gbigmo/GMnomSun
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       rcm=rad*acm
       dcm=dd*acm
