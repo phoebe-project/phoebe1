@@ -307,8 +307,8 @@ c      48   LSST y4    LSST science book
       ot=1.d0/3.d0
       pi=dacos(-1.d0)
       clight=2.99792458d5
-      en0=6.0254d23
-      rsuncm=6.9566d10
+      en0=6.0221409d23
+      rsuncm=6.957d10
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Ramp ranges are set below. The following values seem to work.
 c  They may be changed.
