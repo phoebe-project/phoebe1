@@ -121,6 +121,9 @@
   # Install program:
     AC_PROG_INSTALL
 
+  # Linker:
+    AM_PROG_AR
+
   # Lexer (needed for PHOEBE constraints); we require flex 2.5.33 or later:
     AC_PROG_LEX
     if $LEX --version | grep 2.5.[[3-9]][[0-9]] > /dev/null 2>&1; then
