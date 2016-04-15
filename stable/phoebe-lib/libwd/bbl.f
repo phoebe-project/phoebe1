@@ -64,7 +64,7 @@ c  Version of December 18, 2003
       if(e.ne.0.d0) call KEPLER(XMEAN,E,DUM,TR)
       U=TR+PERR
       COSU=dcos(U)
-      GPHA=U*.1591549d0-.25d0
+      GPHA=U/twopi-.25d0
    40 if(GPHA.lt.0.d0) GPHA=GPHA+1.d0
       if(gpha.lt.0.d0) goto 40
    50 if(GPHA.GE.1.d0) GPHA=GPHA-1.d0
