@@ -418,6 +418,16 @@ int wd_passband_id_lookup (int *id, const char *passband)
 	if (strcmp (passband,         "LSST:z") == 0) { *id = 46; return SUCCESS; }
 	if (strcmp (passband,        "LSST:y3") == 0) { *id = 47; return SUCCESS; }
 	if (strcmp (passband,        "LSST:y4") == 0) { *id = 48; return SUCCESS; }
+	if (strcmp (passband,     "Walraven:W") == 0) { *id = 49; return SUCCESS; }
+	if (strcmp (passband,     "Walraven:U") == 0) { *id = 50; return SUCCESS; }
+	if (strcmp (passband,     "Walraven:L") == 0) { *id = 51; return SUCCESS; }
+	if (strcmp (passband,     "Walraven:B") == 0) { *id = 52; return SUCCESS; }
+	if (strcmp (passband,     "Walraven:V") == 0) { *id = 53; return SUCCESS; }
+	if (strcmp (passband,   "MOST:default") == 0) { *id = 54; return SUCCESS; }
+	if (strcmp (passband,  "SuperWASP:pre2004") == 0) { *id = 55; return SUCCESS; }
+	if (strcmp (passband, "SuperWASP:post2004") == 0) { *id = 56; return SUCCESS; }
+	if (strcmp (passband,     "BRITE:blue") == 0) { *id = 57; return SUCCESS; }
+	if (strcmp (passband,      "BRITE:red") == 0) { *id = 58; return SUCCESS; }
 
 	*id = -1;
 	return ERROR_PASSBAND_INVALID;

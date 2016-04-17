@@ -50,7 +50,7 @@ c
       parameter (lpomax=100000)
       parameter (ispmax=   100)
       parameter (iclmax=   100)
-      parameter (iplmax=    48)
+      parameter (iplmax=    58)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -300,6 +300,17 @@ c      45   LSST i     LSST science book
 c      46   LSST z     LSST science book
 c      47   LSST y3    LSST science book
 c      48   LSST y4    LSST science book
+c      49   Walraven w Lub, J. & Pel, J. W. A&A 54, 137 (1963)
+c      50   Walraven u     "             "             "      
+c      51   Walraven l     "             "             "      
+c      52   Walraven b     "             "             "      
+c      53   Walraven v     "             "             "      
+c      54   MOST       Walker et al. 2003 PASP  115, 1023
+c      55   SWASP 2004 Gomez Maqueo Chew, priv.comm.
+c      56   SWASP 2006 Gomez Maqueo Chew, priv.comm.
+c      57   BRITE blue Weiss et al. (2014), PASP 126, 573
+c      58   BRITE red  Weiss et al. (2014), PASP 126, 573
+
       do 15067 i=1,ifrmax
       theta(i)=0.d0
       rho(i)=0.d0

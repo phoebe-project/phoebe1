@@ -122,6 +122,8 @@ phoebeptf_DATA = 2mass_j.ptf                 \
                  walraven_l.ptf              \
                  walraven_u.ptf              \
                  walraven_v.ptf              \
-                 walraven_w.ptf
+                 walraven_w.ptf              \
+                 brite_blue.ptf              \
+                 brite_red.ptf
 
 EXTRA_DIST = $(phoebeptf_DATA)
