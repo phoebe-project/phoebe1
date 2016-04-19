@@ -55,7 +55,9 @@ c    Version of December 18, 2003
       if(potc.lt.omo1) kfo2=1
   100 continue
       SINI=dsin(.017453292519943d0*XINCL)
-      VF=50.61455d0/PERIOD
+c     the magical number below is 2*pi*RSun/86400, and it's wrong.
+c~       VF=50.61455d0/PERIOD
+      VF=50.592731692186d0/PERIOD
       VFAC=VF*A
       VGAM=VGA*VUNIT/VFAC
       VFVU=VFAC
