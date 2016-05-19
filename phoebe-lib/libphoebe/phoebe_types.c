@@ -2891,7 +2891,7 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	curve->passband = phoebe_passband_lookup (filter);
 
 	/* Read in all parameters and create the LCI file: */
-    args = phoebe_malloc(18*sizeof(args));
+    args = phoebe_malloc(18*sizeof(*args));
 	status = wd_lci_parameters_get (&params, &args, mpage, index);
 	if (status != SUCCESS) return status;
 	params.JDPHS = jdphs;
