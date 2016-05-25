@@ -246,7 +246,7 @@ bool phoebe_pcsv_constrained (int wd_model)
 	}
 }
 
-void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *args, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos, integer *mswitch, double *mesh1, double *mesh2)
+void intern_call_wd_lc(char *atmcof, char *atmcofplanck, char *lcin, double *args, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos, integer *mswitch, double *mesh1, double *mesh2, integer *hswitch, double *hrho, double *htheta, double *hAc, double *hAs)
 {
 	int wd_model;
 	double params[16];
@@ -256,36 +256,36 @@ void intern_call_wd_lc (char *atmcof, char *atmcofplanck, char *lcin, double *ar
     phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &mem);
     phoebe_config_entry_get("DUMP_LCOUT_FILES", &dump);
 
-    wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "", mswitch, mesh1, mesh2);
+    wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "", mswitch, mesh1, mesh2, hswitch, hrho, htheta, hAc, hAs);
 
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_mass1"),   params[ 2]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_mass2"),   params[ 3]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_radius1"), params[ 4]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_radius2"), params[ 5]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_mbol1"),   params[ 6]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_mbol2"),   params[ 7]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_logg1"),   params[ 8]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_logg2"),   params[ 9]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_sbr1"),    params[10]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_sbr2"),    params[11]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_vol1"),    params[14]);
-	phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_vol2"),    params[15]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_mass1"),   params[ 2]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_mass2"),   params[ 3]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_radius1"), params[ 4]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_radius2"), params[ 5]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_mbol1"),   params[ 6]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_mbol2"),   params[ 7]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_logg1"),   params[ 8]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_logg2"),   params[ 9]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_sbr1"),    params[10]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_sbr2"),    params[11]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_vol1"),    params[14]);
+	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_vol2"),    params[15]);
 	
 	/* If morphology is constrained, update parameter values: */
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_model"), &phoebe_model);
-	wd_model = phoebe_wd_model (phoebe_model);
+	phoebe_parameter_get_value(phoebe_parameter_lookup ("phoebe_model"), &phoebe_model);
+	wd_model = phoebe_wd_model(phoebe_model);
 	
-	if (phoebe_phsv_constrained (wd_model))
+	if (phoebe_phsv_constrained(wd_model))
 		phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_pot1"), params[12]);
-	if (phoebe_pcsv_constrained (wd_model))
+	if (phoebe_pcsv_constrained(wd_model))
 		phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_pot2"), params[13]);
         
 	return;
 }
 
-int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2)
+int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
 {
 	/**
 	 * phoebe_compute_lc_using_wd:
@@ -295,11 +295,13 @@ int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char 
      * @args:  
      * @mesh1: an allocated array for the primary star mesh, or NULL
      * @mesh2: an allocated array for the secondary star mesh, or NULL
+     * @hrho:  an allocated array for horizon rhos, or NULL
+     * @htheta: an allocated array for horizon thetas, or NULL
 	 *
 	 * Uses WD's LC code through a FORTRAN wrapper to obtain the fluxes.
 	 * #PHOEBE_curve @curve must be initialized. In case when meshes are needed
      * explicitly, pass allocated arrays to @mesh1 and @mesh2, otherwise
-     * pass NULLs.
+     * pass NULLs. Same for horizon arrays @hrho and @htheta.
 	 *
 	 * Returns: #PHOEBE_error_code.
 	 */
@@ -308,7 +310,7 @@ int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char 
 	char *atmcof, *atmcofplanck;
 
 	PHOEBE_el3_units l3units;
-	integer request, nodes, L3perc, mswitch = 0;
+	integer request, nodes, L3perc, mswitch = 0, hswitch = 0;
 
 	if (!curve)
 		return ERROR_CURVE_NOT_INITIALIZED;
@@ -339,17 +341,21 @@ int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char 
 		L3perc = 1;
 
     /* If meshes are requested, flip the mswitch: */
-    if (mesh1 || mesh2)
+    if (mesh1 && mesh2)
         mswitch = TRUE;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, curve->indep->val, curve->dep->val, NULL, NULL, &mswitch, mesh1, mesh2);
+	/* If horizon is requested, flip the hswitch: */
+	if (hrho && htheta && hAc && hAs)
+		hswitch = TRUE;
+
+	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, curve->indep->val, curve->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
 	free (atmcof); free (atmcofplanck);
 	
 	return SUCCESS;
 }
 
-int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2)
+int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
 {
 	/**
 	 * phoebe_compute_rv1_using_wd:
@@ -359,6 +365,8 @@ int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *
      * @args:
      * @mesh1: an allocated array for the primary star mesh, or NULL
      * @mesh2: an allocated array for the secondary star mesh, or NULL
+     * @hrho:  an allocated array for horizon rhos, or NULL
+     * @htheta: an allocated array for horizon thetas, or NULL
 	 *
 	 * Uses WD's LC code through a FORTRAN wrapper to obtain the primary
 	 * star radial velocities. #PHOEBE_curve @rv1 must be initialized.
@@ -369,7 +377,7 @@ int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *
 	int i, status;
 	char *atmcof, *atmcofplanck;
 
-	integer request, nodes, L3perc, mswitch = 0;
+	integer request, nodes, L3perc, mswitch = 0, hswitch = 0;
 
 	if (!rv1)
 		return ERROR_CURVE_NOT_INITIALIZED;
@@ -394,15 +402,19 @@ int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *
 	L3perc = 0;
 
     /* If meshes are requested, flip the mswitch: */
-    if (mesh1 || mesh2)
+    if (mesh1 && mesh2)
         mswitch = TRUE;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv1->dep->val, NULL, NULL, &mswitch, mesh1, mesh2);
+	/* If horizon is requested, flip the hswitch: */
+	if (hrho && htheta && hAc && hAs)
+		hswitch = TRUE;
+
+	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv1->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
 	return SUCCESS;
 }
 
-int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2)
+int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
 {
 	/**
 	 * phoebe_compute_rv2_using_wd:
@@ -412,6 +424,8 @@ int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *
      * @args:
      * @mesh1: an allocated array for the primary star mesh, or NULL
      * @mesh2: an allocated array for the secondary star mesh, or NULL
+     * @hrho:  an allocated array for horizon rhos, or NULL
+     * @htheta: an allocated array for horizon thetas, or NULL
 	 *
 	 * Uses WD's LC code through a FORTRAN wrapper to obtain the secondary
 	 * star radial velocities. #PHOEBE_curve @rv2 must be initialized.
@@ -422,7 +436,7 @@ int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *
 	int i, status;
 	char *atmcof, *atmcofplanck;
 
-	integer request, nodes, L3perc, mswitch = 0;
+	integer request, nodes, L3perc, mswitch = 0, hswitch = 0;
 
 	if (!rv2)
 		return ERROR_CURVE_NOT_INITIALIZED;
@@ -447,15 +461,19 @@ int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *
 	L3perc = 0;
 
     /* If meshes are requested, flip the mswitch: */
-    if (mesh1 || mesh2)
+    if (mesh1 && mesh2)
         mswitch = TRUE;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv2->dep->val, NULL, NULL, &mswitch, mesh1, mesh2);
+	/* If horizon is requested, flip the hswitch: */
+	if (hrho && htheta && hAc && hAs)
+		hswitch = TRUE;
+
+	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv2->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
 	return SUCCESS;
 }
 
-int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, char *lcin, double *args, double phase, double *mesh1, double *mesh2)
+int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, char *lcin, double *args, double phase, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
 {
 	/**
 	 * phoebe_compute_pos_using_wd:
@@ -464,6 +482,8 @@ int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, c
 	 * @phase: phase at which the plane-of-sky coordinates are computed
      * @mesh1: an allocated array for the primary star mesh, or NULL
      * @mesh2: an allocated array for the secondary star mesh, or NULL
+     * @hrho:  an allocated array for horizon rhos, or NULL
+     * @htheta: an allocated array for horizon thetas, or NULL
 	 *
 	 * Uses WD's LC code through a FORTRAN wrapper to obtain the plane-of-sky
 	 * coordinates. #PHOEBE_vector#s @poscoy and @poscoz must be initialized.
@@ -478,7 +498,7 @@ int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, c
 	double theta;
 	int dim1 = 0, dim2 = 0;
 
-	integer request, nodes, L3perc, mswitch = 0;
+	integer request, nodes, L3perc, mswitch = 0, hswitch = 0;
 	double phs, dummy;
 
 	if (!poscoy || !poscoz)
@@ -536,10 +556,14 @@ int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, c
 	L3perc  = 0;
 
     /* If meshes are requested, flip the mswitch: */
-    if (mesh1 || mesh2)
+    if (mesh1 && mesh2)
         mswitch = TRUE;
 
-	intern_call_wd_lc (atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, &phs, &dummy, poscoy->val, poscoz->val, &mswitch, mesh1, mesh2);
+	/* If horizon is requested, flip the hswitch: */
+	if (hrho && htheta && hAc && hAs)
+		hswitch = TRUE;
+
+	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, &phs, &dummy, poscoy->val, poscoz->val, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
 	i = 0;
 	while (!isnan(poscoy->val[i]) && i < poscoy->dim) i++;

@@ -169,7 +169,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         lexp = intern_get_level_weighting_id(rstr);
         
         syn = phoebe_curve_new();
-        phoebe_curve_compute(syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
+        phoebe_curve_compute(syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
     }
 
     else if (strcmp(ctype, "rv") == 0 || strcmp(ctype, "RV") == 0) {
@@ -179,7 +179,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
         lexp = 0;
 
         syn = phoebe_curve_new();
-        phoebe_curve_compute(syn, obs->indep, index, obs->itype, obs->dtype, NULL, NULL);
+        phoebe_curve_compute(syn, obs->indep, index, obs->itype, obs->dtype, NULL, NULL, NULL);
     }
 
     else {
@@ -579,19 +579,45 @@ int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, int co
     return SUCCESS;
 }
 
+int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
+{
+    int i;
+    PyObject *rho = PyTuple_New(horizon->elems);
+    PyObject *theta = PyTuple_New(horizon->elems);
+    PyObject *hAc = PyTuple_New(6);
+    PyObject *hAs = PyTuple_New(6);
+    
+    for (i = 0; i < horizon->elems; i++) {
+		PyTuple_SetItem(rho, i, Py_BuildValue("d", horizon->rho[i]));
+		PyTuple_SetItem(theta, i, Py_BuildValue("d", horizon->theta[i]));
+	}
+	for (i = 0; i < 6; i++) {
+		PyTuple_SetItem(hAc, i, Py_BuildValue("d", horizon->hAc[i]));
+		PyTuple_SetItem(hAs, i, Py_BuildValue("d", horizon->hAs[i]));
+	}
+    
+    PyDict_SetItem(dict, Py_BuildValue("s", "rho"), rho);
+    PyDict_SetItem(dict, Py_BuildValue("s", "theta"), theta);
+    PyDict_SetItem(dict, Py_BuildValue("s", "hAc"), hAc);
+    PyDict_SetItem(dict, Py_BuildValue("s", "hAs"), hAs);
+
+    return SUCCESS;
+}
+
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
     int status;
-    int index, tlen, i, mswitch = 0;
-    PyObject *obj, *lc;
+    int index, tlen, i, mswitch = 0, hswitch = 0;
+    PyObject *obj, *lc, *combo = NULL;
     char *rstr;
     
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
     PHOEBE_mesh *mesh1 = NULL, *mesh2 = NULL;
+    PHOEBE_horizon *horizon = NULL;
     
-    if (!PyArg_ParseTuple(args, "Oi|i", &obj, &index, &mswitch) || !PyTuple_Check(obj)) {
+    if (!PyArg_ParseTuple(args, "Oi|ii", &obj, &index, &mswitch, &hswitch) || !PyTuple_Check(obj)) {
         printf("parsing failed.\n");
         return NULL;
     }
@@ -611,8 +637,13 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         mesh2 = phoebe_mesh_new();
     }
 
+    /* If hswitch is turned on, we need to store the horizon. */
+    if (hswitch) {
+        horizon = phoebe_horizon_new();
+    }
+
     curve = phoebe_curve_new();
-    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX, mesh1, mesh2);
+    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX, mesh1, mesh2, horizon);
 
     if (status != SUCCESS) {
         printf("%s", phoebe_error(status));
@@ -623,10 +654,14 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     for (i = 0; i < tlen; i++)
         PyTuple_SetItem(lc, i, Py_BuildValue("d", curve->dep->val[i]));
 
+	if (mswitch || hswitch) {
+        combo = PyTuple_New(1 + mswitch + hswitch);
+        PyTuple_SetItem(combo, 0, lc);
+	}
+
     if (mswitch) {
         /* Now we need to wrap this into something nice. */
         PyObject *dict = PyDict_New();
-        PyObject *combo = PyTuple_New(2);
         
         intern_add_mesh_to_dict(dict, mesh1, "vcx1",   0);
         intern_add_mesh_to_dict(dict, mesh1, "vcy1",   1);
@@ -660,20 +695,25 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         intern_add_mesh_to_dict(dict, mesh2, "tloc2",  13);
         intern_add_mesh_to_dict(dict, mesh2, "Inorm2", 14);
 
-        phoebe_curve_free(curve);
-        phoebe_vector_free(indep);
-        phoebe_mesh_free(mesh1);
-        phoebe_mesh_free(mesh2);
-
-        PyTuple_SetItem(combo, 0, lc);
         PyTuple_SetItem(combo, 1, dict);
-        return combo;
     }
+
+	if (hswitch) {
+		PyObject *dict = PyDict_New();
+
+		intern_add_horizon_to_dict(dict, horizon);
+
+        PyTuple_SetItem(combo, 1+mswitch, dict);
+	}
     
     phoebe_curve_free(curve);
     phoebe_vector_free(indep);
     phoebe_mesh_free(mesh1);
     phoebe_mesh_free(mesh2);
+	phoebe_horizon_free(horizon);
+
+	if (mswitch || hswitch)
+        return combo;
 
     return lc;
 }
@@ -703,7 +743,7 @@ static PyObject *phoebeRV1(PyObject *self, PyObject *args)
     phoebe_column_get_type (&itype, rstr);
     
     curve = phoebe_curve_new();
-    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_PRIMARY_RV, NULL, NULL);
+    status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_PRIMARY_RV, NULL, NULL, NULL);
     if (status != SUCCESS) {
         printf("%s", phoebe_error(status));
         return NULL;
@@ -744,7 +784,7 @@ static PyObject *phoebeRV2(PyObject *self, PyObject *args)
     phoebe_column_get_type (&itype, rstr);
     
     curve = phoebe_curve_new();
-    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_SECONDARY_RV, NULL, NULL);
+    phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_SECONDARY_RV, NULL, NULL, NULL);
 
     ret = PyTuple_New(tlen);
     for (i = 0; i < tlen; i++)

@@ -1,6 +1,6 @@
       subroutine lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,
      +              indeps,deps,skycoy,skycoz,params,args,lcout,
-     +              mswitch,mesh1,mesh2)
+     +              mswitch,mesh1,mesh2,hswitch,hrho,htheta,hAc,hAs)
 c
 c  Main program for computing light and radial velocity curves,
 c      line profiles, and images
@@ -156,6 +156,9 @@ c                     params(11) = SBR1   star 1 polar surface brightness
 c                     params(12) = SBR2   star 2 polar surface brightness
 c                     params(13) = phsv   star 1 potential
 c                     params(14) = pcsv   star 2 potential
+c                     params(15) = vol1   star 1 volume
+c                     params(16) = vol2   star 2 volume
+c                     params(17) = ifr    length of horizon arrays
 c
 c         args   ..   an array of passed parameters (arguments):
 c
@@ -183,12 +186,16 @@ c                     rounding problems in WD when using I/O.
 c      mswitch   ..   should the meshes be exported to phoebe?
 c        mesh1   ..   a matrix of primary star mesh values, useful for debugging
 c        mesh2   ..   a matrix of secondary star mesh values, useful for debugging
+c         hrho   ..   horizon rho, useful for debugging
+c       htheta   ..   horizon theta, useful for debugging
+c          hAc   ..   Fourier cosine coefficients, useful for debugging
+c          hAs   ..   Fourier sine coefficients, useful for debugging
 
-      integer request,vertno,mswitch
+      integer request,vertno,mswitch,hswitch
       double precision indeps(*),deps(*),skycoy(*),skycoz(*),params(*),
      $args(*),pltab(iplcof),atmtab(iatmsize)
       character lcin*(*)
-      double precision mesh1(*), mesh2(*)
+      double precision mesh1(*),mesh2(*),hrho(*),htheta(*),hAc(*),hAs(*)
       dimension tloc1(igsmax),tloc2(igsmax),xInorm1(igsmax),
      $xInorm2(igsmax)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -594,6 +601,7 @@ c
       params(14) = pcsv
       params(15) = vol1
       params(16) = vol2
+c~       params(17) = ifr
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if(lcout.ne."") then
@@ -680,7 +688,7 @@ c
 c     PHOEBE extension:
 c
 c     grv1(igsmax),grv2(igsmax),rftemp(igsmax),
-c     $rf1(igsmax),rf2(igsmax),csbt1(igsmax),csbt2(igsmax),
+c     $rf1(igsmax),rf2(igsmax)
 c
       if (mswitch.eq.1) then
         nc = 15
@@ -747,6 +755,16 @@ c
           skycoy(imp) = yskp(imp)
           skycoz(imp) = zskp(imp)
   129   continue
+      endif
+      if (hswitch.eq.1) then
+        do 130 imp=1,ifrmax
+          hrho(imp) = rho(imp)
+          htheta(imp) = theta(imp)
+  130   continue
+        do 131 imp=1,6
+          hAc(imp)=aa(imp)
+          hAs(imp)=bb(imp)
+  131   continue
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
