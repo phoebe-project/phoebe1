@@ -2352,7 +2352,7 @@ int gui_para_lum_levels_calc(GtkTreeModel *model, GtkTreeIter iter)
 			
 	/* Synthesize a theoretical curve: */
 	syncurve = phoebe_curve_new ();
-	phoebe_curve_compute (syncurve, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
+	phoebe_curve_compute (syncurve, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
 
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), index, &lw_str);
 	lw = -1;

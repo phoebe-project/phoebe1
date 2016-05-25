@@ -671,7 +671,7 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 					switch (data->ptype) {
 						case GUI_PLOT_LC:
 							data->request[i].model->type = PHOEBE_CURVE_LC;
-							status = phoebe_curve_compute (data->request[i].model, indep, i, itype, dtype, NULL, NULL);
+							status = phoebe_curve_compute (data->request[i].model, indep, i, itype, dtype, NULL, NULL, NULL);
 							data->block_signal = TRUE;
 							gui_update_cla_value (i);
 						break;
@@ -681,7 +681,7 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 							data->request[i].model->type = PHOEBE_CURVE_RV;
 							phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_rv_dep"), i, &param);
 							phoebe_column_get_type (&rvtype, param);
-							status = phoebe_curve_compute (data->request[i].model, indep, i, itype, rvtype, NULL, NULL);
+							status = phoebe_curve_compute (data->request[i].model, indep, i, itype, rvtype, NULL, NULL, NULL);
 						}
 						break;
 						default:
@@ -737,7 +737,7 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 				switch (data->ptype) {
 					case GUI_PLOT_LC:
 						data->request[i].model->type = PHOEBE_CURVE_LC;
-						status = phoebe_curve_compute (data->request[i].model, indep, i, itype, dtype, NULL, NULL);
+						status = phoebe_curve_compute (data->request[i].model, indep, i, itype, dtype, NULL, NULL, NULL);
 						data->block_signal = TRUE;
 						gui_update_cla_value (i);
 					break;
@@ -747,7 +747,7 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 						data->request[i].model->type = PHOEBE_CURVE_RV;
 						phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_rv_dep"), i, &param);
 						phoebe_column_get_type (&rvtype, param);
-						status = phoebe_curve_compute (data->request[i].model, indep, i, itype, rvtype, NULL, NULL);
+						status = phoebe_curve_compute (data->request[i].model, indep, i, itype, rvtype, NULL, NULL, NULL);
 					}
 					break;
 					default:
@@ -827,7 +827,7 @@ void on_plot_button_clicked (GtkButton *button, gpointer user_data)
 		
 		poscoy = phoebe_vector_new ();
 		poscoz = phoebe_vector_new ();
-		status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, args, data->request->phase, NULL, NULL);
+		status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, args, data->request->phase, NULL, NULL, NULL, NULL, NULL, NULL);
 		
 		data->request[0].model = phoebe_curve_new ();
 		data->request[0].model->indep = poscoy;

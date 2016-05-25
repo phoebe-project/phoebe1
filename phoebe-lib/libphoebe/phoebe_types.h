@@ -270,6 +270,20 @@ int          phoebe_mesh_free(PHOEBE_mesh *mesh);
 
 /* **************************************************************************** */
 
+typedef struct PHOEBE_horizon {
+	int elems;
+	double *rho;
+	double *theta;
+	double *hAc;
+	double *hAs;
+} PHOEBE_horizon;
+
+PHOEBE_horizon *phoebe_horizon_new();
+int             phoebe_horizon_alloc(PHOEBE_horizon *horizon, int elems);
+int             phoebe_horizon_free(PHOEBE_horizon *horizon);
+
+/* **************************************************************************** */
+
 /**
  * PHOEBE_curve_type:
  * @PHOEBE_CURVE_UNDEFINED: The type of the curve is unknown.
@@ -348,7 +362,7 @@ PHOEBE_curve *phoebe_curve_new_from_pars  (PHOEBE_curve_type ctype, int index);
 PHOEBE_curve *phoebe_curve_duplicate      (PHOEBE_curve *curve);
 int           phoebe_curve_alloc          (PHOEBE_curve *curve, int dim);
 int           phoebe_curve_realloc        (PHOEBE_curve *curve, int dim);
-int           phoebe_curve_compute        (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_mesh *mesh1, PHOEBE_mesh *mesh2);
+int           phoebe_curve_compute        (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_mesh *mesh1, PHOEBE_mesh *mesh2, PHOEBE_horizon *horizon);
 int           phoebe_curve_transform      (PHOEBE_curve *curve, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_column_type wtype);
 int           phoebe_curve_alias          (PHOEBE_curve *curve, double phmin, double phmax);
 int           phoebe_curve_set_properties (PHOEBE_curve *curve, PHOEBE_curve_type type, char *filename, PHOEBE_passband *passband, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_column_type wtype, double sigma);

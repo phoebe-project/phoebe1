@@ -2772,7 +2772,7 @@ int intern_get_num_wd_elems(int N)
     return nelems;
 }
 
-int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_mesh *mesh1, PHOEBE_mesh *mesh2)
+int phoebe_curve_compute(PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, PHOEBE_column_type itype, PHOEBE_column_type dtype, PHOEBE_mesh *mesh1, PHOEBE_mesh *mesh2, PHOEBE_horizon *horizon)
 {
 	/**
 	 * phoebe_curve_compute:
@@ -2783,6 +2783,7 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
 	 * @dtype: requested dependent data type (see #PHOEBE_column_type)
      * @mesh1: a pointer to the initialized #PHOEBE_mesh, or NULL
      * @mesh2: a pointer to the initialized #PHOEBE_mesh, or NULL
+     * @horizon: a pointer to the initialized #PHOEBE_horizon, or NULL
 	 *
 	 * Computes the @index-th model light curve or RV curve in @nodes.
 	 * The computation is governed by the enumerated choices of @itype
@@ -2814,6 +2815,9 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
     /* Mesh lists to be passed to WD: */
     double *list1 = NULL, *list2 = NULL;
     int N1, N2, nelems1, nelems2;
+
+	/* Horizon lists to be passed to WD: */
+	double *hrho = NULL, *htheta = NULL, *hAc= NULL, *hAs = NULL;
 
 	double A;
 
@@ -2933,27 +2937,36 @@ int phoebe_curve_compute (PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, 
         list2 = phoebe_malloc(fti ? verts->dim : nodes->dim * nelems2*mesh2->ncols*sizeof(*list2));
     }
 
+    /* If horizon is requested, allocate the structures: */
+    if (horizon) {
+        phoebe_horizon_alloc(horizon, 800);
+        hrho = horizon->rho;
+        htheta = horizon->theta;
+        hAc = horizon->hAc;
+        hAs = horizon->hAs;
+    }
+
 	switch (dtype) {
 		case PHOEBE_COLUMN_MAGNITUDE:
-			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args, list1, list2);
+			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args, list1, list2, hrho, htheta, hAc, hAs);
 			if (status != SUCCESS) return status;
 			apply_extinction_correction (fti ? fticurve : curve, A);
 		break;
 		case PHOEBE_COLUMN_FLUX:
-			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args, list1, list2);
+			status = phoebe_compute_lc_using_wd (fti ? fticurve : curve, fti ? verts : nodes, lcin, args, list1, list2, hrho, htheta, hAc, hAs);
 			if (status != SUCCESS) return status;
 			apply_extinction_correction (fti ? fticurve : curve, A);
 		break;
 		case PHOEBE_COLUMN_PRIMARY_RV:
-			status = phoebe_compute_rv1_using_wd (curve, nodes, lcin, args, list1, list2);
+			status = phoebe_compute_rv1_using_wd (curve, nodes, lcin, args, list1, list2, hrho, htheta, hAc, hAs);
 			if (status != SUCCESS) return status;
 		break;
 		case PHOEBE_COLUMN_SECONDARY_RV:
-			status = phoebe_compute_rv2_using_wd (curve, nodes, lcin, args, list1, list2);
+			status = phoebe_compute_rv2_using_wd (curve, nodes, lcin, args, list1, list2, hrho, htheta, hAc, hAs);
 			if (status != SUCCESS) return status;
 		break;
 		default:
-			phoebe_lib_error ("exception handler invoked by dtype switch in phoebe_curve_compute (), please report this!\n");
+			phoebe_lib_error ("exception handler invoked by dtype switch in phoebe_curve_compute(), please report this!\n");
 			return ERROR_EXCEPTION_HANDLER_INVOKED;
 	}
 
@@ -3707,6 +3720,72 @@ int phoebe_mesh_free(PHOEBE_mesh *mesh)
         free(mesh->mesh[i]);
     }
     free(mesh);
+    
+    return SUCCESS;
+}
+
+PHOEBE_horizon *phoebe_horizon_new()
+{
+    /**
+     * phoebe_horizon_new:
+     * 
+     * Initializes a new horizon structure.
+     * 
+     * Returns: instance of a new horizon.
+     */
+    
+    PHOEBE_horizon *horizon = phoebe_malloc(sizeof(*horizon));
+    
+    horizon->elems = 0;
+    horizon->rho = NULL;
+    horizon->theta = NULL;
+    horizon->hAc = NULL;
+    horizon->hAs = NULL;
+        
+    return horizon;
+}
+
+int phoebe_horizon_alloc(PHOEBE_horizon *horizon, int elems)
+{
+    /**
+     * phoebe_horizon_alloc:
+     * @horizon: horizon structure to be allocated
+     * @elems: number of horizon elements on the star
+     * 
+     * Initializes memory for the horizon.
+     * 
+     * Returns: #PHOEBE_error_code.
+     */
+    
+    horizon->elems = elems;
+    
+    horizon->rho = phoebe_malloc(horizon->elems*sizeof(*(horizon->rho)));
+    horizon->theta = phoebe_malloc(horizon->elems*sizeof(*(horizon->theta)));
+	horizon->hAc = phoebe_malloc(6*sizeof(*(horizon->hAc)));
+	horizon->hAs = phoebe_malloc(6*sizeof(*(horizon->hAs)));
+
+    return SUCCESS;
+}
+
+int phoebe_horizon_free(PHOEBE_horizon *horizon)
+{
+    /**
+     * phoebe_horizon_free:
+     * @horizon: horizon to be freed.
+     * 
+     * Frees memory from horizon structures and the horizon itself.
+     * 
+     * Returns: #PHOEBE_error_code.
+     */
+        
+    if (!horizon)
+        return SUCCESS;
+    
+    free(horizon->rho);
+    free(horizon->theta);
+    free(horizon->hAc);
+    free(horizon->hAs);
+    free(horizon);
     
     return SUCCESS;
 }

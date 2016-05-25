@@ -251,8 +251,7 @@ c   Version of October 18, 2004
       THETA(L)=twopi+THETA(L)
       GOTO 93
    92 THETA(L)=pi-THETA(L)
-   93 IF (THETA(L).GE.twopi) THETA(L)=THETA(L)
-     $-twopi
+   93 IF (THETA(L).GE.twopi) THETA(L)=THETA(L)-twopi
       L=L+1
       GOTO 27
    22 COSSAV=COSGAM
