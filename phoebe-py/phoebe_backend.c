@@ -582,7 +582,8 @@ int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, int co
 
 int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
 {
-    int i, hlen = 0;
+    int i;
+    Py_ssize_t hlen = 0;
     PyObject *rho, *theta;
     PyObject *hAc = PyTuple_New(6);
     PyObject *hAs = PyTuple_New(6);
@@ -593,11 +594,11 @@ int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
      */
     while (fabs(horizon->rho[hlen]) > 1e-6)
 		hlen++;
-    
+        
     rho = PyTuple_New(hlen);
     theta = PyTuple_New(hlen);
     
-    for (i = 0; i < horizon->elems; i++) {
+    for (i = 0; i < hlen; i++) {
 		PyTuple_SetItem(rho, i, Py_BuildValue("d", horizon->rho[i]));
 		PyTuple_SetItem(theta, i, Py_BuildValue("d", horizon->theta[i]));
 	}
@@ -617,10 +618,11 @@ int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
     int status;
-    int index, tlen, i, mswitch = 0, hswitch = 0;
+    int index, i;
     PyObject *obj, *lc, *combo = NULL;
     char *rstr;
     
+    Py_ssize_t tlen, mswitch = 0, hswitch = 0;
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
