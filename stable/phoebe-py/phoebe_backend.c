@@ -1,6 +1,7 @@
 #include <Python.h>
 #include <phoebe/phoebe.h>
 #include <string.h>
+#include <math.h>
 
 static PyObject *phoebeInit(PyObject *self, PyObject *args)
 {
@@ -581,11 +582,20 @@ int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, int co
 
 int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
 {
-    int i;
-    PyObject *rho = PyTuple_New(horizon->elems);
-    PyObject *theta = PyTuple_New(horizon->elems);
+    int i, hlen = 0;
+    PyObject *rho, *theta;
     PyObject *hAc = PyTuple_New(6);
     PyObject *hAs = PyTuple_New(6);
+    
+    /* WD stores rhos and thetas in a fixed size array, but fills only
+     * up to a certain element, with the remaining elements being
+     * exactly 0. Here we will filter those out.
+     */
+    while (fabs(horizon->rho[hlen]) > 1e-6)
+		hlen++;
+    
+    rho = PyTuple_New(hlen);
+    theta = PyTuple_New(hlen);
     
     for (i = 0; i < horizon->elems; i++) {
 		PyTuple_SetItem(rho, i, Py_BuildValue("d", horizon->rho[i]));
