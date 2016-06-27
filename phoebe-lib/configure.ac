@@ -129,6 +129,9 @@
     if $LEX --version | grep 2.5.[[3-9]][[0-9]] > /dev/null 2>&1; then
       flex_check_passed="yes"
     fi
+    if $LEX --version | grep 2.6 > /dev/null 2>&1; then
+      flex_check_passed="yes"
+    fi
 
   # Check for existence of all flexed sources:
     AC_SUBST([flex_built_sources],["phoebe_constraints.lng.c phoebe_constraints.lng.h"])

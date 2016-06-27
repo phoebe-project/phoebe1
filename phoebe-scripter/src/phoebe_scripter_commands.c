@@ -129,7 +129,7 @@ scripter_ast_value scripter_testcmd (scripter_ast_list *args)
 	lexp = intern_get_level_weighting_id (readout_str);
 
 	syncurve = phoebe_curve_new ();
-	phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
+	phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
 
 	status = phoebe_cf_compute (&chi2, PHOEBE_CF_CHI2, syncurve->dep, obs->dep, obs->weight, 1.0, lexp, 1.0);
 
@@ -1429,7 +1429,7 @@ scripter_ast_value scripter_compute_light_levels (scripter_ast_list *args)
 
 		/* Synthesize a theoretical curve: */
 		syncurve = phoebe_curve_new ();
-		phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
+		phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
 		
 		phoebe_el3_units_id (&l3units);
 		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_el3"), index-1, &l3);
@@ -1784,7 +1784,7 @@ scripter_ast_value scripter_plot_lc_using_gnuplot (scripter_ast_list *args)
 		for (i = 0; i < 300; i++) indep->val[i] = -0.6 + 1.2 * (double) i/299;
 
 		/* Read in synthetic data: */
-		status = phoebe_curve_compute (lc[index], indep, vals[0].value.i-1, PHOEBE_COLUMN_PHASE, PHOEBE_COLUMN_FLUX, NULL, NULL);
+		status = phoebe_curve_compute (lc[index], indep, vals[0].value.i-1, PHOEBE_COLUMN_PHASE, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
 		if (status != SUCCESS) {
 			phoebe_scripter_output ("%s", phoebe_scripter_error (status));
 			scripter_ast_value_array_free (vals, 3);
@@ -1938,9 +1938,9 @@ scripter_ast_value scripter_plot_rv_using_gnuplot (scripter_ast_list *args)
 
 		/* Read in synthetic data: */
 		if (dtype == PHOEBE_COLUMN_PRIMARY_RV)
-			status = phoebe_curve_compute (rv[index], indep, vals[0].value.i-1, PHOEBE_COLUMN_PHASE, PHOEBE_COLUMN_PRIMARY_RV, NULL, NULL);
+			status = phoebe_curve_compute (rv[index], indep, vals[0].value.i-1, PHOEBE_COLUMN_PHASE, PHOEBE_COLUMN_PRIMARY_RV, NULL, NULL, NULL);
 		else
-			status = phoebe_curve_compute (rv[index], indep, vals[0].value.i-1, PHOEBE_COLUMN_PHASE, PHOEBE_COLUMN_SECONDARY_RV, NULL, NULL);
+			status = phoebe_curve_compute (rv[index], indep, vals[0].value.i-1, PHOEBE_COLUMN_PHASE, PHOEBE_COLUMN_SECONDARY_RV, NULL, NULL, NULL);
 
 		if (status != SUCCESS) {
 			phoebe_scripter_output ("%s", phoebe_scripter_error (status));
@@ -2130,7 +2130,7 @@ scripter_ast_value scripter_plot_eb_using_gnuplot (scripter_ast_list *args)
 
 	poscoy = phoebe_vector_new ();
 	poscoz = phoebe_vector_new ();
-	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, lciargs, vals[0].value.d, NULL, NULL);
+	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, lciargs, vals[0].value.d, NULL, NULL, NULL, NULL, NULL, NULL);
 
 	props = phoebe_malloc (sizeof (*props));
 	props[index].lines = FALSE;
@@ -2296,7 +2296,7 @@ scripter_ast_value scripter_compute_lc (scripter_ast_list *args)
 	}
 
 	curve = phoebe_curve_new ();
-	status = phoebe_curve_compute (curve, vals[0].value.vec, vals[1].value.i-1, itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
+	status = phoebe_curve_compute (curve, vals[0].value.vec, vals[1].value.i-1, itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
 	if (status != SUCCESS) {
 		phoebe_scripter_output ("%s", phoebe_scripter_error (status));
 		phoebe_curve_free (curve);
@@ -2438,7 +2438,7 @@ scripter_ast_value scripter_compute_rv (scripter_ast_list *args)
 	}
 
 	curve = phoebe_curve_new ();
-	status = phoebe_curve_compute (curve, vals[0].value.vec, vals[1].value.i-1, itype, dtype, NULL, NULL);
+	status = phoebe_curve_compute (curve, vals[0].value.vec, vals[1].value.i-1, itype, dtype, NULL, NULL, NULL);
 
 	if (status != SUCCESS) {
 		phoebe_scripter_output ("%s", phoebe_scripter_error (status));
@@ -2500,7 +2500,7 @@ scripter_ast_value scripter_compute_mesh (scripter_ast_list *args)
 
 	poscoy = phoebe_vector_new ();
 	poscoz = phoebe_vector_new ();
-	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, lciargs, vals[0].value.d, NULL, NULL);
+	status = phoebe_compute_pos_using_wd (poscoy, poscoz, lcin, lciargs, vals[0].value.d, NULL, NULL, NULL, NULL, NULL, NULL);
 
 	out.type = type_curve;
 	out.value.curve = phoebe_curve_new ();
@@ -2590,7 +2590,7 @@ scripter_ast_value scripter_compute_chi2 (scripter_ast_list *args)
 
 			/* Synthesize a theoretical curve: */
 			syncurve = phoebe_curve_new ();
-			phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL);
+			phoebe_curve_compute (syncurve, obs->indep, index-1, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
 		}
 		else {
 			obs = phoebe_curve_new_from_pars (PHOEBE_CURVE_RV, index-lcno-1);
@@ -2604,7 +2604,7 @@ scripter_ast_value scripter_compute_chi2 (scripter_ast_list *args)
 			lexp = 0;
 
 			syncurve = phoebe_curve_new ();
-			phoebe_curve_compute (syncurve, obs->indep, index-lcno-1, obs->itype, obs->dtype, NULL, NULL);
+			phoebe_curve_compute (syncurve, obs->indep, index-lcno-1, obs->itype, obs->dtype, NULL, NULL, NULL);
 		}
 
 		status = phoebe_cf_compute (&chi2, PHOEBE_CF_CHI2, syncurve->dep, obs->dep, obs->weight, psigma, lexp, 1.0);
