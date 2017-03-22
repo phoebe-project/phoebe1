@@ -934,7 +934,7 @@ int phoebe_minimize_using_dc (FILE *dc_output, PHOEBE_minimizer_feedback *feedba
 		L3perc = 1;
 
 	/* Run one DC iteration and store the results in the allocated arrays: */
-	printf ("nph = %d; delph = %lf\n", params->nph, params->delph);
+	//~ printf ("nph = %d; delph = %lf\n", params->nph, params->delph);
 
 	/* Build the arguments array to be passed to WD: */
 	phoebe_parameter_get_value (phoebe_parameter_lookup("phoebe_pshift"), &args[0]);

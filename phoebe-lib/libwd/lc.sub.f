@@ -560,6 +560,7 @@ c***************************************************************
      $GRV1,GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,
      $GMAG1,GMAG2,glog1,glog2,GR2,2,tloc1,tloc2,xInorm1,xInorm2)
       DPDX2=(POTC-P2AP)*(1.d0-E*E)*.5d0/E
+c~       write(*,*) vol1,poth,vol2,potc,vl1,p1ap,vl2,p2ap,dpdx1,dpdx2
   117 CONTINUE
       PHSV=POTH
       PCSV=POTC

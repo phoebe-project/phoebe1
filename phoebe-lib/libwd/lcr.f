@@ -51,6 +51,7 @@ c  Version of January 8, 2003
      $GRYQ,GRZQ,MMSAVE,FR1,FR2,HLD,SNTH,CSTH,SNFI,CSFI,SUMM2,SM2,GRV1,
      $GRV2,XX1,YY1,ZZ1,XX2,YY2,ZZ2,CSBT1,CSBT2,GLUMP1,GLUMP2,GMAG1,GMAG2
      $,glog1,glog2,GR2,IFC,tloc1,tloc2,xInorm1,xInorm2)
+c~       write(*,*) d,vl1,vl2,pothd,potcd
    86 CONTINUE
       TPOLH=TAVH*dsqrt(dsqrt(SM1/SUMM1))
       TPOLC=TAVC*dsqrt(dsqrt(SM2/SUMM2))

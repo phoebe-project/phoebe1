@@ -56,6 +56,11 @@ int phoebe_init_parameters ()
 	phoebe_parameter_add ("phoebe_lc_levweight",         "Observed LC data level weighting",           KIND_MENU,       "phoebe_lcno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Poissonian scatter");
 	phoebe_parameter_add ("phoebe_lc_active",            "Observed LC data is used",                   KIND_SWITCH,     "phoebe_lcno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,    YES);
 
+	phoebe_parameter_add ("phoebe_lc_cadence_switch",    "Finite cadence integration",                 KIND_SWITCH,     "phoebe_lcno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,               NO);
+	phoebe_parameter_add ("phoebe_lc_cadence",           "Cadence in seconds",                         KIND_PARAMETER,  "phoebe_lcno", "%lf", 0.0, 3600.0,    1.0, NO, TYPE_DOUBLE_ARRAY,         1766.0);
+	phoebe_parameter_add ("phoebe_lc_cadence_rate",      "Cadence sampling rate (times per cadence)",  KIND_PARAMETER,  "phoebe_lcno", "%d",  0.0,    0.0,    0.0, NO, TYPE_INT_ARRAY,                10);
+	phoebe_parameter_add ("phoebe_lc_cadence_timestamp", "Cadence timestamp",                          KIND_MENU,       "phoebe_lcno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Mid-exposure");
+
 	phoebe_parameter_add ("phoebe_rv_id",                "Observed RV identification name",            KIND_PARAMETER,  "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Undefined");
 	phoebe_parameter_add ("phoebe_rv_filename",          "Observed RV data filename",                  KIND_PARAMETER,  "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Undefined");
 	phoebe_parameter_add ("phoebe_rv_sigma",             "Observed RV data standard deviation",        KIND_PARAMETER,  "phoebe_rvno", "%lf", 0.0,    0.0,    0.0, NO, TYPE_DOUBLE_ARRAY, 1.0);
@@ -64,6 +69,11 @@ int phoebe_init_parameters ()
 	phoebe_parameter_add ("phoebe_rv_dep",               "Observed RV data dependent variable",        KIND_MENU,       "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Primary RV");
 	phoebe_parameter_add ("phoebe_rv_indweight",         "Observed RV data individual weighting",      KIND_MENU,       "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Standard deviation");
 	phoebe_parameter_add ("phoebe_rv_active",            "Observed RV data is used",                   KIND_SWITCH,     "phoebe_rvno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,    YES);
+
+	phoebe_parameter_add ("phoebe_rv_cadence_switch",    "Finite cadence integration",                 KIND_SWITCH,     "phoebe_rvno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,               NO);
+	phoebe_parameter_add ("phoebe_rv_cadence",           "Cadence in seconds",                         KIND_PARAMETER,  "phoebe_rvno", "%lf", 0.0, 3600.0,    1.0, NO, TYPE_DOUBLE_ARRAY,         1766.0);
+	phoebe_parameter_add ("phoebe_rv_cadence_rate",      "Cadence sampling rate (times per cadence)",  KIND_PARAMETER,  "phoebe_rvno", "%d",  0.0,    0.0,    0.0, NO, TYPE_INT_ARRAY,                10);
+	phoebe_parameter_add ("phoebe_rv_cadence_timestamp", "Cadence timestamp",                          KIND_MENU,       "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Mid-exposure");
 
 	phoebe_parameter_add ("phoebe_spectra_disptype",     "Dispersion type of theoretical spectra",     KIND_MENU,       NULL,          "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING,       "Linear");
 	phoebe_parameter_add ("phoebe_mnorm",                "Flux-normalizing magnitude",                 KIND_PARAMETER,  NULL,          "%lf", 0.0,    0.0,    0.0, NO, TYPE_DOUBLE,           10.0);

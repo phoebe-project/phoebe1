@@ -151,6 +151,35 @@ static PyObject *phoebeCheck(PyObject *self, PyObject *args)
         return Py_BuildValue("i", 0);
 }
 
+static PyObject *phoebePBLum(PyObject *self, PyObject *args)
+{
+    int i, index;
+    double sigma, num, denom, Lpb, hla;
+    
+    PHOEBE_curve *obs, *syn;
+    
+    PyArg_ParseTuple(args, "i", &index);
+    
+    obs = phoebe_curve_new_from_pars(PHOEBE_CURVE_LC, index);
+    phoebe_curve_transform(obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_sigma"), index, &sigma);
+    
+    syn = phoebe_curve_new();
+    phoebe_curve_compute(syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
+
+    num = 0.0;
+    denom = 0.0;
+    for (i = 0; i < syn->dep->dim; i++) {
+        num += syn->dep->val[i]*obs->dep->val[i]/obs->weight->val[i]/obs->weight->val[i];
+        denom += syn->dep->val[i]*syn->dep->val[i]/obs->weight->val[i]/obs->weight->val[i];
+    }
+    Lpb = num/denom;
+
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_hla"), index, &hla);
+
+    return Py_BuildValue ("d", Lpb*hla);
+}
+
 static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 {
     int i, index, status, lexp, scale;
@@ -615,6 +644,60 @@ int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
     return SUCCESS;
 }
 
+int intern_add_feedback_to_dict(PyObject *dict, PHOEBE_minimizer_feedback *feedback)
+{
+    int i, dim = feedback->qualifiers->dim;
+    PyObject *qualifiers, *initvals, *newvals, *ferrors;
+    
+    qualifiers = PyTuple_New(dim);
+    initvals = PyTuple_New(dim);
+    newvals = PyTuple_New(dim);
+    ferrors = PyTuple_New(dim);
+    
+    for (i = 0; i < feedback->qualifiers->dim; i++) {
+        PyTuple_SetItem(qualifiers, i, Py_BuildValue("s", feedback->qualifiers->val.strarray[i]));
+        PyTuple_SetItem(initvals, i, Py_BuildValue("d", feedback->initvals->val[i]));
+        PyTuple_SetItem(newvals, i, Py_BuildValue("d", feedback->newvals->val[i]));
+        PyTuple_SetItem(ferrors, i, Py_BuildValue("d", feedback->ferrors->val[i]));
+    }
+    
+    PyDict_SetItem(dict, Py_BuildValue("s", "qualifiers"), qualifiers);
+    PyDict_SetItem(dict, Py_BuildValue("s", "initvals"), initvals);
+    PyDict_SetItem(dict, Py_BuildValue("s", "newvals"), newvals);
+    PyDict_SetItem(dict, Py_BuildValue("s", "ferrors"), ferrors);
+
+    return SUCCESS;
+}
+
+static PyObject *phoebeDC(PyObject *self, PyObject *args)
+{
+    /*
+     * phoebeDC:
+     * @self:
+     * @args:
+     * 
+     * Runs a single iteration of differential corrections.
+     */
+     
+    int status;
+    PHOEBE_minimizer_feedback *feedback;
+    PyObject *dict;
+
+    feedback = phoebe_minimizer_feedback_new();
+    status = phoebe_minimize_using_dc (NULL, feedback);
+
+    if (status != SUCCESS) {
+		printf("%s", phoebe_error(status));
+        return Py_BuildValue ("i", status);
+	}
+	else {
+        dict = PyDict_New();
+        intern_add_feedback_to_dict(dict, feedback);
+        return dict;
+	}
+
+}
+
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
     int status;
@@ -899,6 +982,7 @@ static PyMethodDef PhoebeMethods[] = {
     {"open",             phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
     {"save",             phoebeSave,        METH_VARARGS, "Save PHOEBE parameter file"},
     {"cfval",            phoebeCFVal,       METH_VARARGS, "Compute a cost function value of the passed curve"},
+    {"pblum",            phoebePBLum,       METH_VARARGS, "Compute passband luminosity of the passed curve"},
     {"check",            phoebeCheck,       METH_VARARGS, "Check whether the parameter is within bounds"},
     {"setpar",           phoebeSetPar,      METH_VARARGS, "Set the value of the parameter"},
     {"getpar",           phoebeGetPar,      METH_VARARGS, "Get the value of the parameter"},
@@ -906,12 +990,13 @@ static PyMethodDef PhoebeMethods[] = {
     {"getlim",           phoebeGetLim,      METH_VARARGS, "Get parameter limits"},
     {"updateLD",         phoebeUpdateLD,    METH_VARARGS, "Update limb darkening coefficients"},
     {"lc",               phoebeLC,          METH_VARARGS, "Compute light curve"},
+    {"dc",               phoebeDC,          METH_VARARGS, "Run one iteration of the differential corrections minimizer"},
     {"rv1",              phoebeRV1,         METH_VARARGS, "Compute primary radial velocity curve"},
     {"rv2",              phoebeRV2,         METH_VARARGS, "Compute secondary radial velocity curve"},
     {"data",             phoebeData,        METH_VARARGS, "Return light or RV curve data"},
     {"parameter",        phoebeParameter,   METH_VARARGS, "Return a list of parameter properties"},
     {"role_reverse",     phoebeRoleReverse, METH_VARARGS, "Reverses the role of the primary and the secondary"},
-    {NULL,               NULL,             0,            NULL}
+    {NULL,               NULL,              0,            NULL}
 };
 
 PyMODINIT_FUNC initphoebeBackend (void)
