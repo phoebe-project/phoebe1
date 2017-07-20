@@ -48,7 +48,7 @@ if len(sys.argv)>1 and sys.argv[1] == 'build':
   # Optionally add include directories etc.
   c.add_include_dir(workdir)
 
-  c.set_libraries("wd")
+  #c.set_libraries(['wd','gsl','gslcblas','m'])
 
   c.set_library_dirs("./phoebe_legacy/libwd")
 
@@ -71,7 +71,7 @@ ext_modules = [
       sources = ['./phoebe_legacy/libphoebe_legacy.c'],
       include_dirs = ['./phoebe_legacy/libphoebe_methods'],
       extra_link_args= ["-L./build"],
-      libraries = ['phoebe_methods','wd', 'gfortran']
+      libraries = ['phoebe_methods', 'wd', 'gfortran']
     )
   ]
 
