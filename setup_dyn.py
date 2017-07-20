@@ -1,9 +1,19 @@
 #!/usr/bin/env python
 
-import sys, glob
+import sys, glob, site
+from distutils.util import get_platform
 
-build_dir = './build/lib.linux-x86_64-2.7'
-install_dir = '/home/horvat/.local/lib/python2.7/site-packages'
+if 'build' in sys.argv:
+  print "In dynamic version nly install is supported."
+  quit()
+  
+build_dir = './build/lib.%s-%d.%d' % (get_platform(), sys.version_info[0], sys.version_info[1])
+
+if '--user' in sys.argv:
+  install_dir = site.getusersitepackages()
+else:
+  install_dir = site.getsitepackages()[0]
+ 
 
 """
   Making python module
@@ -14,8 +24,7 @@ from numpy.distutils.core import setup, Extension
 ext_modules = [
     
     Extension('libwd',
-      sources = glob.glob('./phoebe_legacy/libwd/*.f'),
-      runtime_library_dirs = [install_dir]
+      sources = glob.glob('./phoebe_legacy/libwd/*.f')
     ),
     
     Extension(
