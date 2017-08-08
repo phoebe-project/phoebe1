@@ -2,7 +2,7 @@
 
 import sys, glob
 
-if len(sys.argv)>1 and sys.argv[1] == 'build':
+if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
   """
     Making static library
