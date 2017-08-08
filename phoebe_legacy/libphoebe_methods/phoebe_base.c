@@ -487,6 +487,74 @@ int phoebe_configure ()
 	return return_flag;
 }
 
+int phoebe_custom_configure(char *startup, char *home, char *basedir, char *tmpdir, char *datadir, char *ptfdir, int ldswitch, int ldintern, char *lddir, char *vhdir, int loadatm, int dumplco)
+{
+	/**
+	 * phoebe_custom_configure:
+	 *
+	 * Skips the configuration file altogether and sets everything
+     * according to the passed arguments.
+	 *
+	 * Returns: #PHOEBE_error_code.
+	 */
+
+	int status;
+	
+    PHOEBE_STARTUP_DIR = strdup(startup);
+    PHOEBE_HOME_DIR = strdup(home);
+    PHOEBE_CONFIG = NULL;
+    
+    phoebe_debug ("* adding configuration entries...\n");
+	phoebe_config_populate();
+	
+    phoebe_config_entry_set("PHOEBE_BASE_DIR", basedir);
+    phoebe_config_entry_set("PHOEBE_DEFAULTS_DIR", basedir);
+    phoebe_config_entry_set("PHOEBE_TEMP_DIR", tmpdir);
+    phoebe_config_entry_set("PHOEBE_DATA_DIR", datadir);
+    phoebe_config_entry_set("PHOEBE_PTF_DIR", ptfdir);
+    phoebe_config_entry_set("PHOEBE_LD_SWITCH", ldswitch);
+    phoebe_config_entry_set("PHOEBE_LD_INTERN", ldintern);
+    phoebe_config_entry_set("PHOEBE_LD_DIR", lddir);
+    phoebe_config_entry_set("PHOEBE_LD_VH_DIR", vhdir);
+    phoebe_config_entry_set("PHOEBE_KURUCZ_SWITCH", 0);
+    phoebe_config_entry_set("PHOEBE_KURUCZ_DIR", "");
+    phoebe_config_entry_set("PHOEBE_PLUGINS_DIR", "");
+    phoebe_config_entry_set("LOAD_ATM_TO_MEMORY", loadatm);
+    phoebe_config_entry_set("DUMP_LCOUT_FILES", dumplco);
+    
+	phoebe_read_in_passbands (ptfdir);
+
+	if (ldswitch == 1) {
+		if (ldintern == 1) {
+			phoebe_ld_attach_all(lddir);
+		}
+
+		phoebe_load_ld_tables ();
+	}
+
+    if (loadatm == 1) {
+        char *atmcofplanck, *atmcof;
+
+        status = intern_get_atmcof_filenames(&atmcofplanck, &atmcof);
+        if (status != SUCCESS)
+            return status;
+
+        status = phoebe_load_atm_tables(atmcofplanck, atmcof);
+        free(atmcofplanck); free(atmcof);
+        
+        if (status != SUCCESS)
+            return status;
+    }
+
+	phoebe_debug ("* declaring parameters...\n");
+	phoebe_init_parameters ();
+
+	phoebe_debug ("* declaring parameter options...\n");
+	phoebe_init_parameter_options ();
+
+	return SUCCESS;
+}
+
 int phoebe_quit ()
 {
 	/**

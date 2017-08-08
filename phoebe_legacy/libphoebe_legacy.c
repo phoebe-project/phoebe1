@@ -50,6 +50,22 @@ static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
     return Py_BuildValue ("i", status);
 }
 
+static PyObject *phoebeCustomConfigure(PyObject *self, PyObject *args)
+{
+    char *startup, *homedir, *basedir, *tmpdir, *datadir, *ptfdir, *lddir, *vhdir;
+    int ldswitch, ldintern, loadatm, dumplco;
+
+    PyArg_ParseTuple(args, "ssssssiissii", &startup, &homedir, &basedir, &tmpdir, &datadir, &ptfdir, &ldswitch, &ldintern, &lddir, &vhdir, &loadatm, &dumplco);
+
+    int status = phoebe_custom_configure(startup, homedir, basedir, tmpdir, datadir, ptfdir, ldswitch, ldintern, lddir, vhdir, loadatm, dumplco);
+    if (status != SUCCESS) {
+        printf ("%s", phoebe_error (status));
+        return NULL;
+    }
+
+    return Py_BuildValue ("i", status);
+}
+
 static PyObject *phoebeQuit(PyObject *self, PyObject *args)
 {
     int status = phoebe_quit();
@@ -918,25 +934,26 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 }
 
 static PyMethodDef PhoebeMethods[] = {
-    {"init",             phoebeInit,        METH_VARARGS, "Initialize PHOEBE backend"},
-    {"configure",        phoebeConfigure,   METH_VARARGS, "Configure all internal PHOEBE structures"},
-    {"quit",             phoebeQuit,        METH_VARARGS, "Quit PHOEBE"},
-    {"open",             phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
-    {"save",             phoebeSave,        METH_VARARGS, "Save PHOEBE parameter file"},
-    {"cfval",            phoebeCFVal,       METH_VARARGS, "Compute a cost function value of the passed curve"},
-    {"check",            phoebeCheck,       METH_VARARGS, "Check whether the parameter is within bounds"},
-    {"setpar",           phoebeSetPar,      METH_VARARGS, "Set the value of the parameter"},
-    {"getpar",           phoebeGetPar,      METH_VARARGS, "Get the value of the parameter"},
-    {"setlim",           phoebeSetLim,      METH_VARARGS, "Set parameter limits"},
-    {"getlim",           phoebeGetLim,      METH_VARARGS, "Get parameter limits"},
-    {"updateLD",         phoebeUpdateLD,    METH_VARARGS, "Update limb darkening coefficients"},
-    {"lc",               phoebeLC,          METH_VARARGS, "Compute light curve"},
-    {"rv1",              phoebeRV1,         METH_VARARGS, "Compute primary radial velocity curve"},
-    {"rv2",              phoebeRV2,         METH_VARARGS, "Compute secondary radial velocity curve"},
-    {"data",             phoebeData,        METH_VARARGS, "Return light or RV curve data"},
-    {"parameter",        phoebeParameter,   METH_VARARGS, "Return a list of parameter properties"},
-    {"role_reverse",     phoebeRoleReverse, METH_VARARGS, "Reverses the role of the primary and the secondary"},
-    {NULL,               NULL,             0,            NULL}
+    {"init",             phoebeInit,            METH_VARARGS, "Initialize PHOEBE backend"},
+    {"custom_configure", phoebeCustomConfigure, METH_VARARGS, "Custom-configure all internal PHOEBE structures"},
+    {"configure",        phoebeConfigure,       METH_VARARGS, "Configure all internal PHOEBE structures"},
+    {"quit",             phoebeQuit,            METH_VARARGS, "Quit PHOEBE"},
+    {"open",             phoebeOpen,            METH_VARARGS, "Open PHOEBE parameter file"},
+    {"save",             phoebeSave,            METH_VARARGS, "Save PHOEBE parameter file"},
+    {"cfval",            phoebeCFVal,           METH_VARARGS, "Compute a cost function value of the passed curve"},
+    {"check",            phoebeCheck,           METH_VARARGS, "Check whether the parameter is within bounds"},
+    {"setpar",           phoebeSetPar,          METH_VARARGS, "Set the value of the parameter"},
+    {"getpar",           phoebeGetPar,          METH_VARARGS, "Get the value of the parameter"},
+    {"setlim",           phoebeSetLim,          METH_VARARGS, "Set parameter limits"},
+    {"getlim",           phoebeGetLim,          METH_VARARGS, "Get parameter limits"},
+    {"updateLD",         phoebeUpdateLD,        METH_VARARGS, "Update limb darkening coefficients"},
+    {"lc",               phoebeLC,              METH_VARARGS, "Compute light curve"},
+    {"rv1",              phoebeRV1,             METH_VARARGS, "Compute primary radial velocity curve"},
+    {"rv2",              phoebeRV2,             METH_VARARGS, "Compute secondary radial velocity curve"},
+    {"data",             phoebeData,            METH_VARARGS, "Return light or RV curve data"},
+    {"parameter",        phoebeParameter,       METH_VARARGS, "Return a list of parameter properties"},
+    {"role_reverse",     phoebeRoleReverse,     METH_VARARGS, "Reverses the role of the primary and the secondary"},
+    {NULL,               NULL,                  0,            NULL}
 };
 
 
