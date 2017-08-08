@@ -79,6 +79,6 @@ setup (name = 'phoebe_legacy',
        version = '0.40',
        description = 'PHOEBE legacy python package',
        packages = ['phoebe_legacy'],
-       package_data={'phoebe_legacy': ['tables/*'], },
+       package_data={'phoebe_legacy': ['tables/wd/*','tables/ptf/*'], },
        ext_modules = ext_modules)
 
