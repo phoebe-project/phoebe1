@@ -21,28 +21,28 @@
 /******************************************************************************/
 
 /* These are exported PHOEBE API prototypes. The following functions become   */
-/* available after `#include <phoebe/phoebe.h>'ing and '-lphoebe'ing the      */
+/* available after `#include <phoebe.h>'ing and '-lphoebe'ing the      */
 /* source code.                                                               */
 
 #ifndef PHOEBE_H
 	#define PHOEBE_H 1
 
-#include <phoebe/phoebe_accessories.h>
-#include <phoebe/phoebe_base.h>
-#include <phoebe/phoebe_calculations.h>
-#include <phoebe/phoebe_configuration.h>
-#include <phoebe/phoebe_constraints.h>
-#include <phoebe/phoebe_data.h>
-#include <phoebe/phoebe_error_handling.h>
-#include <phoebe/phoebe_fitting.h>
-#include <phoebe/phoebe_fortran_interface.h>
-#include <phoebe/phoebe_global.h>
-#include <phoebe/phoebe_ld.h>
-#include <phoebe/phoebe_model.h>
-#include <phoebe/phoebe_nms.h>
-#include <phoebe/phoebe_parameters.h>
-#include <phoebe/phoebe_radiation.h>
-#include <phoebe/phoebe_spectra.h>
-#include <phoebe/phoebe_types.h>
+#include <phoebe_accessories.h>
+#include <phoebe_base.h>
+#include <phoebe_calculations.h>
+#include <phoebe_configuration.h>
+#include <phoebe_constraints.h>
+#include <phoebe_data.h>
+#include <phoebe_error_handling.h>
+#include <phoebe_fitting.h>
+#include <phoebe_fortran_interface.h>
+#include <phoebe_global.h>
+#include <phoebe_ld.h>
+#include <phoebe_model.h>
+#include <phoebe_nms.h>
+#include <phoebe_parameters.h>
+#include <phoebe_radiation.h>
+#include <phoebe_spectra.h>
+#include <phoebe_types.h>
 
 #endif

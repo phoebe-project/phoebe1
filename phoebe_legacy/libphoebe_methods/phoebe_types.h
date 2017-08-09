@@ -60,7 +60,7 @@ typedef struct PHOEBE_vector {
 	double *val;
 } PHOEBE_vector;
 
-PHOEBE_vector *phoebe_vector_new                ();
+PHOEBE_vector *phoebe_vector_new                (void);
 PHOEBE_vector *phoebe_vector_new_from_qualifier (char *qualifier);
 PHOEBE_vector *phoebe_vector_new_from_column    (char *filename, int col);
 PHOEBE_vector *phoebe_vector_new_from_range     (int dim, double start, double end);
@@ -83,7 +83,7 @@ int            phoebe_vector_standard_deviation (PHOEBE_vector *vec, double *sig
 int            phoebe_vector_multiply_by        (PHOEBE_vector *vec, double factor);
 int            phoebe_vector_dot_product        (double *result, PHOEBE_vector *fac1, PHOEBE_vector *fac2);
 int            phoebe_vector_vec_product        (PHOEBE_vector *result, PHOEBE_vector *fac1, PHOEBE_vector *fac2);
-int            phoebe_vector_submit             (PHOEBE_vector *result, PHOEBE_vector *vec, double func ());
+int            phoebe_vector_submit             (PHOEBE_vector *result, PHOEBE_vector *vec, double func (void));
 int            phoebe_vector_norm               (double *result, PHOEBE_vector *vec);
 int            phoebe_vector_dim                (int *result, PHOEBE_vector *vec);
 int            phoebe_vector_randomize          (PHOEBE_vector *result, double limit);
@@ -114,7 +114,7 @@ typedef struct PHOEBE_matrix {
 	double **val;
 } PHOEBE_matrix;
 
-PHOEBE_matrix *phoebe_matrix_new     ();
+PHOEBE_matrix *phoebe_matrix_new     (void);
 int            phoebe_matrix_alloc   (PHOEBE_matrix *matrix, int cols, int rows);
 int            phoebe_matrix_free    (PHOEBE_matrix *matrix);
 int            phoebe_matrix_get_row (PHOEBE_vector *vec, PHOEBE_matrix *matrix, int row);
@@ -200,7 +200,7 @@ typedef enum PHOEBE_hist_rebin_type {
 	PHOEBE_HIST_CONSERVE_DENSITY
 } PHOEBE_hist_rebin_type;
 
-PHOEBE_hist *phoebe_hist_new             ();
+PHOEBE_hist *phoebe_hist_new             (void);
 PHOEBE_hist *phoebe_hist_new_from_arrays (int bins, double *binarray, double *valarray);
 PHOEBE_hist *phoebe_hist_new_from_file   (char *filename);
 PHOEBE_hist *phoebe_hist_duplicate       (PHOEBE_hist *hist);
@@ -263,7 +263,7 @@ typedef struct PHOEBE_mesh {
     double ***mesh;
 } PHOEBE_mesh;
 
-PHOEBE_mesh *phoebe_mesh_new();
+PHOEBE_mesh *phoebe_mesh_new(void);
 int          phoebe_mesh_alloc(PHOEBE_mesh *mesh, int verts, int elems);
 int          phoebe_mesh_import(PHOEBE_mesh *mesh, double *list, int verts, int elems);
 int          phoebe_mesh_free(PHOEBE_mesh *mesh);
@@ -278,7 +278,7 @@ typedef struct PHOEBE_horizon {
 	double *hAs;
 } PHOEBE_horizon;
 
-PHOEBE_horizon *phoebe_horizon_new();
+PHOEBE_horizon *phoebe_horizon_new(void);
 int             phoebe_horizon_alloc(PHOEBE_horizon *horizon, int elems);
 int             phoebe_horizon_free(PHOEBE_horizon *horizon);
 
@@ -356,7 +356,7 @@ typedef struct PHOEBE_curve {
 	double             sigma;
 } PHOEBE_curve;
 
-PHOEBE_curve *phoebe_curve_new            ();
+PHOEBE_curve *phoebe_curve_new            (void);
 PHOEBE_curve *phoebe_curve_new_from_file  (char *filename);
 PHOEBE_curve *phoebe_curve_new_from_pars  (PHOEBE_curve_type ctype, int index);
 PHOEBE_curve *phoebe_curve_duplicate      (PHOEBE_curve *curve);
@@ -454,7 +454,7 @@ typedef struct PHOEBE_minimizer_feedback {
 	PHOEBE_vector   *__cla;
 } PHOEBE_minimizer_feedback;
 
-PHOEBE_minimizer_feedback *phoebe_minimizer_feedback_new       ();
+PHOEBE_minimizer_feedback *phoebe_minimizer_feedback_new       (void);
 PHOEBE_minimizer_feedback *phoebe_minimizer_feedback_duplicate (PHOEBE_minimizer_feedback *feedback);
 int                        phoebe_minimizer_feedback_alloc     (PHOEBE_minimizer_feedback *feedback, int tba, int cno, int __lcno);
 int                        phoebe_minimizer_feedback_accept    (PHOEBE_minimizer_feedback *feedback);

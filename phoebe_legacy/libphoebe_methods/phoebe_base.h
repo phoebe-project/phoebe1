@@ -3,10 +3,10 @@
 
 int  intern_get_atmcof_filenames(char **atmcofplanck, char **atmcof);
 
-int  phoebe_init();
-int  phoebe_configure();
+int  phoebe_init(void);
+int  phoebe_configure(void);
 int  phoebe_custom_configure(char *startup, char *home, char *basedir, char *tmpdir, char *datadir, char *ptfdir, int ldswitch, int ldintern, char *lddir, char *vhdir, int loadatm, int dumplco);
-int  phoebe_quit();
-void phoebe_load_ld_tables();
+int  phoebe_quit(void);
+void phoebe_load_ld_tables(void);
 
 #endif

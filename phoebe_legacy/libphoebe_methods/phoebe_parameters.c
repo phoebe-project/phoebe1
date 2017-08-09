@@ -35,9 +35,10 @@ int phoebe_init_parameters ()
 	 */
 
 	/* **********************   Model parameters   ************************** */
-
+  
 	phoebe_parameter_add ("phoebe_name",                 "Common name of the binary",                  KIND_PARAMETER,  NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "");
-	phoebe_parameter_add ("phoebe_indep",                "Independent modeling variable",              KIND_MENU,       NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "Phase");
+  
+  phoebe_parameter_add ("phoebe_indep",                "Independent modeling variable",              KIND_MENU,       NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "Phase");
 	phoebe_parameter_add ("phoebe_model",                "Morphological constraints",                  KIND_MENU,       NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "Unconstrained binary system");
 
 	phoebe_parameter_add ("phoebe_lcno",                 "Number of observed light curves",            KIND_MODIFIER,   NULL,          "%d",      0.0, 0.0, 0.0, NO, TYPE_INT,          0);
@@ -481,6 +482,7 @@ int phoebe_parameter_add (char *qualifier, char *description, PHOEBE_parameter_k
 	 */
 
 	va_list args;
+  
 	PHOEBE_parameter *par = phoebe_parameter_new ();
 
 	par->qualifier   = strdup (qualifier);
@@ -557,9 +559,9 @@ int phoebe_parameter_add (char *qualifier, char *description, PHOEBE_parameter_k
 		par->menu->optno  = 0;
 		par->menu->option = NULL;
 	}
-
+  
 	phoebe_parameter_commit (par);
-
+    
 	return SUCCESS;
 }
 
@@ -724,13 +726,14 @@ unsigned int phoebe_parameter_hash (char *qualifier)
 int phoebe_parameter_commit (PHOEBE_parameter *par)
 {
 	int hash = phoebe_parameter_hash (par->qualifier);
+  
 	PHOEBE_parameter_list *elem = PHOEBE_pt->bucket[hash];
 
 	while (elem) {
 		if (strcmp (elem->par->qualifier, par->qualifier) == 0) break;
 		elem = elem->next;
 	}
-
+  
 	if (elem) {
 		phoebe_lib_error ("parameter %s already declared, ignoring.\n", par->qualifier);
 		return SUCCESS;

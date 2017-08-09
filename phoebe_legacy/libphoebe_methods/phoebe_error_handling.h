@@ -241,8 +241,8 @@ int   phoebe_debug       (const char *fmt, ...);
 void *phoebe_malloc (size_t size);
 void *phoebe_realloc (void *ptr, size_t size);
 
-bool hla_request_is_sane ();
-bool vga_request_is_sane ();
-bool dpdt_request_is_sane ();
+bool hla_request_is_sane (void);
+bool vga_request_is_sane (void);
+bool dpdt_request_is_sane (void);
 
 #endif

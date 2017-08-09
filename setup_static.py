@@ -4,24 +4,24 @@ import sys, glob
 
 if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
+  import numpy.distutils.fcompiler as Fcompiler
+  import numpy.distutils.ccompiler as Ccompiler
+
   """
     Making static library
   """
 
   #
-  # WD library (libwd)
+  # WD library (libwd) Fortran 77 (legacy)
   #
 
   print "WD library (libwd)"
-
-  import numpy.distutils.fcompiler as Fcompiler
-  import numpy.distutils.ccompiler as Ccompiler
-
+  
   c = Fcompiler.new_fcompiler()
 
   workdir = './phoebe_legacy/libwd'
 
-  src = glob.glob(workdir+'/*.f')
+  src = glob.glob(workdir+'/*.F')
 
   # Optionally add include directories etc.
   c.add_include_dir(workdir)
@@ -29,10 +29,11 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
   c.customize()
 
   # Compile into .o files
-  objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC"])
+  objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC", "-std=legacy"])
 
   # Create static library
   c = Ccompiler.new_compiler()   # linking does not work with fcompiler
+  
   c.create_static_lib(objects, "wd", output_dir="./build")
 
 

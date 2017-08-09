@@ -38,7 +38,7 @@ typedef struct PHOEBE_nms_parameters {
 	double *average;
 } PHOEBE_nms_parameters;
 
-PHOEBE_nms_simplex *phoebe_nms_simplex_new      ();
+PHOEBE_nms_simplex *phoebe_nms_simplex_new      (void);
 int                 phoebe_nms_simplex_alloc    (PHOEBE_nms_simplex *simplex, int n);
 int                 phoebe_nms_simplex_free     (PHOEBE_nms_simplex *simplex);
 

@@ -13,16 +13,16 @@ typedef struct PHOEBE_config_entry {
 extern PHOEBE_config_entry **PHOEBE_config_table;
 extern int                   PHOEBE_config_table_size;
 
-PHOEBE_config_entry *phoebe_config_entry_new  ();
+PHOEBE_config_entry *phoebe_config_entry_new  (void);
 int                  phoebe_config_entry_add  (PHOEBE_type type, char *keyword, ...);
 int                  phoebe_config_entry_get  (char *keyword, ...);
 int                  phoebe_config_entry_set  (char *keyword, ...);
 int                  phoebe_config_entry_free (PHOEBE_config_entry *entry);
 
-int                  phoebe_config_populate   ();
-int                  phoebe_config_free       ();
+int                  phoebe_config_populate   (void);
+int                  phoebe_config_free       (void);
 
-int                  phoebe_configure         ();
+int                  phoebe_configure         (void);
 
 int                  phoebe_config_peek       (char *filename);
 int                  phoebe_config_load       (char *filename);

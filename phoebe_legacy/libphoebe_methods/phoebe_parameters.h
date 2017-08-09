@@ -65,7 +65,7 @@ extern PHOEBE_parameter_table *PHOEBE_pt;
 
 /**************************   PARAMETER TABLE   *******************************/
 
-PHOEBE_parameter_table *phoebe_parameter_table_new       ();
+PHOEBE_parameter_table *phoebe_parameter_table_new       (void);
 PHOEBE_parameter_table *phoebe_parameter_table_duplicate (PHOEBE_parameter_table *table);
 int                     phoebe_parameter_table_activate  (PHOEBE_parameter_table *table);
 int                     phoebe_parameter_table_print     (PHOEBE_parameter_table *table);
@@ -73,7 +73,7 @@ int                     phoebe_parameter_table_free      (PHOEBE_parameter_table
 
 /****************************   PARAMETERS   **********************************/
 
-PHOEBE_parameter *phoebe_parameter_new            ();
+PHOEBE_parameter *phoebe_parameter_new            (void);
 int               phoebe_parameter_add            (char *qualifier, char *description, PHOEBE_parameter_kind kind, char *dependency, char *format, double min, double max, double step, bool tba, ...);
 unsigned int      phoebe_parameter_hash           (char *qualifier);
 PHOEBE_parameter *phoebe_parameter_lookup         (char *qualifier);
@@ -85,10 +85,10 @@ int               phoebe_parameter_free           (PHOEBE_parameter *par);
 int               phoebe_parameter_option_get_index (PHOEBE_parameter *par, char *option, int *index);
 bool              phoebe_parameter_option_is_valid (char *qualifier, char *option);
 
-int               phoebe_init_parameters        ();
-int               phoebe_free_parameters        ();
+int               phoebe_init_parameters        (void);
+int               phoebe_free_parameters        (void);
 
-int               phoebe_init_parameter_options ();
+int               phoebe_init_parameter_options (void);
 
 int               phoebe_parameters_check_bounds  (char **offender);
 
@@ -118,7 +118,7 @@ int phoebe_parameter_set_limits (PHOEBE_parameter *par, double  valmin, double  
 bool phoebe_parameter_is_within_limits (PHOEBE_parameter *par);
 
 PHOEBE_parameter_list *phoebe_parameter_list_reverse         (PHOEBE_parameter_list *c, PHOEBE_parameter_list *p);
-PHOEBE_parameter_list *phoebe_parameter_list_get_marked_tba  ();
+PHOEBE_parameter_list *phoebe_parameter_list_get_marked_tba  (void);
 int                    phoebe_parameter_list_sort_marked_tba (PHOEBE_parameter_list *list);
 int                    phoebe_parameter_list_free            (PHOEBE_parameter_list *list);
 
@@ -136,7 +136,7 @@ int phoebe_el3_units_id (PHOEBE_el3_units *el3_units);
 
 PHOEBE_array *phoebe_active_curves_get (PHOEBE_curve_type type);
 int phoebe_active_spots_get (int *active_spots_no, PHOEBE_array **active_spotindices);
-double phoebe_spots_units_to_wd_conversion_factor ();
+double phoebe_spots_units_to_wd_conversion_factor (void);
 
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int phoebe_open_parameter_file        (const char *filename);
 int phoebe_open_legacy_parameter_file (const char *filename);
 int phoebe_save_parameter_file        (const char *filename);
 
-int phoebe_restore_default_parameters ();
+int phoebe_restore_default_parameters (void);
 
 int phoebe_parameter_file_import_bm3 (const char *bm3file, const char *datafile);
 

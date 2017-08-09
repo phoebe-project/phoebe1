@@ -1,18 +1,18 @@
 import libphoebe_legacy
 
 import os 
-basedir = os.path.dirname(libphoebe_legacy.__file__) + "/phoebe_legacy"
+packegedir = os.path.dirname(libphoebe_legacy.__file__) + "/phoebe_legacy"
 
 from libphoebe_legacy import *
 import tempfile
   
-def phoebeAutoConfigure():
+def auto_configure():
   
-  startup = os.getcmd()
+  startup = os.getcwd()
   homedir = os.path.expanduser("~")
-  basedir = basedir
   tmpdir = tempfile.gettempdir()
-  datadir = basedir + "/tables"
+  basedir = packegedir + "/tables"
+  datadir = basedir
   ptfdir = datadir + "/ptf"
   ldswitch = 0
   ldintern = 0
@@ -21,7 +21,7 @@ def phoebeAutoConfigure():
   loadatm = 1
   dumplco = 1
   
-  return  phoebeCustomConfigure( bytes(startup),bytes(homedir), 
+  return  custom_configure( bytes(startup),bytes(homedir), 
             bytes(basedir), bytes(tmpdir), bytes(datadir),
             bytes(ptfdir), ldswitch, ldintern, bytes(lddir), 
             bytes(vhdir), loadatm, dumplco)

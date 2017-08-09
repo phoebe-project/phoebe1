@@ -40,7 +40,7 @@ typedef struct PHOEBE_star_surface {
 	double *cosphi;
 } PHOEBE_star_surface;
 
-PHOEBE_star_surface *phoebe_star_surface_new    ();
+PHOEBE_star_surface *phoebe_star_surface_new    (void);
 
 int phoebe_star_surface_alloc                   (PHOEBE_star_surface *surface, int lat_raster);
 int phoebe_star_surface_rasterize               (PHOEBE_star_surface *surface, int lat_raster);

@@ -189,9 +189,9 @@ int create_lci_file (char *filename, WD_LCI_parameters *param);
 int create_dci_file (char *filename, void *pars);
 
 int wd_lci_parameters_get (WD_LCI_parameters *params, double **args, int MPAGE, int curve);
-int wd_spots_parameters_get ();
+int wd_spots_parameters_get (void);
 
-WD_DCI_parameters *wd_dci_parameters_new  ();
+WD_DCI_parameters *wd_dci_parameters_new  (void);
 int                wd_dci_parameters_get  (WD_DCI_parameters *params, int *marked_tba);
 int                wd_dci_parameters_free (WD_DCI_parameters *params);
 

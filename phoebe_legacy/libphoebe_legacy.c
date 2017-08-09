@@ -51,13 +51,14 @@ static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
 }
 
 static PyObject *phoebeCustomConfigure(PyObject *self, PyObject *args)
-{
+{    
     char *startup, *homedir, *basedir, *tmpdir, *datadir, *ptfdir, *lddir, *vhdir;
     int ldswitch, ldintern, loadatm, dumplco;
-
+   
     PyArg_ParseTuple(args, "ssssssiissii", &startup, &homedir, &basedir, &tmpdir, &datadir, &ptfdir, &ldswitch, &ldintern, &lddir, &vhdir, &loadatm, &dumplco);
-
+  
     int status = phoebe_custom_configure(startup, homedir, basedir, tmpdir, datadir, ptfdir, ldswitch, ldintern, lddir, vhdir, loadatm, dumplco);
+    
     if (status != SUCCESS) {
         printf ("%s", phoebe_error (status));
         return NULL;

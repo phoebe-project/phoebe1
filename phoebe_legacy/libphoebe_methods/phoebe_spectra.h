@@ -28,9 +28,9 @@ typedef struct PHOEBE_specrep {
 extern PHOEBE_specrep PHOEBE_spectra_repository;
 
 int phoebe_spectra_set_repository (char *rep_name);
-int phoebe_spectra_free_repository ();
+int phoebe_spectra_free_repository (void);
 
-PHOEBE_spectrum *phoebe_spectrum_new                         ();
+PHOEBE_spectrum *phoebe_spectrum_new                         (void);
 PHOEBE_spectrum *phoebe_spectrum_new_from_file               (char *filename);
 PHOEBE_spectrum *phoebe_spectrum_new_from_repository         (double Teff, double logg, double met);
 PHOEBE_spectrum *phoebe_spectrum_create                      (double ll, double ul, double R, PHOEBE_spectrum_dispersion disp);

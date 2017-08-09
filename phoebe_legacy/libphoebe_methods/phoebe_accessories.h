@@ -17,7 +17,7 @@ bool  phoebe_filename_has_full_permissions    (const char *filename);
 bool  phoebe_filename_is_directory            (const char *filename);
 bool  phoebe_filename_is_regular_file         (const char *filename);
 
-char *phoebe_get_current_working_directory    ();
+char *phoebe_get_current_working_directory    (void);
 char *phoebe_resolve_relative_filename        (char *filename);
 int   phoebe_list_directory_contents          (char *dir);
 char *phoebe_concatenate_strings              (const char *str, ...);
@@ -28,6 +28,6 @@ char *phoebe_strdup                           (const char *s);
 char *phoebe_readline                         (FILE *stream);
 char *phoebe_create_temp_filename             (char *templ);
 
-long int phoebe_seed ();
+long int phoebe_seed (void);
 
 #endif

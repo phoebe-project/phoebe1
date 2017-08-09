@@ -30,7 +30,7 @@ typedef enum LD_model {
 	LD_LAW_INVALID
 } LD_model;
 
-PHOEBE_ld *phoebe_ld_new           ();
+PHOEBE_ld *phoebe_ld_new           (void);
 PHOEBE_ld *phoebe_ld_new_from_file (const char *filename);
 int        phoebe_ld_alloc         (PHOEBE_ld *table, int dim);
 int        phoebe_ld_realloc       (PHOEBE_ld *table, int dim);

@@ -24,7 +24,7 @@ from numpy.distutils.core import setup, Extension
 ext_modules = [
     
     Extension('libwd',
-      sources = glob.glob('./phoebe_legacy/libwd/*.f')
+      sources = glob.glob('./phoebe_legacy/libwd/*.F')
     ),
     
     Extension(
