@@ -53,7 +53,7 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
   c.set_library_dirs("./phoebe_legacy/libwd")
   
-  c.undefine_macro("HAVE_LIBGSL")
+  c.define_macro("PHOEBE_GSL_DISABLED")
   
   # Compile into .o files
   objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC"])
