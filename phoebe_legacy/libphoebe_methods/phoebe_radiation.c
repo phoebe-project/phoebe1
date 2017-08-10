@@ -4,7 +4,7 @@
 #include "phoebe_error_handling.h"
 #include "phoebe_types.h"
 
-#if defined (HAVE_LIBGSL) && !defined (PHOEBE_GSL_DISABLED)
+#if defined(HAVE_LIBGSL) && !defined(PHOEBE_GSL_DISABLED)
 #include <gsl/gsl_spline.h>
 #endif
 
