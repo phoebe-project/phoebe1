@@ -1826,7 +1826,7 @@ int phoebe_hist_shift (PHOEBE_hist *hist, double shift)
 	 */
 
 	PHOEBE_hist *copy = phoebe_hist_duplicate (hist);
-	int    int_shift = fabs ((int) shift);
+	int    int_shift = abs ((int) shift);
 	double frac_shift = fabs (frac (shift));
 	int i;
 
