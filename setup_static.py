@@ -27,7 +27,8 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
   c.add_include_dir(workdir)
 
   c.customize()
-
+  print c.compiler_f77
+  
   # Compile into .o files
   objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC", "-std=legacy"])
 
