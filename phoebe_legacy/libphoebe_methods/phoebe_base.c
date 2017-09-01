@@ -319,7 +319,9 @@ int phoebe_configure ()
   int status;
   char dname[255], homedir[255], conffile[255];
   char *pathname;
-  bool switch_state, return_flag = SUCCESS;
+  bool switch_state
+  
+  int return_flag = SUCCESS;
   
   /* Current working directory: */
   if (!getcwd (dname, 255)) {

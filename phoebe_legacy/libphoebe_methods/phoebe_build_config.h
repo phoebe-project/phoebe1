@@ -33,16 +33,16 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `gsl' library (-lgsl). */
-#define HAVE_LIBGSL 1
+//#define HAVE_LIBGSL 1
 
 /* Define to 1 if you have the `gslcblas' library (-lgslcblas). */
-#define HAVE_LIBGSLCBLAS 1
+//#define HAVE_LIBGSLCBLAS 1
 
 /* Define to 1 if you have the `m' library (-lm). */
-#define HAVE_LIBM 1
+//#define HAVE_LIBM 1
 
 /* Define to 1 if you have the <locale.h> header file. */
-#define HAVE_LOCALE_H 1
+//#define HAVE_LOCALE_H 1
 
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
    to 0 otherwise. */
@@ -71,10 +71,10 @@
 #define HAVE_REALLOC 1
 
 /* Define to 1 if you have the `setlocale' function. */
-#define HAVE_SETLOCALE 1
+//#define HAVE_SETLOCALE 1
 
 /* Define to 1 if you have the `sqrt' function. */
-#define HAVE_SQRT 1
+//#define HAVE_SQRT 1
 
 /* Define to 1 if `stat' has the bug that it succeeds when given the
    zero-length file name argument. */
