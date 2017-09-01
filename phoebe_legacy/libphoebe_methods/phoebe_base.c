@@ -319,7 +319,7 @@ int phoebe_configure ()
   int status;
   char dname[255], homedir[255], conffile[255];
   char *pathname;
-  bool switch_state
+  bool switch_state;
   
   int return_flag = SUCCESS;
   
