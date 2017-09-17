@@ -891,6 +891,34 @@ static PyObject *phoebeRV2(PyObject *self, PyObject *args)
     return ret;
 }
 
+static PyObject *phoebeCritPot(PyObject *self, PyObject *args)
+{
+    /**
+     * phoebeCritPot:
+     * 
+     * Calculates critical surface potentials in L1 and L2 and returns
+     * them in a 2-element tuple.
+     */
+
+    int status;
+    double q, F, e, L1, L2;
+    PyObject *retval;
+
+    if (!PyArg_ParseTuple(args, "ddd", &q, &F, &e)) {
+        printf("parsing failed.\n");
+        return NULL;
+    }
+    
+    status = phoebe_calculate_critical_potentials(q, F, e, &L1, &L2);
+    if (status != SUCCESS)
+        printf("%s", phoebe_error(status));
+    
+    retval = PyTuple_New(2);
+    PyTuple_SetItem(retval, 0, Py_BuildValue("d", L1));
+    PyTuple_SetItem(retval, 1, Py_BuildValue("d", L2));
+    return retval;
+}
+
 static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 {
     /**
@@ -996,6 +1024,7 @@ static PyMethodDef PhoebeMethods[] = {
     {"data",             phoebeData,        METH_VARARGS, "Return light or RV curve data"},
     {"parameter",        phoebeParameter,   METH_VARARGS, "Return a list of parameter properties"},
     {"role_reverse",     phoebeRoleReverse, METH_VARARGS, "Reverses the role of the primary and the secondary"},
+    {"critpot",          phoebeCritPot,     METH_VARARGS, "Computes critical surface potentials in L1 and L2"},
     {NULL,               NULL,              0,            NULL}
 };
 
