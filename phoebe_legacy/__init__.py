@@ -21,7 +21,11 @@ def auto_configure():
   loadatm = 1
   dumplco = 1
   
+  verbose_warnings = os.environ.get('VERBOSE_WARNINGS', 1)
+  verbose_errors = os.environ.get('VERBOSE_ERRORS', 1)
+  
   return  custom_configure( bytes(startup),bytes(homedir), 
             bytes(basedir), bytes(tmpdir), bytes(datadir),
             bytes(ptfdir), ldswitch, ldintern, bytes(lddir), 
-            bytes(vhdir), loadatm, dumplco)
+            bytes(vhdir), loadatm, dumplco, 
+            verbose_warnings, verbose_errors)

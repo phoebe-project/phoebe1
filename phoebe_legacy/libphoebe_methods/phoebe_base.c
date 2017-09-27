@@ -489,7 +489,7 @@ int phoebe_configure ()
   return return_flag;
 }
 
-int phoebe_custom_configure(char *startup, char *home, char *basedir, char *tmpdir, char *datadir, char *ptfdir, int ldswitch, int ldintern, char *lddir, char *vhdir, int loadatm, int dumplco)
+int phoebe_custom_configure(char *startup, char *home, char *basedir, char *tmpdir, char *datadir, char *ptfdir, int ldswitch, int ldintern, char *lddir, char *vhdir, int loadatm, int dumplco, int verbose_warnings, int verbose_errors)
 {
   /**
    * phoebe_custom_configure:
@@ -523,7 +523,9 @@ int phoebe_custom_configure(char *startup, char *home, char *basedir, char *tmpd
   phoebe_config_entry_set("PHOEBE_PLUGINS_DIR", "");
   phoebe_config_entry_set("LOAD_ATM_TO_MEMORY", loadatm);
   phoebe_config_entry_set("DUMP_LCOUT_FILES", dumplco);
-   
+  phoebe_config_entry_set("VERBOSE_WARNINGS", verbose_warnings);
+  phoebe_config_entry_set("VERBOSE_ERRORS", verbose_errors); 
+  
   phoebe_read_in_passbands (ptfdir);
 
   if (ldswitch == 1) {

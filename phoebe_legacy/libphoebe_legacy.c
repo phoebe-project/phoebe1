@@ -50,21 +50,51 @@ static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
     return Py_BuildValue ("i", status);
 }
 
-static PyObject *phoebeCustomConfigure(PyObject *self, PyObject *args)
+static PyObject *phoebeCustomConfigure(PyObject *self, PyObject *args, PyObject *keywds)
 {    
-    char *startup, *homedir, *basedir, *tmpdir, *datadir, *ptfdir, *lddir, *vhdir;
-    int ldswitch, ldintern, loadatm, dumplco;
-   
-    PyArg_ParseTuple(args, "ssssssiissii", &startup, &homedir, &basedir, &tmpdir, &datadir, &ptfdir, &ldswitch, &ldintern, &lddir, &vhdir, &loadatm, &dumplco);
-  
-    int status = phoebe_custom_configure(startup, homedir, basedir, tmpdir, datadir, ptfdir, ldswitch, ldintern, lddir, vhdir, loadatm, dumplco);
+  char *kwlist[] = {
+    (char*)"startup",
+    (char*)"homedir",
+    (char*)"basedir",
+    (char*)"tmpdir",
+    (char*)"datadir",
+    (char*)"ptfdir",
+    (char*)"ldswitch",
+    (char*)"ldintern",
+    (char*)"lddir",
+    (char*)"vhdir",
+    (char*)"loadatm",
+    (char*)"dumplco",
+    (char*)"verbose_warnings", 
+    (char*)"verbose_errors",
+    NULL};
     
-    if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
-        return NULL;
-    }
+  char *startup, *homedir, *basedir, *tmpdir, *datadir, *ptfdir, *lddir, *vhdir;
+  
+  int ldswitch, ldintern, loadatm, dumplco, 
+      verbose_warnings = TRUE, // = 1  
+      verbose_errors = TRUE;   // = 0
+ 
+  if (!PyArg_ParseTupleAndKeywords(args, keywds,
+      "ssssssiissii|ii", kwlist,
+      &startup, &homedir, &basedir, &tmpdir, &datadir, &ptfdir, 
+      &ldswitch, &ldintern, &lddir, &vhdir, &loadatm, &dumplco,  
+      &verbose_warnings, &verbose_errors)
+     ){
+    printf("phoebeCustomConfigure::Problem reading arguments\n");
+    return NULL;
+  }
 
-    return Py_BuildValue ("i", status);
+  int status = phoebe_custom_configure(startup, homedir, basedir, tmpdir, 
+                datadir, ptfdir, ldswitch, ldintern, lddir, vhdir,
+                loadatm, dumplco, verbose_warnings, verbose_errors);
+  
+  if (status != SUCCESS) {
+      printf ("%s", phoebe_error (status));
+      return NULL;
+  }
+
+  return Py_BuildValue ("i", status);
 }
 
 static PyObject *phoebeQuit(PyObject *self, PyObject *args)
@@ -1047,7 +1077,7 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 
 static PyMethodDef PhoebeMethods[] = {
     {"init",             phoebeInit,        METH_VARARGS, "Initialize PHOEBE backend"},
-    {"custom_configure", phoebeCustomConfigure, METH_VARARGS, "Custom-configure all internal PHOEBE structures"}, 
+    {"custom_configure", (PyCFunction)phoebeCustomConfigure, METH_VARARGS|METH_KEYWORDS, "Custom-configure all internal PHOEBE structures"}, 
     {"configure",        phoebeConfigure,   METH_VARARGS, "Configure all internal PHOEBE structures"},
     {"quit",             phoebeQuit,        METH_VARARGS, "Quit PHOEBE"},
     {"open",             phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
