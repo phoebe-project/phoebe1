@@ -9,6 +9,7 @@
 #include "phoebe_error_handling.h"
 #include "phoebe_global.h"
 #include "phoebe_parameters.h"
+#include "phoebe_configuration.h"
 
 char *phoebe_error (PHOEBE_error_code code)
 {
@@ -361,28 +362,60 @@ char *phoebe_error (PHOEBE_error_code code)
 
 int phoebe_lib_error (const char *fmt, ...)
 {
-	va_list ap;
-	int r;
+	/**
+	 * phoebe_lib_warning:
+	 * @fmt: printf-compatible format
+	 * @...: arguments to @fmt
+	 *
+	 * Writes the message to stdout in case the VERBOSE_WARNINGS switch
+     * is turned on, otherwise it just returns control to the
+	 * main program.
+	 *
+	 * Returns: number of characters output, or -1 on failure.
+	 */
 
-	printf ("PHOEBE-lib error: ");
-	va_start (ap, fmt);
-	r = vprintf (fmt, ap);
-	va_end (ap);
+	va_list ap;
+	int r = -1, verbose;
+
+    phoebe_config_entry_get("VERBOSE_ERRORS", &verbose);
+
+    if (verbose) {
+        printf ("PHOEBE-lib error: ");
+        va_start (ap, fmt);
+        r = vprintf (fmt, ap);
+        va_end (ap);
+    }
 
 	return r;
 }
 
 int phoebe_lib_warning (const char *fmt, ...)
 {
+	/**
+	 * phoebe_lib_warning:
+	 * @fmt: printf-compatible format
+	 * @...: arguments to @fmt
+	 *
+	 * Writes the message to stdout in case the VERBOSE_WARNINGS switch
+     * is turned on, otherwise it just returns control to the
+	 * main program.
+	 *
+	 * Returns: number of characters output, or -1 on failure.
+	 */
+
 	va_list ap;
-	int r;
+	int r = -1, verbose;
 
-	printf ("PHOEBE-lib warning: ");
-	va_start (ap, fmt);
-	r = vprintf (fmt, ap);
-	va_end (ap);
+    phoebe_config_entry_get("VERBOSE_WARNINGS", &verbose);
 
-	return r;
+    if (verbose) {
+        printf ("PHOEBE-lib warning: ");
+        va_start (ap, fmt);
+        r = vprintf (fmt, ap);
+        va_end (ap);
+    }
+
+    return r;
 }
 
 int phoebe_debug (const char *fmt, ...)

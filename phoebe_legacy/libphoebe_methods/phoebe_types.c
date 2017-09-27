@@ -1484,8 +1484,10 @@ int phoebe_hist_crop (PHOEBE_hist *hist, double ll, double ul)
 	if (ll > hist->range[hist->bins] || ul < hist->range[0]) return ERROR_HIST_INVALID_RANGES;
 
 	/* Fast forward to the cropped interval: */
-	while (hist->range[i] <  ll) i++; j = i;
-	while (hist->range[j] <= ul) j++; j--;
+	while (hist->range[i] <  ll) i++;
+    	j = i;
+	while (hist->range[j] <= ul) j++;
+    	j--;
 
 	/* If the inverval is narrower than the bin width, bail out: */
 	if (i == j)
@@ -1641,7 +1643,8 @@ int phoebe_hist_resample (PHOEBE_hist *out, PHOEBE_hist *in, PHOEBE_hist_rebin_t
 			while (j < c_out->dim && c_out->val[j] < c_in->val[0]) j++;
 			
 			for ( ; j < c_out->dim; j++) {
-				while (i < c_in->dim && c_out->val[j] > c_in->val[i]) i++; i--;
+				while (i < c_in->dim && c_out->val[j] > c_in->val[i]) i++;
+                		i--;
 				if (i == c_in->dim-1) break;
 				out->val[j] = in->val[i] + (c_out->val[j]-c_in->val[i])/(c_in->val[i+1]-c_in->val[i])*(in->val[i+1]-in->val[i]);
 			}
@@ -2807,8 +2810,8 @@ int phoebe_curve_compute(PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, P
 
 	char *filter;
 	char *lcin;
-	PHOEBE_vector *verts;
-	PHOEBE_curve  *fticurve;
+	PHOEBE_vector *verts = NULL;
+	PHOEBE_curve  *fticurve = NULL;
 	WD_LCI_parameters params;
     double *args;
 
@@ -2916,7 +2919,7 @@ int phoebe_curve_compute(PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, P
 		verts = phoebe_vector_new ();
 		phoebe_vector_alloc (verts, (rate+1)*nodes->dim);
 
-		printf ("itype: %d\tcadence: %lf\trate: %d\n", itype, cadence, rate);
+		//~ printf ("itype: %d\tcadence: %lf\trate: %d\n", itype, cadence, rate);
 		for (i = 0; i < nodes->dim; i++)
 			for (j = -rate/2; j <= rate/2; j++)
 				verts->val[i*(rate+1)+j+rate/2] = (jdphs == 1 ? nodes->val[i]+(double)j/rate*cadence : nodes->val[i]+(double)j/rate*cadence/params.PERIOD);
@@ -2982,12 +2985,12 @@ int phoebe_curve_compute(PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, P
 			curve->dep->val[i] = 0.0;
 			for (j = -rate/2; j <= rate/2; j++) {
 				curve->dep->val[i] += fticurve->dep->val[i*(rate+1)+j+rate/2];
-				printf ("%3d\t% lf\t% lf", i*(rate+1)+j+rate/2, fticurve->indep->val[i*(rate+1)+j+rate/2], fticurve->dep->val[i*(rate+1)+j+rate/2]);
-				if (j != rate/2)
-					printf ("\n");
+				//~ printf ("%3d\t% lf\t% lf", i*(rate+1)+j+rate/2, fticurve->indep->val[i*(rate+1)+j+rate/2], fticurve->dep->val[i*(rate+1)+j+rate/2]);
+				//~ if (j != rate/2)
+					//~ printf ("\n");
 			}
 			curve->dep->val[i] /= (rate+1);
-			printf ("\t% lf\t% lf\n", curve->indep->val[i], curve->dep->val[i]);
+			//~ printf ("\t% lf\t% lf\n", curve->indep->val[i], curve->dep->val[i]);
 		}
 		phoebe_curve_free (fticurve);
 		phoebe_vector_free (verts);
