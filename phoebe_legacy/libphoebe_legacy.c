@@ -1047,6 +1047,7 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 
 static PyMethodDef PhoebeMethods[] = {
     {"init",             phoebeInit,        METH_VARARGS, "Initialize PHOEBE backend"},
+    {"custom_configure", phoebeCustomConfigure, METH_VARARGS, "Custom-configure all internal PHOEBE structures"}, 
     {"configure",        phoebeConfigure,   METH_VARARGS, "Configure all internal PHOEBE structures"},
     {"quit",             phoebeQuit,        METH_VARARGS, "Quit PHOEBE"},
     {"open",             phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
