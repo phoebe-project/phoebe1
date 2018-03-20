@@ -81,6 +81,8 @@
   fi
 
 # Check for system programs:
+  # Linker:
+    AM_PROG_AR
 
   # C compiler:
     AC_PROG_CC
@@ -120,9 +122,6 @@
 
   # Install program:
     AC_PROG_INSTALL
-
-  # Linker:
-    AM_PROG_AR
 
   # Lexer (needed for PHOEBE constraints); we require flex 2.5.33 or later:
     AC_PROG_LEX
@@ -216,7 +215,7 @@
 
   # gtk-doc support; sorry for the silly formatting, gtkdocize requires it:
     gtkdocstate="no"
-GTK_DOC_CHECK(1.0)
+GTK_DOC_CHECK([1.0])
     if test "$enable_gtk_doc" == "yes"; then
       gtkdocstate="yes"
     fi
@@ -234,14 +233,14 @@ GTK_DOC_CHECK(1.0)
 # Recent versions of gcc have a -Wextra option for more verbose warnings
   extra_warn="-Wextra"
   echo -n 'checking for $(CC) -Wextra... '
-  AC_LANG_CONFTEST([/* test for -Wextra */ int main(){}])
+  AC_LANG_CONFTEST([AC_LANG_SOURCE([/* test for -Wextra */ int main() { return 0; }])])
   if gcc $extra_warn conftest.c -o -; then
     echo yes
   else
     echo no
     extra_warn=""
   fi
-  
+
   AC_DEFINE(EXTRA_WARNING_COMPILER_FLAG, $extra_warn, [Set -Wextra if the c compiler recognizes it:])
 
 # Check for C library features:
