@@ -2910,16 +2910,16 @@ int phoebe_curve_compute(PHOEBE_curve *curve, PHOEBE_vector *nodes, int index, P
 	 * oversample the nodes vector.
 	 */
 
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_cadence_switch"), &fti);
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_cadence"), &cadence);
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_cadence_rate"), &rate);
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_cadence_switch"), index, &fti);
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_cadence"), index, &cadence);
+	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_cadence_rate"), index, &rate);
 	cadence /= 86400.0;
 
 	if (fti && mpage == 1) {
 		verts = phoebe_vector_new ();
 		phoebe_vector_alloc (verts, (rate+1)*nodes->dim);
 
-		//~ printf ("itype: %d\tcadence: %lf\trate: %d\n", itype, cadence, rate);
+		// printf ("itype: %d\tcadence: %lf\trate: %d\n", itype, cadence, rate);
 		for (i = 0; i < nodes->dim; i++)
 			for (j = -rate/2; j <= rate/2; j++)
 				verts->val[i*(rate+1)+j+rate/2] = (jdphs == 1 ? nodes->val[i]+(double)j/rate*cadence : nodes->val[i]+(double)j/rate*cadence/params.PERIOD);

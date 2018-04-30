@@ -167,8 +167,9 @@ void gui_toggle_cell_edited (GtkCellRendererToggle *renderer, gchar *path, gpoin
 int gui_ld_treeview_update ()
 {
 #warning FINISH_LD_UPDATE_FUNCTION
-	GtkWidget *treeview = gui_widget_lookup ("phoebe_para_lc_ld_treeview")->gtk;
-	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
+	// GtkWidget *treeview = gui_widget_lookup ("phoebe_para_lc_ld_treeview")->gtk;
+	// GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
+	return SUCCESS;
 }
 
 void gui_gdk_color_to_string (GdkColor color, 	gchar *colorstring)
@@ -232,6 +233,11 @@ int gui_init_lc_treeviews ()
 		G_TYPE_INT,            /* wtype                 */
 		G_TYPE_STRING,         /* wtype as string       */
 		G_TYPE_DOUBLE,         /* sigma                 */
+		G_TYPE_BOOLEAN,        /* FTI switch            */
+		G_TYPE_DOUBLE,         /* exposure time         */
+		G_TYPE_INT,            /* oversampling rate     */
+		G_TYPE_INT,            /* timestamp type        */
+		G_TYPE_STRING,         /* timestamp as string   */
 		G_TYPE_STRING,         /* level weighting       */
 		G_TYPE_DOUBLE,         /* hla                   */
 		G_TYPE_DOUBLE,         /* cla                   */
@@ -270,7 +276,7 @@ int gui_init_lc_treeviews ()
 	gtk_tree_view_column_set_resizable (column, TRUE);
 
     renderer    = gtk_cell_renderer_text_new ();
-    column      = gtk_tree_view_column_new_with_attributes ("Filter", renderer, "text", LC_COL_FILTER, NULL);
+    column      = gtk_tree_view_column_new_with_attributes ("Passband", renderer, "text", LC_COL_FILTER, NULL);
     gtk_tree_view_insert_column ((GtkTreeView *) phoebe_data_lc_treeview, column, -1);
 	gtk_tree_view_column_set_resizable (column, TRUE);
 
@@ -318,6 +324,26 @@ int gui_init_lc_treeviews ()
     column      = gtk_tree_view_column_new_with_attributes ("Weighting", renderer, "text", LC_COL_WTYPE_STR, NULL);
     gtk_tree_view_insert_column ((GtkTreeView *) phoebe_data_lc_treeview, column, -1);
 	gtk_tree_view_column_set_resizable (column, TRUE);
+
+    renderer    = gtk_cell_renderer_toggle_new ();
+	gtk_cell_renderer_toggle_set_activatable((GtkCellRendererToggle *) renderer, FALSE); // we only display the FTI bit, not edit it.
+    column      = gtk_tree_view_column_new_with_attributes ("FTI", renderer, "active", LC_COL_FTI, NULL);
+    gtk_tree_view_insert_column ((GtkTreeView *) phoebe_data_lc_treeview, column, -1);
+
+    // renderer    = gtk_cell_renderer_text_new ();
+    // column      = gtk_tree_view_column_new_with_attributes ("Exposure", renderer, "text", LC_COL_EXPTIME, NULL);
+    // gtk_tree_view_insert_column ((GtkTreeView *) phoebe_data_lc_treeview, column, -1);
+	// gtk_tree_view_column_set_resizable (column, TRUE);
+
+    // renderer    = gtk_cell_renderer_text_new ();
+    // column      = gtk_tree_view_column_new_with_attributes ("Oversampling", renderer, "text", LC_COL_OVERSAMPLING, NULL);
+    // gtk_tree_view_insert_column ((GtkTreeView *) phoebe_data_lc_treeview, column, -1);
+	// gtk_tree_view_column_set_resizable (column, TRUE);
+
+    // renderer    = gtk_cell_renderer_text_new ();
+    // column      = gtk_tree_view_column_new_with_attributes ("Timestamp", renderer, "text", LC_COL_TIMESTAMP, NULL);
+    // gtk_tree_view_insert_column ((GtkTreeView *) phoebe_data_lc_treeview, column, -1);
+	// gtk_tree_view_column_set_resizable (column, TRUE);
 
     renderer    = gtk_cell_renderer_text_new ();
     column      = gtk_tree_view_column_new_with_attributes ("Sigma", renderer, "text", LC_COL_SIGMA, NULL);
@@ -437,9 +463,9 @@ int gui_init_lc_treeviews ()
 
 	/**************************************************************************/
 
-/* OBSOLETE:
+	/* OBSOLETE:
 	g_signal_connect (lc_model, "row_changed", GTK_SIGNAL_FUNC (on_phoebe_data_lc_model_row_changed), NULL);
-*/
+	*/
 
     gtk_tree_view_set_model ((GtkTreeView *) phoebe_data_lc_treeview,            lc_model);
     gtk_tree_view_set_model ((GtkTreeView *) phoebe_para_lc_el3_treeview,        lc_model);
@@ -866,10 +892,10 @@ static void gui_crit_cell_data_function (GtkCellLayout *cell_layout, GtkCellRend
 
 	pot1 = gtk_spin_button_get_value (GTK_SPIN_BUTTON (gui_widget_lookup ("phoebe_para_comp_phsv_spinbutton")->gtk));
 	pot2 = gtk_spin_button_get_value (GTK_SPIN_BUTTON (gui_widget_lookup ("phoebe_para_comp_pcsv_spinbutton")->gtk));
-/*
+	/*
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_pot1"), &pot1);
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_pot2"), &pot2);
-*/
+	*/
 	gtk_tree_model_get (model, iter, RS_COL_PARAM_NAME, &name, RS_COL_PARAM_VALUE, &val, -1);
 
 	if (pot1 < val && !strcmp(name, "Ω(L<sub>1</sub>)")) {
@@ -1123,7 +1149,6 @@ int gui_update_cla_value (int row)
 {
 	GtkTreeView *master = (GtkTreeView *) gui_widget_lookup ("phoebe_data_lc_treeview")->gtk;
 	GtkTreeModel *model = gtk_tree_view_get_model (master);
-	GtkTreeIter iter;
 	double cla;
 
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_plum2"), &cla);
@@ -1170,12 +1195,10 @@ int gui_init_sidesheet_res_treeview ()
 	renderer    = gtk_cell_renderer_text_new ();
 	column      = gtk_tree_view_column_new_with_attributes ("Value", renderer, "markup", RS_COL_PARAM_VALUE, NULL);
 	gtk_tree_view_insert_column ((GtkTreeView *) phoebe_sidesheet_res_treeview, column, -1);
-/*
+	/*
 	gtk_tree_view_column_set_cell_data_func (column, renderer, (GtkTreeCellDataFunc) gui_crit_cell_data_function, NULL, NULL);
-*/
+	*/
 	gtk_tree_view_set_model ((GtkTreeView *) phoebe_sidesheet_res_treeview, model);
-
-	printf ("*** in sidesheet's init function.\n");
 
 	for (i = 0; i < SIDESHEET_NUM_PARAMS; i++)
 		gtk_list_store_append (GTK_LIST_STORE (model), &iter);
@@ -1451,10 +1474,15 @@ int gui_data_lc_treeview_add ()
 {
 	int status = 0;
 	int optindex, optcount;
+	int ival;
+	double fval;
 
 	PHOEBE_parameter *indep     = phoebe_parameter_lookup ("phoebe_lc_indep");
 	PHOEBE_parameter *dep       = phoebe_parameter_lookup ("phoebe_lc_dep");
 	PHOEBE_parameter *indweight = phoebe_parameter_lookup ("phoebe_lc_indweight");
+	PHOEBE_parameter *cadence   = phoebe_parameter_lookup ("phoebe_lc_cadence");
+	PHOEBE_parameter *rate      = phoebe_parameter_lookup ("phoebe_lc_cadence_rate");
+	PHOEBE_parameter *timestamp = phoebe_parameter_lookup ("phoebe_lc_cadence_timestamp");
 
 	gchar *glade_xml_file    = g_build_filename (PHOEBE_GLADE_XML_DIR, "phoebe_load_lc.glade", NULL);
 	gchar *glade_pixmap_file = g_build_filename (PHOEBE_GLADE_PIXMAP_DIR, "ico.png", NULL);
@@ -1468,10 +1496,17 @@ int gui_data_lc_treeview_add ()
     GtkWidget *phoebe_load_lc_column1_combobox      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_column1_combobox");
     GtkWidget *phoebe_load_lc_column2_combobox      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_column2_combobox");
     GtkWidget *phoebe_load_lc_column3_combobox      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_column3_combobox");
-    GtkWidget *phoebe_load_lc_sigma_spinbutton      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_sigma_spinbutton");
-    GtkWidget *phoebe_load_lc_preview_textview      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_preview_textview");
     GtkWidget *phoebe_load_lc_filter_combobox       = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_filter_combobox");
+    GtkWidget *phoebe_load_lc_sigma_spinbutton      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_sigma_spinbutton");
+	GtkWidget *phoebe_load_lc_fti_switch            = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_fti_checkbutton");
+	GtkWidget *phoebe_load_lc_exptime               = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_exptime");
+	GtkWidget *phoebe_load_lc_timestamp             = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_timestamp");
+	GtkWidget *phoebe_load_lc_oversampling          = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_oversampling");
+    GtkWidget *phoebe_load_lc_preview_textview      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_preview_textview");
     GtkWidget *phoebe_load_lc_id_entry				= glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_id_entry");
+
+	/* Connect toggle button sensitivity callbacks: */
+	glade_xml_signal_autoconnect(phoebe_load_lc_xml);
 
 	g_object_unref (phoebe_load_lc_xml);
 	gui_status ("Adding a light curve.");
@@ -1480,7 +1515,7 @@ int gui_data_lc_treeview_add ()
 	gtk_window_set_title (GTK_WINDOW(phoebe_load_lc_dialog), "Add Observed Light Curve Data");
 	
 	gui_init_filter_combobox (phoebe_load_lc_filter_combobox, -1);
-	
+
 	g_signal_connect (G_OBJECT (phoebe_load_lc_filechooserbutton),
 					  "selection_changed",
 					  G_CALLBACK (on_phoebe_load_lc_filechooserbutton_selection_changed),
@@ -1498,12 +1533,23 @@ int gui_data_lc_treeview_add ()
 	optcount = indweight->menu->optno;
 	for(optindex = 0; optindex < optcount; optindex++)
 		gtk_combo_box_append_text(GTK_COMBO_BOX(phoebe_load_lc_column3_combobox), strdup(indweight->menu->option[optindex]));
-	
+
+	optcount = timestamp->menu->optno;
+	for(optindex = 0; optindex < optcount; optindex++)
+		gtk_combo_box_append_text(GTK_COMBO_BOX(phoebe_load_lc_timestamp), strdup(timestamp->menu->option[optindex]));
+
 	/* Default values for column combo boxes: */
 	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_column1_combobox, 0);
 	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_column2_combobox, 0);
 	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_column3_combobox, 0);
+	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_timestamp, 0);
 	
+	/* Default values for FTI parameters: */
+	phoebe_parameter_get_default_value(cadence, &fval);
+	gtk_spin_button_set_value((GtkSpinButton *) phoebe_load_lc_exptime, fval);
+	phoebe_parameter_get_default_value(rate, &ival);
+	gtk_spin_button_set_value((GtkSpinButton *) phoebe_load_lc_oversampling, ival);
+
 	phoebe_config_entry_get ("PHOEBE_DATA_DIR", &dir);
 	
 	if (PHOEBE_DIRFLAG)
@@ -1513,9 +1559,10 @@ int gui_data_lc_treeview_add ()
     result = gtk_dialog_run ((GtkDialog *) phoebe_load_lc_dialog);
     switch (result) {
         case GTK_RESPONSE_OK: {
+			GtkWidget *phoebe_data_lc_treeview;
             GtkTreeModel *model;
             GtkTreeIter iter;
-			gchar *id;
+			const gchar *id;
 			
 			GtkTreeIter filter_iter;
 			gint 		filter_number;
@@ -1524,13 +1571,13 @@ int gui_data_lc_treeview_add ()
 			gchar* filename = gtk_file_chooser_get_filename ((GtkFileChooser *) phoebe_load_lc_filechooserbutton);
 
 			if (!phoebe_filename_exists (filename))
-				gui_notice ("Invalid filename", "You haven't supplied a filename for your data.");
+				gui_notice ("Empty or invalid filename", "Note that you haven't supplied a filename for your data.");
 			else {
 				if (!PHOEBE_DIRFLAG) PHOEBE_DIRFLAG = TRUE;
 				PHOEBE_DIRNAME = gtk_file_chooser_get_current_folder ((GtkFileChooser *) phoebe_load_lc_filechooserbutton);
 			}
 			
-			GtkWidget *phoebe_data_lc_treeview = gui_widget_lookup ("phoebe_data_lc_treeview")->gtk;
+			phoebe_data_lc_treeview = gui_widget_lookup ("phoebe_data_lc_treeview")->gtk;
             model = gtk_tree_view_get_model ((GtkTreeView *) phoebe_data_lc_treeview);
 			
 			if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (phoebe_load_lc_filter_combobox), &filter_iter)) {
@@ -1542,35 +1589,41 @@ int gui_data_lc_treeview_add ()
 			if (strlen (id) < 1) id = filter_selected;
 
             gtk_list_store_append ((GtkListStore*) model, &iter);
+
             gtk_list_store_set ((GtkListStore*) model, &iter,
-								LC_COL_ACTIVE,      TRUE,
-								LC_COL_FILENAME,    filename,
-								LC_COL_ID,			id,
-								LC_COL_FILTER,      filter_selected,
-								LC_COL_FILTERNO,	filter_number,
-                                LC_COL_ITYPE,       gtk_combo_box_get_active ((GtkComboBox*) phoebe_load_lc_column1_combobox),
-                                LC_COL_ITYPE_STR,   strdup (indep->menu->option[gtk_combo_box_get_active((GtkComboBox*) phoebe_load_lc_column1_combobox)]),
-                                LC_COL_DTYPE,       gtk_combo_box_get_active ((GtkComboBox*) phoebe_load_lc_column2_combobox),
-                                LC_COL_DTYPE_STR,   strdup (dep->menu->option[gtk_combo_box_get_active((GtkComboBox*) phoebe_load_lc_column2_combobox)]),
-                                LC_COL_WTYPE,       gtk_combo_box_get_active ((GtkComboBox*) phoebe_load_lc_column3_combobox),
-                                LC_COL_WTYPE_STR,   strdup (indweight->menu->option[gtk_combo_box_get_active((GtkComboBox*) phoebe_load_lc_column3_combobox)]),
-                                LC_COL_SIGMA,       gtk_spin_button_get_value ((GtkSpinButton*) phoebe_load_lc_sigma_spinbutton),
-                                LC_COL_LEVWEIGHT,   "Poissonian scatter",
-                                LC_COL_HLA,         12.566371,
-                                LC_COL_CLA,         12.566371,
-                                LC_COL_OPSF,        0.0,
-                                LC_COL_EL3,         0.0,
-                                LC_COL_EL3_LUM,     0.0,
-                                LC_COL_EXTINCTION,  0.0,
-                                LC_COL_X1,          0.5,
-                                LC_COL_X2,          0.5,
-                                LC_COL_Y1,          0.5,
-                                LC_COL_Y2,          0.5,
-								LC_COL_PLOT_OBS,    FALSE,
-								LC_COL_PLOT_SYN,    FALSE,
+								LC_COL_ACTIVE,         TRUE,
+								LC_COL_FILENAME,       filename,
+								LC_COL_ID,			   id,
+								LC_COL_FILTER,         filter_selected,
+								LC_COL_FILTERNO,	   filter_number,
+                                LC_COL_ITYPE,          gtk_combo_box_get_active ((GtkComboBox *) phoebe_load_lc_column1_combobox),
+                                LC_COL_ITYPE_STR,      strdup (indep->menu->option[gtk_combo_box_get_active((GtkComboBox *) phoebe_load_lc_column1_combobox)]),
+                                LC_COL_DTYPE,          gtk_combo_box_get_active ((GtkComboBox *) phoebe_load_lc_column2_combobox),
+                                LC_COL_DTYPE_STR,      strdup (dep->menu->option[gtk_combo_box_get_active((GtkComboBox *) phoebe_load_lc_column2_combobox)]),
+                                LC_COL_WTYPE,          gtk_combo_box_get_active ((GtkComboBox *) phoebe_load_lc_column3_combobox),
+                                LC_COL_WTYPE_STR,      strdup (indweight->menu->option[gtk_combo_box_get_active((GtkComboBox *) phoebe_load_lc_column3_combobox)]),
+                                LC_COL_SIGMA,          gtk_spin_button_get_value ((GtkSpinButton *) phoebe_load_lc_sigma_spinbutton),
+                                LC_COL_FTI,            gtk_toggle_button_get_active((GtkToggleButton *) phoebe_load_lc_fti_switch),
+								LC_COL_EXPTIME,        gtk_spin_button_get_value((GtkSpinButton *) phoebe_load_lc_exptime),
+								LC_COL_OVERSAMPLING,   gtk_spin_button_get_value_as_int((GtkSpinButton *) phoebe_load_lc_oversampling),
+								LC_COL_TIMESTAMP,      gtk_combo_box_get_active((GtkComboBox *) phoebe_load_lc_timestamp),
+								LC_COL_TS_STR,         strdup (timestamp->menu->option[gtk_combo_box_get_active((GtkComboBox *) phoebe_load_lc_timestamp)]),
+								LC_COL_LEVWEIGHT,      "Poissonian scatter",
+                                LC_COL_HLA,            12.566371,
+                                LC_COL_CLA,            12.566371,
+                                LC_COL_OPSF,           0.0,
+                                LC_COL_EL3,            0.0,
+                                LC_COL_EL3_LUM,        0.0,
+                                LC_COL_EXTINCTION,     0.0,
+                                LC_COL_X1,             0.5,
+                                LC_COL_X2,             0.5,
+                                LC_COL_Y1,             0.5,
+                                LC_COL_Y2,             0.5,
+								LC_COL_PLOT_OBS,       FALSE,
+								LC_COL_PLOT_SYN,       FALSE,
 								LC_COL_PLOT_OBS_COLOR, "#0000FF",
 								LC_COL_PLOT_SYN_COLOR, "#FF0000",
-								LC_COL_PLOT_OFFSET, 0.0,
+								LC_COL_PLOT_OFFSET,    0.0,
 								-1);
 
 			/* Update the number of light curves parameter: */
@@ -1610,23 +1663,26 @@ int gui_data_lc_treeview_edit ()
 {
 	int status = SUCCESS;
 
-	PHOEBE_parameter *indep, *dep, *indweight, *lcfilter;
+	PHOEBE_parameter *indep, *dep, *indweight, *lcfilter, *tspar;
 	int optindex, optcount;
 
 	GtkTreeModel *model;
     GtkTreeIter  iter, filter_iter;
 	GtkTreeSelection *selection;
 
-	gchar *glade_xml_file, *glade_pixmap_file, *id, *itype_str, *dtype_str, *wtype_str, *filename, *filter;
+	gchar *glade_xml_file, *glade_pixmap_file, *id, *itype_str, *dtype_str, *wtype_str, *filename, *filter, *ts_str;
 	gchar filter_selected[255] = "Johnson:V";
 	GladeXML *phoebe_load_lc_xml;
 
 	GtkWidget *phoebe_load_lc_dialog, *phoebe_load_lc_filechooserbutton, *phoebe_load_lc_column1_combobox,
 	          *phoebe_load_lc_column2_combobox, *phoebe_load_lc_column3_combobox, *phoebe_load_lc_sigma_spinbutton,
-	          *phoebe_load_lc_preview_textview, *phoebe_load_lc_filter_combobox, *phoebe_load_lc_id_entry;
+	          *phoebe_load_lc_preview_textview, *phoebe_load_lc_filter_combobox, *phoebe_load_lc_id_entry,
+			  *phoebe_load_lc_fti_checkbutton, *phoebe_load_lc_exptime, *phoebe_load_lc_oversampling,
+			  *phoebe_load_lc_timestamp;
 
-	gint itype, dtype, wtype, filter_number, result;
-	gdouble sigma;
+	gint itype, dtype, wtype, filter_number, result, oversampling, ts_index;
+	gdouble sigma, exptime;
+	gboolean fti;
 
 	GtkWidget *phoebe_data_lc_treeview = gui_widget_lookup ("phoebe_data_lc_treeview")->gtk;
     model = gtk_tree_view_get_model ((GtkTreeView *) phoebe_data_lc_treeview);
@@ -1644,6 +1700,7 @@ int gui_data_lc_treeview_edit ()
 	dep       = phoebe_parameter_lookup ("phoebe_lc_dep");
 	indweight = phoebe_parameter_lookup ("phoebe_lc_indweight");
 	lcfilter  = phoebe_parameter_lookup ("phoebe_lc_filter");
+	tspar     = phoebe_parameter_lookup ("phoebe_lc_cadence_timestamp");
 
 	glade_xml_file    = g_build_filename (PHOEBE_GLADE_XML_DIR, "phoebe_load_lc.glade", NULL);
 	glade_pixmap_file = g_build_filename (PHOEBE_GLADE_PIXMAP_DIR, "ico.png", NULL);
@@ -1658,7 +1715,14 @@ int gui_data_lc_treeview_edit ()
 	phoebe_load_lc_sigma_spinbutton      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_sigma_spinbutton");
 	phoebe_load_lc_preview_textview      = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_preview_textview");
 	phoebe_load_lc_filter_combobox       = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_filter_combobox");
-	phoebe_load_lc_id_entry				= glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_id_entry");
+	phoebe_load_lc_id_entry				 = glade_xml_get_widget (phoebe_load_lc_xml, "phoebe_load_lc_id_entry");
+	phoebe_load_lc_fti_checkbutton       = glade_xml_get_widget(phoebe_load_lc_xml, "phoebe_load_lc_fti_checkbutton");
+	phoebe_load_lc_exptime               = glade_xml_get_widget(phoebe_load_lc_xml, "phoebe_load_lc_exptime");
+	phoebe_load_lc_oversampling          = glade_xml_get_widget(phoebe_load_lc_xml, "phoebe_load_lc_oversampling");
+	phoebe_load_lc_timestamp             = glade_xml_get_widget(phoebe_load_lc_xml, "phoebe_load_lc_timestamp");
+	
+	/* Connect toggle button sensitivity callbacks: */
+	glade_xml_signal_autoconnect(phoebe_load_lc_xml);
 
 	g_object_unref (phoebe_load_lc_xml);
 
@@ -1672,18 +1736,24 @@ int gui_data_lc_treeview_edit ()
 
 	selection = gtk_tree_view_get_selection ((GtkTreeView *) phoebe_data_lc_treeview);
 
-	gtk_tree_model_get(model, &iter,    LC_COL_FILENAME, 	&filename,
-										LC_COL_ID,          &id,
-										LC_COL_FILTER,   	&filter,
-										LC_COL_ITYPE_STR,	&itype_str,
-										LC_COL_DTYPE_STR, 	&dtype_str,
-										LC_COL_WTYPE_STR, 	&wtype_str,
-										LC_COL_SIGMA,    	&sigma, -1);
+	gtk_tree_model_get(model, &iter,    LC_COL_FILENAME, 	 &filename,
+										LC_COL_ID,           &id,
+										LC_COL_FILTER,   	 &filter,
+										LC_COL_ITYPE_STR,	 &itype_str,
+										LC_COL_DTYPE_STR, 	 &dtype_str,
+										LC_COL_WTYPE_STR, 	 &wtype_str,
+										LC_COL_SIGMA,    	 &sigma,
+										LC_COL_FTI,          &fti,
+										LC_COL_EXPTIME,      &exptime,
+										LC_COL_OVERSAMPLING, &oversampling,
+										LC_COL_TS_STR,       &ts_str,
+										-1);
 
 	phoebe_parameter_option_get_index (indep, itype_str, &itype);
 	phoebe_parameter_option_get_index (dep, dtype_str, &dtype);
 	phoebe_parameter_option_get_index (indweight, wtype_str, &wtype);
 	phoebe_parameter_option_get_index (lcfilter, filter, &filter_number);
+	phoebe_parameter_option_get_index (tspar, ts_str, &ts_index);
 
 	/* Populate the combo boxes: */
 	optcount = indep->menu->optno;
@@ -1698,12 +1768,21 @@ int gui_data_lc_treeview_edit ()
 	for(optindex = 0; optindex < optcount; optindex++)
 		gtk_combo_box_append_text(GTK_COMBO_BOX(phoebe_load_lc_column3_combobox), strdup(indweight->menu->option[optindex]));
 
+	optcount = tspar->menu->optno;
+	for(optindex = 0; optindex < optcount; optindex++)
+		gtk_combo_box_append_text(GTK_COMBO_BOX(phoebe_load_lc_timestamp), strdup(tspar->menu->option[optindex]));
+
 	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_column1_combobox,  itype);
 	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_column2_combobox,  dtype);
 	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_column3_combobox,  wtype);
+	gtk_combo_box_set_active ((GtkComboBox *) phoebe_load_lc_timestamp, ts_index);
+
 	gui_init_filter_combobox (phoebe_load_lc_filter_combobox, filter_number);
 
+	gtk_toggle_button_set_active((GtkToggleButton *) phoebe_load_lc_fti_checkbutton, fti);
 	gtk_spin_button_set_value ((GtkSpinButton*) phoebe_load_lc_sigma_spinbutton, sigma);
+	gtk_spin_button_set_value ((GtkSpinButton*) phoebe_load_lc_exptime, exptime);
+	gtk_spin_button_set_value ((GtkSpinButton*) phoebe_load_lc_oversampling, oversampling);
 	gtk_entry_set_text ((GtkEntry*)	phoebe_load_lc_id_entry, id);
 
 	sprintf(filter_selected, "%s", filter);
@@ -1743,18 +1822,23 @@ int gui_data_lc_treeview_edit ()
 
 			gtk_list_store_set (
 				(GtkListStore *) model, &iter,
-				LC_COL_ACTIVE,      TRUE,
-				LC_COL_FILENAME,    filename,
-				LC_COL_ID,          new_id,
-				LC_COL_FILTER,      filter_selected,
-				LC_COL_FILTERNO,    filter_number,
-				LC_COL_ITYPE,       gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column1_combobox),
-				LC_COL_ITYPE_STR,   strdup(indep->menu->option[gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column1_combobox)]),
-				LC_COL_DTYPE,       gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column2_combobox),
-				LC_COL_DTYPE_STR,   strdup(dep->menu->option[gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column2_combobox)]),
-				LC_COL_WTYPE,       gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column3_combobox),
-				LC_COL_WTYPE_STR,   strdup(indweight->menu->option[gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column3_combobox)]),
-				LC_COL_SIGMA,       gtk_spin_button_get_value((GtkSpinButton*)phoebe_load_lc_sigma_spinbutton),
+				LC_COL_ACTIVE,       TRUE,
+				LC_COL_FILENAME,     filename,
+				LC_COL_ID,           new_id,
+				LC_COL_FILTER,       filter_selected,
+				LC_COL_FILTERNO,     filter_number,
+				LC_COL_ITYPE,        gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column1_combobox),
+				LC_COL_ITYPE_STR,    strdup(indep->menu->option[gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column1_combobox)]),
+				LC_COL_DTYPE,        gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column2_combobox),
+				LC_COL_DTYPE_STR,    strdup(dep->menu->option[gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column2_combobox)]),
+				LC_COL_WTYPE,        gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column3_combobox),
+				LC_COL_WTYPE_STR,    strdup(indweight->menu->option[gtk_combo_box_get_active((GtkComboBox*)phoebe_load_lc_column3_combobox)]),
+				LC_COL_SIGMA,        gtk_spin_button_get_value((GtkSpinButton*)phoebe_load_lc_sigma_spinbutton),
+				LC_COL_FTI,          gtk_toggle_button_get_active((GtkToggleButton *) phoebe_load_lc_fti_checkbutton),
+				LC_COL_EXPTIME,      gtk_spin_button_get_value((GtkSpinButton *) phoebe_load_lc_exptime),
+				LC_COL_OVERSAMPLING, gtk_spin_button_get_value_as_int((GtkSpinButton *) phoebe_load_lc_oversampling),
+				LC_COL_TIMESTAMP,    gtk_combo_box_get_active((GtkComboBox *) phoebe_load_lc_timestamp),
+				LC_COL_TS_STR,       strdup(tspar->menu->option[gtk_combo_box_get_active((GtkComboBox *) phoebe_load_lc_timestamp)]),
 				-1);
 			
 			/* Update file stats in the Fitting tab. */
