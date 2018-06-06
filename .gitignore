@@ -18,3 +18,4 @@ libphoebe-svn.*
 phoebe_constraints.grm.[ch]
 phoebe_constraints.lng.[ch]
 lex.yy.c
+phoebe-gui/src/phoebe-gui
