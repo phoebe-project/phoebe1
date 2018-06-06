@@ -44,7 +44,7 @@ c      ispmax    ..    maximum number of spots
 c                        default: ispmax =    100
 c      iclmax    ..    maximum number of clouds
 c                        default: iclmax =    100
-c      iptmax    ..    maximum number of observed data points, including 
+c      iptmax    ..    maximum number of observed data points, including
 c                        blank points on last lines of the velocity and light curve
 c                        data sets and on stop lines
 c                        default: iptmax =  10000
@@ -63,7 +63,7 @@ c
       parameter (iclmax=   100)
       parameter (iptmax= 50000)
       parameter (ncmax=     50)
-      parameter (iplmax=    48)
+      parameter (iplmax=    58)
       parameter (ipmax=     50)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -111,7 +111,7 @@ c
 c        MMmax    ..    maximum dimension of the MMSAVE array
 c       ifrmax    ..    maximum dimension of the horizon polar
 c                       coordinate arrays
-c       istmax    ..    maximum dimension of storage arrays OBS and HOLD 
+c       istmax    ..    maximum dimension of storage arrays OBS and HOLD
 c                         (iptmax * (no. of adjusted parameters + 1).
 c       iplcof    ..    dimension of the atmcofplanck matrix, 50 per
 c                       passband
@@ -636,11 +636,11 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       READ(15,702)E,A,F1,F2,VGA,XINCL,GR1,GR2,abunin
       READ(15,706) TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,xbol1,xbol2,ybol1,
      $ybol2
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     Overwrite the read values with passed values:
       pshift=args(1)
       xincl=args(2)
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       acm=6.957d10*a
       nn1=n1
       CALL SINCOS(1,N1,N1,SNTHH,CSTHH,SNFIH,CSFIH,MMSAVH)
