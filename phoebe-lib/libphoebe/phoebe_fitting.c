@@ -940,7 +940,7 @@ int phoebe_minimize_using_dc (FILE *dc_output, PHOEBE_minimizer_feedback *feedba
 	phoebe_parameter_get_value (phoebe_parameter_lookup("phoebe_pshift"), &args[0]);
 	phoebe_parameter_get_value (phoebe_parameter_lookup("phoebe_incl"), &args[1]);
 	
-	wd_dc (atmcof, atmcofplanck, &L3perc, params->knobs, params->indeps, params->fluxes, params->weights, &(params->nph), &(params->delph), corrections, errors, chi2s, cormat, __cla, &cfval, args);
+	wd_dc (atmcof, atmcofplanck, &L3perc, params->knobs, params->indeps, params->fluxes, params->weights, params->nph, params->delph, corrections, errors, chi2s, cormat, __cla, &cfval, args);
 	
 	/*
 	 * Allocate the feedback structure and fill it in. The number of parameter

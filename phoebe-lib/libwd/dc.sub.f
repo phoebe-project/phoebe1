@@ -44,7 +44,7 @@ c      ispmax    ..    maximum number of spots
 c                        default: ispmax =    100
 c      iclmax    ..    maximum number of clouds
 c                        default: iclmax =    100
-c      iptmax    ..    maximum number of observed data points, including 
+c      iptmax    ..    maximum number of observed data points, including
 c                        blank points on last lines of the velocity and light curve
 c                        data sets and on stop lines
 c                        default: iptmax =  10000
@@ -63,7 +63,7 @@ c
       parameter (iclmax=   100)
       parameter (iptmax= 50000)
       parameter (ncmax=     50)
-      parameter (iplmax=    48)
+      parameter (iplmax=    58)
       parameter (ipmax=     50)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -111,7 +111,7 @@ c
 c        MMmax    ..    maximum dimension of the MMSAVE array
 c       ifrmax    ..    maximum dimension of the horizon polar
 c                       coordinate arrays
-c       istmax    ..    maximum dimension of storage arrays OBS and HOLD 
+c       istmax    ..    maximum dimension of storage arrays OBS and HOLD
 c                         (iptmax * (no. of adjusted parameters + 1).
 c       iplcof    ..    dimension of the atmcofplanck matrix, 50 per
 c                       passband
@@ -150,8 +150,8 @@ c        chi2s   ..   chi2 values of individual curves after the fit
 c       cormat   ..   correlation matrix (a wrapped 1D array)
 c         ccla   ..   computed CLA values
 c        cfval   ..   cost function value (global goodness-of-fit value)
-c          nph   ..   finite time integration oversampling rate
-c        delph   ..   finite time integration cadence
+c          nph   ..   an array of finite time integration oversampling rates
+c        delph   ..   an array of finite time integration cadences
 c         args   ..   an array of passed parameters (arguments):
 c
 c                     args( 1) = phase shift
@@ -160,8 +160,8 @@ c
 c                     Incorporating args was necessary to circumvent
 c                     rounding problems in WD when using I/O.
 c
-      integer L3perc,knobs(*),nph
-      double precision indeps(*),fluxes(*),weights(*),cfval,delph
+      integer L3perc,knobs(*),nph(*)
+      double precision indeps(*),fluxes(*),weights(*),cfval,delph(*)
       double precision corrs(*),stdevs(*),chi2s(*),cormat(*),ccla(*)
       double precision args(*)
       double precision tloc1(igsmax),tloc2(igsmax),xInorm1(igsmax),
@@ -338,9 +338,9 @@ c
   701 FORMAT(4I2,4I4,f13.6,d12.5,F8.5,F9.3)
 c   2 FORMAT(5(F14.5,F8.4,F6.2))
     2 FORMAT(5(F14.5,F8.4,F12.2))
-   85 FORMAT(i3,2F10.5,4(1X,F6.3),f8.4,d10.3,i6,d14.5,f10.6)
+   85 FORMAT(i3,2F10.5,4(1X,F6.3),f8.4,d10.3,i6,d14.5,f10.6,f11.5,i5)
    18 format(i3,2f10.5,4f7.3,f8.4,d10.3,i2,d12.5,f10.6)
-  218 FORMAT(i3,2F10.5,4F7.3,d10.3,d12.5,f10.6)
+  218 FORMAT(i3,2F10.5,4F7.3,d10.3,d12.5,f10.6,f11.5,i5)
    37 FORMAT(1X,11F12.7)
   137 FORMAT(1X,F11.7)
   715 format(22x,'Input-Output in F Format')
@@ -453,7 +453,7 @@ c   2 FORMAT(5(F14.5,F8.4,F6.2))
    64 format(3f10.4,f9.4,d12.4,f10.4,d12.4,f9.4,f9.3,d12.4)
    69 format('      xcl       ycl       zcl      rcl       op1         f
      $cl        ne       mu e      encl     dens')
-  170 format(i3,f17.6,d18.10,d14.6,f10.4,f11.5,i5)
+  170 format(i3,f17.6,d18.10,d14.6,f10.4)
   649 format(i1,f15.6,d17.10,d14.6,f10.4)
   171 format('JDPHS',5x,'J.D. zero',7x,'Period',11x,'dPdt',
      $6x,'Ph. shift')
@@ -636,11 +636,11 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       READ(15,702)E,A,F1,F2,VGA,XINCL,GR1,GR2,abunin
       READ(15,706) TAVH,TAVC,ALB1,ALB2,PHSV,PCSV,RM,xbol1,xbol2,ybol1,
      $ybol2
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
-c     Override the read-in values with passed values:
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c     Overwrite the read values with passed values:
       pshift=args(1)
       xincl=args(2)
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc      
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       acm=6.957d10*a
       nn1=n1
       CALL SINCOS(1,N1,N1,SNTHH,CSTHH,SNFIH,CSFIH,MMSAVH)
@@ -895,7 +895,7 @@ c***************************************************************
       write(16,912)nref,mref,ifsmv1,ifsmv2,icor1,icor2,ld
       WRITE(16,101)
       write(16,171)
-      write(16,170) jdphs,hjd0,period,dpdt,pshift,delph,nph
+      write(16,170) jdphs,hjd0,period,dpdt,pshift
       WRITE(16,101)
       WRITE(16,12)
       WRITE(16,1)MODE,IPB,IFAT1,IFAT2,N1,N2,N1L,N2L,perr0,dperdt,THE,
@@ -911,8 +911,8 @@ c***************************************************************
       WRITE(16,101)
       WRITE(16,111)
       DO 91 I=1,NVC
-   91 WRITE(16,218)iband(I),HLA(I),CLA(I),X1A(I),X2A(I),y1a(i),y2a(i),
-     $opsfa(i),sigma(i),wla(i)
+   91 WRITE(16,218)iband(i),HLA(i),CLA(i),X1A(i),X2A(i),y1a(i),y2a(i),
+     $opsfa(i),sigma(i),wla(i),delph(i),nph(i)
   196 CONTINUE
       IF(NLVC.EQ.NVC) GOTO 197
       WRITE(16,101)
@@ -932,7 +932,7 @@ c
         el3=el3a(i)
       end if
    92 write(16,85)iband(i),hla(i),cla(i),x1a(i),x2a(i),y1a(i),y2a(i),
-     $el3,opsfa(i),noise(i),sigma(i),wla(i)
+     $el3,opsfa(i),noise(i),sigma(i),wla(i),delph(i),nph(i)
 c  92 write(16,85)iband(i),hla(i),cla(i),x1a(i),x2a(i),y1a(i),y2a(i),
 c    $el3a(i),opsfa(i),noise(i),sigma(i),wla(i)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1391,10 +1391,10 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $xInorm2)
       hot=0.d0
       cool=0.d0
-      do 551 iph=1,nph
+      do 551 iph=1,nph(ib)
       phasin=phas(ix)
-      if(nph.gt.1.and.ib.gt.nvc) phasin=phas(ix)+delph*(dfloat(iph-1)/
-     $dfloat(nph-1)-.5d0)
+      if(nph(ib).gt.1) phasin=phas(ix)+delph(ib)*
+     $(dfloat(iph-1)/dfloat(nph(ib)-1)-.5d0)
       CALL BBL(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVH,FR1,FR2,HLD,
      $SLUMP1,SLUMP2,THETA,RHO,AA,BB,POT1,POT2,N1,N2,FF1,FF2,d,hl,cl,x1,
      $x2,y1,y2,g1,g2,wla(ib),sm1,sm2,tph,tpc,sbrh,sbrc,t1,
@@ -1406,8 +1406,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,hbarw2,xcl,ycl,zcl,
      $rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,zskp,mode,iband(ib),
      $ifat1,ifat2,1,tloc1,tloc2,xInorm1,xInorm2)
-      hot=hot+hotr/dfloat(nph)
-      cool=cool+coolr/dfloat(nph)
+      hot=hot+hotr/dfloat(nph(ib))
+      cool=cool+coolr/dfloat(nph(ib))
   551 continue
       GOTO 801
   802 CONTINUE
@@ -1418,10 +1418,10 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $xInorm2)
       hot=0.d0
       cool=0.d0
-      do 550 iph=1,nph
+      do 550 iph=1,nph(ib)
       phasin=phas(ix)
-      if(nph.gt.1.and.ib.gt.nvc) phasin=phas(ix)+delph*(dfloat(iph-1)/
-     $dfloat(nph-1)-.5d0)
+      if(nph(ib).gt.1) phasin=phas(ix)+delph(ib)*
+     $(dfloat(iph-1)/dfloat(nph(ib)-1)-.5d0)
       CALL BBL(RV,GRX,GRY,GRZ,RVQ,GRXQ,GRYQ,GRZQ,MMSAVL,FR1,FR2,HLD,
      $SLUMP1,SLUMP2,THETA,RHO,AA,BB,POT1,POT2,N1L,N2L,FF1,FF2,d,hl,cl,
      $x1,x2,y1,y2,g1,g2,wla(ib),sm1,sm2,tph,tpc,sbrh,sbrc,
@@ -1433,8 +1433,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,hbarw2,xcl,ycl,zcl,
      $rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,zskp,mode,iband(ib),
      $ifat1,ifat2,1,tloc1,tloc2,xInorm1,xInorm2)
-      hot=hot+hotr/dfloat(nph)
-      cool=cool+coolr/dfloat(nph)
+      hot=hot+hotr/dfloat(nph(ib))
+      cool=cool+coolr/dfloat(nph(ib))
   550 continue
   801 CONTINUE
       IF(E.NE.0.d0) GOTO 4111

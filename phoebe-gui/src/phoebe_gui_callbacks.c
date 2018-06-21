@@ -2765,7 +2765,7 @@ int gui_init_ld_filter_combobox (GtkWidget *combo_box)
 	GtkCellRenderer *renderer;
 
 	int i, lcno, rvno;
-	char *cid, path[10];
+	char *cid, path[11];
 
 	lcs = gtk_tree_view_get_model ((GtkTreeView *) gui_widget_lookup ("phoebe_data_lc_treeview")->gtk);
 	rvs = gtk_tree_view_get_model ((GtkTreeView *) gui_widget_lookup ("phoebe_data_rv_treeview")->gtk);

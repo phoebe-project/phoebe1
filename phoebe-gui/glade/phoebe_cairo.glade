@@ -20,7 +20,6 @@
               <widget class="GtkMenuItem" id="phoebe_file_menuitem">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_File</property>
                 <property name="use_underline">True</property>
                 <child>
@@ -31,7 +30,6 @@
                         <property name="label">gtk-new</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_phoebe_file_new_menuitem_activate"/>
@@ -42,7 +40,6 @@
                         <property name="label">gtk-open</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_phoebe_file_open_menuitem_activate"/>
@@ -53,7 +50,6 @@
                         <property name="label">gtk-save</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_phoebe_file_save_menuitem_activate"/>
@@ -64,7 +60,6 @@
                         <property name="label">gtk-save-as</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_phoebe_file_saveas_menuitem_activate"/>
@@ -83,7 +78,6 @@
                         <property name="can_focus">False</property>
                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                         <property name="tooltip" translatable="yes">Import Binary Maker (BM3) parameter file</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_phoebe_file_import_bm3_menuitem_activate"/>
                         <child internal-child="image">
@@ -106,7 +100,6 @@
                         <property name="label">gtk-quit</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_phoebe_file_quit_menuitem_activate"/>
@@ -120,7 +113,6 @@
               <widget class="GtkMenuItem" id="phoebe_settings_menuitem">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_Settings</property>
                 <property name="use_underline">True</property>
                 <child>
@@ -131,7 +123,6 @@
                         <property name="label">gtk-preferences</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_phoebe_settings_configuration_menuitem_activate"/>
@@ -145,7 +136,6 @@
               <widget class="GtkMenuItem" id="phoebe_help_menuitem">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_Help</property>
                 <property name="use_underline">True</property>
                 <child>
@@ -156,7 +146,6 @@
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_phoebe_help_about_menuitem_activate"/>
@@ -182,7 +171,6 @@
               <widget class="GtkToolButton" id="phoebe_open_toolbutton">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="stock_id">gtk-open</property>
                 <signal name="clicked" handler="on_phoebe_open_toolbutton_clicked"/>
               </widget>
@@ -195,7 +183,6 @@
               <widget class="GtkToolButton" id="phoebe_save_toolbutton">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="stock_id">gtk-save</property>
                 <signal name="clicked" handler="on_phoebe_save_toolbutton_clicked"/>
               </widget>
@@ -217,7 +204,6 @@
               <widget class="GtkToolButton" id="phoebe_lc_plot_toolbutton">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label">LC Plot</property>
                 <property name="stock_id">gtk-select-color</property>
                 <signal name="clicked" handler="on_phoebe_lc_plot_toolbutton_clicked"/>
@@ -231,7 +217,6 @@
               <widget class="GtkToolButton" id="phoebe_rv_plot_toolbutton">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label">RV Plot</property>
                 <property name="stock_id">gtk-select-color</property>
                 <signal name="clicked" handler="on_phoebe_rv_plot_toolbutton_clicked"/>
@@ -254,7 +239,6 @@
               <widget class="GtkToolButton" id="phoebe_fitting_toolbutton">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label">Fitting</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-execute</property>
@@ -278,7 +262,6 @@
               <widget class="GtkToolButton" id="phoebe_settings_toolbutton">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label">Settings</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-preferences</property>
@@ -302,7 +285,6 @@
               <widget class="GtkToolButton" id="phoebe_quit_toolbutton">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="stock_id">gtk-quit</property>
                 <signal name="clicked" handler="on_phoebe_quit_toolbutton_clicked"/>
               </widget>
@@ -397,7 +379,7 @@
                                     <property name="width_request">280</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="items" translatable="yes"></property>
+                                    <property name="items" translatable="yes"/>
                                     <signal name="changed" handler="on_phoebe_data_star_model_combobox_changed"/>
                                   </widget>
                                   <packing>
@@ -425,7 +407,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_lum_options_decouple_checkbutton_toggled"/>
@@ -436,7 +417,7 @@
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
                                     <property name="x_options">GTK_FILL</property>
-                                    <property name="y_options"></property>
+                                    <property name="y_options"/>
                                   </packing>
                                 </child>
                               </widget>
@@ -521,7 +502,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">4</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <signal name="clicked" handler="on_phoebe_data_lc_add_button_clicked"/>
                                           </widget>
@@ -538,7 +518,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">4</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <signal name="clicked" handler="on_phoebe_data_lc_edit_button_clicked"/>
                                           </widget>
@@ -555,7 +534,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">4</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <signal name="clicked" handler="on_phoebe_data_lc_remove_button_clicked"/>
                                           </widget>
@@ -581,7 +559,6 @@
                                 </child>
                                 <child>
                                   <widget class="GtkHSeparator" id="hseparator2">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                   </widget>
@@ -604,7 +581,6 @@
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
                                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                       </widget>
                                       <packing>
@@ -618,7 +594,7 @@
                                         <property name="visible">True</property>
                                         <property name="sensitive">False</property>
                                         <property name="can_focus">False</property>
-                                        <property name="items" translatable="yes"></property>
+                                        <property name="items" translatable="yes"/>
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -699,7 +675,6 @@
                                         <property name="sensitive">False</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_data_lc_seedgen_button_clicked"/>
                                       </widget>
@@ -715,133 +690,6 @@
                                     <property name="expand">True</property>
                                     <property name="fill">False</property>
                                     <property name="position">2</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkHBox" id="phoebe_cadence_hbox">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <child>
-                                      <widget class="GtkCheckButton" id="phoebe_cadence_switch">
-                                        <property name="label" translatable="yes">Finite integration time</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
-                                        <property name="xalign">0</property>
-                                        <property name="draw_indicator">True</property>
-                                        <signal name="toggled" handler="on_toggle_make_sensitive" object="phoebe_cadence_label"/>
-                                        <signal name="toggled" handler="on_toggle_make_sensitive" object="phoebe_cadence"/>
-                                        <signal name="toggled" handler="on_toggle_make_sensitive" object="phoebe_cadence_rate_label"/>
-                                        <signal name="toggled" handler="on_toggle_make_sensitive" object="phoebe_cadence_rate"/>
-                                        <signal name="toggled" handler="on_toggle_make_sensitive" object="phoebe_cadence_timestamp_label"/>
-                                        <signal name="toggled" handler="on_toggle_make_sensitive" object="phoebe_cadence_timestamp"/>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkLabel" id="phoebe_cadence_label">
-                                        <property name="visible">True</property>
-                                        <property name="sensitive">False</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Cadence [sec]:</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="padding">20</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkSpinButton" id="phoebe_cadence">
-                                        <property name="visible">True</property>
-                                        <property name="sensitive">False</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="invisible_char">●</property>
-                                        <property name="primary_icon_activatable">False</property>
-                                        <property name="secondary_icon_activatable">False</property>
-                                        <property name="primary_icon_sensitive">True</property>
-                                        <property name="secondary_icon_sensitive">True</property>
-                                        <property name="adjustment">1766 0 100000 1 10 0</property>
-                                        <property name="numeric">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">True</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">2</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkLabel" id="phoebe_cadence_rate_label">
-                                        <property name="visible">True</property>
-                                        <property name="sensitive">False</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Oversampling rate:</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="padding">20</property>
-                                        <property name="position">3</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkSpinButton" id="phoebe_cadence_rate">
-                                        <property name="visible">True</property>
-                                        <property name="sensitive">False</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="invisible_char">●</property>
-                                        <property name="primary_icon_activatable">False</property>
-                                        <property name="secondary_icon_activatable">False</property>
-                                        <property name="primary_icon_sensitive">True</property>
-                                        <property name="secondary_icon_sensitive">True</property>
-                                        <property name="adjustment">10 0 1000 2 10 0</property>
-                                        <property name="snap_to_ticks">True</property>
-                                        <property name="numeric">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">True</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">4</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkLabel" id="phoebe_cadence_timestamp_label">
-                                        <property name="visible">True</property>
-                                        <property name="sensitive">False</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Time-stamp:</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="padding">20</property>
-                                        <property name="position">5</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkComboBox" id="phoebe_cadence_timestamp">
-                                        <property name="visible">True</property>
-                                        <property name="sensitive">False</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="items"></property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">True</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">6</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">3</property>
                                   </packing>
                                 </child>
                               </widget>
@@ -905,7 +753,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_data_rv_add_button_clicked"/>
                                       </widget>
@@ -922,7 +769,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_data_rv_edit_button_clicked"/>
                                       </widget>
@@ -939,7 +785,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_data_rv_remove_button_clicked"/>
                                       </widget>
@@ -1054,7 +899,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                    <property name="items" translatable="yes"></property>
+                                    <property name="items" translatable="yes"/>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1067,7 +912,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                    <property name="items" translatable="yes"></property>
+                                    <property name="items" translatable="yes"/>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1106,7 +951,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">4</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                   </widget>
@@ -1246,7 +1090,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">4</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                   </widget>
@@ -1263,7 +1106,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">4</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                   </widget>
@@ -1371,7 +1213,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="focus_on_click">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -1569,7 +1410,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                   </widget>
@@ -1614,7 +1454,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1655,7 +1495,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1677,7 +1517,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1768,7 +1608,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                   </widget>
@@ -1810,7 +1649,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1850,7 +1689,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1871,7 +1710,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1962,7 +1801,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -2015,7 +1853,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2047,7 +1885,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2068,7 +1906,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2189,7 +2027,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                   </widget>
@@ -2233,7 +2070,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2273,7 +2110,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2294,7 +2131,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2388,7 +2225,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                   </widget>
@@ -2432,7 +2268,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2472,7 +2308,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2493,7 +2329,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2583,7 +2419,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                   </widget>
@@ -2627,7 +2462,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2667,7 +2502,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2688,7 +2523,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2778,7 +2613,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -2831,7 +2665,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2863,7 +2697,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -2884,7 +2718,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3009,7 +2843,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -3062,7 +2895,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3094,7 +2927,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3115,7 +2948,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3205,7 +3038,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -3259,7 +3091,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3292,7 +3124,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3313,7 +3145,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3406,7 +3238,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -3451,7 +3282,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3491,7 +3322,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3512,7 +3343,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3604,7 +3435,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -3649,7 +3479,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3689,7 +3519,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3710,7 +3540,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3801,7 +3631,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -3846,7 +3675,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3887,7 +3716,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -3908,7 +3737,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -4209,6 +4038,12 @@
                                         <child>
                                           <placeholder/>
                                         </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
                                       </widget>
                                     </child>
                                   </widget>
@@ -4312,7 +4147,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                   </widget>
@@ -4504,7 +4338,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -4691,7 +4524,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <signal name="clicked" handler="on_phoebe_para_comp_phsv_calculate_button_clicked"/>
                                       </widget>
                                       <packing>
@@ -4725,7 +4557,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -4916,7 +4747,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <signal name="clicked" handler="on_phoebe_para_comp_pcsv_calculate_button_clicked"/>
                                       </widget>
                                       <packing>
@@ -4950,7 +4780,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -5136,7 +4965,7 @@
                                           <packing>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5148,7 +4977,7 @@
                                           <packing>
                                             <property name="top_attach">2</property>
                                             <property name="bottom_attach">3</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5171,7 +5000,7 @@
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
                                             <property name="x_options">GTK_EXPAND</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5194,7 +5023,7 @@
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
                                             <property name="x_options">GTK_EXPAND</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5217,7 +5046,7 @@
                                             <property name="top_attach">2</property>
                                             <property name="bottom_attach">3</property>
                                             <property name="x_options">GTK_EXPAND</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5240,7 +5069,7 @@
                                             <property name="top_attach">2</property>
                                             <property name="bottom_attach">3</property>
                                             <property name="x_options">GTK_EXPAND</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5252,8 +5081,8 @@
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
+                                            <property name="x_options"/>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5265,10 +5094,16 @@
                                           <packing>
                                             <property name="left_attach">2</property>
                                             <property name="right_attach">3</property>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
+                                            <property name="x_options"/>
+                                            <property name="y_options"/>
                                             <property name="x_padding">6</property>
                                           </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
                                         </child>
                                         <child>
                                           <placeholder/>
@@ -5493,6 +5328,12 @@
                                         <child>
                                           <placeholder/>
                                         </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
                                       </widget>
                                     </child>
                                   </widget>
@@ -5671,7 +5512,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="on_auto_logg_switch_toggled"/>
@@ -5680,7 +5520,7 @@
                                             <property name="right_attach">3</property>
                                             <property name="top_attach">4</property>
                                             <property name="bottom_attach">5</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5699,7 +5539,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
@@ -5708,8 +5547,8 @@
                                             <property name="right_attach">2</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
+                                            <property name="x_options"/>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -5717,7 +5556,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
@@ -5726,9 +5564,15 @@
                                             <property name="right_attach">3</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
+                                            <property name="x_options"/>
+                                            <property name="y_options"/>
                                           </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
                                         </child>
                                         <child>
                                           <placeholder/>
@@ -5788,6 +5632,18 @@
                         <property name="border_width">2</property>
                         <property name="n_rows">8</property>
                         <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
                           <widget class="GtkFrame" id="phoebe_para_surf_alb1_frame">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
@@ -5834,7 +5690,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -5887,7 +5742,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -5919,7 +5774,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -5940,7 +5795,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6027,7 +5882,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -6080,7 +5934,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6112,7 +5966,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6133,7 +5987,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6222,7 +6076,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -6275,7 +6128,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6307,7 +6160,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6328,7 +6181,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6417,7 +6270,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">8</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -6470,7 +6322,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6502,7 +6354,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6523,7 +6375,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6564,18 +6416,6 @@
                             <property name="bottom_attach">4</property>
                             <property name="y_options">GTK_FILL</property>
                           </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
                         </child>
                       </widget>
                       <packing>
@@ -6648,7 +6488,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">2</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <signal name="clicked" handler="on_phoebe_para_lum_levels_edit_button_clicked"/>
                                           </widget>
@@ -6665,7 +6504,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">2</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <signal name="clicked" handler="on_phoebe_para_lum_levels_calc_button_clicked"/>
                                           </widget>
@@ -6682,7 +6520,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">2</property>
-                                            <property name="use_action_appearance">False</property>
                                             <signal name="clicked" handler="on_phoebe_para_lum_levels_calc_all_button_clicked"/>
                                           </widget>
                                           <packing>
@@ -6718,14 +6555,13 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                       </widget>
                                       <packing>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6734,7 +6570,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -6743,7 +6578,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6764,7 +6599,7 @@
                                         <property name="left_attach">2</property>
                                         <property name="right_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6787,7 +6622,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6801,7 +6636,7 @@
                                         <property name="left_attach">1</property>
                                         <property name="right_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -6818,7 +6653,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -6840,7 +6675,7 @@
                                         <property name="left_attach">6</property>
                                         <property name="right_attach">7</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6863,7 +6698,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6884,7 +6719,7 @@
                                         <property name="left_attach">4</property>
                                         <property name="right_attach">5</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6907,7 +6742,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -6921,7 +6756,7 @@
                                         <property name="left_attach">3</property>
                                         <property name="right_attach">4</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -6938,7 +6773,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -6953,7 +6788,7 @@
                                         <property name="left_attach">5</property>
                                         <property name="right_attach">6</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -6970,7 +6805,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -7051,7 +6886,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">2</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <signal name="clicked" handler="on_phoebe_para_lum_el3_edit_button_clicked"/>
                                           </widget>
@@ -7098,7 +6932,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                        <property name="items" translatable="yes"></property>
+                                        <property name="items" translatable="yes"/>
                                       </widget>
                                       <packing>
                                         <property name="expand">False</property>
@@ -7126,14 +6960,13 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
                                       </widget>
                                       <packing>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7142,7 +6975,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -7151,7 +6983,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7161,7 +6993,6 @@
                                         <property name="sensitive">False</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -7170,7 +7001,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7184,7 +7015,7 @@
                                         <property name="left_attach">1</property>
                                         <property name="right_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7200,7 +7031,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7217,7 +7048,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7238,7 +7069,7 @@
                                         <property name="left_attach">2</property>
                                         <property name="right_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7262,7 +7093,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7285,7 +7116,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7306,7 +7137,7 @@
                                         <property name="left_attach">6</property>
                                         <property name="right_attach">7</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7329,7 +7160,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7353,7 +7184,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7374,7 +7205,7 @@
                                         <property name="left_attach">4</property>
                                         <property name="right_attach">5</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7397,7 +7228,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7421,7 +7252,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7435,7 +7266,7 @@
                                         <property name="left_attach">3</property>
                                         <property name="right_attach">4</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7451,7 +7282,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7468,7 +7299,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7482,7 +7313,7 @@
                                         <property name="left_attach">5</property>
                                         <property name="right_attach">6</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7498,7 +7329,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7515,7 +7346,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                   </widget>
@@ -7567,6 +7398,18 @@
                                     <property name="column_spacing">4</property>
                                     <property name="row_spacing">2</property>
                                     <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
                                       <widget class="GtkSpinButton" id="phoebe_para_lum_options_reflections_spinbutton">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -7582,7 +7425,7 @@
                                         <property name="left_attach">1</property>
                                         <property name="right_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7596,7 +7439,7 @@
                                         <property name="left_attach">2</property>
                                         <property name="right_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7605,23 +7448,13 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                       </widget>
                                       <packing>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
                                     </child>
                                   </widget>
                                 </child>
@@ -7706,8 +7539,8 @@
                                       <packing>
                                         <property name="left_attach">1</property>
                                         <property name="right_attach">2</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7722,8 +7555,8 @@
                                       <packing>
                                         <property name="left_attach">2</property>
                                         <property name="right_attach">3</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7744,8 +7577,8 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -7767,8 +7600,8 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -7790,8 +7623,8 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -7813,8 +7646,8 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -7829,8 +7662,8 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -7844,9 +7677,15 @@
                                       <packing>
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                       </packing>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
                                     </child>
                                     <child>
                                       <placeholder/>
@@ -7885,16 +7724,19 @@
                                     <property name="n_rows">3</property>
                                     <property name="n_columns">3</property>
                                     <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
                                       <widget class="GtkComboBox" id="phoebe_para_ld_model_combobox">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="items" translatable="yes"></property>
+                                        <property name="items" translatable="yes"/>
                                         <signal name="changed" handler="on_phoebe_para_ld_model_combobox_changed"/>
                                       </widget>
                                       <packing>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
-                                        <property name="y_options"></property>
+                                        <property name="x_options"/>
+                                        <property name="y_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -7907,7 +7749,7 @@
                                         <property name="left_attach">1</property>
                                         <property name="right_attach">2</property>
                                         <property name="bottom_attach">3</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -7918,7 +7760,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">2</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_para_ld_model_tables_vanhamme_button_clicked"/>
                                       </widget>
@@ -7927,7 +7768,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                         <property name="x_padding">1</property>
                                       </packing>
                                     </child>
@@ -7938,7 +7779,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">2</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                       </widget>
@@ -7948,11 +7788,8 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_SHRINK</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
                                     </child>
                                   </widget>
                                 </child>
@@ -8025,7 +7862,6 @@
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
                                             <property name="border_width">4</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <signal name="clicked" handler="on_phoebe_para_ld_lccoefs_edit_button_clicked"/>
                                           </widget>
@@ -8074,7 +7910,7 @@
                                         <property name="right_attach">3</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -8094,7 +7930,7 @@
                                       <packing>
                                         <property name="left_attach">2</property>
                                         <property name="right_attach">3</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -8110,7 +7946,7 @@
                                         <property name="right_attach">2</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -8124,7 +7960,7 @@
                                       <packing>
                                         <property name="left_attach">1</property>
                                         <property name="right_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -8135,7 +7971,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -8143,7 +7978,7 @@
                                       <packing>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -8153,7 +7988,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="on_phoebe_para_tba_checkbutton_toggled"/>
@@ -8172,7 +8006,7 @@
                                       <packing>
                                         <property name="left_attach">3</property>
                                         <property name="right_attach">4</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -8188,7 +8022,7 @@
                                         <property name="right_attach">4</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -8202,7 +8036,7 @@
                                       <packing>
                                         <property name="left_attach">5</property>
                                         <property name="right_attach">6</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -8218,7 +8052,7 @@
                                         <property name="right_attach">6</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">5</property>
                                       </packing>
                                     </child>
@@ -8238,7 +8072,7 @@
                                       <packing>
                                         <property name="left_attach">4</property>
                                         <property name="right_attach">5</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -8260,7 +8094,7 @@
                                         <property name="right_attach">5</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -8280,7 +8114,7 @@
                                       <packing>
                                         <property name="left_attach">6</property>
                                         <property name="right_attach">7</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -8302,7 +8136,7 @@
                                         <property name="right_attach">7</property>
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
-                                        <property name="x_options"></property>
+                                        <property name="x_options"/>
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
@@ -8378,7 +8212,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <signal name="clicked" handler="on_phoebe_para_ld_rvcoefs_edit_button_clicked"/>
                                       </widget>
                                       <packing>
@@ -8482,7 +8315,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_para_spots_add_button_clicked"/>
                                       </widget>
@@ -8499,7 +8331,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_para_spots_edit_button_clicked"/>
                                       </widget>
@@ -8516,7 +8347,6 @@
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
                                         <property name="border_width">4</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
                                         <signal name="clicked" handler="on_phoebe_para_spots_remove_button_clicked"/>
                                       </widget>
@@ -8546,7 +8376,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
                               </widget>
@@ -8562,7 +8391,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
                               </widget>
@@ -8593,7 +8421,7 @@
                                   <widget class="GtkComboBox" id="phoebe_para_spots_units_combobox">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="items" translatable="yes"></property>
+                                    <property name="items" translatable="yes"/>
                                     <signal name="changed" handler="on_phoebe_para_spots_units_combobox_changed"/>
                                   </widget>
                                   <packing>
@@ -8692,7 +8520,6 @@
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="on_phoebe_para_spots_latadjust_checkbutton_toggled"/>
                                           </widget>
@@ -8959,7 +8786,6 @@
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="on_phoebe_para_spots_lonadjust_checkbutton_toggled"/>
                                           </widget>
@@ -9226,7 +9052,6 @@
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="on_phoebe_para_spots_radadjust_checkbutton_toggled"/>
                                           </widget>
@@ -9493,7 +9318,6 @@
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="on_phoebe_para_spots_tempadjust_checkbutton_toggled"/>
                                           </widget>
@@ -9763,7 +9587,7 @@
                                   <widget class="GtkComboBox" id="phoebe_fitt_method_combobox">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="items" translatable="yes"></property>
+                                    <property name="items" translatable="yes"/>
                                     <signal name="changed" handler="on_phoebe_fitt_method_combobox_changed"/>
                                   </widget>
                                   <packing>
@@ -9830,7 +9654,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <property name="use_action_appearance">False</property>
                                         <signal name="clicked" handler="on_phoebe_fitt_cfval_compute_button_clicked"/>
                                       </widget>
                                       <packing>
@@ -9894,14 +9717,13 @@
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
                                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                   </widget>
                                   <packing>
                                     <property name="right_attach">2</property>
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
-                                    <property name="y_options"></property>
+                                    <property name="y_options"/>
                                   </packing>
                                 </child>
                                 <child>
@@ -9913,7 +9735,7 @@
                                     <property name="label" translatable="yes">Marquardt Lambda:</property>
                                   </widget>
                                   <packing>
-                                    <property name="y_options"></property>
+                                    <property name="y_options"/>
                                   </packing>
                                 </child>
                                 <child>
@@ -9932,8 +9754,8 @@
                                   <packing>
                                     <property name="left_attach">1</property>
                                     <property name="right_attach">2</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
+                                    <property name="x_options"/>
+                                    <property name="y_options"/>
                                   </packing>
                                 </child>
                               </widget>
@@ -9984,7 +9806,7 @@
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
                                     <property name="x_options">GTK_FILL</property>
-                                    <property name="y_options"></property>
+                                    <property name="y_options"/>
                                   </packing>
                                 </child>
                                 <child>
@@ -10019,7 +9841,7 @@
                                   </widget>
                                   <packing>
                                     <property name="x_options">GTK_FILL</property>
-                                    <property name="y_options"></property>
+                                    <property name="y_options"/>
                                   </packing>
                                 </child>
                                 <child>
@@ -10049,7 +9871,6 @@
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
                                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="on_phoebe_fitt_nms_nolimit_checkbutton_toggled"/>
                                   </widget>
@@ -10119,7 +9940,6 @@
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
                                     <property name="border_width">2</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
                                     <signal name="clicked" handler="on_phoebe_para_lum_weighting_edit_button_clicked"/>
                                   </widget>
@@ -10195,7 +10015,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
                                         <signal name="clicked" handler="on_phoebe_fitt_fitting_detach_button_clicked"/>
                                         <child>
@@ -10320,7 +10139,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <signal name="clicked" handler="on_phoebe_fitt_fitting_corrmat_button_clicked"/>
                                           </widget>
                                           <packing>
@@ -10347,7 +10165,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <signal name="clicked" handler="on_phoebe_fitt_calculate_button_clicked"/>
                                           </widget>
                                           <packing>
@@ -10362,7 +10179,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <signal name="clicked" handler="on_phoebe_fitt_updateall_button_clicked"/>
                                           </widget>
                                           <packing>
@@ -10459,7 +10275,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="relief">none</property>
                                     <signal name="clicked" handler="on_phoebe_lc_plot_detach_button_clicked"/>
                                     <child>
@@ -10480,7 +10295,7 @@
                               <packing>
                                 <property name="right_attach">2</property>
                                 <property name="x_options">GTK_FILL</property>
-                                <property name="y_options"></property>
+                                <property name="y_options"/>
                               </packing>
                             </child>
                             <child>
@@ -10502,6 +10317,18 @@
                                         <property name="n_columns">2</property>
                                         <property name="column_spacing">12</property>
                                         <property name="row_spacing">2</property>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
                                         <child>
                                           <widget class="GtkVBox" id="vbox15">
                                             <property name="visible">True</property>
@@ -10551,6 +10378,9 @@
                                         <child>
                                           <placeholder/>
                                         </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
                                       </widget>
                                       <packing>
                                         <property name="expand">False</property>
@@ -10580,7 +10410,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <property name="active">True</property>
                                             <property name="draw_indicator">True</property>
@@ -10597,7 +10426,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
@@ -10665,7 +10493,7 @@
                                             <property name="right_attach">5</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -10684,7 +10512,7 @@
                                           <packing>
                                             <property name="left_attach">4</property>
                                             <property name="right_attach">5</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -10698,7 +10526,7 @@
                                             <property name="right_attach">4</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -10710,20 +10538,20 @@
                                           <packing>
                                             <property name="left_attach">3</property>
                                             <property name="right_attach">4</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
                                           <widget class="GtkComboBox" id="phoebe_lc_plot_options_x_combobox">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="items" translatable="yes"></property>
+                                            <property name="items" translatable="yes"/>
                                             <signal name="changed" handler="on_phoebe_lc_plot_options_x_combobox_changed"/>
                                           </widget>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -10736,7 +10564,7 @@
                                           <packing>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -10747,8 +10575,8 @@
                                             <property name="label" translatable="yes">X</property>
                                           </widget>
                                           <packing>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
+                                            <property name="x_options"/>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -10756,14 +10584,14 @@
                                             <property name="width_request">120</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="items" translatable="yes"></property>
+                                            <property name="items" translatable="yes"/>
                                           </widget>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                       </widget>
@@ -10795,7 +10623,7 @@
                                 <property name="right_attach">2</property>
                                 <property name="top_attach">1</property>
                                 <property name="bottom_attach">2</property>
-                                <property name="y_options"></property>
+                                <property name="y_options"/>
                               </packing>
                             </child>
                             <child>
@@ -10818,11 +10646,16 @@
                                         <property name="n_columns">3</property>
                                         <property name="homogeneous">True</property>
                                         <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
                                           <widget class="GtkButton" id="phoebe_lc_plot_controls_left_button">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_lc_plot_controls_left_arrow">
                                                 <property name="visible">True</property>
@@ -10841,7 +10674,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_lc_plot_controls_down_arrow">
                                                 <property name="visible">True</property>
@@ -10862,7 +10694,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_lc_plot_controls_right_arrow">
                                                 <property name="visible">True</property>
@@ -10879,11 +10710,13 @@
                                           </packing>
                                         </child>
                                         <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
                                           <widget class="GtkButton" id="phoebe_lc_plot_controls_up_button">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_lc_plot_controls_up_arrow">
                                                 <property name="visible">True</property>
@@ -10903,7 +10736,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <placeholder/>
                                             </child>
@@ -10914,6 +10746,12 @@
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
                                           </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
                                         </child>
                                         <child>
                                           <placeholder/>
@@ -10957,7 +10795,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -10971,7 +10808,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -11021,7 +10857,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
                                           <packing>
@@ -11036,7 +10871,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
                                           <packing>
@@ -11108,7 +10942,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">False</property>
@@ -11122,7 +10955,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_stock">True</property>
                                           </widget>
                                           <packing>
@@ -11137,7 +10969,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_stock">True</property>
                                           </widget>
                                           <packing>
@@ -11152,7 +10983,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">False</property>
@@ -11205,6 +11035,9 @@
                                         <property name="n_rows">6</property>
                                         <property name="n_columns">2</property>
                                         <property name="homogeneous">True</property>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
                                         <child>
                                           <widget class="GtkLabel" id="phoebe_lc_plot_coordinates_cy_value">
                                             <property name="visible">True</property>
@@ -11308,9 +11141,6 @@
                                             <property name="bottom_attach">3</property>
                                           </packing>
                                         </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
                                       </widget>
                                     </child>
                                   </widget>
@@ -11390,7 +11220,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="relief">none</property>
                                     <property name="xalign">0</property>
                                     <property name="yalign">0</property>
@@ -11441,11 +11270,16 @@
                                         <property name="n_columns">3</property>
                                         <property name="homogeneous">True</property>
                                         <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
                                           <widget class="GtkButton" id="phoebe_rv_plot_controls_left_button">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_rv_plot_controls_left_arrow">
                                                 <property name="visible">True</property>
@@ -11464,7 +11298,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_rv_plot_controls_down_arrow">
                                                 <property name="visible">True</property>
@@ -11485,7 +11318,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_rv_plot_controls_right_arrow">
                                                 <property name="visible">True</property>
@@ -11502,11 +11334,13 @@
                                           </packing>
                                         </child>
                                         <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
                                           <widget class="GtkButton" id="phoebe_rv_plot_controls_up_button">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <widget class="GtkArrow" id="phoebe_rv_plot_controls_up_arrow">
                                                 <property name="visible">True</property>
@@ -11526,7 +11360,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <child>
                                               <placeholder/>
                                             </child>
@@ -11537,6 +11370,12 @@
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
                                           </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
                                         </child>
                                         <child>
                                           <placeholder/>
@@ -11580,7 +11419,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -11594,7 +11432,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -11644,7 +11481,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
                                           <packing>
@@ -11659,7 +11495,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
                                           <packing>
@@ -11730,7 +11565,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">False</property>
@@ -11744,7 +11578,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_stock">True</property>
                                           </widget>
                                           <packing>
@@ -11759,7 +11592,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_stock">True</property>
                                           </widget>
                                           <packing>
@@ -11774,7 +11606,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">False</property>
@@ -11829,6 +11660,18 @@
                                         <property name="column_spacing">12</property>
                                         <property name="row_spacing">2</property>
                                         <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
                                           <widget class="GtkVBox" id="vbox38">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
@@ -11877,6 +11720,9 @@
                                         <child>
                                           <placeholder/>
                                         </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
                                       </widget>
                                       <packing>
                                         <property name="expand">False</property>
@@ -11906,7 +11752,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <property name="active">True</property>
                                             <property name="draw_indicator">True</property>
@@ -11923,7 +11768,6 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
                                             <property name="draw_indicator">True</property>
                                           </widget>
@@ -11991,7 +11835,7 @@
                                             <property name="right_attach">5</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -12010,7 +11854,7 @@
                                           <packing>
                                             <property name="left_attach">4</property>
                                             <property name="right_attach">5</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -12024,7 +11868,7 @@
                                             <property name="right_attach">4</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -12036,20 +11880,20 @@
                                           <packing>
                                             <property name="left_attach">3</property>
                                             <property name="right_attach">4</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
                                           <widget class="GtkComboBox" id="phoebe_rv_plot_options_x_combobox">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="items" translatable="yes"></property>
+                                            <property name="items" translatable="yes"/>
                                             <signal name="changed" handler="on_phoebe_rv_plot_options_x_combobox_changed"/>
                                           </widget>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -12062,7 +11906,7 @@
                                           <packing>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -12073,8 +11917,8 @@
                                             <property name="label" translatable="yes">X</property>
                                           </widget>
                                           <packing>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
+                                            <property name="x_options"/>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                         <child>
@@ -12082,14 +11926,14 @@
                                             <property name="width_request">120</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="items" translatable="yes"></property>
+                                            <property name="items" translatable="yes"/>
                                           </widget>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
-                                            <property name="y_options"></property>
+                                            <property name="y_options"/>
                                           </packing>
                                         </child>
                                       </widget>
@@ -12118,7 +11962,7 @@
                                 <property name="right_attach">2</property>
                                 <property name="top_attach">1</property>
                                 <property name="bottom_attach">2</property>
-                                <property name="y_options"></property>
+                                <property name="y_options"/>
                               </packing>
                             </child>
                             <child>
@@ -12139,6 +11983,9 @@
                                         <property name="n_rows">6</property>
                                         <property name="n_columns">2</property>
                                         <property name="homogeneous">True</property>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
                                         <child>
                                           <widget class="GtkLabel" id="phoebe_rv_plot_coordinates_cy_value">
                                             <property name="visible">True</property>
@@ -12241,9 +12088,6 @@
                                             <property name="top_attach">2</property>
                                             <property name="bottom_attach">3</property>
                                           </packing>
-                                        </child>
-                                        <child>
-                                          <placeholder/>
                                         </child>
                                       </widget>
                                     </child>
@@ -12357,7 +12201,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                       </widget>
                                       <packing>
                                         <property name="expand">False</property>
@@ -12371,7 +12214,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="receives_default">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_stock">True</property>
                                       </widget>
                                       <packing>
@@ -12386,7 +12228,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_stock">True</property>
                                       </widget>
                                       <packing>
@@ -12455,7 +12296,6 @@
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
                                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
                                   </widget>
                                   <packing>
@@ -12474,7 +12314,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_stock">True</property>
                                       </widget>
                                       <packing>
@@ -12489,7 +12328,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="use_stock">True</property>
                                       </widget>
                                       <packing>
@@ -12595,7 +12433,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="relief">none</property>
                             <signal name="clicked" handler="on_phoebe_sidesheet_detach_button_clicked"/>
                             <child>
