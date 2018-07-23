@@ -241,7 +241,7 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
             cf += (obs->dep->val[i]-Lpb*syn->dep->val[i])*(obs->dep->val[i]-Lpb*syn->dep->val[i])/obs->weight->val[i]/obs->weight->val[i];
     }
     
-    return Py_BuildValue ("d", cf);
+    return Py_BuildValue ("d", cf/sigma/sigma);
 }
 
 static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
