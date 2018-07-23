@@ -38,7 +38,7 @@ int 			 gui_free_widgets	();
 
 int              gui_init_angle_widgets       ();
 int              gui_update_angle_values      ();
-int              gui_export_values_to_radians ();
+int              gui_export_angles_to_radians ();
 
 int				 gui_get_value_from_widget		(GUI_widget *widget);
 int 		     gui_set_value_to_widget		(GUI_widget *widget);

@@ -41,16 +41,16 @@ static PyObject *phoebeRoleReverse(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rm"), &q);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_pshift"), &pshift);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_perr0"), &perr0);
-    
+
     pot1n = pot2/q + (q-1)/2/q;
     pot2n = pot1/q + (q-1)/2/q;
     q = 1/q;
     pshift = pshift > 0.5 ? pshift - 0.5 : pshift + 0.5;
     perr0 = perr0 > 3.1415926 ? perr0 - 3.1415926 : perr0 + 3.1415926;
-    
+
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lcno"), &lcno);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rvno"), &rvno);
-    
+
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_pot1"), pot1n);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_pot2"), pot2n);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_rm"), q);
@@ -83,7 +83,7 @@ static PyObject *phoebeRoleReverse(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f2"), &c2);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_f1"), c2);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_f2"), c1);
-    
+
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_alb1"), &c1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_alb2"), &c2);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_alb1"), c2);
@@ -111,7 +111,7 @@ static PyObject *phoebeOpen(PyObject *self, PyObject *args)
 {
     char *fname;
     int status;
-    
+
     PyArg_ParseTuple(args, "s", &fname);
     status = phoebe_open_parameter_file(fname);
     if (status != SUCCESS) {
@@ -126,7 +126,7 @@ static PyObject *phoebeSave(PyObject *self, PyObject *args)
 {
     char *fname;
     int status;
-    
+
     PyArg_ParseTuple(args, "s", &fname);
     status = phoebe_save_parameter_file(fname);
     if (status != SUCCESS) {
@@ -141,10 +141,10 @@ static PyObject *phoebeCheck(PyObject *self, PyObject *args)
 {
     char *parname;
     PHOEBE_parameter *par;
-    
+
     PyArg_ParseTuple(args, "s", &parname);
     par = phoebe_parameter_lookup(parname);
-    
+
     if (phoebe_parameter_is_within_limits(par))
         return Py_BuildValue("i", 1);
     else
@@ -155,15 +155,15 @@ static PyObject *phoebePBLum(PyObject *self, PyObject *args)
 {
     int i, index;
     double sigma, num, denom, Lpb, hla;
-    
+
     PHOEBE_curve *obs, *syn;
-    
+
     PyArg_ParseTuple(args, "i", &index);
-    
+
     obs = phoebe_curve_new_from_pars(PHOEBE_CURVE_LC, index);
     phoebe_curve_transform(obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_sigma"), index, &sigma);
-    
+
     syn = phoebe_curve_new();
     phoebe_curve_compute(syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
 
@@ -177,27 +177,27 @@ static PyObject *phoebePBLum(PyObject *self, PyObject *args)
 
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_hla"), index, &hla);
 
-    return Py_BuildValue ("d", Lpb*hla);
+    return Py_BuildValue("d", Lpb*hla);
 }
 
 static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 {
-    int i, index, status, lexp, scale;
+    int i, index, status, lexp, scale, retlum;
     double cf, sigma, num, denom, Lpb;
     char *rstr, *ctype;
-    
+
     PHOEBE_curve *obs, *syn;
-    
+
     scale = 0;
-    PyArg_ParseTuple(args, "si|i", &ctype, &index, &scale);
-    
+    PyArg_ParseTuple(args, "si|ii", &ctype, &index, &scale, &retlum);
+
     if (strcmp(ctype, "lc") == 0 || strcmp(ctype, "LC") == 0) {
         obs = phoebe_curve_new_from_pars(PHOEBE_CURVE_LC, index);
         phoebe_curve_transform(obs, obs->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
         phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_sigma"), index, &sigma);
         phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_levweight"), index, &rstr);
         lexp = intern_get_level_weighting_id(rstr);
-        
+
         syn = phoebe_curve_new();
         phoebe_curve_compute(syn, obs->indep, index, obs->itype, PHOEBE_COLUMN_FLUX, NULL, NULL, NULL);
     }
@@ -235,13 +235,16 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 
         //~ for (i = 0; i < syn->dep->dim; i++)
             //~ printf("%lf %lf %lf %lf\n", syn->indep->val[i], obs->dep->val[i], syn->dep->val[i], Lpb*syn->dep->val[i]);
-        
+
         cf = 0.0;
         for (i = 0; i < syn->dep->dim; i++)
             cf += (obs->dep->val[i]-Lpb*syn->dep->val[i])*(obs->dep->val[i]-Lpb*syn->dep->val[i])/obs->weight->val[i]/obs->weight->val[i];
     }
-    
-    return Py_BuildValue ("d", cf/sigma/sigma);
+
+    if (scale == 0 || (scale == 1 && retlum == 0))
+        return Py_BuildValue("d", cf/sigma/sigma);
+    else
+        return Py_BuildValue ("(d,d)", cf/sigma/sigma, Lpb);
 }
 
 static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
@@ -250,16 +253,16 @@ static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
     char *parname;
     double parmin, parmax;
     PHOEBE_parameter *par;
-    
+
     PyArg_ParseTuple(args, "sdd", &parname, &parmin, &parmax);
-    
+
     par = phoebe_parameter_lookup(parname);
     status = phoebe_parameter_set_limits(par, parmin, parmax);
     if (status != SUCCESS) {
         printf ("%s", phoebe_error (status));
         return NULL;
     }
-    
+
     return Py_BuildValue ("i", status);
 }
 
@@ -269,16 +272,16 @@ static PyObject *phoebeGetLim(PyObject *self, PyObject *args)
     char *parname;
     double parmin, parmax;
     PHOEBE_parameter *par;
-    
+
     PyArg_ParseTuple(args, "s", &parname);
-    
+
     par = phoebe_parameter_lookup(parname);
     status = phoebe_parameter_get_limits(par, &parmin, &parmax);
     if (status != SUCCESS) {
         printf ("%s", phoebe_error (status));
         return NULL;
     }
-    
+
     return Py_BuildValue ("(d,d)", parmin, parmax);
 }
 
@@ -288,7 +291,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
     char *parname;
     PyObject *parval;
     PHOEBE_parameter *par;
-    
+
     PyArg_ParseTuple(args, "sO|i", &parname, &parval, &index);
     par = phoebe_parameter_lookup(parname);
     switch (par->type) {
@@ -377,12 +380,12 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
             printf("not yet implemented, sorry.\n");
             break;
     }
-    
+
     if (status != SUCCESS) {
         printf ("%s", phoebe_error (status));
         return NULL;
     }
-    
+
     return Py_BuildValue ("i", status);
 }
 
@@ -466,7 +469,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
         printf ("%s", phoebe_error (status));
         return NULL;
     }
-    
+
     return Py_BuildValue ("d", val);
 }
 
@@ -479,16 +482,16 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     double T1, T2, logg1, logg2, met1, met2;
     double pot1, pot2, sma, P, e, q, F1, F2;
     double xld, yld;
-    
+
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lcno"), &lcno);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rvno"), &rvno);
 
     /* LD model: */
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_model"), &ldname);
     ldmodel = phoebe_ld_model_type(ldname);
-    
+
     printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
-    
+
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff1"), &T1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff2"), &T2);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_met1"),  &met1);
@@ -504,9 +507,9 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f1"),  &F1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f2"),  &F2);
     phoebe_calculate_loggs(pot1, pot2, sma, P, e, q, F1, F2, &logg1, &logg2);
-    
+
     printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
-    
+
     /* Bolometric LD coefficients first: */
     xld = yld = 0;
     passband = phoebe_passband_lookup("Bolometric:3000A-10000A");
@@ -514,7 +517,7 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     //~ printf("Primary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_xbol1"), xld);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_ybol1"), yld);
-    
+
     xld = yld = 0;
     phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
     //~ printf("Secondary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
@@ -564,19 +567,19 @@ static PyObject *phoebeData(PyObject *self, PyObject *args)
     char *ctype;
     PHOEBE_curve *curve;
     PyObject *x, *y, *z, *ret;
-    
+
     if (!PyArg_ParseTuple(args, "si", &ctype, &cidx)) {
         printf("parsing failed.\n");
         return NULL;
     }
-    
+
     if (strcmp(ctype, "lc") == 0 || strcmp(ctype, "LC") == 0) {
         curve = phoebe_curve_new_from_pars(PHOEBE_CURVE_LC, cidx);
     }
     else {
         curve = phoebe_curve_new_from_pars(PHOEBE_CURVE_RV, cidx);
     }
-    
+
     phoebe_curve_transform(curve, curve->itype, PHOEBE_COLUMN_FLUX, PHOEBE_COLUMN_SIGMA);
 
     x = PyTuple_New(curve->indep->dim);
@@ -588,7 +591,7 @@ static PyObject *phoebeData(PyObject *self, PyObject *args)
         PyTuple_SetItem(z, i, Py_BuildValue("d", curve->weight->val[i]));
     }
     phoebe_curve_free(curve);
-    
+
     ret = PyTuple_New(3);
     PyTuple_SetItem(ret, 0, x);
     PyTuple_SetItem(ret, 1, y);
@@ -600,7 +603,7 @@ int intern_add_mesh_to_dict(PyObject *dict, PHOEBE_mesh *mesh, char *key, int co
 {
     int i, j;
     PyObject *tuple = PyTuple_New(mesh->verts*mesh->elems);
-    
+
     for (i = 0; i < mesh->verts; i++)
         for (j = 0; j < mesh->elems; j++)
             PyTuple_SetItem(tuple, i*mesh->elems+j, Py_BuildValue("d", mesh->mesh[i][j][col]));
@@ -616,17 +619,17 @@ int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
     PyObject *rho, *theta;
     PyObject *hAc = PyTuple_New(6);
     PyObject *hAs = PyTuple_New(6);
-    
+
     /* WD stores rhos and thetas in a fixed size array, but fills only
      * up to a certain element, with the remaining elements being
      * exactly 0. Here we will filter those out.
      */
     while (fabs(horizon->rho[hlen]) > 1e-6)
 		hlen++;
-        
+
     rho = PyTuple_New(hlen);
     theta = PyTuple_New(hlen);
-    
+
     for (i = 0; i < hlen; i++) {
 		PyTuple_SetItem(rho, i, Py_BuildValue("d", horizon->rho[i]));
 		PyTuple_SetItem(theta, i, Py_BuildValue("d", horizon->theta[i]));
@@ -635,7 +638,7 @@ int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
 		PyTuple_SetItem(hAc, i, Py_BuildValue("d", horizon->hAc[i]));
 		PyTuple_SetItem(hAs, i, Py_BuildValue("d", horizon->hAs[i]));
 	}
-    
+
     PyDict_SetItem(dict, Py_BuildValue("s", "rho"), rho);
     PyDict_SetItem(dict, Py_BuildValue("s", "theta"), theta);
     PyDict_SetItem(dict, Py_BuildValue("s", "hAc"), hAc);
@@ -648,19 +651,19 @@ int intern_add_feedback_to_dict(PyObject *dict, PHOEBE_minimizer_feedback *feedb
 {
     int i, dim = feedback->qualifiers->dim;
     PyObject *qualifiers, *initvals, *newvals, *ferrors;
-    
+
     qualifiers = PyTuple_New(dim);
     initvals = PyTuple_New(dim);
     newvals = PyTuple_New(dim);
     ferrors = PyTuple_New(dim);
-    
+
     for (i = 0; i < feedback->qualifiers->dim; i++) {
         PyTuple_SetItem(qualifiers, i, Py_BuildValue("s", feedback->qualifiers->val.strarray[i]));
         PyTuple_SetItem(initvals, i, Py_BuildValue("d", feedback->initvals->val[i]));
         PyTuple_SetItem(newvals, i, Py_BuildValue("d", feedback->newvals->val[i]));
         PyTuple_SetItem(ferrors, i, Py_BuildValue("d", feedback->ferrors->val[i]));
     }
-    
+
     PyDict_SetItem(dict, Py_BuildValue("s", "qualifiers"), qualifiers);
     PyDict_SetItem(dict, Py_BuildValue("s", "initvals"), initvals);
     PyDict_SetItem(dict, Py_BuildValue("s", "newvals"), newvals);
@@ -675,10 +678,10 @@ static PyObject *phoebeDC(PyObject *self, PyObject *args)
      * phoebeDC:
      * @self:
      * @args:
-     * 
+     *
      * Runs a single iteration of differential corrections.
      */
-     
+
     int status;
     PHOEBE_minimizer_feedback *feedback;
     PyObject *dict;
@@ -704,28 +707,28 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     int index, i;
     PyObject *obj, *lc, *combo = NULL;
     char *rstr;
-    
+
     Py_ssize_t tlen, mswitch = 0, hswitch = 0;
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
     PHOEBE_mesh *mesh1 = NULL, *mesh2 = NULL;
     PHOEBE_horizon *horizon = NULL;
-    
+
     if (!PyArg_ParseTuple(args, "Oi|ii", &obj, &index, &mswitch, &hswitch) || !PyTuple_Check(obj)) {
         printf("parsing failed.\n");
         return NULL;
     }
-    
+
     tlen = PyTuple_Size(obj);
     indep = phoebe_vector_new();
     phoebe_vector_alloc(indep, tlen);
     for (i = 0; i < tlen; i++)
-        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
-    
+        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));
+
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
     phoebe_column_get_type (&itype, rstr);
-    
+
     /* If mswitch is turned on, we need to store the computed meshes. */
     if (mswitch) {
         mesh1 = phoebe_mesh_new();
@@ -749,15 +752,15 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     for (i = 0; i < tlen; i++)
         PyTuple_SetItem(lc, i, Py_BuildValue("d", curve->dep->val[i]));
 
-	if (mswitch || hswitch) {
+	  if (mswitch || hswitch) {
         combo = PyTuple_New(1 + mswitch + hswitch);
         PyTuple_SetItem(combo, 0, lc);
-	}
+	  }
 
     if (mswitch) {
         /* Now we need to wrap this into something nice. */
         PyObject *dict = PyDict_New();
-        
+
         intern_add_mesh_to_dict(dict, mesh1, "vcx1",   0);
         intern_add_mesh_to_dict(dict, mesh1, "vcy1",   1);
         intern_add_mesh_to_dict(dict, mesh1, "vcz1",   2);
@@ -800,7 +803,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
 
         PyTuple_SetItem(combo, 1+mswitch, dict);
 	}
-    
+
     phoebe_curve_free(curve);
     phoebe_vector_free(indep);
     phoebe_mesh_free(mesh1);
@@ -818,25 +821,25 @@ static PyObject *phoebeRV1(PyObject *self, PyObject *args)
     int index, tlen, i, status;
     PyObject *obj, *ret;
     char *rstr;
-    
+
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
-    
+
     if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
         printf("parsing failed.\n");
         return NULL;
     }
-    
+
     tlen = PyTuple_Size(obj);
     indep = phoebe_vector_new();
     phoebe_vector_alloc(indep, tlen);
     for (i = 0; i < tlen; i++)
-        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
-    
+        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));
+
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
     phoebe_column_get_type (&itype, rstr);
-    
+
     curve = phoebe_curve_new();
     status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_PRIMARY_RV, NULL, NULL, NULL);
     if (status != SUCCESS) {
@@ -859,25 +862,25 @@ static PyObject *phoebeRV2(PyObject *self, PyObject *args)
     int index, tlen, i;
     PyObject *obj, *ret;
     char *rstr;
-    
+
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
-    
+
     if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
         printf("parsing failed.\n");
         return NULL;
     }
-    
+
     tlen = PyTuple_Size(obj);
     indep = phoebe_vector_new();
     phoebe_vector_alloc(indep, tlen);
     for (i = 0; i < tlen; i++)
-        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));    
-    
+        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));
+
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
     phoebe_column_get_type (&itype, rstr);
-    
+
     curve = phoebe_curve_new();
     phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_SECONDARY_RV, NULL, NULL, NULL);
 
@@ -895,7 +898,7 @@ static PyObject *phoebeCritPot(PyObject *self, PyObject *args)
 {
     /**
      * phoebeCritPot:
-     * 
+     *
      * Calculates critical surface potentials in L1 and L2 and returns
      * them in a 2-element tuple.
      */
@@ -908,11 +911,11 @@ static PyObject *phoebeCritPot(PyObject *self, PyObject *args)
         printf("parsing failed.\n");
         return NULL;
     }
-    
+
     status = phoebe_calculate_critical_potentials(q, F, e, &L1, &L2);
     if (status != SUCCESS)
         printf("%s", phoebe_error(status));
-    
+
     retval = PyTuple_New(2);
     PyTuple_SetItem(retval, 0, Py_BuildValue("d", L1));
     PyTuple_SetItem(retval, 1, Py_BuildValue("d", L2));
@@ -923,7 +926,7 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
 {
     /**
      * phoebeParameter:
-     * 
+     *
      * Packs all PHOEBE_parameter properties into a list to be parsed in
      * python into the parameter class. The following fields are parsed:
      *
@@ -932,16 +935,16 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
      *   parameter->kind
      *   parameter->format
      */
-    
+
     PyObject *list;
     PHOEBE_parameter *par;
     char *qualifier;
     int i;
-    
+
     PyArg_ParseTuple (args, "s", &qualifier);
     par = phoebe_parameter_lookup (qualifier);
     if (!par) return Py_BuildValue ("");
-    
+
     list = PyList_New (8);
 
     PyList_SetItem (list, 0, Py_BuildValue ("s", par->qualifier));
