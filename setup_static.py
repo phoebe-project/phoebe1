@@ -15,8 +15,8 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
   # WD library (libwd) Fortran 77 (legacy)
   #
 
-  print "WD library (libwd)"
-  
+  print("WD library (libwd)")
+
   c = Fcompiler.new_fcompiler()
 
   workdir = './phoebe_legacy/libwd'
@@ -28,20 +28,20 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
   c.customize()
   #print c.compiler_f77
-  
+
   # Compile into .o files
   objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC", "-std=legacy"])
 
   # Create static library
   c = Ccompiler.new_compiler()   # linking does not work with fcompiler
-  
+
   c.create_static_lib(objects, "wd", output_dir="./build")
 
 
   #
   # PHOEBE library (libphoebe)
   #
-  print "PHOEBE library methods (libphoebe)"
+  print("PHOEBE library methods (libphoebe)")
 
   c = Ccompiler.new_compiler()
   workdir = "./phoebe_legacy/libphoebe_methods"
@@ -53,9 +53,9 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
   #c.set_libraries(['wd','gsl','gslcblas','m'])
 
   c.set_library_dirs("./phoebe_legacy/libwd")
-  
+
   c.define_macro("PHOEBE_GSL_DISABLED")
-  
+
   # Compile into .o files
   objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC"])
 
@@ -85,4 +85,3 @@ setup (name = 'phoebe_legacy',
        packages = ['phoebe_legacy'],
        package_data={'phoebe_legacy': ['tables/wd/*','tables/ptf/*', 'tables/vanhamme/*', 'tables/ld/*'], },
        ext_modules = ext_modules)
-
