@@ -3,6 +3,10 @@
 #include <string.h>
 #include <math.h>
 
+#if PY_MAJOR_VERSION >= 3
+#define PY3K
+#endif
+
 static PyObject *phoebeInit(PyObject *self, PyObject *args)
 {
     int status = phoebe_init();
@@ -183,7 +187,7 @@ static PyObject *phoebePBLum(PyObject *self, PyObject *args)
 static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 {
     int i, index, status, lexp, scale, retlum;
-    double cf, sigma, num, denom, Lpb;
+    double cf, sigma, num, denom, Lpb = 0.0;
     char *rstr, *ctype;
 
     PHOEBE_curve *obs, *syn;
@@ -296,22 +300,39 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
     par = phoebe_parameter_lookup(parname);
     switch (par->type) {
         case TYPE_INT: {
+#ifdef PY3K
+            long val;
+            if (!PyLong_Check(parval)) {
+                printf("error: integer value expected for %s.\n", parname);
+				return NULL;
+            }
+            val = PyLong_AsLong(parval);
+#else
 			int val;
 			if (!PyInt_Check(parval)) {
 				printf("error: integer value expected for %s.\n", parname);
 				return NULL;
 			}
 			val = PyInt_AS_LONG(parval);
+#endif
             status = phoebe_parameter_set_value(par, (int) val);
             break;
 		}
         case TYPE_BOOL: {
 			int val;
+#ifdef PY3K
+			if (!PyLong_Check(parval)) {
+				printf("error: boolean value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyLong_AsLong(parval);
+#else
 			if (!PyInt_Check(parval)) {
 				printf("error: boolean value expected for %s.\n", parname);
 				return NULL;
 			}
 			val = PyInt_AS_LONG(parval);
+#endif
             status = phoebe_parameter_set_value(par, (int) val);
             break;
 		}
@@ -327,31 +348,55 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 		}
 		case TYPE_STRING: {
 			char *val;
+#ifdef PY3K
+			if (!PyUnicode_Check(parval)) {
+				printf("error: string value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyUnicode_AsUTF8(parval);
+#else
 			if (!PyString_Check(parval)) {
 				printf("error: string value expected for %s.\n", parname);
 				return NULL;
 			}
 			val = PyString_AS_STRING(parval);
+#endif
 			status = phoebe_parameter_set_value(par, val);
 			break;
 		}
         case TYPE_INT_ARRAY: {
 			int val;
+#ifdef PY3K
+			if (!PyLong_Check(parval)) {
+				printf("error: float value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyLong_AsLong(parval);
+#else
 			if (!PyInt_Check(parval)) {
 				printf("error: float value expected for %s.\n", parname);
 				return NULL;
 			}
 			val = PyInt_AS_LONG(parval);
+#endif
             status = phoebe_parameter_set_value(par, index, (int) val);
             break;
 		}
         case TYPE_BOOL_ARRAY: {
 			int val;
+#ifdef PY3K
+			if (!PyLong_Check(parval)) {
+				printf("error: float value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyLong_AsLong(parval);
+#else
 			if (!PyInt_Check(parval)) {
 				printf("error: float value expected for %s.\n", parname);
 				return NULL;
 			}
 			val = PyInt_AS_LONG(parval);
+#endif
             status = phoebe_parameter_set_value(par, index, (int) val);
             break;
 		}
@@ -367,11 +412,19 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 		}
         case TYPE_STRING_ARRAY: {
 			char *val;
+#ifdef PY3K
+			if (!PyUnicode_Check(parval)) {
+				printf("error: string value expected for %s.\n", parname);
+				return NULL;
+			}
+			val = PyUnicode_AsUTF8(parval);
+#else
 			if (!PyString_Check(parval)) {
 				printf("error: string value expected for %s.\n", parname);
 				return NULL;
 			}
 			val = PyString_AS_STRING(parval);
+#endif
             status = phoebe_parameter_set_value(par, index, val);
             break;
 		}
@@ -1006,34 +1059,102 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
     return list;
 }
 
-static PyMethodDef PhoebeMethods[] = {
-    {"init",             phoebeInit,        METH_VARARGS, "Initialize PHOEBE backend"},
-    {"configure",        phoebeConfigure,   METH_VARARGS, "Configure all internal PHOEBE structures"},
-    {"quit",             phoebeQuit,        METH_VARARGS, "Quit PHOEBE"},
-    {"open",             phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
-    {"save",             phoebeSave,        METH_VARARGS, "Save PHOEBE parameter file"},
-    {"cfval",            phoebeCFVal,       METH_VARARGS, "Compute a cost function value of the passed curve"},
-    {"pblum",            phoebePBLum,       METH_VARARGS, "Compute passband luminosity of the passed curve"},
-    {"check",            phoebeCheck,       METH_VARARGS, "Check whether the parameter is within bounds"},
-    {"setpar",           phoebeSetPar,      METH_VARARGS, "Set the value of the parameter"},
-    {"getpar",           phoebeGetPar,      METH_VARARGS, "Get the value of the parameter"},
-    {"setlim",           phoebeSetLim,      METH_VARARGS, "Set parameter limits"},
-    {"getlim",           phoebeGetLim,      METH_VARARGS, "Get parameter limits"},
-    {"updateLD",         phoebeUpdateLD,    METH_VARARGS, "Update limb darkening coefficients"},
-    {"lc",               phoebeLC,          METH_VARARGS, "Compute light curve"},
-    {"dc",               phoebeDC,          METH_VARARGS, "Run one iteration of the differential corrections minimizer"},
-    {"rv1",              phoebeRV1,         METH_VARARGS, "Compute primary radial velocity curve"},
-    {"rv2",              phoebeRV2,         METH_VARARGS, "Compute secondary radial velocity curve"},
-    {"data",             phoebeData,        METH_VARARGS, "Return light or RV curve data"},
-    {"parameter",        phoebeParameter,   METH_VARARGS, "Return a list of parameter properties"},
-    {"role_reverse",     phoebeRoleReverse, METH_VARARGS, "Reverses the role of the primary and the secondary"},
-    {"critpot",          phoebeCritPot,     METH_VARARGS, "Computes critical surface potentials in L1 and L2"},
-    {NULL,               NULL,              0,            NULL}
+struct ModuleState {
+    PyObject *error;
 };
 
-PyMODINIT_FUNC initphoebeBackend (void)
+#ifdef PY3K
+#define GETSTATE(m) ((struct ModuleState *) PyModule_GetState(m))
+#else
+#define GETSTATE(m) (&_state)
+static struct ModuleState _state;
+#endif
+
+static PyObject *phoebeError(PyObject *m) {
+    struct ModuleState *st = GETSTATE(m);
+    PyErr_SetString(st->error, "phoebeBackend module failed to load.");
+    return NULL;
+}
+
+static PyMethodDef PhoebeMethods[] = {
+    {"error", (PyCFunction) phoebeError,       METH_NOARGS,  NULL},
+    {"init",                phoebeInit,        METH_VARARGS, "Initialize PHOEBE backend"},
+    {"configure",           phoebeConfigure,   METH_VARARGS, "Configure all internal PHOEBE structures"},
+    {"quit",                phoebeQuit,        METH_VARARGS, "Quit PHOEBE"},
+    {"open",                phoebeOpen,        METH_VARARGS, "Open PHOEBE parameter file"},
+    {"save",                phoebeSave,        METH_VARARGS, "Save PHOEBE parameter file"},
+    {"cfval",               phoebeCFVal,       METH_VARARGS, "Compute a cost function value of the passed curve"},
+    {"pblum",               phoebePBLum,       METH_VARARGS, "Compute passband luminosity of the passed curve"},
+    {"check",               phoebeCheck,       METH_VARARGS, "Check whether the parameter is within bounds"},
+    {"setpar",              phoebeSetPar,      METH_VARARGS, "Set the value of the parameter"},
+    {"getpar",              phoebeGetPar,      METH_VARARGS, "Get the value of the parameter"},
+    {"setlim",              phoebeSetLim,      METH_VARARGS, "Set parameter limits"},
+    {"getlim",              phoebeGetLim,      METH_VARARGS, "Get parameter limits"},
+    {"updateLD",            phoebeUpdateLD,    METH_VARARGS, "Update limb darkening coefficients"},
+    {"lc",                  phoebeLC,          METH_VARARGS, "Compute light curve"},
+    {"dc",                  phoebeDC,          METH_VARARGS, "Run one iteration of the differential corrections minimizer"},
+    {"rv1",                 phoebeRV1,         METH_VARARGS, "Compute primary radial velocity curve"},
+    {"rv2",                 phoebeRV2,         METH_VARARGS, "Compute secondary radial velocity curve"},
+    {"data",                phoebeData,        METH_VARARGS, "Return light or RV curve data"},
+    {"parameter",           phoebeParameter,   METH_VARARGS, "Return a list of parameter properties"},
+    {"role_reverse",        phoebeRoleReverse, METH_VARARGS, "Reverses the role of the primary and the secondary"},
+    {"critpot",             phoebeCritPot,     METH_VARARGS, "Computes critical surface potentials in L1 and L2"},
+    {NULL,                  NULL,              0,            NULL}
+};
+
+#ifdef PY3K
+
+static int PhoebeTraverse(PyObject *m, visitproc visit, void *arg) {
+    Py_VISIT(GETSTATE(m)->error);
+    return 0;
+}
+
+static int PhoebeClear(PyObject *m) {
+    Py_CLEAR(GETSTATE(m)->error);
+    return 0;
+}
+
+static struct PyModuleDef moduledef = {
+    PyModuleDef_HEAD_INIT,
+    "phoebeBackend",
+    NULL,
+    sizeof(struct ModuleState),
+    PhoebeMethods,
+    NULL,
+    PhoebeTraverse,
+    PhoebeClear,
+    NULL
+};
+
+#define INITERROR return NULL
+
+PyMODINIT_FUNC PyInit_phoebeBackend(void)
+#else
+
+#define INITERROR return
+
+void initphoebeBackend(void)
+#endif
 {
+    struct ModuleState *st;
+#ifdef PY3K
+    PyObject *backend = PyModule_Create(&moduledef);
+#else
     PyObject *backend = Py_InitModule("phoebeBackend", PhoebeMethods);
+#endif
+
     if (!backend)
-        return;
+        INITERROR;
+    
+    st = GETSTATE(backend);
+
+    st->error = PyErr_NewException("phoebeBackend.Error", NULL, NULL);
+    if (!st->error) {
+        Py_DECREF(backend);
+        INITERROR;
+    }
+
+#ifdef PY3K
+    return backend;
+#endif
 }
