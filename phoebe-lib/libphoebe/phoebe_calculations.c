@@ -578,7 +578,7 @@ int phoebe_calculate_plum_correction (double *alpha, PHOEBE_curve *syn, PHOEBE_c
 	/**
 	 * phoebe_calculate_plum_correction:
 	 * @alpha:     placeholder for passband luminosity correction:
-	 *             L1 -> L1/@alpha, L2 -> L2/@alpha
+	 *             L1 -> 1/@alpha * L1, L2 -> 1/@alpha * L2
 	 * @syn:       synthetic (model) light curve
 	 * @obs:       observed light curve
 	 * @levweight: level-dependent weighting (0 .. none, 1 .. sqrt, 2 .. lin)
@@ -635,7 +635,6 @@ int phoebe_calculate_plum_correction (double *alpha, PHOEBE_curve *syn, PHOEBE_c
 					phoebe_lib_error ("level-dependent weighting (lw=%d) invalid.\n", levweight);
 					return ERROR_INVALID_WEIGHT;
 			}
-
 			wsum_xy += obs->weight->val[i] * lw * obs->dep->val[i] * syn->dep->val[i];
 			wsum_xx += obs->weight->val[i] * lw * obs->dep->val[i] * obs->dep->val[i];
 		}
