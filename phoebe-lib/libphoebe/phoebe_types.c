@@ -67,6 +67,48 @@ PHOEBE_vector *phoebe_vector_new_from_qualifier (char *qualifier)
 	return vec;
 }
 
+PHOEBE_vector *phoebe_vector_new_from_data(double *data, int nelems)
+{
+	/**
+	 * phoebe_vector_new_from_data:
+	 * @data: valid array of doubles
+	 * @nelems: number of elements in the array
+	 * 
+	 * Appropriates data into a vector. No copying is
+	 * done, so @data will be freed on deallocation.
+	 * 
+	 * Returns: #PHOEBE_vector, or NULL if an error occurred.
+	 */
+
+	PHOEBE_vector *vec = phoebe_vector_new();
+	vec->dim = nelems;
+	vec->val = data;
+
+	return vec;
+}
+
+PHOEBE_vector *phoebe_vector_new_from_copied_data(double *data, int nelems)
+{
+	/**
+	 * phoebe_vector_new_from_copied_data:
+	 * @data: valid array of doubles
+	 * @nelems: number of elements in the array
+	 * 
+	 * Copy passed data into a new vector.
+	 * 
+ 	 * Returns: #PHOEBE_vector, or NULL if an error occurred.
+	 */
+
+	int i;
+	PHOEBE_vector *vec = phoebe_vector_new();
+
+	phoebe_vector_alloc(vec, nelems);
+	for (i = 0; i < nelems; i++)
+		vec->val[i] = data[i];
+	
+	return vec;
+}
+
 PHOEBE_vector *phoebe_vector_new_from_column (char *filename, int col)
 {
 	/**
