@@ -428,6 +428,11 @@ int wd_passband_id_lookup (int *id, const char *passband)
 	if (strcmp (passband, "SuperWASP:post2004") == 0) { *id = 56; return SUCCESS; }
 	if (strcmp (passband,     "BRITE:blue") == 0) { *id = 57; return SUCCESS; }
 	if (strcmp (passband,      "BRITE:red") == 0) { *id = 58; return SUCCESS; }
+	if (strcmp (passband,   "TESS:default") == 0) { *id = 59; return SUCCESS; }
+	if (strcmp (passband,  "Spitzer:3.6um") == 0) { *id = 60; return SUCCESS; }
+	if (strcmp (passband,  "Spitzer:4.5um") == 0) { *id = 61; return SUCCESS; }
+	if (strcmp (passband,  "Spitzer:5.8um") == 0) { *id = 62; return SUCCESS; }
+	if (strcmp (passband,  "Spitzer:8.0um") == 0) { *id = 63; return SUCCESS; }
 
 	*id = -1;
 	return ERROR_PASSBAND_INVALID;

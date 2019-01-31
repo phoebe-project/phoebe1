@@ -63,7 +63,7 @@ c
       parameter (iclmax=   100)
       parameter (iptmax= 50000)
       parameter (ncmax=     50)
-      parameter (iplmax=    58)
+      parameter (iplmax=    63)
       parameter (ipmax=     50)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -323,6 +323,21 @@ c      45   LSST i     LSST science book
 c      46   LSST z     LSST science book
 c      47   LSST y3    LSST science book
 c      48   LSST y4    LSST science book
+c      49   Walraven w Lub, J. & Pel, J. W. A&A 54, 137 (1963)
+c      50   Walraven u     "             "             "      
+c      51   Walraven l     "             "             "      
+c      52   Walraven b     "             "             "      
+c      53   Walraven v     "             "             "      
+c      54   MOST       Walker et al. 2003 PASP  115, 1023
+c      55   SWASP 2004 Gomez Maqueo Chew, priv.comm.
+c      56   SWASP 2006 Gomez Maqueo Chew, priv.comm.
+c      57   BRITE blue Weiss et al. (2014), PASP 126, 573
+c      58   BRITE red  Weiss et al. (2014), PASP 126, 573
+c      59   TESS       http://svo2.cab.inta-csic.es/theory/fps3/index.php?id=TESS/TESS.Red&&mode=browse&gname=TESS&gname2=TESS
+c      60   Spitzer b1 IRAC 3.6 micron array
+c      61   Spitzer b1 IRAC 4.5 micron array
+c      62   Spitzer b3 IRAC 5.8 micron array
+c      63   Spitzer b3 IRAC 8.0 micron array
 c
    15 FORMAT(1X,16(F11.5))
    16 FORMAT(1X,18(F7.4))

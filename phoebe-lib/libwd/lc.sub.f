@@ -50,7 +50,7 @@ c
       parameter (lpomax=100000)
       parameter (ispmax=   100)
       parameter (iclmax=   100)
-      parameter (iplmax=    58)
+      parameter (iplmax=    63)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -317,6 +317,11 @@ c      55   SWASP 2004 Gomez Maqueo Chew, priv.comm.
 c      56   SWASP 2006 Gomez Maqueo Chew, priv.comm.
 c      57   BRITE blue Weiss et al. (2014), PASP 126, 573
 c      58   BRITE red  Weiss et al. (2014), PASP 126, 573
+c      59   TESS       http://svo2.cab.inta-csic.es/theory/fps3/index.php?id=TESS/TESS.Red&&mode=browse&gname=TESS&gname2=TESS
+c      60   Spitzer b1 IRAC 3.6 micron array
+c      61   Spitzer b1 IRAC 4.5 micron array
+c      62   Spitzer b3 IRAC 5.8 micron array
+c      63   Spitzer b3 IRAC 8.0 micron array
 
       do 15067 i=1,ifrmax
       theta(i)=0.d0
