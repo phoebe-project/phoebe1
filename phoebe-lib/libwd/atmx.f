@@ -21,10 +21,10 @@ c                        default: iatmchunk = 528*25 = 13200
 c       iatmsize  ..   size of the atmosphere grid
 c                        default: iatmsize = 13200*19 = 250800
 c
-      parameter (iplmax  =63)
-      parameter (itemppts=48)
-      parameter (iloggpts=11)
-      parameter (imetpts =19)
+      parameter (iplmax  =1)
+      parameter (itemppts=72)
+      parameter (iloggpts=13)
+      parameter (imetpts =9)
       parameter (iatmpts=iloggpts*itemppts)
       parameter (iatmchunk=iatmpts*iplmax)
       parameter (iatmsize=iatmchunk*imetpts)
@@ -37,24 +37,16 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       common/arrayleg/ grand,istart
       common /ramprange/ tlowtol,thightol,glowtol,ghightol
       common /atmmessages/ message,komp
-      data effwvl/350.d0,412.d0,430.d0,546.d0,365.d0,440.d0,
-     $550.d0,680.d0,870.d0,1220.d0,2145.d0,3380.d0,4900.d0,
-     $9210.d0,650.d0,790.d0,230.d0,250.d0,270.d0,290.d0,
-     $310.d0,330.d0,430.d0,520.d0,500.d0,640.d0,640.d0,
-     $1620.d0,345.6d0,424.5d0,402.4d0,448.d0,550.d0,540.5d0,
-     $580.5d0,592.0d0,355.7d0,482.5d0,626.1d0,767.2d0,909.7d0,
-     $367.d0,485.d0,624.d0,752.d0,867.d0,963.d0,963.d0,326.d0,
-     $362.d0,382.d0,431.d0,540.d0,547.d0,550.d0,550.d0,427.d0,
-     $623.d0,797.d0,3600.d0,4500.d0,5800.d0,8000.d0/
+      data effwvl/550.d0/
       tlog=dlog10(t)
       trec=1.d0/t
-      tlow=3500.d0-tlowtol
+      tlow=2300.d0-tlowtol
       if(t.le.tlow) goto 66
-      thigh=50000.d0+thightol
-      fractol=thightol/50000.d0
+      thigh=12000.d0+thightol
+      fractol=thightol/12000.d0
       glow=0.d0-glowtol
       if(g.le.glow) goto 77
-      ghigh=5.d0+ghightol
+      ghigh=6.d0+ghightol
       if(g.ge.ghigh) goto 78
       tt=t
       gg=g
@@ -79,7 +71,7 @@ ccccccccccccccccccccccccccccccccccccccccccccccccccccc
 ccccccccccccccccccccccccccccccccccccccccccccccccccccc
       do 4 ii=1,m
       ib=ib+itemppts
-      do 719 ibin=1,4
+      do 719 ibin=1,1
       it=ib+(ibin-1)*12
       it1=it+1
       if(tt.le.grand(it1)) goto 720
@@ -174,7 +166,7 @@ ccccccccccccccccccccccccccccccccccccccccccccccccc
       ib=ib-48
       do 61 kik=1,2
       ib=ib+48
-      do 619 ibin=1,4
+      do 619 ibin=1,1
       it=ib+(ibin-1)*12
       it1=it+1
       if(tt.le.grand(it1)) goto 620

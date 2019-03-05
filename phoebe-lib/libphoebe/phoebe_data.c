@@ -369,70 +369,7 @@ int wd_passband_id_lookup (int *id, const char *passband)
 	 * Returns: #PHOEBE_error_code.
 	 */
 
-	if (strcmp (passband,    "Stromgren:u") == 0) { *id =  1; return SUCCESS; }
-	if (strcmp (passband,    "Stromgren:v") == 0) { *id =  2; return SUCCESS; }
-	if (strcmp (passband,    "Stromgren:b") == 0) { *id =  3; return SUCCESS; }
-	if (strcmp (passband,    "Stromgren:y") == 0) { *id =  4; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:U") == 0) { *id =  5; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:B") == 0) { *id =  6; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:V") == 0) { *id =  7; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:R") == 0) { *id =  8; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:I") == 0) { *id =  9; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:J") == 0) { *id = 10; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:H") == 0) { *id = 28; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:K") == 0) { *id = 11; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:L") == 0) { *id = 12; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:M") == 0) { *id = 13; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:N") == 0) { *id = 14; return SUCCESS; }
-	if (strcmp (passband,      "Cousins:R") == 0) { *id = 15; return SUCCESS; }
-	if (strcmp (passband,      "Cousins:I") == 0) { *id = 16; return SUCCESS; }
-	/*                                230           *id = 17;                 */
-	/*                                250           *id = 18;                 */
-	/*                                270           *id = 19;                 */
-	/*                                290           *id = 20;                 */
-	/*                                310           *id = 21;                 */
-	/*                                330           *id = 22;                 */
-	if (strcmp (passband,   "Hipparcos:BT") == 0) { *id = 23; return SUCCESS; }
-	if (strcmp (passband,   "Hipparcos:VT") == 0) { *id = 24; return SUCCESS; }
-	if (strcmp (passband,   "Hipparcos:Hp") == 0) { *id = 25; return SUCCESS; }
-	if (strcmp (passband,      "CoRoT:exo") == 0) { *id = 26; return SUCCESS; }
-	if (strcmp (passband,    "CoRoT:sismo") == 0) { *id = 27; return SUCCESS; }
-	if (strcmp (passband,      "Johnson:H") == 0) { *id = 28; return SUCCESS; }
-	if (strcmp (passband,       "Geneva:U") == 0) { *id = 29; return SUCCESS; }
-	if (strcmp (passband,       "Geneva:B") == 0) { *id = 30; return SUCCESS; }
-	if (strcmp (passband,      "Geneva:B1") == 0) { *id = 31; return SUCCESS; }
-	if (strcmp (passband,      "Geneva:B2") == 0) { *id = 32; return SUCCESS; }
-	if (strcmp (passband,       "Geneva:V") == 0) { *id = 33; return SUCCESS; }
-	if (strcmp (passband,      "Geneva:V1") == 0) { *id = 34; return SUCCESS; }
-	if (strcmp (passband,       "Geneva:G") == 0) { *id = 35; return SUCCESS; }
-	if (strcmp (passband,    "Kepler:mean") == 0) { *id = 36; return SUCCESS; }
-	if (strcmp (passband,       "Sloan:u'") == 0) { *id = 37; return SUCCESS; }
-	if (strcmp (passband,       "Sloan:g'") == 0) { *id = 38; return SUCCESS; }
-	if (strcmp (passband,       "Sloan:r'") == 0) { *id = 39; return SUCCESS; }
-	if (strcmp (passband,       "Sloan:i'") == 0) { *id = 40; return SUCCESS; }
-	if (strcmp (passband,       "Sloan:z'") == 0) { *id = 41; return SUCCESS; }
-	if (strcmp (passband,         "LSST:u") == 0) { *id = 42; return SUCCESS; }
-	if (strcmp (passband,         "LSST:g") == 0) { *id = 43; return SUCCESS; }
-	if (strcmp (passband,         "LSST:r") == 0) { *id = 44; return SUCCESS; }
-	if (strcmp (passband,         "LSST:i") == 0) { *id = 45; return SUCCESS; }
-	if (strcmp (passband,         "LSST:z") == 0) { *id = 46; return SUCCESS; }
-	if (strcmp (passband,        "LSST:y3") == 0) { *id = 47; return SUCCESS; }
-	if (strcmp (passband,        "LSST:y4") == 0) { *id = 48; return SUCCESS; }
-	if (strcmp (passband,     "Walraven:W") == 0) { *id = 49; return SUCCESS; }
-	if (strcmp (passband,     "Walraven:U") == 0) { *id = 50; return SUCCESS; }
-	if (strcmp (passband,     "Walraven:L") == 0) { *id = 51; return SUCCESS; }
-	if (strcmp (passband,     "Walraven:B") == 0) { *id = 52; return SUCCESS; }
-	if (strcmp (passband,     "Walraven:V") == 0) { *id = 53; return SUCCESS; }
-	if (strcmp (passband,   "MOST:default") == 0) { *id = 54; return SUCCESS; }
-	if (strcmp (passband,  "SuperWASP:pre2004") == 0) { *id = 55; return SUCCESS; }
-	if (strcmp (passband, "SuperWASP:post2004") == 0) { *id = 56; return SUCCESS; }
-	if (strcmp (passband,     "BRITE:blue") == 0) { *id = 57; return SUCCESS; }
-	if (strcmp (passband,      "BRITE:red") == 0) { *id = 58; return SUCCESS; }
-	if (strcmp (passband,   "TESS:default") == 0) { *id = 59; return SUCCESS; }
-	if (strcmp (passband,  "Spitzer:3.6um") == 0) { *id = 60; return SUCCESS; }
-	if (strcmp (passband,  "Spitzer:4.5um") == 0) { *id = 61; return SUCCESS; }
-	if (strcmp (passband,  "Spitzer:5.8um") == 0) { *id = 62; return SUCCESS; }
-	if (strcmp (passband,  "Spitzer:8.0um") == 0) { *id = 63; return SUCCESS; }
+	if (strcmp (passband,      "Johnson:V") == 0) { *id =  1; return SUCCESS; }
 
 	*id = -1;
 	return ERROR_PASSBAND_INVALID;

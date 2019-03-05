@@ -41,8 +41,6 @@ c      ispmax    ..    maximum number of spots
 c                        default: ispmax =    100
 c      iclmax    ..    maximum number of clouds
 c                        default: iclmax =    100
-c      iplmax    ..    number of defined passbands
-c                        default: iplmax =     25
 c
       parameter (Nmax=     200)
       parameter (igsmax= 33202)
@@ -50,12 +48,13 @@ c
       parameter (lpomax=100000)
       parameter (ispmax=   100)
       parameter (iclmax=   100)
-      parameter (iplmax=    63)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Model atmosphere grid properties:
 c
+c       iplmax    ..   number of defined passbands
+c                        default: iplmax =     25
 c       itemppts  ..   number of temperature coefficients per spectrum
 c                        default: itemppts=48 (4x12)
 c       iloggpts  ..   number of log(g) nodes
@@ -72,9 +71,10 @@ c                        default: iatmchunk = 528*25 = 13200
 c       iatmsize  ..   size of the atmosphere grid
 c                        default: iatmsize = 13200*19 = 250800
 c
-      parameter (itemppts=48)
-      parameter (iloggpts=11)
-      parameter (imetpts =19)
+      parameter (iplmax=1)
+      parameter (itemppts=72)
+      parameter (iloggpts=13)
+      parameter (imetpts =9)
       parameter (iatmpts=iloggpts*itemppts)
       parameter (iatmchunk=iatmpts*iplmax)
       parameter (iatmsize=iatmchunk*imetpts)
@@ -336,29 +336,19 @@ ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Ramp ranges are set below. The following values seem to work.
 c  They may be changed.
       tlowtol=1500.d0
-      thightol=50000.d0
+      thightol=12000.d0
       glowtol=4.0d0
       ghightol=4.0d0
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      abun(1)=1.d0
-      abun(2)=0.5d0
-      abun(3)=0.3d0
-      abun(4)=0.2d0
-      abun(5)=0.1d0
-      abun(6)=0.0d0
-      abun(7)=-0.1d0
-      abun(8)=-0.2d0
-      abun(9)=-0.3d0
-      abun(10)=-0.5d0
-      abun(11)=-1.0d0
-      abun(12)=-1.5d0
-      abun(13)=-2.0d0
-      abun(14)=-2.5d0
-      abun(15)=-3.0d0
-      abun(16)=-3.5d0
-      abun(17)=-4.0d0
-      abun(18)=-4.5d0
-      abun(19)=-5.0d0
+      abun(1)=-4.d0
+      abun(2)=-3.d0
+      abun(3)=-2.d0
+      abun(4)=-1.5d0
+      abun(5)=-1.d0
+      abun(6)=-0.5d0
+      abun(7)=0.d0
+      abun(8)=0.5d0
+      abun(9)=1.d0
       glog(1)=0.0d0
       glog(2)=0.5d0
       glog(3)=1.0d0
@@ -370,6 +360,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       glog(9)=4.0d0
       glog(10)=4.5d0
       glog(11)=5.0d0
+      glog(12)=5.5d0
+      glog(13)=6.0d0
       nn=100
       gau=0.d0
 
