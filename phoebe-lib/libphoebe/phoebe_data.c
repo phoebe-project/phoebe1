@@ -369,7 +369,7 @@ int wd_passband_id_lookup (int *id, const char *passband)
 	 * Returns: #PHOEBE_error_code.
 	 */
 
-	if (strcmp (passband,      "Johnson:V") == 0) { *id =  1; return SUCCESS; }
+	if (strcmp (passband,      "Kepler:mean") == 0) { *id =  1; return SUCCESS; }
 
 	*id = -1;
 	return ERROR_PASSBAND_INVALID;
