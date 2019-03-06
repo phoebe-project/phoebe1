@@ -22,7 +22,7 @@ c       iatmsize  ..   size of the atmosphere grid
 c                        default: iatmsize = 13200*19 = 250800
 c
       parameter (iplmax  =1)
-      parameter (itemppts=72)
+      parameter (itemppts=12)
       parameter (iloggpts=13)
       parameter (imetpts =9)
       parameter (iatmpts=iloggpts*itemppts)
@@ -53,8 +53,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if(g.ge.0.d0) goto 11
       gg=0.d0
       goto 12
-  11  if(g.le.5.d0) goto 12
-      gg=5.d0
+  11  if(g.le.6.d0) goto 12
+      gg=6.d0
   12  continue
 ccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c The following is for 4-point interpolation in log g.

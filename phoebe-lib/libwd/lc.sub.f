@@ -72,7 +72,7 @@ c       iatmsize  ..   size of the atmosphere grid
 c                        default: iatmsize = 13200*19 = 250800
 c
       parameter (iplmax=1)
-      parameter (itemppts=72)
+      parameter (itemppts=12)
       parameter (iloggpts=13)
       parameter (imetpts =9)
       parameter (iatmpts=iloggpts*itemppts)
@@ -335,10 +335,10 @@ c      63   Spitzer b3 IRAC 8.0 micron array
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Ramp ranges are set below. The following values seem to work.
 c  They may be changed.
-      tlowtol=1500.d0
-      thightol=12000.d0
-      glowtol=4.0d0
-      ghightol=4.0d0
+      tlowtol=0.d0
+      thightol=0.d0
+      glowtol=0.0d0
+      ghightol=0.0d0
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       abun(1)=-4.d0
       abun(2)=-3.d0
@@ -455,6 +455,7 @@ c  the input value.
       abunir=abunin
       abunin=abun(iab)
       istart=1+(iab-1)*iatmchunk
+      write(*,*) 'istart=', istart
 c***************************************************************
       if(mpage.ne.3) goto 897
       colam=clight/wl
