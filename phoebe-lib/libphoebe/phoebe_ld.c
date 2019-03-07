@@ -430,8 +430,8 @@ LD_table *phoebe_ld_table_intern_load (char *model_list)
 			phoebe_lib_warning ("reallocating LD arrays -- so that you know.\n");
 			recsize *= 2;
 			recT  = phoebe_realloc (recT, recsize * sizeof(*recT));
-			reclg = phoebe_realloc (recT, recsize * sizeof(*reclg));
-			recM  = phoebe_realloc (recT, recsize * sizeof(*recM));
+			reclg = phoebe_realloc (reclg, recsize * sizeof(*reclg));
+			recM  = phoebe_realloc (recM, recsize * sizeof(*recM));
 		}
 
 		matched = fscanf (models, "%d %d %d\n", &recT[i], &reclg[i], &recM[i]);

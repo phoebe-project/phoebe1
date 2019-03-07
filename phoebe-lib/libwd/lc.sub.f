@@ -455,7 +455,6 @@ c  the input value.
       abunir=abunin
       abunin=abun(iab)
       istart=1+(iab-1)*iatmchunk
-      write(*,*) 'istart=', istart
 c***************************************************************
       if(mpage.ne.3) goto 897
       colam=clight/wl
