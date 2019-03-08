@@ -24,9 +24,9 @@
 #                                                                      #
 ########################################################################
 
-lib_LTLIBRARIES = libwd.la
+lib_LTLIBRARIES = libwd_phoenix.la
 
-libwd_la_SOURCES = \
+libwd_phoenix_la_SOURCES = \
     atmx.f      bbl.f       binnum.f    cloud.f     conjph.f    dgmprd.f       \
     dminv.f     dura.f      ellone.f    fourls.f    gabs.f      jdph.f         \
     kepler.f    lcr.f       legendre.f  light.f     linpro.f    lum.f          \
@@ -39,9 +39,9 @@ libwd_la_SOURCES = \
 
 #CLEANFILES = 
 
-libwd_la_LDFLAGS = -release 2007-08-15
+libwd_phoenix_la_LDFLAGS = -release 1.0
 #libwd_la_FFLAGS  =
 #libwd_la_CFLAGS  =
 
-library_includedir=$(includedir)/phoebe
+library_includedir=$(includedir)/phoebe_phoenix
 library_include_HEADERS = wd.h

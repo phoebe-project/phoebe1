@@ -35,7 +35,7 @@
   AC_PREREQ(2.50)
 
 # Initialize configure.ac for autoconf:
-  AC_INIT([phoebe-gui],[svn],[phoebe-devel@lists.sourceforge.net])
+  AC_INIT([phoebe-gui-phoenix],[1.0],[phoebe-devel@lists.sourceforge.net])
 
 # Create a dedicated header file phoebe_scripter_build_config.h that will
 # contain all #define statements that correspond to whatever ./configure
@@ -45,7 +45,7 @@
 # Define the release name, date and type:
   AC_DEFINE(
 	PHOEBE_GUI_RELEASE_NAME,
-	[["PHOEBE GUI svn"]],
+	[["PHOEBE GUI 1.0"]],
 	[PHOEBE release name])
   AC_DEFINE(
 	PHOEBE_GUI_RELEASE_DATE,
@@ -129,7 +129,7 @@
 
 # Check if PHOEBE library is installed:
 
-  AC_CHECK_LIB(phoebe, phoebe_init, , phoebe_missing=1)
+  AC_CHECK_LIB(phoebe_phoenix, phoebe_init, , phoebe_missing=1)
 
   if test x$phoebe_missing == x1; then
     echo ""

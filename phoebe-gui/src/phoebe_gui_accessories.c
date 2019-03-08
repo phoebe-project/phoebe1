@@ -2,7 +2,7 @@
 #include <sys/stat.h>
 #include <math.h>
 
-#include <phoebe/phoebe.h>
+#include <phoebe_phoenix/phoebe.h>
 
 #include "phoebe_gui_build_config.h"
 

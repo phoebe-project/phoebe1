@@ -3,7 +3,7 @@
 #include <math.h>
 #include <libgen.h>
 
-#include <phoebe/phoebe.h>
+#include <phoebe_phoenix/phoebe.h>
 
 #include "phoebe_gui_accessories.h"
 #include "phoebe_gui_callbacks.h"

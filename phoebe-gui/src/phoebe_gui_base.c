@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include <phoebe/phoebe.h>
+#include <phoebe_phoenix/phoebe.h>
 
 #include "phoebe_gui_types.h"
 #include "phoebe_gui_base.h"

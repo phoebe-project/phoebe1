@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 
-#include <phoebe/phoebe.h>
+#include <phoebe_phoenix/phoebe.h>
 
 #include "phoebe_gui_error_handling.h"
 

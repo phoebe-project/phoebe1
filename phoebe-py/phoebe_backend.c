@@ -1,6 +1,6 @@
 #include <Python.h>
 #include <numpy/arrayobject.h>
-#include <phoebe/phoebe.h>
+#include <phoebe_phoenix/phoebe.h>
 #include <string.h>
 #include <math.h>
 
@@ -1074,7 +1074,7 @@ static struct ModuleState _state;
 
 static PyObject *phoebeError(PyObject *m) {
     struct ModuleState *st = GETSTATE(m);
-    PyErr_SetString(st->error, "phoebeBackend module failed to load.");
+    PyErr_SetString(st->error, "phoebeBackendPhoenix module failed to load.");
     return NULL;
 }
 
@@ -1118,7 +1118,7 @@ static int PhoebeClear(PyObject *m) {
 
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
-    "phoebeBackend",
+    "phoebeBackendPhoenix",
     NULL,
     sizeof(struct ModuleState),
     PhoebeMethods,
@@ -1130,12 +1130,12 @@ static struct PyModuleDef moduledef = {
 
 #define INITERROR return NULL
 
-PyMODINIT_FUNC PyInit_phoebeBackend(void)
+PyMODINIT_FUNC PyInit_phoebeBackendPhoenix(void)
 #else
 
 #define INITERROR return
 
-void initphoebeBackend(void)
+void initphoebeBackendPhoenix(void)
 #endif
 {
     import_array();
@@ -1143,7 +1143,7 @@ void initphoebeBackend(void)
 #ifdef PY3K
     PyObject *backend = PyModule_Create(&moduledef);
 #else
-    PyObject *backend = Py_InitModule("phoebeBackend", PhoebeMethods);
+    PyObject *backend = Py_InitModule("phoebeBackendPhoenix", PhoebeMethods);
 #endif
 
     if (!backend)
@@ -1151,7 +1151,7 @@ void initphoebeBackend(void)
     
     st = GETSTATE(backend);
 
-    st->error = PyErr_NewException("phoebeBackend.Error", NULL, NULL);
+    st->error = PyErr_NewException("phoebeBackendPhoenix.Error", NULL, NULL);
     if (!st->error) {
         Py_DECREF(backend);
         INITERROR;

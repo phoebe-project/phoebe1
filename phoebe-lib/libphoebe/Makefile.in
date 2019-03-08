@@ -163,29 +163,36 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(library_includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libphoebe_la_DEPENDENCIES = ../libwd/libwd.la
-am_libphoebe_la_OBJECTS = libphoebe_la-phoebe_constraints.grm.lo \
-	libphoebe_la-phoebe_constraints.lng.lo \
-	libphoebe_la-phoebe_accessories.lo libphoebe_la-phoebe_base.lo \
-	libphoebe_la-phoebe_calculations.lo \
-	libphoebe_la-phoebe_configuration.lo \
-	libphoebe_la-phoebe_constraints.lo libphoebe_la-phoebe_data.lo \
-	libphoebe_la-phoebe_error_handling.lo \
-	libphoebe_la-phoebe_fitting.lo \
-	libphoebe_la-phoebe_fortran_interface.lo \
-	libphoebe_la-phoebe_ld.lo libphoebe_la-phoebe_legacy.lo \
-	libphoebe_la-phoebe_model.lo libphoebe_la-phoebe_nms.lo \
-	libphoebe_la-phoebe_parameters.lo \
-	libphoebe_la-phoebe_radiation.lo \
-	libphoebe_la-phoebe_spectra.lo libphoebe_la-phoebe_types.lo
-libphoebe_la_OBJECTS = $(am_libphoebe_la_OBJECTS)
+libphoebe_phoenix_la_DEPENDENCIES = ../libwd/libwd_phoenix.la
+am_libphoebe_phoenix_la_OBJECTS =  \
+	libphoebe_phoenix_la-phoebe_constraints.grm.lo \
+	libphoebe_phoenix_la-phoebe_constraints.lng.lo \
+	libphoebe_phoenix_la-phoebe_accessories.lo \
+	libphoebe_phoenix_la-phoebe_base.lo \
+	libphoebe_phoenix_la-phoebe_calculations.lo \
+	libphoebe_phoenix_la-phoebe_configuration.lo \
+	libphoebe_phoenix_la-phoebe_constraints.lo \
+	libphoebe_phoenix_la-phoebe_data.lo \
+	libphoebe_phoenix_la-phoebe_error_handling.lo \
+	libphoebe_phoenix_la-phoebe_fitting.lo \
+	libphoebe_phoenix_la-phoebe_fortran_interface.lo \
+	libphoebe_phoenix_la-phoebe_ld.lo \
+	libphoebe_phoenix_la-phoebe_legacy.lo \
+	libphoebe_phoenix_la-phoebe_model.lo \
+	libphoebe_phoenix_la-phoebe_nms.lo \
+	libphoebe_phoenix_la-phoebe_parameters.lo \
+	libphoebe_phoenix_la-phoebe_radiation.lo \
+	libphoebe_phoenix_la-phoebe_spectra.lo \
+	libphoebe_phoenix_la-phoebe_types.lo
+libphoebe_phoenix_la_OBJECTS = $(am_libphoebe_phoenix_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-libphoebe_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libphoebe_la_CFLAGS) \
-	$(CFLAGS) $(libphoebe_la_LDFLAGS) $(LDFLAGS) -o $@
+libphoebe_phoenix_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) \
+	$(libphoebe_phoenix_la_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -201,25 +208,26 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/autoconfig/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/libphoebe_la-phoebe_accessories.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_base.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_calculations.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_configuration.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_constraints.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_constraints.grm.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_constraints.lng.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_data.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_error_handling.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_fitting.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_fortran_interface.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_ld.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_legacy.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_model.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_nms.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_parameters.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_radiation.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_spectra.Plo \
-	./$(DEPDIR)/libphoebe_la-phoebe_types.Plo
+am__depfiles_remade =  \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_accessories.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_base.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_calculations.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_configuration.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.grm.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.lng.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_data.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_error_handling.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fitting.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fortran_interface.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_ld.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_legacy.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_model.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_nms.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_parameters.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_radiation.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_spectra.Plo \
+	./$(DEPDIR)/libphoebe_phoenix_la-phoebe_types.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -258,8 +266,8 @@ AM_V_YACC = $(am__v_YACC_@AM_V@)
 am__v_YACC_ = $(am__v_YACC_@AM_DEFAULT_V@)
 am__v_YACC_0 = @echo "  YACC    " $@;
 am__v_YACC_1 = 
-SOURCES = $(libphoebe_la_SOURCES)
-DIST_SOURCES = $(libphoebe_la_SOURCES)
+SOURCES = $(libphoebe_phoenix_la_SOURCES)
+DIST_SOURCES = $(libphoebe_phoenix_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -434,8 +442,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-lib_LTLIBRARIES = libphoebe.la
-libphoebe_la_SOURCES = \
+lib_LTLIBRARIES = libphoebe_phoenix.la
+libphoebe_phoenix_la_SOURCES = \
     phoebe_constraints.grm.y          phoebe_constraints.lng.l          \
     phoebe_accessories.c              phoebe_accessories.h              \
     phoebe_base.c                     phoebe_base.h                     \
@@ -461,10 +469,10 @@ BUILT_SOURCES = phoebe_constraints.lng.h phoebe_constraints.grm.h
 EXTRA_DIST = phoebe_constraints.lng.h
 AM_YFLAGS = -d -p pc
 AM_LFLAGS = -P pc
-libphoebe_la_LDFLAGS = -release $(PACKAGE_VERSION)
-libphoebe_la_CFLAGS = -Wall $(EXTRA_WARNING_COMPILER_FLAG)
-libphoebe_la_LIBADD = ../libwd/libwd.la
-library_includedir = $(includedir)/phoebe
+libphoebe_phoenix_la_LDFLAGS = -release $(PACKAGE_VERSION)
+libphoebe_phoenix_la_CFLAGS = -Wall $(EXTRA_WARNING_COMPILER_FLAG)
+libphoebe_phoenix_la_LIBADD = ../libwd/libwd_phoenix.la
+library_includedir = $(includedir)/phoebe_phoenix
 library_include_HEADERS = phoebe.h                   \
                           phoebe_accessories.h       \
                           phoebe_base.h              \
@@ -572,8 +580,8 @@ phoebe_constraints.grm.h: phoebe_constraints.grm.c
 	@if test ! -f $@; then rm -f phoebe_constraints.grm.c; else :; fi
 	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) phoebe_constraints.grm.c; else :; fi
 
-libphoebe.la: $(libphoebe_la_OBJECTS) $(libphoebe_la_DEPENDENCIES) $(EXTRA_libphoebe_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libphoebe_la_LINK) -rpath $(libdir) $(libphoebe_la_OBJECTS) $(libphoebe_la_LIBADD) $(LIBS)
+libphoebe_phoenix.la: $(libphoebe_phoenix_la_OBJECTS) $(libphoebe_phoenix_la_DEPENDENCIES) $(EXTRA_libphoebe_phoenix_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libphoebe_phoenix_la_LINK) -rpath $(libdir) $(libphoebe_phoenix_la_OBJECTS) $(libphoebe_phoenix_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -581,25 +589,25 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_accessories.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_base.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_calculations.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_configuration.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_constraints.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_constraints.grm.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_constraints.lng.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_data.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_error_handling.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_fitting.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_fortran_interface.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_ld.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_legacy.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_model.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_nms.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_parameters.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_radiation.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_spectra.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_la-phoebe_types.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_accessories.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_base.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_calculations.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_configuration.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.grm.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.lng.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_data.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_error_handling.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fitting.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fortran_interface.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_ld.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_legacy.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_model.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_nms.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_parameters.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_radiation.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_spectra.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libphoebe_phoenix_la-phoebe_types.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -628,138 +636,138 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
-libphoebe_la-phoebe_constraints.grm.lo: phoebe_constraints.grm.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_constraints.grm.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_constraints.grm.Tpo -c -o libphoebe_la-phoebe_constraints.grm.lo `test -f 'phoebe_constraints.grm.c' || echo '$(srcdir)/'`phoebe_constraints.grm.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_constraints.grm.Tpo $(DEPDIR)/libphoebe_la-phoebe_constraints.grm.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_constraints.grm.c' object='libphoebe_la-phoebe_constraints.grm.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_constraints.grm.lo: phoebe_constraints.grm.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_constraints.grm.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.grm.Tpo -c -o libphoebe_phoenix_la-phoebe_constraints.grm.lo `test -f 'phoebe_constraints.grm.c' || echo '$(srcdir)/'`phoebe_constraints.grm.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.grm.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.grm.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_constraints.grm.c' object='libphoebe_phoenix_la-phoebe_constraints.grm.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_constraints.grm.lo `test -f 'phoebe_constraints.grm.c' || echo '$(srcdir)/'`phoebe_constraints.grm.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_constraints.grm.lo `test -f 'phoebe_constraints.grm.c' || echo '$(srcdir)/'`phoebe_constraints.grm.c
 
-libphoebe_la-phoebe_constraints.lng.lo: phoebe_constraints.lng.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_constraints.lng.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_constraints.lng.Tpo -c -o libphoebe_la-phoebe_constraints.lng.lo `test -f 'phoebe_constraints.lng.c' || echo '$(srcdir)/'`phoebe_constraints.lng.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_constraints.lng.Tpo $(DEPDIR)/libphoebe_la-phoebe_constraints.lng.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_constraints.lng.c' object='libphoebe_la-phoebe_constraints.lng.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_constraints.lng.lo: phoebe_constraints.lng.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_constraints.lng.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.lng.Tpo -c -o libphoebe_phoenix_la-phoebe_constraints.lng.lo `test -f 'phoebe_constraints.lng.c' || echo '$(srcdir)/'`phoebe_constraints.lng.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.lng.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.lng.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_constraints.lng.c' object='libphoebe_phoenix_la-phoebe_constraints.lng.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_constraints.lng.lo `test -f 'phoebe_constraints.lng.c' || echo '$(srcdir)/'`phoebe_constraints.lng.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_constraints.lng.lo `test -f 'phoebe_constraints.lng.c' || echo '$(srcdir)/'`phoebe_constraints.lng.c
 
-libphoebe_la-phoebe_accessories.lo: phoebe_accessories.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_accessories.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_accessories.Tpo -c -o libphoebe_la-phoebe_accessories.lo `test -f 'phoebe_accessories.c' || echo '$(srcdir)/'`phoebe_accessories.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_accessories.Tpo $(DEPDIR)/libphoebe_la-phoebe_accessories.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_accessories.c' object='libphoebe_la-phoebe_accessories.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_accessories.lo: phoebe_accessories.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_accessories.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_accessories.Tpo -c -o libphoebe_phoenix_la-phoebe_accessories.lo `test -f 'phoebe_accessories.c' || echo '$(srcdir)/'`phoebe_accessories.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_accessories.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_accessories.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_accessories.c' object='libphoebe_phoenix_la-phoebe_accessories.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_accessories.lo `test -f 'phoebe_accessories.c' || echo '$(srcdir)/'`phoebe_accessories.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_accessories.lo `test -f 'phoebe_accessories.c' || echo '$(srcdir)/'`phoebe_accessories.c
 
-libphoebe_la-phoebe_base.lo: phoebe_base.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_base.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_base.Tpo -c -o libphoebe_la-phoebe_base.lo `test -f 'phoebe_base.c' || echo '$(srcdir)/'`phoebe_base.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_base.Tpo $(DEPDIR)/libphoebe_la-phoebe_base.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_base.c' object='libphoebe_la-phoebe_base.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_base.lo: phoebe_base.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_base.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_base.Tpo -c -o libphoebe_phoenix_la-phoebe_base.lo `test -f 'phoebe_base.c' || echo '$(srcdir)/'`phoebe_base.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_base.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_base.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_base.c' object='libphoebe_phoenix_la-phoebe_base.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_base.lo `test -f 'phoebe_base.c' || echo '$(srcdir)/'`phoebe_base.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_base.lo `test -f 'phoebe_base.c' || echo '$(srcdir)/'`phoebe_base.c
 
-libphoebe_la-phoebe_calculations.lo: phoebe_calculations.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_calculations.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_calculations.Tpo -c -o libphoebe_la-phoebe_calculations.lo `test -f 'phoebe_calculations.c' || echo '$(srcdir)/'`phoebe_calculations.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_calculations.Tpo $(DEPDIR)/libphoebe_la-phoebe_calculations.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_calculations.c' object='libphoebe_la-phoebe_calculations.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_calculations.lo: phoebe_calculations.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_calculations.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_calculations.Tpo -c -o libphoebe_phoenix_la-phoebe_calculations.lo `test -f 'phoebe_calculations.c' || echo '$(srcdir)/'`phoebe_calculations.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_calculations.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_calculations.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_calculations.c' object='libphoebe_phoenix_la-phoebe_calculations.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_calculations.lo `test -f 'phoebe_calculations.c' || echo '$(srcdir)/'`phoebe_calculations.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_calculations.lo `test -f 'phoebe_calculations.c' || echo '$(srcdir)/'`phoebe_calculations.c
 
-libphoebe_la-phoebe_configuration.lo: phoebe_configuration.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_configuration.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_configuration.Tpo -c -o libphoebe_la-phoebe_configuration.lo `test -f 'phoebe_configuration.c' || echo '$(srcdir)/'`phoebe_configuration.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_configuration.Tpo $(DEPDIR)/libphoebe_la-phoebe_configuration.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_configuration.c' object='libphoebe_la-phoebe_configuration.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_configuration.lo: phoebe_configuration.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_configuration.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_configuration.Tpo -c -o libphoebe_phoenix_la-phoebe_configuration.lo `test -f 'phoebe_configuration.c' || echo '$(srcdir)/'`phoebe_configuration.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_configuration.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_configuration.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_configuration.c' object='libphoebe_phoenix_la-phoebe_configuration.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_configuration.lo `test -f 'phoebe_configuration.c' || echo '$(srcdir)/'`phoebe_configuration.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_configuration.lo `test -f 'phoebe_configuration.c' || echo '$(srcdir)/'`phoebe_configuration.c
 
-libphoebe_la-phoebe_constraints.lo: phoebe_constraints.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_constraints.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_constraints.Tpo -c -o libphoebe_la-phoebe_constraints.lo `test -f 'phoebe_constraints.c' || echo '$(srcdir)/'`phoebe_constraints.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_constraints.Tpo $(DEPDIR)/libphoebe_la-phoebe_constraints.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_constraints.c' object='libphoebe_la-phoebe_constraints.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_constraints.lo: phoebe_constraints.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_constraints.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.Tpo -c -o libphoebe_phoenix_la-phoebe_constraints.lo `test -f 'phoebe_constraints.c' || echo '$(srcdir)/'`phoebe_constraints.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_constraints.c' object='libphoebe_phoenix_la-phoebe_constraints.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_constraints.lo `test -f 'phoebe_constraints.c' || echo '$(srcdir)/'`phoebe_constraints.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_constraints.lo `test -f 'phoebe_constraints.c' || echo '$(srcdir)/'`phoebe_constraints.c
 
-libphoebe_la-phoebe_data.lo: phoebe_data.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_data.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_data.Tpo -c -o libphoebe_la-phoebe_data.lo `test -f 'phoebe_data.c' || echo '$(srcdir)/'`phoebe_data.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_data.Tpo $(DEPDIR)/libphoebe_la-phoebe_data.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_data.c' object='libphoebe_la-phoebe_data.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_data.lo: phoebe_data.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_data.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_data.Tpo -c -o libphoebe_phoenix_la-phoebe_data.lo `test -f 'phoebe_data.c' || echo '$(srcdir)/'`phoebe_data.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_data.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_data.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_data.c' object='libphoebe_phoenix_la-phoebe_data.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_data.lo `test -f 'phoebe_data.c' || echo '$(srcdir)/'`phoebe_data.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_data.lo `test -f 'phoebe_data.c' || echo '$(srcdir)/'`phoebe_data.c
 
-libphoebe_la-phoebe_error_handling.lo: phoebe_error_handling.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_error_handling.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_error_handling.Tpo -c -o libphoebe_la-phoebe_error_handling.lo `test -f 'phoebe_error_handling.c' || echo '$(srcdir)/'`phoebe_error_handling.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_error_handling.Tpo $(DEPDIR)/libphoebe_la-phoebe_error_handling.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_error_handling.c' object='libphoebe_la-phoebe_error_handling.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_error_handling.lo: phoebe_error_handling.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_error_handling.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_error_handling.Tpo -c -o libphoebe_phoenix_la-phoebe_error_handling.lo `test -f 'phoebe_error_handling.c' || echo '$(srcdir)/'`phoebe_error_handling.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_error_handling.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_error_handling.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_error_handling.c' object='libphoebe_phoenix_la-phoebe_error_handling.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_error_handling.lo `test -f 'phoebe_error_handling.c' || echo '$(srcdir)/'`phoebe_error_handling.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_error_handling.lo `test -f 'phoebe_error_handling.c' || echo '$(srcdir)/'`phoebe_error_handling.c
 
-libphoebe_la-phoebe_fitting.lo: phoebe_fitting.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_fitting.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_fitting.Tpo -c -o libphoebe_la-phoebe_fitting.lo `test -f 'phoebe_fitting.c' || echo '$(srcdir)/'`phoebe_fitting.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_fitting.Tpo $(DEPDIR)/libphoebe_la-phoebe_fitting.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_fitting.c' object='libphoebe_la-phoebe_fitting.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_fitting.lo: phoebe_fitting.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_fitting.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_fitting.Tpo -c -o libphoebe_phoenix_la-phoebe_fitting.lo `test -f 'phoebe_fitting.c' || echo '$(srcdir)/'`phoebe_fitting.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_fitting.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_fitting.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_fitting.c' object='libphoebe_phoenix_la-phoebe_fitting.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_fitting.lo `test -f 'phoebe_fitting.c' || echo '$(srcdir)/'`phoebe_fitting.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_fitting.lo `test -f 'phoebe_fitting.c' || echo '$(srcdir)/'`phoebe_fitting.c
 
-libphoebe_la-phoebe_fortran_interface.lo: phoebe_fortran_interface.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_fortran_interface.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_fortran_interface.Tpo -c -o libphoebe_la-phoebe_fortran_interface.lo `test -f 'phoebe_fortran_interface.c' || echo '$(srcdir)/'`phoebe_fortran_interface.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_fortran_interface.Tpo $(DEPDIR)/libphoebe_la-phoebe_fortran_interface.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_fortran_interface.c' object='libphoebe_la-phoebe_fortran_interface.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_fortran_interface.lo: phoebe_fortran_interface.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_fortran_interface.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_fortran_interface.Tpo -c -o libphoebe_phoenix_la-phoebe_fortran_interface.lo `test -f 'phoebe_fortran_interface.c' || echo '$(srcdir)/'`phoebe_fortran_interface.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_fortran_interface.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_fortran_interface.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_fortran_interface.c' object='libphoebe_phoenix_la-phoebe_fortran_interface.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_fortran_interface.lo `test -f 'phoebe_fortran_interface.c' || echo '$(srcdir)/'`phoebe_fortran_interface.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_fortran_interface.lo `test -f 'phoebe_fortran_interface.c' || echo '$(srcdir)/'`phoebe_fortran_interface.c
 
-libphoebe_la-phoebe_ld.lo: phoebe_ld.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_ld.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_ld.Tpo -c -o libphoebe_la-phoebe_ld.lo `test -f 'phoebe_ld.c' || echo '$(srcdir)/'`phoebe_ld.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_ld.Tpo $(DEPDIR)/libphoebe_la-phoebe_ld.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_ld.c' object='libphoebe_la-phoebe_ld.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_ld.lo: phoebe_ld.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_ld.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_ld.Tpo -c -o libphoebe_phoenix_la-phoebe_ld.lo `test -f 'phoebe_ld.c' || echo '$(srcdir)/'`phoebe_ld.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_ld.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_ld.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_ld.c' object='libphoebe_phoenix_la-phoebe_ld.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_ld.lo `test -f 'phoebe_ld.c' || echo '$(srcdir)/'`phoebe_ld.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_ld.lo `test -f 'phoebe_ld.c' || echo '$(srcdir)/'`phoebe_ld.c
 
-libphoebe_la-phoebe_legacy.lo: phoebe_legacy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_legacy.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_legacy.Tpo -c -o libphoebe_la-phoebe_legacy.lo `test -f 'phoebe_legacy.c' || echo '$(srcdir)/'`phoebe_legacy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_legacy.Tpo $(DEPDIR)/libphoebe_la-phoebe_legacy.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_legacy.c' object='libphoebe_la-phoebe_legacy.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_legacy.lo: phoebe_legacy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_legacy.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_legacy.Tpo -c -o libphoebe_phoenix_la-phoebe_legacy.lo `test -f 'phoebe_legacy.c' || echo '$(srcdir)/'`phoebe_legacy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_legacy.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_legacy.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_legacy.c' object='libphoebe_phoenix_la-phoebe_legacy.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_legacy.lo `test -f 'phoebe_legacy.c' || echo '$(srcdir)/'`phoebe_legacy.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_legacy.lo `test -f 'phoebe_legacy.c' || echo '$(srcdir)/'`phoebe_legacy.c
 
-libphoebe_la-phoebe_model.lo: phoebe_model.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_model.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_model.Tpo -c -o libphoebe_la-phoebe_model.lo `test -f 'phoebe_model.c' || echo '$(srcdir)/'`phoebe_model.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_model.Tpo $(DEPDIR)/libphoebe_la-phoebe_model.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_model.c' object='libphoebe_la-phoebe_model.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_model.lo: phoebe_model.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_model.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_model.Tpo -c -o libphoebe_phoenix_la-phoebe_model.lo `test -f 'phoebe_model.c' || echo '$(srcdir)/'`phoebe_model.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_model.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_model.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_model.c' object='libphoebe_phoenix_la-phoebe_model.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_model.lo `test -f 'phoebe_model.c' || echo '$(srcdir)/'`phoebe_model.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_model.lo `test -f 'phoebe_model.c' || echo '$(srcdir)/'`phoebe_model.c
 
-libphoebe_la-phoebe_nms.lo: phoebe_nms.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_nms.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_nms.Tpo -c -o libphoebe_la-phoebe_nms.lo `test -f 'phoebe_nms.c' || echo '$(srcdir)/'`phoebe_nms.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_nms.Tpo $(DEPDIR)/libphoebe_la-phoebe_nms.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_nms.c' object='libphoebe_la-phoebe_nms.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_nms.lo: phoebe_nms.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_nms.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_nms.Tpo -c -o libphoebe_phoenix_la-phoebe_nms.lo `test -f 'phoebe_nms.c' || echo '$(srcdir)/'`phoebe_nms.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_nms.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_nms.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_nms.c' object='libphoebe_phoenix_la-phoebe_nms.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_nms.lo `test -f 'phoebe_nms.c' || echo '$(srcdir)/'`phoebe_nms.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_nms.lo `test -f 'phoebe_nms.c' || echo '$(srcdir)/'`phoebe_nms.c
 
-libphoebe_la-phoebe_parameters.lo: phoebe_parameters.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_parameters.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_parameters.Tpo -c -o libphoebe_la-phoebe_parameters.lo `test -f 'phoebe_parameters.c' || echo '$(srcdir)/'`phoebe_parameters.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_parameters.Tpo $(DEPDIR)/libphoebe_la-phoebe_parameters.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_parameters.c' object='libphoebe_la-phoebe_parameters.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_parameters.lo: phoebe_parameters.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_parameters.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_parameters.Tpo -c -o libphoebe_phoenix_la-phoebe_parameters.lo `test -f 'phoebe_parameters.c' || echo '$(srcdir)/'`phoebe_parameters.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_parameters.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_parameters.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_parameters.c' object='libphoebe_phoenix_la-phoebe_parameters.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_parameters.lo `test -f 'phoebe_parameters.c' || echo '$(srcdir)/'`phoebe_parameters.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_parameters.lo `test -f 'phoebe_parameters.c' || echo '$(srcdir)/'`phoebe_parameters.c
 
-libphoebe_la-phoebe_radiation.lo: phoebe_radiation.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_radiation.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_radiation.Tpo -c -o libphoebe_la-phoebe_radiation.lo `test -f 'phoebe_radiation.c' || echo '$(srcdir)/'`phoebe_radiation.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_radiation.Tpo $(DEPDIR)/libphoebe_la-phoebe_radiation.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_radiation.c' object='libphoebe_la-phoebe_radiation.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_radiation.lo: phoebe_radiation.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_radiation.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_radiation.Tpo -c -o libphoebe_phoenix_la-phoebe_radiation.lo `test -f 'phoebe_radiation.c' || echo '$(srcdir)/'`phoebe_radiation.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_radiation.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_radiation.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_radiation.c' object='libphoebe_phoenix_la-phoebe_radiation.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_radiation.lo `test -f 'phoebe_radiation.c' || echo '$(srcdir)/'`phoebe_radiation.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_radiation.lo `test -f 'phoebe_radiation.c' || echo '$(srcdir)/'`phoebe_radiation.c
 
-libphoebe_la-phoebe_spectra.lo: phoebe_spectra.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_spectra.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_spectra.Tpo -c -o libphoebe_la-phoebe_spectra.lo `test -f 'phoebe_spectra.c' || echo '$(srcdir)/'`phoebe_spectra.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_spectra.Tpo $(DEPDIR)/libphoebe_la-phoebe_spectra.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_spectra.c' object='libphoebe_la-phoebe_spectra.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_spectra.lo: phoebe_spectra.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_spectra.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_spectra.Tpo -c -o libphoebe_phoenix_la-phoebe_spectra.lo `test -f 'phoebe_spectra.c' || echo '$(srcdir)/'`phoebe_spectra.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_spectra.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_spectra.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_spectra.c' object='libphoebe_phoenix_la-phoebe_spectra.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_spectra.lo `test -f 'phoebe_spectra.c' || echo '$(srcdir)/'`phoebe_spectra.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_spectra.lo `test -f 'phoebe_spectra.c' || echo '$(srcdir)/'`phoebe_spectra.c
 
-libphoebe_la-phoebe_types.lo: phoebe_types.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -MT libphoebe_la-phoebe_types.lo -MD -MP -MF $(DEPDIR)/libphoebe_la-phoebe_types.Tpo -c -o libphoebe_la-phoebe_types.lo `test -f 'phoebe_types.c' || echo '$(srcdir)/'`phoebe_types.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_la-phoebe_types.Tpo $(DEPDIR)/libphoebe_la-phoebe_types.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_types.c' object='libphoebe_la-phoebe_types.lo' libtool=yes @AMDEPBACKSLASH@
+libphoebe_phoenix_la-phoebe_types.lo: phoebe_types.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -MT libphoebe_phoenix_la-phoebe_types.lo -MD -MP -MF $(DEPDIR)/libphoebe_phoenix_la-phoebe_types.Tpo -c -o libphoebe_phoenix_la-phoebe_types.lo `test -f 'phoebe_types.c' || echo '$(srcdir)/'`phoebe_types.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libphoebe_phoenix_la-phoebe_types.Tpo $(DEPDIR)/libphoebe_phoenix_la-phoebe_types.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='phoebe_types.c' object='libphoebe_phoenix_la-phoebe_types.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_la_CFLAGS) $(CFLAGS) -c -o libphoebe_la-phoebe_types.lo `test -f 'phoebe_types.c' || echo '$(srcdir)/'`phoebe_types.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libphoebe_phoenix_la_CFLAGS) $(CFLAGS) -c -o libphoebe_phoenix_la-phoebe_types.lo `test -f 'phoebe_types.c' || echo '$(srcdir)/'`phoebe_types.c
 
 .l.c:
 	$(AM_V_LEX)$(am__skiplex) $(SHELL) $(YLWRAP) $< $(LEX_OUTPUT_ROOT).c $@ -- $(LEXCOMPILE)
@@ -928,25 +936,25 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_accessories.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_base.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_calculations.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_configuration.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_constraints.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_constraints.grm.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_constraints.lng.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_data.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_error_handling.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_fitting.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_fortran_interface.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_ld.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_legacy.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_model.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_nms.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_parameters.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_radiation.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_spectra.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_types.Plo
+		-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_accessories.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_base.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_calculations.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_configuration.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.grm.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.lng.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_data.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_error_handling.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fitting.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fortran_interface.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_ld.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_legacy.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_model.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_nms.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_parameters.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_radiation.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_spectra.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_types.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -992,25 +1000,25 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_accessories.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_base.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_calculations.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_configuration.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_constraints.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_constraints.grm.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_constraints.lng.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_data.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_error_handling.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_fitting.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_fortran_interface.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_ld.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_legacy.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_model.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_nms.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_parameters.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_radiation.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_spectra.Plo
-	-rm -f ./$(DEPDIR)/libphoebe_la-phoebe_types.Plo
+		-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_accessories.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_base.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_calculations.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_configuration.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.grm.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_constraints.lng.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_data.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_error_handling.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fitting.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_fortran_interface.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_ld.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_legacy.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_model.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_nms.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_parameters.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_radiation.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_spectra.Plo
+	-rm -f ./$(DEPDIR)/libphoebe_phoenix_la-phoebe_types.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

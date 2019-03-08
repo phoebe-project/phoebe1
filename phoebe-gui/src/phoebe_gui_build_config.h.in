@@ -9,8 +9,8 @@
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM
 
-/* Define to 1 if you have the `phoebe' library (-lphoebe). */
-#undef HAVE_LIBPHOEBE
+/* Define to 1 if you have the `phoebe_phoenix' library (-lphoebe_phoenix). */
+#undef HAVE_LIBPHOEBE_PHOENIX
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H

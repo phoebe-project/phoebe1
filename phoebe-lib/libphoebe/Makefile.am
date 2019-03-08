@@ -25,9 +25,9 @@
 #                                                                      #
 ########################################################################
 
-lib_LTLIBRARIES = libphoebe.la
+lib_LTLIBRARIES = libphoebe_phoenix.la
 
-libphoebe_la_SOURCES =                                                  \
+libphoebe_phoenix_la_SOURCES =                                          \
     phoebe_constraints.grm.y          phoebe_constraints.lng.l          \
     phoebe_accessories.c              phoebe_accessories.h              \
     phoebe_base.c                     phoebe_base.h                     \
@@ -59,12 +59,12 @@ EXTRA_DIST = phoebe_constraints.lng.h
 AM_YFLAGS = -d -p pc
 AM_LFLAGS = -P pc
 
-libphoebe_la_LDFLAGS = -release $(PACKAGE_VERSION)
-libphoebe_la_CFLAGS  = -Wall $(EXTRA_WARNING_COMPILER_FLAG)
+libphoebe_phoenix_la_LDFLAGS = -release $(PACKAGE_VERSION)
+libphoebe_phoenix_la_CFLAGS  = -Wall $(EXTRA_WARNING_COMPILER_FLAG)
 
-libphoebe_la_LIBADD  = ../libwd/libwd.la
+libphoebe_phoenix_la_LIBADD  = ../libwd/libwd_phoenix.la
 
-library_includedir=$(includedir)/phoebe
+library_includedir=$(includedir)/phoebe_phoenix
 library_include_HEADERS = phoebe.h                   \
                           phoebe_accessories.h       \
                           phoebe_base.h              \

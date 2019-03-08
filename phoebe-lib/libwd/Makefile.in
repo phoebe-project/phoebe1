@@ -162,22 +162,23 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(library_includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libwd_la_LIBADD =
-am_libwd_la_OBJECTS = atmx.lo bbl.lo binnum.lo cloud.lo conjph.lo \
-	dgmprd.lo dminv.lo dura.lo ellone.lo fourls.lo gabs.lo jdph.lo \
-	kepler.lo lcr.lo legendre.lo light.lo linpro.lo lum.lo lump.lo \
-	mlrg.lo modlog.lo nekmin.lo olump.lo planckint.lo rangau.lo \
-	ranuni.lo rddata.lo ring.lo romq.lo sincos.lo spot.lo \
-	square.lo surfas.lo volume.lo wrhead.lo wrdata.lo wrfoot.lo \
-	wrlci.lo wrdci.lo lc.sub.lo dc.sub.lo
-libwd_la_OBJECTS = $(am_libwd_la_OBJECTS)
+libwd_phoenix_la_LIBADD =
+am_libwd_phoenix_la_OBJECTS = atmx.lo bbl.lo binnum.lo cloud.lo \
+	conjph.lo dgmprd.lo dminv.lo dura.lo ellone.lo fourls.lo \
+	gabs.lo jdph.lo kepler.lo lcr.lo legendre.lo light.lo \
+	linpro.lo lum.lo lump.lo mlrg.lo modlog.lo nekmin.lo olump.lo \
+	planckint.lo rangau.lo ranuni.lo rddata.lo ring.lo romq.lo \
+	sincos.lo spot.lo square.lo surfas.lo volume.lo wrhead.lo \
+	wrdata.lo wrfoot.lo wrlci.lo wrdci.lo lc.sub.lo dc.sub.lo
+libwd_phoenix_la_OBJECTS = $(am_libwd_phoenix_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-libwd_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=F77 $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(F77LD) $(AM_FFLAGS) $(FFLAGS) \
-	$(libwd_la_LDFLAGS) $(LDFLAGS) -o $@
+libwd_phoenix_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=F77 \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(F77LD) \
+	$(AM_FFLAGS) $(FFLAGS) $(libwd_phoenix_la_LDFLAGS) $(LDFLAGS) \
+	-o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -206,8 +207,8 @@ AM_V_F77LD = $(am__v_F77LD_@AM_V@)
 am__v_F77LD_ = $(am__v_F77LD_@AM_DEFAULT_V@)
 am__v_F77LD_0 = @echo "  F77LD   " $@;
 am__v_F77LD_1 = 
-SOURCES = $(libwd_la_SOURCES)
-DIST_SOURCES = $(libwd_la_SOURCES)
+SOURCES = $(libwd_phoenix_la_SOURCES)
+DIST_SOURCES = $(libwd_phoenix_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -377,8 +378,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-lib_LTLIBRARIES = libwd.la
-libwd_la_SOURCES = \
+lib_LTLIBRARIES = libwd_phoenix.la
+libwd_phoenix_la_SOURCES = \
     atmx.f      bbl.f       binnum.f    cloud.f     conjph.f    dgmprd.f       \
     dminv.f     dura.f      ellone.f    fourls.f    gabs.f      jdph.f         \
     kepler.f    lcr.f       legendre.f  light.f     linpro.f    lum.f          \
@@ -391,10 +392,10 @@ libwd_la_SOURCES = \
 #EXTRA_DIST =
 
 #CLEANFILES = 
-libwd_la_LDFLAGS = -release 2007-08-15
+libwd_phoenix_la_LDFLAGS = -release 1.0
 #libwd_la_FFLAGS  =
 #libwd_la_CFLAGS  =
-library_includedir = $(includedir)/phoebe
+library_includedir = $(includedir)/phoebe_phoenix
 library_include_HEADERS = wd.h
 all: all-am
 
@@ -465,8 +466,8 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-libwd.la: $(libwd_la_OBJECTS) $(libwd_la_DEPENDENCIES) $(EXTRA_libwd_la_DEPENDENCIES) 
-	$(AM_V_F77LD)$(libwd_la_LINK) -rpath $(libdir) $(libwd_la_OBJECTS) $(libwd_la_LIBADD) $(LIBS)
+libwd_phoenix.la: $(libwd_phoenix_la_OBJECTS) $(libwd_phoenix_la_DEPENDENCIES) $(EXTRA_libwd_phoenix_la_DEPENDENCIES) 
+	$(AM_V_F77LD)$(libwd_phoenix_la_LINK) -rpath $(libdir) $(libwd_phoenix_la_OBJECTS) $(libwd_phoenix_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
