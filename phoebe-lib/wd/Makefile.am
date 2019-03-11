@@ -20,7 +20,7 @@
 #                                                                      #
 ########################################################################
 
-phoebewddir = $(datarootdir)/phoebe/wd
+phoebewddir = $(datarootdir)/phoebe-phoenix/wd
 phoebewd_DATA = atmcof.dat        \
                 atmcofplanck.dat  \
 		phoebe_atmcof.dat \
