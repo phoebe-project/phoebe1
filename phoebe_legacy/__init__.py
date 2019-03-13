@@ -11,9 +11,7 @@ import tempfile
 def auto_configure():
 
   def f(s):
-    if sys.version_info > (3,):
-      return s
-    else:
+    return s if sys.version_info > (3,) else bytes(s)
 
   startup = os.getcwd()
   homedir = os.path.expanduser("~")
@@ -32,17 +30,10 @@ def auto_configure():
   verbose_errors = os.environ.get('VERBOSE_ERRORS', 1)
 
 
-    return  custom_configure(f(startup), f(homedir),
-              f(basedir), f(tmpdir),f(datadir),
-              f(ptfdir), ldswitch, ldintern, f(lddir),
-              f(vhdir), loadatm, dumplco,
-              verbose_warnings, verbose_errors)
-  else:
-    return  custom_configure(f(startup), f(homedir),
-              f(basedir), f(tmpdir), f(datadir),
-              f(ptfdir), ldswitch, ldintern, f(lddir),
-              f(vhdir), loadatm, dumplco,
-              verbose_warnings, verbose_errors)
-
+  return  custom_configure(f(startup), f(homedir),
+            f(basedir), f(tmpdir),f(datadir),
+            f(ptfdir), ldswitch, ldintern, f(lddir),
+            f(vhdir), loadatm, dumplco,
+            verbose_warnings, verbose_errors)
 
 auto_configure()
