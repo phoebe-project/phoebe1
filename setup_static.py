@@ -2,6 +2,8 @@
 
 import sys, glob
 
+import numpy
+
 if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
   import numpy.distutils.fcompiler as Fcompiler
@@ -73,9 +75,8 @@ ext_modules = [
     Extension(
       'libphoebe_legacy',
       sources = ['./phoebe_legacy/libphoebe_legacy.c'],
-      include_dirs = ['./phoebe_legacy/libphoebe_methods'],
+      include_dirs = ['./phoebe_legacy/libphoebe_methods', numpy.get_include()],
       extra_link_args= ["-L./build"],
-      include_dirs=[numpy.get_include()],
       libraries = ['phoebe_methods', 'wd', 'gfortran']
     )
   ]

@@ -48,7 +48,7 @@ struct module_state {
   #define PyString_AS_STRING PyUnicode_AsUTF8
   #define PyString_Check PyUnicode_Check
 
-  #defind PyInt_AS_LONG PyLong_AS_LONG
+  #define PyInt_AS_LONG PyLong_AS_LONG
   #define PyInt_Check PyLong_Check
 
   #define PyInt_FromLong PyLong_FromLong
