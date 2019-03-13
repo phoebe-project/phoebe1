@@ -75,7 +75,7 @@ ext_modules = [
       sources = ['./phoebe_legacy/libphoebe_legacy.c'],
       include_dirs = ['./phoebe_legacy/libphoebe_methods'],
       extra_link_args= ["-L./build"],
-      include_dirs=[numpy.get_include()]
+      include_dirs=[numpy.get_include()],
       libraries = ['phoebe_methods', 'wd', 'gfortran']
     )
   ]
