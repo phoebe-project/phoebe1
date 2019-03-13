@@ -35,5 +35,3 @@ def auto_configure():
             f(ptfdir), ldswitch, ldintern, f(lddir),
             f(vhdir), loadatm, dumplco,
             verbose_warnings, verbose_errors)
-
-auto_configure()
