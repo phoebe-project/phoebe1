@@ -37,8 +37,7 @@ int phoebe_init_parameters ()
 	/* **********************   Model parameters   ************************** */
   
 	phoebe_parameter_add ("phoebe_name",                 "Common name of the binary",                  KIND_PARAMETER,  NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "");
-  
-  phoebe_parameter_add ("phoebe_indep",                "Independent modeling variable",              KIND_MENU,       NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "Phase");
+	phoebe_parameter_add ("phoebe_indep",                "Independent modeling variable",              KIND_MENU,       NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "Phase");
 	phoebe_parameter_add ("phoebe_model",                "Morphological constraints",                  KIND_MENU,       NULL,          "%s",      0.0, 0.0, 0.0, NO, TYPE_STRING,       "Unconstrained binary system");
 
 	phoebe_parameter_add ("phoebe_lcno",                 "Number of observed light curves",            KIND_MODIFIER,   NULL,          "%d",      0.0, 0.0, 0.0, NO, TYPE_INT,          0);
@@ -57,6 +56,11 @@ int phoebe_init_parameters ()
 	phoebe_parameter_add ("phoebe_lc_levweight",         "Observed LC data level weighting",           KIND_MENU,       "phoebe_lcno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Poissonian scatter");
 	phoebe_parameter_add ("phoebe_lc_active",            "Observed LC data is used",                   KIND_SWITCH,     "phoebe_lcno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,    YES);
 
+	phoebe_parameter_add ("phoebe_lc_cadence_switch",    "Finite cadence integration",                 KIND_SWITCH,     "phoebe_lcno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,               NO);
+	phoebe_parameter_add ("phoebe_lc_cadence",           "Cadence in seconds",                         KIND_PARAMETER,  "phoebe_lcno", "%lf", 0.0, 3600.0,    1.0, NO, TYPE_DOUBLE_ARRAY,         1766.0);
+	phoebe_parameter_add ("phoebe_lc_cadence_rate",      "Cadence sampling rate (times per cadence)",  KIND_PARAMETER,  "phoebe_lcno", "%d",  0.0,  100.0,    1.0, NO, TYPE_INT_ARRAY,                10);
+	phoebe_parameter_add ("phoebe_lc_cadence_timestamp", "Cadence timestamp",                          KIND_MENU,       "phoebe_lcno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Mid-exposure");
+
 	phoebe_parameter_add ("phoebe_rv_id",                "Observed RV identification name",            KIND_PARAMETER,  "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Undefined");
 	phoebe_parameter_add ("phoebe_rv_filename",          "Observed RV data filename",                  KIND_PARAMETER,  "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Undefined");
 	phoebe_parameter_add ("phoebe_rv_sigma",             "Observed RV data standard deviation",        KIND_PARAMETER,  "phoebe_rvno", "%lf", 0.0,    0.0,    0.0, NO, TYPE_DOUBLE_ARRAY, 1.0);
@@ -65,6 +69,11 @@ int phoebe_init_parameters ()
 	phoebe_parameter_add ("phoebe_rv_dep",               "Observed RV data dependent variable",        KIND_MENU,       "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Primary RV");
 	phoebe_parameter_add ("phoebe_rv_indweight",         "Observed RV data individual weighting",      KIND_MENU,       "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Standard deviation");
 	phoebe_parameter_add ("phoebe_rv_active",            "Observed RV data is used",                   KIND_SWITCH,     "phoebe_rvno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,    YES);
+
+	phoebe_parameter_add ("phoebe_rv_cadence_switch",    "Finite cadence integration",                 KIND_SWITCH,     "phoebe_rvno", "%d",  0.0,    0.0,    0.0, NO, TYPE_BOOL_ARRAY,               NO);
+	phoebe_parameter_add ("phoebe_rv_cadence",           "Cadence in seconds",                         KIND_PARAMETER,  "phoebe_rvno", "%lf", 0.0, 3600.0,    1.0, NO, TYPE_DOUBLE_ARRAY,         1766.0);
+	phoebe_parameter_add ("phoebe_rv_cadence_rate",      "Cadence sampling rate (times per cadence)",  KIND_PARAMETER,  "phoebe_rvno", "%d",  0.0,  100.0,    1.0, NO, TYPE_INT_ARRAY,                10);
+	phoebe_parameter_add ("phoebe_rv_cadence_timestamp", "Cadence timestamp",                          KIND_MENU,       "phoebe_rvno", "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING_ARRAY, "Mid-exposure");
 
 	phoebe_parameter_add ("phoebe_spectra_disptype",     "Dispersion type of theoretical spectra",     KIND_MENU,       NULL,          "%s",  0.0,    0.0,    0.0, NO, TYPE_STRING,       "Linear");
 	phoebe_parameter_add ("phoebe_mnorm",                "Flux-normalizing magnitude",                 KIND_PARAMETER,  NULL,          "%lf", 0.0,    0.0,    0.0, NO, TYPE_DOUBLE,           10.0);
@@ -332,6 +341,11 @@ int phoebe_init_parameter_options ()
 	phoebe_parameter_add_option (par, "Start-exposure");
 	phoebe_parameter_add_option (par, "Mid-exposure");
 	phoebe_parameter_add_option (par, "End-exposure");
+
+	par = phoebe_parameter_lookup ("phoebe_lc_cadence_timestamp");
+	phoebe_parameter_add_option (par, "Start of exposure");
+	phoebe_parameter_add_option (par, "Mid-exposure");
+	phoebe_parameter_add_option (par, "End of exposure");
 	
 	par = phoebe_parameter_lookup ("phoebe_rv_filter");
 	for (i = 0; i < PHOEBE_passbands_no; i++) {
@@ -1168,6 +1182,63 @@ int phoebe_parameter_set_value (PHOEBE_parameter *par, ...)
 
 	/* Satisfy all constraints: */
 	phoebe_constraint_satisfy_all ();
+
+	return SUCCESS;
+}
+
+int phoebe_parameter_get_default_value (PHOEBE_parameter *par, ...)
+{
+	/**
+	 * phoebe_parameter_get_default_value:
+	 * @par: #PHOEBE_parameter to be queried
+	 *
+	 * Synopsis:
+	 *
+	 *   phoebe_parameter_get_default_value (par, &value)
+	 *
+	 * Assigns the value of the passed parameter @par to the passed variable
+	 * @value. In case of strings pointers are returned, so you should never
+	 * free the variable that has been assigned.
+	 *
+	 * Returns: #PHOEBE_error_code
+	 */
+
+	va_list args;
+
+	if (!par) return ERROR_QUALIFIER_NOT_FOUND;
+
+	va_start (args, par);
+
+	switch (par->type) {
+		case TYPE_INT:
+		case TYPE_INT_ARRAY: {
+			int *value = va_arg (args, int *);
+			*value = par->defaultvalue.i;
+		}
+		break;
+		case TYPE_BOOL:
+		case TYPE_BOOL_ARRAY: {
+			bool *value = va_arg (args, bool *);
+			*value = par->defaultvalue.b;
+		}
+		break;
+		case TYPE_DOUBLE:
+		case TYPE_DOUBLE_ARRAY: {
+			double *value = va_arg (args, double *);
+			*value = par->defaultvalue.d;
+		}
+		break;
+		case TYPE_STRING:
+		case TYPE_STRING_ARRAY: {
+			const char **value = va_arg (args, const char **);
+			*value = par->defaultvalue.str;
+		}
+		break;
+		default:
+			phoebe_lib_error ("exception handler invoked in phoebe_parameter_get_default_value (), please report this!\n");
+			return ERROR_EXCEPTION_HANDLER_INVOKED;
+	}
+	va_end (args);
 
 	return SUCCESS;
 }

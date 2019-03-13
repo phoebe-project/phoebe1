@@ -101,6 +101,8 @@ bool              phoebe_qualifier_is_constrained (char *qualifier);
 int phoebe_parameter_get_value  (PHOEBE_parameter *par, ...);
 int phoebe_parameter_set_value  (PHOEBE_parameter *par, ...);
 
+int phoebe_parameter_get_default_value (PHOEBE_parameter *par, ...);
+
 int phoebe_parameter_get_tba    (PHOEBE_parameter *par, bool *tba);
 int phoebe_parameter_set_tba    (PHOEBE_parameter *par, bool  tba);
 

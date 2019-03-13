@@ -617,6 +617,8 @@ WD_DCI_parameters *wd_dci_parameters_new ()
 	pars->opsf       = NULL;
 	pars->extinction = NULL;
 	pars->levweight  = NULL;
+	pars->nph        = NULL;
+	pars->delph      = NULL;
 	pars->spot1lat   = NULL;
 	pars->spot1long  = NULL;
 	pars->spot1rad   = NULL;
@@ -1176,18 +1178,6 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_ybol1"), &(params->ybol1));
 	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_ybol2"), &(params->ybol2));
 
-	/* Finite integration time; must do after system parameters. */
-	phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_cadence_switch"), &readout_bool);
-	if (readout_bool) {
-		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_cadence_rate"), &(params->nph));
-		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_cadence"), &readout_dbl);
-		params->delph = readout_dbl/86400/params->period;
-	}
-	else {
-		params->nph = 1;
-		params->delph = 1.0;
-	}
-
 	/* Passband-dependent parameters: */
 	{
 	int index;
@@ -1206,6 +1196,8 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 	params->opsf       = phoebe_malloc (active_cno * sizeof (*(params->opsf)));
 	params->extinction = phoebe_malloc (active_cno * sizeof (*(params->extinction)));
 	params->levweight  = phoebe_malloc (active_cno * sizeof (*(params->levweight)));
+	params->nph        = phoebe_malloc (active_cno * sizeof (*(params->nph)));
+	params->delph      = phoebe_malloc (active_cno * sizeof (*(params->delph)));
 
 	for (i = 0; i < active_rvno; i++) {
 		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_rv_dep"), active_rvindices->val.iarray[i], &readout_str);
@@ -1244,6 +1236,9 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 		params->opsf[index]       = 0.0;
 		params->extinction[index] = 0.0;
 		params->levweight[index]  = 0;
+		/* RV curve FTI is not implemented and might not make much sense. */
+		params->nph[index] = 1;
+		params->delph[index] = 1.0;
 	}
 
 	for (i = active_rvno; i < active_cno; i++) {
@@ -1277,6 +1272,18 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_opsf"),         active_lcindices->val.iarray[i-active_rvno], &(params->opsf[i]));
 		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_extinction"),   active_lcindices->val.iarray[i-active_rvno], &(params->extinction[i]));
 		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_levweight"), active_lcindices->val.iarray[i-active_rvno], &readout_str);
+
+		/* Per-passband finite integration time: */
+		phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_cadence_switch"), active_lcindices->val.iarray[i-active_rvno], &readout_bool);
+		if (readout_bool) {
+			phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_cadence_rate"), active_lcindices->val.iarray[i-active_rvno], &(params->nph[i]));
+			phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_lc_cadence"), active_lcindices->val.iarray[i-active_rvno], &readout_dbl);
+			params->delph[i] = readout_dbl/86400/params->period;
+		}
+		else {
+			params->nph[i] = 1;
+			params->delph[i] = 1.0;
+		}
 
 		params->levweight[i]  = intern_get_level_weighting_id (readout_str);
 	}

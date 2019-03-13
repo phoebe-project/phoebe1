@@ -180,8 +180,8 @@ int phoebe_load_atm_tables(char *plfile, char *atmfile)
     }
 
     #warning HARDCODED_NUMBER_OF_PASSBANDS
-    PHOEBE_plcof_table  = phoebe_malloc(58*50*sizeof(*PHOEBE_plcof_table));
-    PHOEBE_atmcof_table = phoebe_malloc(58*19*11*48*sizeof(*PHOEBE_atmcof_table));
+    PHOEBE_plcof_table  = phoebe_malloc(63*50*sizeof(*PHOEBE_plcof_table));
+    PHOEBE_atmcof_table = phoebe_malloc(63*19*11*48*sizeof(*PHOEBE_atmcof_table));
 
     row = 0;
     tab = fopen(plfile, "r");
@@ -319,9 +319,8 @@ int phoebe_configure ()
   int status;
   char dname[255], homedir[255], conffile[255];
   char *pathname;
-  bool switch_state;
+  bool switch_state, return_flag = SUCCESS;
   
-  int return_flag = SUCCESS;
   
   /* Current working directory: */
   if (!getcwd (dname, 255)) {

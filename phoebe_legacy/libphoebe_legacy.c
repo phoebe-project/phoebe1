@@ -2,33 +2,72 @@
 #include <string.h>
 #include <math.h>
 
+#include <numpy/arrayobject.h>
 #include <phoebe.h>
+
+struct module_state {
+    PyObject *error;
+};
 
 // Porting to Python 3
 // Ref: http://python3porting.com/cextensions.html
 #if PY_MAJOR_VERSION >= 3
+
+  #define MOD_GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
+
+  static int module_traverse(PyObject *m, visitproc visit, void *arg) {
+    Py_VISIT(MOD_GETSTATE(m)->error);
+    return 0;
+  }
+
+  static int module_clear(PyObject *m){
+    Py_CLEAR(MOD_GETSTATE(m)->error);
+    return 0;
+  }
+
   #define MOD_ERROR_VAL NULL
   #define MOD_SUCCESS_VAL(val) val
   #define MOD_INIT(name) PyMODINIT_FUNC PyInit_##name(void)
   #define MOD_DEF(ob, name, doc, methods) \
-        static struct PyModuleDef moduledef = { \
-          PyModuleDef_HEAD_INIT, name, doc, -1, methods, }; \
-        ob = PyModule_Create(&moduledef);
+    static struct PyModuleDef moduledef = { \
+      PyModuleDef_HEAD_INIT, \
+      name, \
+      doc, \
+      sizeof(struct module_state), \
+      methods,\
+      NULL,\
+      module_traverse,\
+      module_clear,\
+      NULL}; \
+    ob = PyModule_Create(&moduledef);
+
+  #define MOD_NEW_EXCEPTION(st_error, name)\
+    st_error = PyErr_NewException(name, NULL, NULL);
 
   // adding missing declarations and functions
-  #define PyString_Type PyBytes_Type
-  #define PyString_AsString PyBytes_AsString
-  #define PyString_AS_STRING PyBytes_AS_STRING
-  #define PyString_Check PyBytes_Check
-  #define PyInt_FromLong PyLong_FromLong
+  #define PyString_AS_STRING PyUnicode_AsUTF8
+  #define PyString_Check PyUnicode_Check
+
+  #defind PyInt_AS_LONG PyLong_AS_LONG
   #define PyInt_Check PyLong_Check
-  #define PyInt_AS_LONG PyLong_AS_LONG
+
+  #define PyInt_FromLong PyLong_FromLong
 #else
+
+  #define MOD_GETSTATE(m) (&_state)
+  static struct module_state _state;
+
   #define MOD_ERROR_VAL
   #define MOD_SUCCESS_VAL(val)
   #define MOD_INIT(name) PyMODINIT_FUNC init##name(void)
   #define MOD_DEF(ob, name, doc, methods) \
         ob = Py_InitModule3(name, methods, doc);
+
+
+  #define MOD_NEW_EXCEPTION(st_error, name)\
+    char _name[255];\
+    sprintf(_name, "%s", name);\
+    st_error = PyErr_NewException(_name, NULL, NULL);
 #endif
 
 static PyObject *phoebeInit(PyObject *self, PyObject *args)
@@ -252,19 +291,19 @@ static PyObject *phoebePBLum(PyObject *self, PyObject *args)
 
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_hla"), index, &hla);
 
-    return Py_BuildValue ("d", Lpb*hla);
+    return Py_BuildValue("d", Lpb*hla);
 }
 
 static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
 {
-    int i, index, status, lexp, scale;
-    double cf, sigma, num, denom, Lpb;
+    int i, index, status, lexp, scale, retlum;
+    double cf, sigma, num, denom, Lpb = 0.0;
     char *rstr, *ctype;
 
     PHOEBE_curve *obs, *syn;
 
     scale = 0;
-    PyArg_ParseTuple(args, "si|i", &ctype, &index, &scale);
+    PyArg_ParseTuple(args, "si|ii", &ctype, &index, &scale, &retlum);
 
     if (strcmp(ctype, "lc") == 0 || strcmp(ctype, "LC") == 0) {
         obs = phoebe_curve_new_from_pars(PHOEBE_CURVE_LC, index);
@@ -316,7 +355,10 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
             cf += (obs->dep->val[i]-Lpb*syn->dep->val[i])*(obs->dep->val[i]-Lpb*syn->dep->val[i])/obs->weight->val[i]/obs->weight->val[i];
     }
 
-    return Py_BuildValue ("d", cf);
+    if (scale == 0 || (scale == 1 && retlum == 0))
+        return Py_BuildValue("d", cf/sigma/sigma);
+    else
+        return Py_BuildValue ("(d,d)", cf/sigma/sigma, Lpb);
 }
 
 static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
@@ -705,13 +747,13 @@ int intern_add_horizon_to_dict(PyObject *dict, PHOEBE_horizon *horizon)
     theta = PyTuple_New(hlen);
 
     for (i = 0; i < hlen; i++) {
-    PyTuple_SetItem(rho, i, Py_BuildValue("d", horizon->rho[i]));
-    PyTuple_SetItem(theta, i, Py_BuildValue("d", horizon->theta[i]));
-  }
-  for (i = 0; i < 6; i++) {
-    PyTuple_SetItem(hAc, i, Py_BuildValue("d", horizon->hAc[i]));
-    PyTuple_SetItem(hAs, i, Py_BuildValue("d", horizon->hAs[i]));
-  }
+      PyTuple_SetItem(rho, i, Py_BuildValue("d", horizon->rho[i]));
+      PyTuple_SetItem(theta, i, Py_BuildValue("d", horizon->theta[i]));
+    }
+    for (i = 0; i < 6; i++) {
+      PyTuple_SetItem(hAc, i, Py_BuildValue("d", horizon->hAc[i]));
+      PyTuple_SetItem(hAs, i, Py_BuildValue("d", horizon->hAs[i]));
+    }
 
     PyDict_SetItem(dict, Py_BuildValue("s", "rho"), rho);
     PyDict_SetItem(dict, Py_BuildValue("s", "theta"), theta);
@@ -764,14 +806,13 @@ static PyObject *phoebeDC(PyObject *self, PyObject *args)
     status = phoebe_minimize_using_dc (NULL, feedback);
 
     if (status != SUCCESS) {
-    printf("%s", phoebe_error(status));
-        return Py_BuildValue ("i", status);
-  }
-  else {
-        dict = PyDict_New();
-        intern_add_feedback_to_dict(dict, feedback);
-        return dict;
-  }
+      printf("%s", phoebe_error(status));
+      return Py_BuildValue ("i", status);
+    } else {
+      dict = PyDict_New();
+      intern_add_feedback_to_dict(dict, feedback);
+      return dict;
+    }
 
 }
 
@@ -779,26 +820,33 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
     int status;
     int index, i;
-    PyObject *obj, *lc, *combo = NULL;
+    PyObject *obj, *lc, *combo = NULL, *ts = NULL;
     char *rstr;
 
-    Py_ssize_t tlen, mswitch = 0, hswitch = 0;
+    Py_ssize_t mswitch = 0, hswitch = 0;
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
     PHOEBE_mesh *mesh1 = NULL, *mesh2 = NULL;
     PHOEBE_horizon *horizon = NULL;
 
-    if (!PyArg_ParseTuple(args, "Oi|ii", &obj, &index, &mswitch, &hswitch) || !PyTuple_Check(obj)) {
-        printf("parsing failed.\n");
+    if (!PyArg_ParseTuple(args, "Oi|ii", &obj, &index, &mswitch, &hswitch)) {
+        printf("parsing failed: call with lc(t_array, curve_index [, mswitch, hswitch]).\n");
         return NULL;
     }
 
-    tlen = PyTuple_Size(obj);
-    indep = phoebe_vector_new();
-    phoebe_vector_alloc(indep, tlen);
-    for (i = 0; i < tlen; i++)
-        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));
+    // printf("array type: %s\n", obj->ob_type->tp_name);
+
+    // if (!PyArray_Check(obj)) {
+    //     printf("timestamps need to be provided as a numpy-compatible array.\n");
+    //     return NULL;
+    // }
+
+    // tlen = PyTuple_Size(obj);
+    ts = PyArray_FromObject(obj, NPY_DOUBLE, 0, 0);
+    indep = phoebe_vector_new_from_copied_data(PyArray_DATA(ts), PyArray_SIZE(ts));
+
+    // printf("dim=%d\n", indep->dim);
 
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
     phoebe_column_get_type (&itype, rstr);
@@ -822,14 +870,14 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    lc = PyTuple_New(tlen);
-    for (i = 0; i < tlen; i++)
+    lc = PyTuple_New(indep->dim);
+    for (i = 0; i < indep->dim; i++)
         PyTuple_SetItem(lc, i, Py_BuildValue("d", curve->dep->val[i]));
 
-  if (mswitch || hswitch) {
+	  if (mswitch || hswitch) {
         combo = PyTuple_New(1 + mswitch + hswitch);
         PyTuple_SetItem(combo, 0, lc);
-  }
+	  }
 
     if (mswitch) {
         /* Now we need to wrap this into something nice. */
@@ -892,24 +940,21 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
 
 static PyObject *phoebeRV1(PyObject *self, PyObject *args)
 {
-    int index, tlen, i, status;
-    PyObject *obj, *ret;
+    int index, i, status;
+    PyObject *obj, *ret, *ts = NULL;
     char *rstr;
 
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
 
-    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
-        printf("parsing failed.\n");
+    if (!PyArg_ParseTuple(args, "Oi", &obj, &index)) {
+        printf("parsing failed: call with rv1(t_array, curve_index).\n");
         return NULL;
     }
 
-    tlen = PyTuple_Size(obj);
-    indep = phoebe_vector_new();
-    phoebe_vector_alloc(indep, tlen);
-    for (i = 0; i < tlen; i++)
-        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));
+    ts = PyArray_FromObject(obj, NPY_DOUBLE, 0, 0);
+    indep = phoebe_vector_new_from_copied_data(PyArray_DATA(ts), PyArray_SIZE(ts));
 
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
     phoebe_column_get_type (&itype, rstr);
@@ -921,8 +966,8 @@ static PyObject *phoebeRV1(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    ret = PyTuple_New(tlen);
-    for (i = 0; i < tlen; i++)
+    ret = PyTuple_New(indep->dim);
+    for (i = 0; i < indep->dim; i++)
         PyTuple_SetItem(ret, i, Py_BuildValue("d", curve->dep->val[i]));
 
     phoebe_curve_free(curve);
@@ -933,24 +978,21 @@ static PyObject *phoebeRV1(PyObject *self, PyObject *args)
 
 static PyObject *phoebeRV2(PyObject *self, PyObject *args)
 {
-    int index, tlen, i;
-    PyObject *obj, *ret;
+    int index, i;
+    PyObject *obj, *ret, *ts;
     char *rstr;
 
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
 
-    if (!PyArg_ParseTuple(args, "Oi", &obj, &index) || !PyTuple_Check(obj)) {
-        printf("parsing failed.\n");
+    if (!PyArg_ParseTuple(args, "Oi", &obj, &index)) {
+        printf("parsing failed: call with rv2(t_array, curve_index).\n");
         return NULL;
     }
 
-    tlen = PyTuple_Size(obj);
-    indep = phoebe_vector_new();
-    phoebe_vector_alloc(indep, tlen);
-    for (i = 0; i < tlen; i++)
-        indep->val[i] = PyFloat_AsDouble(PyTuple_GetItem(obj, i));
+    ts = PyArray_FromObject(obj, NPY_DOUBLE, 0, 0);
+    indep = phoebe_vector_new_from_copied_data(PyArray_DATA(ts), PyArray_SIZE(ts));
 
     phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
     phoebe_column_get_type (&itype, rstr);
@@ -958,8 +1000,8 @@ static PyObject *phoebeRV2(PyObject *self, PyObject *args)
     curve = phoebe_curve_new();
     phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_SECONDARY_RV, NULL, NULL, NULL);
 
-    ret = PyTuple_New(tlen);
-    for (i = 0; i < tlen; i++)
+    ret = PyTuple_New(indep->dim);
+    for (i = 0; i < indep->dim; i++)
         PyTuple_SetItem(ret, i, Py_BuildValue("d", curve->dep->val[i]));
 
     phoebe_curve_free(curve);
@@ -1107,6 +1149,7 @@ static PyMethodDef PhoebeMethods[] = {
 };
 
 
+/* module initialization */
 MOD_INIT(libphoebe_legacy)
 {
 
@@ -1115,6 +1158,20 @@ MOD_INIT(libphoebe_legacy)
   MOD_DEF(backend, "libphoebe_legacy",  "PHOEBE legacy methods", PhoebeMethods)
 
   if (!backend) return MOD_ERROR_VAL;
+
+  struct module_state *st = MOD_GETSTATE(backend);
+
+  MOD_NEW_EXCEPTION(st->error, "libphoebe_legacy.error")
+
+  if (st->error == NULL) {
+    Py_DECREF(backend);
+    return MOD_ERROR_VAL;
+  }
+
+  // Added to handle Numpy arrays
+  // Ref:
+  // * http://docs.scipy.org/doc/numpy-1.10.1/user/c-info.how-to-extend.html
+  import_array();
 
   return MOD_SUCCESS_VAL(backend);
 }
