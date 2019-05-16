@@ -954,7 +954,7 @@ int phoebe_minimize_using_dc (FILE *dc_output, PHOEBE_minimizer_feedback *feedba
 	feedback->iters = 1;
 
 	for (i = 0; i < rvno; i++)
-		feedback->chi2s->val[i] = 10000.0*chi2s[i]/params->sigma[i]/params->sigma[i];
+		feedback->chi2s->val[i] = 100.*100.*chi2s[i]/params->sigma[i]/params->sigma[i];
 	for (i = rvno; i < lcno + rvno; i++)
 		feedback->chi2s->val[i] = chi2s[i]/params->sigma[i]/params->sigma[i];
 
