@@ -118,6 +118,7 @@ host_triplet = @host@
 subdir = libwd
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/autoconfig/acx_pthread.m4 \
+	$(top_srcdir)/autoconfig/gtk-doc.m4 \
 	$(top_srcdir)/autoconfig/libtool.m4 \
 	$(top_srcdir)/autoconfig/ltoptions.m4 \
 	$(top_srcdir)/autoconfig/ltsugar.m4 \

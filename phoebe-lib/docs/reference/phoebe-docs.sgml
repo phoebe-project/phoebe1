@@ -21,7 +21,6 @@
     <xi:include href="xml/phoebe_accessories.xml"/>
     <xi:include href="xml/phoebe_nms.xml"/>
     <xi:include href="xml/phoebe_calculations.xml"/>
-    <xi:include href="xml/phoebe_roche.xml"/>
     <xi:include href="xml/phoebe_fortran_interface.xml"/>
     <xi:include href="xml/phoebe_error_handling.xml"/>
     <xi:include href="xml/phoebe_constraints.xml"/>
