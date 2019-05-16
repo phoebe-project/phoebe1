@@ -18,6 +18,9 @@ lex.*
 *.lai
 libphoebe_la*
 *svn-base
+output.?
+traces.?
+stamp-h1
 
 # Distribution / packaging
 .Python
@@ -112,3 +115,16 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# gtk-doc
+phoebe-lib/docs/reference/phoebe.*
+phoebe-lib/docs/reference/*txt
+phoebe-lib/docs/reference/*stamp
+phoebe-lib/docs/reference/xml
+phoebe-lib/docs/reference/html
+
+# phoebe-related
+phoebe_build_config.h
+phoebe_gui_build_config.h
+phoebe_constraints.grm*
+phoebe_constraints.lng*
