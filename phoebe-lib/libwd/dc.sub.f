@@ -63,7 +63,7 @@ c
       parameter (iclmax=   100)
       parameter (iptmax= 50000)
       parameter (ncmax=     50)
-      parameter (iplmax=    63)
+      parameter (iplmax=    67)
       parameter (ipmax=     50)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -338,6 +338,10 @@ c      60   Spitzer b1 IRAC 3.6 micron array
 c      61   Spitzer b1 IRAC 4.5 micron array
 c      62   Spitzer b3 IRAC 5.8 micron array
 c      63   Spitzer b3 IRAC 8.0 micron array
+c      64   STEREO HI-1A, filter with quantum efficiency
+c      65   STEREO HI-1A, filter without quantum efficiency
+c      66   STEREO HI-1B, filter with quantum efficiency
+c      67   STEREO HI-1B, filter without quantum efficiency
 c
    15 FORMAT(1X,16(F11.5))
    16 FORMAT(1X,18(F7.4))

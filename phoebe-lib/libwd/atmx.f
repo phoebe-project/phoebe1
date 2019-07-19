@@ -21,7 +21,7 @@ c                        default: iatmchunk = 528*25 = 13200
 c       iatmsize  ..   size of the atmosphere grid
 c                        default: iatmsize = 13200*19 = 250800
 c
-      parameter (iplmax  =63)
+      parameter (iplmax  =67)
       parameter (itemppts=48)
       parameter (iloggpts=11)
       parameter (imetpts =19)
@@ -45,7 +45,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $580.5d0,592.0d0,355.7d0,482.5d0,626.1d0,767.2d0,909.7d0,
      $367.d0,485.d0,624.d0,752.d0,867.d0,963.d0,963.d0,326.d0,
      $362.d0,382.d0,431.d0,540.d0,547.d0,550.d0,550.d0,427.d0,
-     $623.d0,797.d0,3600.d0,4500.d0,5800.d0,8000.d0/
+     $623.d0,797.d0,3600.d0,4500.d0,5800.d0,8000.d0,690.d0,
+     $690.d0,690.d0,690.d0/
       tlog=dlog10(t)
       trec=1.d0/t
       tlow=3500.d0-tlowtol
