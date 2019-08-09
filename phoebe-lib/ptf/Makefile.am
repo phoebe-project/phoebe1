@@ -133,6 +133,7 @@ phoebeptf_DATA = 2mass_j.ptf                 \
                  stereo_hi1a.ptf             \
                  stereo_hi1a_qe.ptf          \
                  stereo_hi1b.ptf             \
-                 stereo_hi1b_qe.ptf          
+                 stereo_hi1b_qe.ptf          \
+                 smei.ptf
 
 EXTRA_DIST = $(phoebeptf_DATA)

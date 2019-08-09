@@ -180,8 +180,8 @@ int phoebe_load_atm_tables(char *plfile, char *atmfile)
     }
 
     #warning HARDCODED_NUMBER_OF_PASSBANDS
-    PHOEBE_plcof_table  = phoebe_malloc(67*50*sizeof(*PHOEBE_plcof_table));
-    PHOEBE_atmcof_table = phoebe_malloc(67*19*11*48*sizeof(*PHOEBE_atmcof_table));
+    PHOEBE_plcof_table  = phoebe_malloc(68*50*sizeof(*PHOEBE_plcof_table));
+    PHOEBE_atmcof_table = phoebe_malloc(68*19*11*48*sizeof(*PHOEBE_atmcof_table));
 
     row = 0;
     tab = fopen(plfile, "r");

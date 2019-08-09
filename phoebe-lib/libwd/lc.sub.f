@@ -50,7 +50,7 @@ c
       parameter (lpomax=100000)
       parameter (ispmax=   100)
       parameter (iclmax=   100)
-      parameter (iplmax=    67)
+      parameter (iplmax=    68)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -326,6 +326,7 @@ c      64   STEREO HI-1A, filter with quantum efficiency, Danielle Bewsher, priv
 c      65   STEREO HI-1A, filter without quantum efficiency, Danielle Bewsher, priv. comm.
 c      66   STEREO HI-1B, filter with quantum efficiency, Danielle Bewsher, priv. comm.
 c      67   STEREO HI-1B, filter without quantum efficiency, Danielle Bewsher, priv. comm.
+c      68   Solar Mass Ejection Imager (SMEI), Petr Harmanec, priv. comm.
 c
       do 15067 i=1,ifrmax
       theta(i)=0.d0

@@ -437,6 +437,7 @@ int wd_passband_id_lookup (int *id, const char *passband)
 	if (strcmp (passband,   "STEREO:HI1A-noQE") == 0) { *id = 65; return SUCCESS; }
 	if (strcmp (passband,     "STEREO:HI1B-QE") == 0) { *id = 66; return SUCCESS; }
 	if (strcmp (passband,   "STEREO:HI1B-noQE") == 0) { *id = 67; return SUCCESS; }
+	if (strcmp (passband,    "SMEI:filterless") == 0) { *id = 68; return SUCCESS; }
 
 	*id = -1;
 	return ERROR_PASSBAND_INVALID;

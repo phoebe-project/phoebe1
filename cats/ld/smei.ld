@@ -2,7 +2,7 @@
 # PASSBAND  filterless
 # VERSION   1.0
 
-# Exported from PHOEBE-2 passband on Fri Aug  9 08:08:29 2019
+# Exported from PHOEBE-2 passband on Fri Aug  9 08:07:32 2019
 # The coefficients are computed for the photon-weighted regime from ck2004 atmospheres.
 
  0.762  0.813  0.263  0.295  0.567  0.509  0.280  1.763 -3.764  4.798 -1.854 
