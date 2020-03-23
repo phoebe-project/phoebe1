@@ -200,17 +200,17 @@
     AC_ARG_ENABLE(gsl,
         [  --enable-gsl            Use GNU Scientific Library (default=yes)],
         [ac_enable_gsl=no], [ac_enable_gsl=yes])
-    gsl_check_passed=1
-    AC_CHECK_LIB(gslcblas, main, , gsl_check_passed=0)
-    AC_CHECK_LIB(gsl,      main, , gsl_check_passed=0)
-    gslsupport="yes"
-    if test $gsl_check_passed -eq 0; then
-      gslsupport="no"
-    fi
     if test $ac_enable_gsl = "no"; then
-      gslsupport="no"
       gslsupport="disabled"
       AC_DEFINE(PHOEBE_GSL_DISABLED, 1, Define if GSL should be disabled:)
+    else
+      gsl_check_passed=1
+      AC_CHECK_LIB(gslcblas, main, , gsl_check_passed=0)
+      AC_CHECK_LIB(gsl,      main, , gsl_check_passed=0)
+      gslsupport="yes"
+      if test $gsl_check_passed -eq 0; then
+        gslsupport="no"
+      fi
     fi
 
   # gtk-doc support; sorry for the silly formatting, gtkdocize requires it:

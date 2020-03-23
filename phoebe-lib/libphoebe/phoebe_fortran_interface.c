@@ -553,12 +553,12 @@ int wd_lci_parameters_get (WD_LCI_parameters *params, double **args, int MPAGE, 
 		if (spotno > 0)
 			phoebe_array_free (active_spotindices);
 	}
-/*
+	/*
 	for (i = 0; i < params->SPRIM; i++)
 		printf ("sprim: %lf %lf %lf %lf\n", params->XLAT1[i], params->XLONG1[i], params->RADSP1[i], params->TEMSP1[i]);
 	for (i = 0; i < params->SSEC; i++)
 		printf ("sprim: %lf %lf %lf %lf\n", params->XLAT2[i], params->XLONG2[i], params->RADSP2[i], params->TEMSP2[i]);
-*/	
+	*/	
 
     /* Now that we have everything in the structure, let's fill out the args array: */
     (*args)[ 0] = params->PSHIFT;
@@ -962,7 +962,6 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 	int lcno, rvno, spotno;
 	int active_lcno, active_rvno, active_cno;
 	PHOEBE_array *active_lcindices, *active_rvindices;
-	double rvfactor;
 
 	int readout_int;
 	bool readout_bool;
@@ -1374,7 +1373,6 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 				return ERROR_FILE_NOT_FOUND;
 			}
 
-			if (rv->wtype == PHOEBE_COLUMN_SIGMA) rvfactor = 100.0; else rvfactor = 1.0;
 			phoebe_curve_transform (rv, master_indep, PHOEBE_COLUMN_PRIMARY_RV, PHOEBE_COLUMN_WEIGHT);
 
 			params->indeps  = phoebe_realloc (params->indeps,  (idx+rv->indep->dim+1) * sizeof (*(params->indeps)));
@@ -1384,7 +1382,7 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 			for (i = 0; i < rv->indep->dim; i++) {
 				params->indeps[idx+i]  = rv->indep->val[i];
 				params->fluxes[idx+i]  = rv->dep->val[i] / 100.0;
-				params->weights[idx+i] = rvfactor*rvfactor*rv->weight->val[i];
+				params->weights[idx+i] = rv->weight->val[i];
 			}
 
 			params->knobs[bandidx] = (idx += rv->indep->dim);
@@ -1399,8 +1397,7 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 				return ERROR_FILE_NOT_FOUND;
 			}
 
-			if (rv->wtype == PHOEBE_COLUMN_SIGMA) rvfactor = 100.0; else rvfactor = 1.0;
-			phoebe_curve_transform (rv, master_indep, PHOEBE_COLUMN_SECONDARY_RV, PHOEBE_COLUMN_WEIGHT);
+			phoebe_curve_transform(rv, master_indep, PHOEBE_COLUMN_SECONDARY_RV, PHOEBE_COLUMN_WEIGHT);
 
 			params->indeps  = phoebe_realloc (params->indeps,  (idx+rv->indep->dim+1) * sizeof (*(params->indeps)));
 			params->fluxes  = phoebe_realloc (params->fluxes,  (idx+rv->indep->dim+1) * sizeof (*(params->fluxes)));
@@ -1409,7 +1406,7 @@ int wd_dci_parameters_get (WD_DCI_parameters *params, int *marked_tba)
 			for (i = 0; i < rv->indep->dim; i++) {
 				params->indeps[idx+i]  = rv->indep->val[i];
 				params->fluxes[idx+i]  = rv->dep->val[i] / 100.0;
-				params->weights[idx+i] = rvfactor*rvfactor*rv->weight->val[i];
+				params->weights[idx+i] = rv->weight->val[i];
 			}
 
 			params->knobs[bandidx] = (idx += rv->indep->dim);
