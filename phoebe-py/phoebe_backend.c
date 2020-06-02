@@ -298,7 +298,12 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
     PHOEBE_parameter *par;
 
     PyArg_ParseTuple(args, "sO|i", &parname, &parval, &index);
+
     par = phoebe_parameter_lookup(parname);
+    if (!par) {
+        PyErr_SetString(PyExc_KeyError, "passed parameter name is not recognized");
+        return NULL;
+    }
     switch (par->type) {
         case TYPE_INT: {
 #ifdef PY3K
@@ -452,12 +457,16 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 
     PyArg_ParseTuple(args, "s|i", &parname, &index);
     par = phoebe_parameter_lookup(parname);
+    if (!par) {
+        PyErr_SetString(PyExc_KeyError, "passed parameter name is not recognized");
+        return NULL;
+    }
     switch (par->type) {
         case TYPE_INT: {
             int ival;
             status = phoebe_parameter_get_value(par, &ival);
             if (status != SUCCESS) {
-                printf ("%s", phoebe_error (status));
+                PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
                 return NULL;
             }
             return Py_BuildValue ("i", ival);
@@ -466,7 +475,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 			int bval;
 			status = phoebe_parameter_get_value(par, &bval);
             if (status != SUCCESS) {
-                printf ("%s", phoebe_error (status));
+                PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
                 return NULL;
             }
             return Py_BuildValue ("i", bval);
@@ -478,7 +487,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 			const char *strval;
 			status = phoebe_parameter_get_value(par, &strval);
             if (status != SUCCESS) {
-                printf ("%s", phoebe_error (status));
+                PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
                 return NULL;
             }
             return Py_BuildValue ("s", strval);
@@ -487,7 +496,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
             int ival;
             status = phoebe_parameter_get_value(par, index, &ival);
             if (status != SUCCESS) {
-                printf ("%s", phoebe_error (status));
+                PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
                 return NULL;
             }
             return Py_BuildValue("i", ival);
@@ -496,7 +505,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
             int bval;
             status = phoebe_parameter_get_value(par, index, &bval);
             if (status != SUCCESS) {
-                printf ("%s", phoebe_error (status));
+                PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
                 return NULL;
             }
             return Py_BuildValue("i", bval);
@@ -508,19 +517,19 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 			const char *strval;
 			status = phoebe_parameter_get_value(par, index, &strval);
             if (status != SUCCESS) {
-                printf ("%s", phoebe_error (status));
+                PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
                 return NULL;
             }
             return Py_BuildValue ("s", strval);
 		}
         default:
             status = 0;
-            printf("not yet implemented, sorry.\n");
+                PyErr_SetString(PyExc_RuntimeError, "not yet implemented, sorry. O:) Bug Andrej if you need this.");
             break;
     }
 
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
