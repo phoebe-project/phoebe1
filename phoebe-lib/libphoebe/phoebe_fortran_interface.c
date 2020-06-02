@@ -23,6 +23,7 @@ int create_lci_file (char *filename, WD_LCI_parameters *param)
 	double  tavc = param->TAVC/10000.0;
 	double   vga = param->VGA/100.0;
 	double   wla = param->WLA/10000.0;
+    double   hla = param->HLA < 1e4 ? param->HLA : -1.0;
 	double   cla = param->CLA > 1e-6 ? param->CLA : 10.0;
 
 	wd_wrlci (filename, param->MPAGE, param->NREF, param->MREF, param->IFSMV1, param->IFSMV2, param->ICOR1, param->ICOR2, param->LD,
@@ -31,7 +32,7 @@ int create_lci_file (char *filename, WD_LCI_parameters *param)
 			  param->MODE, param->IPB, param->IFAT1, param->IFAT2, param->N1, param->N2, param->PERR0, param->DPERDT, param->THE, vunit,
 			  param->E, param->SMA, param->F1, param->F2, vga, param->INCL, param->GR1, param->GR2, param->MET1,
 			  tavh, tavc, param->ALB1, param->ALB2, param->PHSV, param->PCSV, param->RM, param->XBOL1, param->XBOL2, param->YBOL1, param->YBOL2,
-			  param->IBAND, param->HLA, cla, param->X1A, param->X2A, param->Y1A, param->Y2A, param->EL3, param->OPSF, mzero, param->FACTOR, wla,
+			  param->IBAND, hla, cla, param->X1A, param->X2A, param->Y1A, param->Y2A, param->EL3, param->OPSF, mzero, param->FACTOR, wla,
 			  param->SPRIM, param->XLAT1, param->XLONG1, param->RADSP1, param->TEMSP1, param->SSEC, param->XLAT2, param->XLONG2, param->RADSP2, param->TEMSP2);
 
 	return SUCCESS;
@@ -430,8 +431,8 @@ int wd_lci_parameters_get (WD_LCI_parameters *params, double **args, int MPAGE, 
 			params->HLA = readout_dbl;
 			phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_cla"), curve, &readout_dbl);
 			params->CLA = readout_dbl;
-			phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_lcx1"), curve, &readout_dbl);
 
+			phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_lcx1"), curve, &readout_dbl);
 			params->X1A = readout_dbl;
 			phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_ld_lcx2"), curve, &readout_dbl);
 			params->X2A = readout_dbl;
