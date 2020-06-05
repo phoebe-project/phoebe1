@@ -11,6 +11,7 @@ c  the program stops and prints a message.
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       dimension plcof(1750)
       dimension pl(10)
+      common /err/ ierrcode
       common /invar/ id1,id2,id3,id4,id5,id6,id7,id8,id9,
      $id10,id11,ld,id13,id14,id15
       common /planckleg/ plcof
@@ -55,6 +56,10 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       y=10.d0**ylog
       return
   11  continue
+      ylog=-huge(1.0)
+      y=-huge(1.0)
+      ierrcode=-11
+      return
       write(16,*) "planckint subroutine problem: T=", t, " is illegal."
       stop
 c 80  format('Program stopped in PLANCKINT,

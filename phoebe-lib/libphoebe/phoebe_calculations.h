@@ -34,7 +34,7 @@ int phoebe_join_chi2  (double *chi2, PHOEBE_vector *chi2s, PHOEBE_vector *weight
  * below should then correspond to that prototype.
  */
 
-#define wd_lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout,mswitch,mesh1,mesh2,hswitch,hrho,htheta,hAc,hAs) lc_(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout,mswitch,mesh1,mesh2,hswitch,hrho,htheta,hAc,hAs,strlen(plf),strlen(atmf),strlen(lcin),strlen(lcout))
+#define wd_lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout,mswitch,mesh1,mesh2,hswitch,hrho,htheta,hAc,hAs,status) lc_(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,indeps,deps,poscoy,poscoz,params,args,lcout,mswitch,mesh1,mesh2,hswitch,hrho,htheta,hAc,hAs,status,strlen(plf),strlen(atmf),strlen(lcin),strlen(lcout))
 
 int phoebe_compute_lc_using_wd  (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs);
 int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1,   PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs);

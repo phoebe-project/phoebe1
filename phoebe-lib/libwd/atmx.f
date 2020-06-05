@@ -33,6 +33,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       dimension abun(imetpts),glog(iloggpts),grand(iatmsize)
       dimension pl(10),yy(4),pha(4),tte(2),effwvl(iplmax)
       dimension message(2,4)
+      common /err/ ierrcode
       common/abung/abun,glog
       common/arrayleg/ grand,istart
       common /ramprange/ tlowtol,thightol,glowtol,ghightol

@@ -14,6 +14,7 @@ c  Version of January 8, 2003
      $RF2(*),CSBT1(*),CSBT2(*),GMAG1(*),GMAG2(*),glog1(*),glog2(*),
      $TLOC1(*),TLOC2(*),xInorm1(*),xInorm2(*)
       dimension message(2,4)
+      common /err/ ierrcode
       common /atmmessages/ message,komp
       common /coflimbdark/ xld,yld
       COMMON /DPDX/ DPDX1,DPDX2,PHSV,PCSV
@@ -66,6 +67,7 @@ c~       write(*,*) d,vl1,vl2,pothd,potcd
       yld=yh
       if(ifat1.eq.0) call planckint(tph,iband,xintlog1,xint1)
       IF(IFAT1.NE.0) CALL atmx(tph,gplog1,iband,xintlog1,xint1)
+      if(ierrcode.ne.0) return
       call lum(hlum,xh,yh,tpolh,n1,n1,1,sbrh,rv,rvq,glump1,
      $glump2,glog1,glog2,grv1,grv2,mmsave,summ1d,fr1,sm1d,ifat1,vold,rm,
      $poth,f1,d,snth,iband,tloc1,tloc2,xInorm1,xInorm2)
@@ -74,6 +76,7 @@ c~       write(*,*) d,vl1,vl2,pothd,potcd
       yld=yc
       if(ifat2.eq.0) call planckint(tpc,iband,xintlog2,xint2)
       IF(IFAT2.NE.0) CALL atmx(tpc,gplog2,iband,xintlog2,xint2)
+      if(ierrcode.ne.0) return
       sbrc=sbrh*xint2/xint1
       call lum(clum,xc,yc,tpolc,n2,n1,2,sbrt,rv,rvq,glump1,
      $glump2,glog1,glog2,grv1,grv2,mmsave,summ2d,fr2,sm2d,ifat2,vold,rm,

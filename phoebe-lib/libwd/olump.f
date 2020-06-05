@@ -8,6 +8,7 @@ c   Version of January 8, 2003
      $SNFI(*),CSFI(*),tld(*),glump1(*),glump2(*),glog1(*),glog2(*),                         
      $grv1(*),grv2(*) 
       dimension message(2,4) 
+      common /err/ ierrcode
       common /atmmessages/ message,kompcom 
       common /invar/ khdum,ipbdum,irtedm,nrefdm,irv1dm,irv2dm,mrefdm,    
      $ifs1dm,ifs2dm,icr1dm,icr2dm,ld,ncl,jdphs,ipc                       
@@ -30,7 +31,8 @@ c   Version of January 8, 2003
       cmpp=dfloat(2-komp) 
       gplog=cmpp*gplog1+cmp*gplog2 
       if(ifat.eq.0) call planckint(tpole,iband,pollog,pint) 
-      IF(IFAT.NE.0) CALL atmx(tpole,gplog,iband,pollog,pint)                            
+      IF(IFAT.NE.0) CALL atmx(tpole,gplog,iband,pollog,pint)    
+      if(ierrcode.ne.0) return
       COMPP=dfloat(2*KOMP-3)                                             
       COMP=-COMPP                                                        
       CMPD=CMP*D                                                         

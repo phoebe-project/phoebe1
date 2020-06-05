@@ -7,6 +7,7 @@ c   Version of January 8, 2003
      $glump2(*),glog1(*),glog2(*),grv1(*),grv2(*),tloc1(*),tloc2(*),
      $xInorm1(*),xInorm2(*)
       dimension message(2,4)
+      common /err/ ierrcode
       common /atmmessages/ message,kompcom
       common /radi/ R1H,RLH,R1C,RLC
       common /invar/ khdum,ipbdum,irtedm,nrefdm,irv1dm,irv2dm,mrefdm,
@@ -20,6 +21,7 @@ c   Version of January 8, 2003
       gplog=cmpp*gplog1+cmp*gplog2
       IF(ifat.eq.0) call planckint(tpole,iband,pollog,polin)
       IF(IFAT.NE.0) call atmx(TPOLE,gplog,iband,pollog,polin)
+      if(ierrcode.ne.0) return
       EN=dfloat(N)
       DELTH=1.570796326794897d0/EN
       SUM=0.d0

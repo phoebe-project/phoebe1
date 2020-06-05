@@ -814,7 +814,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX, mesh1, mesh2, horizon);
 
     if (status != SUCCESS) {
-        printf("%s", phoebe_error(status));
+        PyErr_SetString(PyExc_Exception, phoebe_error(status));
         return NULL;
     }
 

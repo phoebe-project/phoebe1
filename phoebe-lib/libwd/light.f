@@ -18,6 +18,7 @@ c   Version of October 18, 2004
      $dvks2(*),tau1(*),tau2(*),hbarw1(*),hbarw2(*),taug(*),emm1(*),
      $emm2(*),emmg(*)
       dimension message(2,4)
+      common /err/ ierrcode
       common /atmmessages/ message,komp
       common /coflimbdark/ x,y
       COMMON /misc/ X1
@@ -290,7 +291,8 @@ c   Version of October 18, 2004
       glogg=cmpp*glog1(ix)+cmp*glog2(ix)
       CALL atmx(TLD(IS),glogg,iband,xintlog,xintbase)
       CALL atmx(TSP,glogg,iband,xintlog,xintspot)
-  941 CORFAC=xintspot/xintbase
+  941 if(ierrcode.ne.0) return
+      CORFAC=xintspot/xintbase
   640 CONTINUE
       rit=1.d0
       if(ncl.eq.0) goto 818
@@ -506,7 +508,8 @@ c    of accuracy for distorted stars without those terms. See notes.
       glogg=cmp*glog1(ix)+cmpp*glog2(ix)
       CALL atmx(TLD(IS),glogg,iband,xintlog,xintbase)
       CALL atmx(TSP,glogg,iband,xintlog,xintspot)
-  661 CORFAC=xintspot/xintbase
+  661 if(ierrcode.ne.0) return
+      CORFAC=xintspot/xintbase
   660 CONTINUE
       rit=1.d0
       if(ncl.eq.0) goto 718

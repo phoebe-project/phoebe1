@@ -354,6 +354,8 @@ char *phoebe_error (PHOEBE_error_code code)
 			return "spot temperature factor is invalid (0 < temp < 100), aborting.\n";
 		case ERROR_SPOT_INVALID_WD_NUMBER:
 			return "spot DC designation is invalid (should be 1 or 2), aborting.\n";
+        case WD_TEFF_OUT_OF_RANGE:
+            return "temperature passed to WD backend is out of range, aborting.\n";
 		default:
 			phoebe_lib_error ("exception handler invoked in phoebe_error () by code %d, please report this!\n", code);
 			return "exception handler invoked.\n";

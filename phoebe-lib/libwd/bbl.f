@@ -79,6 +79,7 @@ c  Version of December 18, 2003
      $tld,glump1,glump2,xx1,xx2,yy1,yy2,zz1,zz2,dint1,dint2,grv1,grv2,
      $csbt1,csbt2,rftemp,rf1,rf2,gmag1,gmag2,glog1,glog2,mode,iband,
      $tloc1,tloc2,xInorm1,xInorm2)
+      if(ierrcode.ne.0) return
    19 CONTINUE
       VO1=qfac*SINI*(ECOS+COSU)/EFC+VGAM
       VO2=-qfac1*SINI*(ECOS+COSU)/EFC+VGAM
@@ -88,7 +89,8 @@ c  Version of December 18, 2003
      $fbin2,delv1,delv2,count1,count2,delwl1,delwl2,resf1,resf2,wl1,wl2,
      $dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,hbarw2,xcl,ycl,zcl,rcl,op1,
      $fcl,edens,encl,dens,taug,emmg,yskp,zskp,iband,ifat1,ifat2,ifphn)
-      VRA1=0.d0
+      if(ierrcode.ne.0) return
+     VRA1=0.d0
       VRA2=0.d0
       IF(HOT.GT.0.d0) VRA1=F1*SOMHOT/HOT
       IF(COOL.GT.0.d0) VRA2=F2*SOMKUL/COOL

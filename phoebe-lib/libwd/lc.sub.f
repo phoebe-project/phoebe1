@@ -1,6 +1,7 @@
       subroutine lc(plf,pltab,atmf,atmtab,lcin,request,vertno,L3perc,
      +              indeps,deps,skycoy,skycoz,params,args,lcout,
-     +              mswitch,mesh1,mesh2,hswitch,hrho,htheta,hAc,hAs)
+     +              mswitch,mesh1,mesh2,hswitch,hrho,htheta,hAc,hAs,
+     +              status)
 c
 c  Main program for computing light and radial velocity curves,
 c      line profiles, and images
@@ -191,7 +192,7 @@ c       htheta   ..   horizon theta, useful for debugging
 c          hAc   ..   Fourier cosine coefficients, useful for debugging
 c          hAs   ..   Fourier sine coefficients, useful for debugging
 
-      integer request,vertno,mswitch,hswitch
+      integer request,vertno,mswitch,hswitch,status
       double precision indeps(*),deps(*),skycoy(*),skycoz(*),params(*),
      $args(*),pltab(iplcof),atmtab(iatmsize)
       character lcin*(*)
@@ -227,6 +228,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       dimension plcof(iplcof)
       dimension abun(imetpts),glog(iloggpts),grand(iatmsize)
 
+      common /err/ ierrcode
       common /abung/ abun,glog
       common /arrayleg/ grand,istart
       common /planckleg/ plcof
@@ -328,6 +330,8 @@ c      66   STEREO HI-1B, filter with quantum efficiency, Danielle Bewsher, priv
 c      67   STEREO HI-1B, filter without quantum efficiency, Danielle Bewsher, priv. comm.
 c      68   Solar Mass Ejection Imager (SMEI), Petr Harmanec, priv. comm.
 c
+      ierrcode=0
+      status=0
       do 15067 i=1,ifrmax
       theta(i)=0.d0
       rho(i)=0.d0
@@ -584,7 +588,9 @@ c~       write(*,*) vol1,poth,vol2,potc,vl1,p1ap,vl2,p2ap,dpdx1,dpdx2
      $delwl2,resf1,resf2,wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,
      $hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,
      $zskp,mode,iband,ifat1,ifat2,1,tloc1,tloc2,xInorm1,xInorm2)
-      KH=0
+      if(ierrcode.ne.0) status=ierrcode
+      if(ierrcode.ne.0) return
+     KH=0
 c     (3/4pi)^(1/3) = .6203505d0
       rr1=.6203505d0*vol1**ot
       rr2=.6203505d0*vol2**ot
@@ -694,6 +700,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      $delwl2,resf1,resf2,wl1,wl2,dvks1,dvks2,tau1,tau2,emm1,emm2,hbarw1,
      $hbarw2,xcl,ycl,zcl,rcl,op1,fcl,dens,encl,edens,taug,emmg,yskp,
      $zskp,mode,iband,ifat1,ifat2,0,tloc1,tloc2,xInorm1,xInorm2)
+      if(ierrcode.ne.0) status=ierrcode
+      if(ierrcode.ne.0) return
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     PHOEBE extension:

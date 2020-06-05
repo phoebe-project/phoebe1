@@ -246,18 +246,18 @@ bool phoebe_pcsv_constrained (int wd_model)
 	}
 }
 
-void intern_call_wd_lc(char *atmcof, char *atmcofplanck, char *lcin, double *args, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos, integer *mswitch, double *mesh1, double *mesh2, integer *hswitch, double *hrho, double *htheta, double *hAc, double *hAs)
+int intern_call_wd_lc(char *atmcof, char *atmcofplanck, char *lcin, double *args, integer *request, integer *nodes, integer *L3perc, double *indep, double *dep, double *ypos, double *zpos, integer *mswitch, double *mesh1, double *mesh2, integer *hswitch, double *hrho, double *htheta, double *hAc, double *hAs)
 {
 	int wd_model;
 	double params[16];
 	char *phoebe_model;
-    int mem, dump, i;
+    int mem, dump, status;
     
     phoebe_config_entry_get("LOAD_ATM_TO_MEMORY", &mem);
     phoebe_config_entry_get("DUMP_LCOUT_FILES", &dump);
 
-    wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "", mswitch, mesh1, mesh2, hswitch, hrho, htheta, hAc, hAs);
-
+    wd_lc(mem ? "" : atmcofplanck, PHOEBE_plcof_table, mem ? "" : atmcof, PHOEBE_atmcof_table, lcin, request, nodes, L3perc, indep, dep, ypos, zpos, params, args, dump ? "lcout.active" : "", mswitch, mesh1, mesh2, hswitch, hrho, htheta, hAc, hAs, &status);
+    
 	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_plum1"),   params[ 0]);
 	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_plum2"),   params[ 1]);
 	phoebe_parameter_set_value(phoebe_parameter_lookup ("phoebe_mass1"),   params[ 2]);
@@ -282,7 +282,7 @@ void intern_call_wd_lc(char *atmcof, char *atmcofplanck, char *lcin, double *arg
 	if (phoebe_pcsv_constrained(wd_model))
 		phoebe_parameter_set_value (phoebe_parameter_lookup ("phoebe_pot2"), params[13]);
         
-	return;
+	return status;
 }
 
 int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
@@ -348,11 +348,11 @@ int phoebe_compute_lc_using_wd (PHOEBE_curve *curve, PHOEBE_vector *indep, char 
 	if (hrho && htheta && hAc && hAs)
 		hswitch = TRUE;
 
-	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, curve->indep->val, curve->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
+	status = intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, curve->indep->val, curve->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
 	free (atmcof); free (atmcofplanck);
 	
-	return SUCCESS;
+	return status;
 }
 
 int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
@@ -409,9 +409,9 @@ int phoebe_compute_rv1_using_wd (PHOEBE_curve *rv1, PHOEBE_vector *indep, char *
 	if (hrho && htheta && hAc && hAs)
 		hswitch = TRUE;
 
-	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv1->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
+	status = intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv1->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
-	return SUCCESS;
+	return status;
 }
 
 int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *lcin, double *args, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
@@ -468,9 +468,9 @@ int phoebe_compute_rv2_using_wd (PHOEBE_curve *rv2, PHOEBE_vector *indep, char *
 	if (hrho && htheta && hAc && hAs)
 		hswitch = TRUE;
 
-	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv2->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
+	status = intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, indep->val, rv2->dep->val, NULL, NULL, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
-	return SUCCESS;
+	return status;
 }
 
 int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, char *lcin, double *args, double phase, double *mesh1, double *mesh2, double *hrho, double *htheta, double *hAc, double *hAs)
@@ -563,14 +563,14 @@ int phoebe_compute_pos_using_wd (PHOEBE_vector *poscoy, PHOEBE_vector *poscoz, c
 	if (hrho && htheta && hAc && hAs)
 		hswitch = TRUE;
 
-	intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, &phs, &dummy, poscoy->val, poscoz->val, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
+	status = intern_call_wd_lc(atmcof, atmcofplanck, lcin, args, &request, &nodes, &L3perc, &phs, &dummy, poscoy->val, poscoz->val, &mswitch, mesh1, mesh2, &hswitch, hrho, htheta, hAc, hAs);
 
 	i = 0;
 	while (!isnan(poscoy->val[i]) && i < poscoy->dim) i++;
 	phoebe_vector_realloc (poscoy, i-1);
 	phoebe_vector_realloc (poscoz, i-1);
 
-	return SUCCESS;
+	return status;
 }
 
 int phoebe_calculate_plum_correction (double *alpha, PHOEBE_curve *syn, PHOEBE_curve *obs, int levweight, double l3, PHOEBE_el3_units l3units)
