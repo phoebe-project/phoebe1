@@ -12,7 +12,7 @@ static PyObject *phoebeInit(PyObject *self, PyObject *args)
 {
     int status = phoebe_init();
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -23,7 +23,7 @@ static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
 {
     int status = phoebe_configure();
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -33,6 +33,10 @@ static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
 static PyObject *phoebeQuit(PyObject *self, PyObject *args)
 {
     int status = phoebe_quit();
+    if (status != SUCCESS) {
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
+        return NULL;
+    }
     return Py_BuildValue("i", status);
 }
 
@@ -120,7 +124,7 @@ static PyObject *phoebeOpen(PyObject *self, PyObject *args)
     PyArg_ParseTuple(args, "s", &fname);
     status = phoebe_open_parameter_file(fname);
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -135,7 +139,7 @@ static PyObject *phoebeSave(PyObject *self, PyObject *args)
     PyArg_ParseTuple(args, "s", &fname);
     status = phoebe_save_parameter_file(fname);
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -218,14 +222,14 @@ static PyObject *phoebeCFVal(PyObject *self, PyObject *args)
     }
 
     else {
-        printf("passed curve type %s is invalid, aborting.", ctype);
+        PyErr_SetString(PyExc_KeyError, "passed curve type is invalid, aborting.");
         return NULL;
     }
 
     if (scale == 0) {
         status = phoebe_cf_compute(&cf, PHOEBE_CF_CHI2, syn->dep, obs->dep, obs->weight, sigma, lexp, 1.0);
         if (status != SUCCESS) {
-            printf("%s", phoebe_error (status));
+            PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
             return NULL;
         }
     }
@@ -264,7 +268,7 @@ static PyObject *phoebeSetLim(PyObject *self, PyObject *args)
     par = phoebe_parameter_lookup(parname);
     status = phoebe_parameter_set_limits(par, parmin, parmax);
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -283,7 +287,7 @@ static PyObject *phoebeGetLim(PyObject *self, PyObject *args)
     par = phoebe_parameter_lookup(parname);
     status = phoebe_parameter_get_limits(par, &parmin, &parmax);
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -309,7 +313,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 #ifdef PY3K
             long val;
             if (!PyLong_Check(parval)) {
-                printf("error: integer value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "integer value expected.");
 				return NULL;
             }
             val = PyLong_AsLong(parval);
@@ -328,7 +332,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 			int val;
 #ifdef PY3K
 			if (!PyLong_Check(parval)) {
-				printf("error: boolean value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "boolean value expected.");
 				return NULL;
 			}
 			val = PyLong_AsLong(parval);
@@ -345,7 +349,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
         case TYPE_DOUBLE: {
 			double val;
 			if (!PyFloat_Check(parval)) {
-				printf("error: float value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "float value expected.");
 				return NULL;
 			}
 			val = PyFloat_AS_DOUBLE(parval);
@@ -356,7 +360,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 			char *val;
 #ifdef PY3K
 			if (!PyUnicode_Check(parval)) {
-				printf("error: string value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "string value expected.");
 				return NULL;
 			}
 			val = PyUnicode_AsUTF8(parval);
@@ -374,7 +378,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 			int val;
 #ifdef PY3K
 			if (!PyLong_Check(parval)) {
-				printf("error: float value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "float value expected.");
 				return NULL;
 			}
 			val = PyLong_AsLong(parval);
@@ -392,7 +396,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 			int val;
 #ifdef PY3K
 			if (!PyLong_Check(parval)) {
-				printf("error: float value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "float value expected.");
 				return NULL;
 			}
 			val = PyLong_AsLong(parval);
@@ -409,7 +413,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
         case TYPE_DOUBLE_ARRAY: {
 			double val;
 			if (!PyFloat_Check(parval)) {
-				printf("error: float value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "float value expected.");
 				return NULL;
 			}
 			val = PyFloat_AS_DOUBLE(parval);
@@ -420,7 +424,7 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 			char *val;
 #ifdef PY3K
 			if (!PyUnicode_Check(parval)) {
-				printf("error: string value expected for %s.\n", parname);
+                PyErr_SetString(PyExc_TypeError, "string value expected.");
 				return NULL;
 			}
 			val = PyUnicode_AsUTF8(parval);
@@ -436,12 +440,12 @@ static PyObject *phoebeSetPar(PyObject *self, PyObject *args)
 		}
         default:
             status = 0;
-            printf("not yet implemented, sorry.\n");
+            PyErr_SetString(PyExc_NotImplementedError, "not yet implemented, sorry.");
             break;
     }
 
     if (status != SUCCESS) {
-        printf ("%s", phoebe_error (status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -458,7 +462,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
     PyArg_ParseTuple(args, "s|i", &parname, &index);
     par = phoebe_parameter_lookup(parname);
     if (!par) {
-        PyErr_SetString(PyExc_KeyError, "passed parameter name is not recognized");
+        PyErr_SetString(PyExc_NameError, "passed parameter name is not recognized");
         return NULL;
     }
     switch (par->type) {
@@ -553,7 +557,7 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_model"), &ldname);
     ldmodel = phoebe_ld_model_type(ldname);
 
-    printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
+    // printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
 
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff1"), &T1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff2"), &T2);
@@ -571,7 +575,7 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_f2"),  &F2);
     phoebe_calculate_loggs(pot1, pot2, sma, P, e, q, F1, F2, &logg1, &logg2);
 
-    printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
+    // printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
 
     /* Bolometric LD coefficients first: */
     xld = yld = 0;
@@ -632,7 +636,7 @@ static PyObject *phoebeData(PyObject *self, PyObject *args)
     PyObject *x, *y, *z, *ret;
 
     if (!PyArg_ParseTuple(args, "si", &ctype, &cidx)) {
-        printf("parsing failed.\n");
+        PyErr_SetString(PyExc_TypeError, "parsing failed: string and integer expected.");
         return NULL;
     }
 
@@ -753,15 +757,14 @@ static PyObject *phoebeDC(PyObject *self, PyObject *args)
     status = phoebe_minimize_using_dc (NULL, feedback);
 
     if (status != SUCCESS) {
-		printf("%s", phoebe_error(status));
-        return Py_BuildValue ("i", status);
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
+        return NULL;
 	}
 	else {
         dict = PyDict_New();
         intern_add_feedback_to_dict(dict, feedback);
         return dict;
 	}
-
 }
 
 static PyObject *phoebeLC(PyObject *self, PyObject *args)
@@ -779,7 +782,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     PHOEBE_horizon *horizon = NULL;
 
     if (!PyArg_ParseTuple(args, "Oi|ii", &obj, &index, &mswitch, &hswitch)) {
-        printf("parsing failed: call with lc(t_array, curve_index [, mswitch, hswitch]).\n");
+        PyErr_SetString(PyExc_TypeError, "parsing failed: call with lc(t_array, curve_index [, mswitch, hswitch]).");
         return NULL;
     }
 
@@ -814,7 +817,7 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
     status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_FLUX, mesh1, mesh2, horizon);
 
     if (status != SUCCESS) {
-        PyErr_SetString(PyExc_Exception, phoebe_error(status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -897,7 +900,7 @@ static PyObject *phoebeRV1(PyObject *self, PyObject *args)
     PHOEBE_curve *curve;
 
     if (!PyArg_ParseTuple(args, "Oi", &obj, &index)) {
-        printf("parsing failed: call with rv1(t_array, curve_index).\n");
+        PyErr_SetString(PyExc_TypeError, "parsing failed: call with rv1(t_array, curve_index).");
         return NULL;
     }
 
@@ -910,7 +913,7 @@ static PyObject *phoebeRV1(PyObject *self, PyObject *args)
     curve = phoebe_curve_new();
     status = phoebe_curve_compute(curve, indep, index, itype, PHOEBE_COLUMN_PRIMARY_RV, NULL, NULL, NULL);
     if (status != SUCCESS) {
-        printf("%s", phoebe_error(status));
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
         return NULL;
     }
 
@@ -935,7 +938,7 @@ static PyObject *phoebeRV2(PyObject *self, PyObject *args)
     PHOEBE_curve *curve;
 
     if (!PyArg_ParseTuple(args, "Oi", &obj, &index)) {
-        printf("parsing failed: call with rv2(t_array, curve_index).\n");
+        PyErr_SetString(PyExc_TypeError, "parsing failed: call with rv2(t_array, curve_index).");
         return NULL;
     }
 
@@ -972,13 +975,15 @@ static PyObject *phoebeCritPot(PyObject *self, PyObject *args)
     PyObject *retval;
 
     if (!PyArg_ParseTuple(args, "ddd", &q, &F, &e)) {
-        printf("parsing failed.\n");
+        PyErr_SetString(PyExc_TypeError, "parsing failed. Call with critpot(q, F, e).");
         return NULL;
     }
 
     status = phoebe_calculate_critical_potentials(q, F, e, &L1, &L2);
-    if (status != SUCCESS)
-        printf("%s", phoebe_error(status));
+    if (status != SUCCESS) {
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
+        return NULL;
+    }
 
     retval = PyTuple_New(2);
     PyTuple_SetItem(retval, 0, Py_BuildValue("d", L1));
@@ -1063,7 +1068,8 @@ static PyObject *phoebeParameter (PyObject *self, PyObject *args)
         break;
         default:
             /* If we end up here, yell and scream! */
-            printf ("exception encountered in phoebe_backend.c, phoebeParameter().\n");
+            PyErr_SetString(PyExc_RuntimeError, "exception encountered in phoebe_backend.c, phoebeParameter().");
+            return NULL;
         break;
     }
 
