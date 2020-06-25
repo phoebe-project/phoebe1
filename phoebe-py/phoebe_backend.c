@@ -543,7 +543,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
 {
     int lcno, rvno, i, status;
-    char *ldname, *pbname;
+    char *ldname, *pbname, *errmsg;
     PHOEBE_passband *passband;
     LD_model ldmodel;
     double T1, T2, logg1, logg2, met1, met2;
@@ -582,7 +582,9 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     passband = phoebe_passband_lookup("Bolometric:3000A-10000A");
     status = phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
     if (status != SUCCESS) {
-        PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings("bolometric LD for the primary star: ", phoebe_error(status), NULL));
+        errmsg = phoebe_concatenate_strings("bolometric LD for the primary star: ", phoebe_error(status), NULL);
+        PyErr_SetString(PyExc_RuntimeError, errmsg);
+        free(errmsg);
         return NULL;
     }
     // printf("Primary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
@@ -592,7 +594,9 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     xld = yld = NAN;
     status = phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
     if (status != SUCCESS) {
-        PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings("bolometric LD for the secondary star: ", phoebe_error(status), NULL));
+        errmsg = phoebe_concatenate_strings("bolometric LD for the secondary star: ", phoebe_error(status), NULL);
+        PyErr_SetString(PyExc_RuntimeError, errmsg);
+        free(errmsg);
         return NULL;
     }
     // printf("Secondary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
@@ -606,7 +610,9 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
         xld = yld = NAN;
         status = phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
         if (status != SUCCESS) {
-            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " light curve LD for the primary star: ", phoebe_error(status), NULL));
+            errmsg = phoebe_concatenate_strings(pbname, " light curve LD for the primary star: ", phoebe_error(status), NULL);
+            PyErr_SetString(PyExc_RuntimeError, errmsg);
+            free(errmsg);
             return NULL;
         }
         // printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
@@ -616,7 +622,9 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
         xld = yld = NAN;
         status = phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
         if (status != SUCCESS) {
-            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " light curve LD for the secondary star: ", phoebe_error(status), NULL));
+            errmsg = phoebe_concatenate_strings(pbname, " light curve LD for the secondary star: ", phoebe_error(status), NULL);
+            PyErr_SetString(PyExc_RuntimeError, errmsg);
+            free(errmsg);
             return NULL;
         }
 
@@ -632,7 +640,9 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
         xld = yld = NAN;
         status = phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
         if (status != SUCCESS) {
-            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " RV curve LD for the primary star: ", phoebe_error(status), NULL));
+            errmsg = phoebe_concatenate_strings(pbname, " RV curve LD for the primary star: ", phoebe_error(status), NULL);
+            PyErr_SetString(PyExc_RuntimeError, errmsg);
+            free(errmsg);
             return NULL;
         }
         // printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
@@ -642,7 +652,9 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
         xld = yld = NAN;
         status = phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
         if (status != SUCCESS) {
-            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " RV curve LD for the secondary star: ", phoebe_error(status), NULL));
+            errmsg = phoebe_concatenate_strings(pbname, " RV curve LD for the secondary star: ", phoebe_error(status), NULL);
+            PyErr_SetString(PyExc_RuntimeError, errmsg);
+            free(errmsg);
             return NULL;
         }
         // printf("Secondary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
