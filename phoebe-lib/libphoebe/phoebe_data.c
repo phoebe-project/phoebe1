@@ -162,7 +162,7 @@ PHOEBE_passband *phoebe_passband_new_from_file (char *filename)
 			continue;
 		}
 		else {
-			if (sscanf (line, "%lf\t%lf", &wl, &tf) != 2) continue;
+			if (sscanf (line, "%lf %lf", &wl, &tf) != 2) continue;
 			bins++;
 			wla = phoebe_realloc (wla, bins * sizeof (*wla));
 			tfa = phoebe_realloc (tfa, bins * sizeof (*tfa));
