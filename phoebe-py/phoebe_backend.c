@@ -542,7 +542,7 @@ static PyObject *phoebeGetPar(PyObject *self, PyObject *args)
 
 static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
 {
-    int lcno, rvno, i;
+    int lcno, rvno, i, status;
     char *ldname, *pbname;
     PHOEBE_passband *passband;
     LD_model ldmodel;
@@ -557,7 +557,7 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_ld_model"), &ldname);
     ldmodel = phoebe_ld_model_type(ldname);
 
-    // printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
+    printf("LCs: %d; RVs: %d; LD model: %s\n", lcno, rvno, ldname);
 
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff1"), &T1);
     phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_teff2"), &T2);
@@ -578,16 +578,24 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     // printf("T1=%0.0f, T2=%0.0f; logg1=%3.3f, logg2=%3.3f; met1=%3.3f, met2=%3.3f\n", T1, T2, logg1, logg2, met1, met2);
 
     /* Bolometric LD coefficients first: */
-    xld = yld = 0;
+    xld = yld = NAN;
     passband = phoebe_passband_lookup("Bolometric:3000A-10000A");
-    phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
-    //~ printf("Primary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
+    status = phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
+    if (status != SUCCESS) {
+        PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings("bolometric LD for the primary star: ", phoebe_error(status), NULL));
+        return NULL;
+    }
+    // printf("Primary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_xbol1"), xld);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_ybol1"), yld);
 
-    xld = yld = 0;
-    phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
-    //~ printf("Secondary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
+    xld = yld = NAN;
+    status = phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
+    if (status != SUCCESS) {
+        PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings("bolometric LD for the secondary star: ", phoebe_error(status), NULL));
+        return NULL;
+    }
+    // printf("Secondary star -- bolometric LDs: xld=%3.3f, yld=%3.3f\n", xld, yld);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_xbol2"), xld);
     phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_ybol2"), yld);
 
@@ -595,15 +603,24 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     for (i = 0; i < lcno; i++) {
         phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_lc_filter"), i, &pbname);
         passband = phoebe_passband_lookup(pbname);
-        xld = yld = 0;
-        phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
-        //~ printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        xld = yld = NAN;
+        status = phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
+        if (status != SUCCESS) {
+            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " light curve LD for the primary star: ", phoebe_error(status), NULL));
+            return NULL;
+        }
+        // printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcx1"), i, xld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcy1"), i, yld);
 
-        xld = yld = 0;
-        phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
-        //~ printf("Secondary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        xld = yld = NAN;
+        status = phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
+        if (status != SUCCESS) {
+            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " light curve LD for the secondary star: ", phoebe_error(status), NULL));
+            return NULL;
+        }
+
+        // printf("Secondary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcx2"), i, xld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_lcy2"), i, yld);
     }
@@ -612,15 +629,23 @@ static PyObject *phoebeUpdateLD(PyObject *self, PyObject *args)
     for (i = 0; i < rvno; i++) {
         phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_rv_filter"), i, &pbname);
         passband = phoebe_passband_lookup(pbname);
-        xld = yld = 0;
-        phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
-        //~ printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        xld = yld = NAN;
+        status = phoebe_ld_get_coefficients(ldmodel, passband, met1, T1, logg1, &xld, &yld);
+        if (status != SUCCESS) {
+            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " RV curve LD for the primary star: ", phoebe_error(status), NULL));
+            return NULL;
+        }
+        // printf("Primary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvx1"), xld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvy1"), yld);
 
-        xld = yld = 0;
-        phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
-        //~ printf("Secondary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
+        xld = yld = NAN;
+        status = phoebe_ld_get_coefficients(ldmodel, passband, met2, T2, logg2, &xld, &yld);
+        if (status != SUCCESS) {
+            PyErr_SetString(PyExc_RuntimeError, phoebe_concatenate_strings(pbname, " RV curve LD for the secondary star: ", phoebe_error(status), NULL));
+            return NULL;
+        }
+        // printf("Secondary star -- %s LDs: xld=%3.3f, yld=%3.3f\n", pbname, xld, yld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvx2"), xld);
         phoebe_parameter_set_value(phoebe_parameter_lookup("phoebe_ld_rvy2"), yld);
     }
