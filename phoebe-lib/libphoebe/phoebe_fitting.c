@@ -99,12 +99,13 @@ double phoebe_chi2_cost_function (PHOEBE_vector *adjpars, PHOEBE_nms_parameters 
     args = phoebe_malloc((lcno+rvno)*sizeof(*args));
 	for (i = 0; i < lcno; i++) {
 		lcipars[i] = phoebe_malloc (sizeof (**lcipars));
-        args[i] = phoebe_malloc(sizeof(**args));
+        args[i] = phoebe_malloc(18*sizeof(**args));
 		wd_lci_parameters_get (lcipars[i], &(args[i]), /* MPAGE = */ 1, i);
 	}
 	for (i = 0; i < rvno; i++) {
 		lcipars[lcno+i] = phoebe_malloc (sizeof (**lcipars));
-		wd_lci_parameters_get (lcipars[lcno+i], &(args[i]), /* MPAGE = */ 2, i);
+        args[lcno+i] = phoebe_malloc(18*sizeof(**args));
+		wd_lci_parameters_get (lcipars[lcno+i], &(args[lcno+i]), /* MPAGE = */ 2, i);
 	}
 
 	/* Compute theoretical light and RV curves: */
