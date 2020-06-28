@@ -6,91 +6,91 @@
 #include <phoebe/phoebe.h>
 
 typedef struct GUI_plot_layout {
-	int lmargin;           /* left plot margin in pixels */
-	int rmargin;           /* right plot margin in pixels */
-	int tmargin;           /* top plot margin in pixels */
-	int bmargin;           /* bottom plot margin in pixels */
-	int xmargin;           /* x-spacing between the plot border and the graph */
-	int ymargin;           /* y-spacing between the plot border and the graph */
-	int label_lmargin;     /* spacing between the frame and the y-axis label */
-	int label_rmargin;     /* spacing between the y-axis label and the graph */
-	int x_tick_length;     /* major x-tick length in pixels */
-	int y_tick_length;     /* major y-tick length in pixels */
-	double txfirst;        /* first x-tic value */
-	double tyfirst;        /* first y-tic value */
-	double txspacing;      /* x-tic spacing */
-	double tyspacing;      /* y-tic spacing */
-	int txmajor;           /* number of major tics on the x-axis */
-	int tymajor;           /* number of major tics on the y-axis */
-	int txminor;           /* number of minor tics on the x-axis */
-	int tyminor;           /* number of minor tics on the y-axis */
-	char txfmt[20];        /* x-tic label format */
-	char tyfmt[20];        /* y-tic label format */
+    int lmargin;           /* left plot margin in pixels */
+    int rmargin;           /* right plot margin in pixels */
+    int tmargin;           /* top plot margin in pixels */
+    int bmargin;           /* bottom plot margin in pixels */
+    int xmargin;           /* x-spacing between the plot border and the graph */
+    int ymargin;           /* y-spacing between the plot border and the graph */
+    int label_lmargin;     /* spacing between the frame and the y-axis label */
+    int label_rmargin;     /* spacing between the y-axis label and the graph */
+    int x_tick_length;     /* major x-tick length in pixels */
+    int y_tick_length;     /* major y-tick length in pixels */
+    double txfirst;        /* first x-tic value */
+    double tyfirst;        /* first y-tic value */
+    double txspacing;      /* x-tic spacing */
+    double tyspacing;      /* y-tic spacing */
+    int txmajor;           /* number of major tics on the x-axis */
+    int tymajor;           /* number of major tics on the y-axis */
+    int txminor;           /* number of minor tics on the x-axis */
+    int tyminor;           /* number of minor tics on the y-axis */
+    char txfmt[20];        /* x-tic label format */
+    char tyfmt[20];        /* y-tic label format */
 } GUI_plot_layout;
 
 GUI_plot_layout *gui_plot_layout_new  ();
 int              gui_plot_layout_free (GUI_plot_layout *layout);
 
 typedef enum GUI_plot_type {
-	GUI_PLOT_LC,
-	GUI_PLOT_RV,
-	GUI_PLOT_MESH,
-	GUI_PLOT_UNDEFINED
+    GUI_PLOT_LC,
+    GUI_PLOT_RV,
+    GUI_PLOT_MESH,
+    GUI_PLOT_UNDEFINED
 } GUI_plot_type;
 
 typedef struct GUI_plot_request {
-	bool          plot_obs;
-	bool          plot_syn;
-	bool          data_changed;  /* Indicates whether data points have been deleted or undeleted */
-	char         *obscolor;      /* Hexadecimal color code (with a leading #) */
-	char         *syncolor;      /* Hexadecimal color code (with a leading #) */
-	double        offset;
-	double        phase;         /* For mesh plots */
-	char         *filename;
-	PHOEBE_curve *raw;
-	PHOEBE_curve *query;
-	PHOEBE_curve *model;         /* For LC and RV plots                       */
-	PHOEBE_star_surface *mesh;   /* For mesh (plane-of-sky projection) plots  */
+    bool          plot_obs;
+    bool          plot_syn;
+    bool          data_changed;  /* Indicates whether data points have been deleted or undeleted */
+    char         *obscolor;      /* Hexadecimal color code (with a leading #) */
+    char         *syncolor;      /* Hexadecimal color code (with a leading #) */
+    double        offset;
+    double        phase;         /* For mesh plots */
+    char         *filename;
+    PHOEBE_curve *raw;
+    PHOEBE_curve *query;
+    PHOEBE_curve *model;         /* For LC and RV plots                       */
+    PHOEBE_star_surface *mesh;   /* For mesh (plane-of-sky projection) plots  */
 } GUI_plot_request;
 
 typedef struct GUI_plot_data {
-	GUI_plot_layout   *layout;       /* Plot layout (margins, ticks, ...)      */
-	GUI_plot_request  *request;      /* Structure with all data and properties */
-	GUI_plot_type      ptype;        /* Plot type (LC, RV or mesh)             */
-	GtkWidget         *container;    /* Widget container                       */
-	cairo_t           *canvas;       /* Cairo canvas                           */
-	double             width;        /* Graph width in pixels                  */
-	double             height;       /* Graph height in pixels                 */
-	int                objno;        /* Number of objects for plotting         */
-	bool               alias;        /* Should data be aliased?                */
-	bool               residuals;    /* Should residuals be plotted?           */
-	const char        *x_request;    /* Requested x-coordinate                 */
-	const char        *y_request;    /* Requested y-coordinate                 */
-	double             x_ll;         /* Lower plotting limit for the x-axis    */
-	double             x_ul;         /* Upper plotting limit for the x-axis    */
-	double             y_ll;         /* Lower plotting limit for the y-axis    */
-	double             y_ul;         /* Upper plotting limit for the y-axis    */
-	double             x_min;        /* Minimum x value in the query dataset   */
-	double             x_max;        /* Maximum x value in the query dataset   */
-	double             y_min;        /* Minimum y value in the query dataset   */
-	double             y_max;        /* Maximum y value in the query dataset   */
-	int                vertices;     /* Number of vertices for synthetic plots */
-	bool               coarse_grid;  /* Should a coarse grid be plotted?       */
-	bool               fine_grid;    /* Should a fine grid be plotted?         */
-	GtkWidget         *x_widget;     /* Widget to be connected to x-coordinate */
-	GtkWidget         *y_widget;     /* Widget to be connected to y-coordinate */
-	GtkWidget         *cp_widget;    /* Widget to be connected to closest psb. */
-	GtkWidget         *cx_widget;    /* Widget to be connected to closest x pt */
-	GtkWidget         *cy_widget;    /* Widget to be connected to closest y pt */
-	bool               select_zoom;  /* Indicates whether a rectangle to zoom in is being drawn */
-	double             select_x;     /* Window x value at which zoom started   */
-	double             select_y;     /* Window y value at which zoom started   */
-	double             x_left;       /* Current left x value                   */
-	double             x_right;      /* Current right x value                  */
-	double             y_top;        /* Current top y value                    */
-	double             y_bottom;     /* Current bottom y value                 */
-	bool               block_signal; /* Whether the row-changed signal should be blocked */
-	bool               clear_graph;  /* should graph be cleared */
+    GUI_plot_layout   *layout;       /* Plot layout (margins, ticks, ...)      */
+    GUI_plot_request  *request;      /* Structure with all data and properties */
+    GUI_plot_type      ptype;        /* Plot type (LC, RV or mesh)             */
+    GtkWidget         *container;    /* Widget container                       */
+    cairo_t           *canvas;       /* Cairo canvas                           */
+    double             width;        /* Graph width in pixels                  */
+    double             height;       /* Graph height in pixels                 */
+    int                objno;        /* Number of objects for plotting         */
+    bool               alias;        /* Should data be aliased?                */
+    bool               residuals;    /* Should residuals be plotted?           */
+    const char        *x_request;    /* Requested x-coordinate                 */
+    const char        *y_request;    /* Requested y-coordinate                 */
+    double             x_ll;         /* Lower plotting limit for the x-axis    */
+    double             x_ul;         /* Upper plotting limit for the x-axis    */
+    double             y_ll;         /* Lower plotting limit for the y-axis    */
+    double             y_ul;         /* Upper plotting limit for the y-axis    */
+    double             x_min;        /* Minimum x value in the query dataset   */
+    double             x_max;        /* Maximum x value in the query dataset   */
+    double             y_min;        /* Minimum y value in the query dataset   */
+    double             y_max;        /* Maximum y value in the query dataset   */
+    int                vertices;     /* Number of vertices for synthetic plots */
+    bool               coarse_grid;  /* Should a coarse grid be plotted?       */
+    bool               fine_grid;    /* Should a fine grid be plotted?         */
+    GtkWidget         *x_widget;     /* Widget to be connected to x-coordinate */
+    GtkWidget         *y_widget;     /* Widget to be connected to y-coordinate */
+    GtkWidget         *cp_widget;    /* Widget to be connected to closest psb. */
+    GtkWidget         *cx_widget;    /* Widget to be connected to closest x pt */
+    GtkWidget         *cy_widget;    /* Widget to be connected to closest y pt */
+    bool               select_zoom;  /* Indicates whether a rectangle to zoom in is being drawn */
+    double             select_x;     /* Window x value at which zoom started   */
+    double             select_y;     /* Window y value at which zoom started   */
+    double             x_left;       /* Current left x value                   */
+    double             x_right;      /* Current right x value                  */
+    double             y_top;        /* Current top y value                    */
+    double             y_bottom;     /* Current bottom y value                 */
+    bool               block_signal; /* Whether the row-changed signal should be blocked */
+    bool               clear_graph;  /* should graph be cleared */
 } GUI_plot_data;
 
 GUI_plot_data *gui_plot_data_new ();

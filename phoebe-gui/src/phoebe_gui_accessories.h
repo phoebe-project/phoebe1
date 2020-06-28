@@ -14,10 +14,10 @@ gchar *gui_get_filename_with_overwrite_confirmation(GtkWidget *dialog, char *gui
 
 int gui_show_configuration_dialog();
 
-int gui_question	(char* title, char* message);
-int gui_warning		(char* title, char* message);
-int gui_notice		(char* title, char* message);
-int gui_error		(char* title, char* message);
+int gui_question    (char* title, char* message);
+int gui_warning        (char* title, char* message);
+int gui_notice        (char* title, char* message);
+int gui_error        (char* title, char* message);
 int gui_status      (const char *format, ...);
 
 void gui_beep();
