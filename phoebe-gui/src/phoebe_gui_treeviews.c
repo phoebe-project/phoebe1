@@ -2930,6 +2930,10 @@ int gui_spots_add()
             int source = gtk_combo_box_get_active ((GtkComboBox *) phoebe_load_spots_source_combobox) + 1;
             char *source_str;
 
+            if (source == 0)
+                // This happens when source isn't selected; default to primary:
+                source = 1;
+
             if (source == 1) source_str = "Primary";
             else source_str = "Secondary";
 
