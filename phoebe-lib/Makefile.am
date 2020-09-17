@@ -1,10 +1,10 @@
 ########################################################################
 #                                                                      #
-#                          PHOEBE 0.31 library                         #
+#                          PHOEBE 1.0 library                          #
 #                                                                      #
 ########################################################################
 #                                                                      #
-#    Author of Makefile.am: Andrej Prsa <andrej.prsa@villanova.edu>    #
+#    Author of Makefile.am: Andrej Prsa <aprsa@villanova.edu>          #
 #                                                                      #
 ########################################################################
 #                                                                      #

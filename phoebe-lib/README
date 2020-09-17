@@ -1,4 +1,4 @@
-PHOEBE-lib-0.30 TOPLEVEL DOCUMENTATION                        November 15, 2007
+PHOEBE-lib-1.0 TOPLEVEL DOCUMENTATION                        September 15, 2020
 -------------------------------------------------------------------------------
 
 Hello and thank you for your interest in PHOEBE! :-)
@@ -32,13 +32,13 @@ Wilson-Devinney (WD) code and to extend it with new science, new numeric
 approaches to modeling, and new technical features. For formal introduction
 of PHOEBE see Prsa & Zwitter (2005), ApJ 628, 426.
 
-PHOEBE 0.30 is the first in the new branch. This means that the code is
-expected to run smoothly, it has been tested to some extent and there should
+PHOEBE 1.0 is the first official stable release. This means that the code is
+expected to run smoothly, it has been tested extensively and there should
 be no major show-stoppers. Please report any problems you encounter,
 especially crashes (segmentation faults). The best way to get in touch is via
-PHOEBE discussion mailing list, or report a bug on PHOEBE homepage.
+PHOEBE discussion mailing list, or report a bug on a PHOEBE github tracker.
 
-For modeling back-end PHOEBE 0.30 is based on the Wilson-Devinney (WD) code
+For modeling back-end PHOEBE 1.0 is based on the Wilson-Devinney (WD) code
 (rev. Aug 15 2007). You do not need to obtain any WD sources separately, they
 are already built into PHOEBE and will be compiled during the build process.
 
@@ -67,15 +67,9 @@ REQUIREMENTS
 To successfully build PHOEBE-lib from distribution, you need:
 
     * A Linux machine
-
-	PHOEBE-lib has been successfully tested on the following platforms:
-
-	- Ubuntu 7.10 (Gutsy)  - no issues (development platform)
-	- Ubuntu 7.04 (Feisty) - no issues
-
-    * ANSI C compliant compiler (e. g. gcc)
+    * A C compiler (e.g. gcc)
+    * A Fortran compiler (e.g. gfortran)
     * GNU make
-    * libg2c
 
 INSTALLATION
 ------------

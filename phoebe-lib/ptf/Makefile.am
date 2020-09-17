@@ -1,6 +1,6 @@
 ########################################################################
 #                                                                      #
-#    Author of Makefile.am: Andrej Prsa <andrej.prsa@fmf.uni-lj.si>    #
+#    Author of Makefile.am: Andrej Prsa <aprsa@villanova.edu>          #
 #                                                                      #
 ########################################################################
 #                                                                      #

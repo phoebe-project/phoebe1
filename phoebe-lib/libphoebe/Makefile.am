@@ -1,13 +1,13 @@
 ########################################################################
 #                                                                      #
-#                          PHOEBE SVN library                          #
+#                          PHOEBE 1.0 library                          #
 #                                                                      #
 ########################################################################
 #                                                                      #
-#    Author of Makefile.am: Andrej Prsa <andrej.prsa@villanova.edu>    #
+#    Author of Makefile.am: Andrej Prsa <aprsa@villanova.edu>          #
 #                                                                      #
 ########################################################################
-#                                            Last modified: 2008-06-10 #
+#                                            Last modified: 2020-09-15 #
 #                                                                      #
 # This program is free software; you can redistribute it and/or modify #
 # it under the terms of the GNU General Public License as published by #

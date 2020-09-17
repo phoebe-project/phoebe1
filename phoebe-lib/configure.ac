@@ -1,10 +1,10 @@
 ########################################################################
 #                                                                      #
-#                          PHOEBE SVN library                          #
+#                          PHOEBE 1.0 library                          #
 #                                                                      #
 ########################################################################
 #                                                                      #
-#   Author of configure.ac: Andrej Prsa <andrej.prsa@villanova.edu>    #
+#   Author of configure.ac: Andrej Prsa <aprsa@villanova.edu>          #
 #                                                                      #
 #                               * * *                                  #
 #                                                                      #
@@ -12,7 +12,7 @@
 #                     changes to take effect!                          #
 #                                                                      #
 #                               * * *                                  #
-#                                            Last revision: 2008-06-11 #
+#                                            Last revision: 2020-09-15 #
 ########################################################################
 #                                                                      #
 # This program is free software; you can redistribute it and/or modify #
@@ -35,7 +35,7 @@
   AC_PREREQ(2.50)
 
 # Initialize configure.ac for autoconf:
-  AC_INIT([phoebe-lib],[svn],[phoebe-devel@lists.sourceforge.net])
+  AC_INIT([phoebe-lib],[1.0],[phoebe-devel@lists.sourceforge.net])
 
 # Create a dedicated header file phoebe_build_config.h that will contain
 # all #define statements that correspond to whatever ./configure found:
@@ -60,11 +60,11 @@
 # Define the release name, date and type:
   AC_DEFINE(
 	PHOEBE_RELEASE_NAME,
-	[["PHOEBE svn"]],
+	[["PHOEBE 1.0"]],
 	[PHOEBE release name])
   AC_DEFINE(
 	PHOEBE_RELEASE_DATE,
-	[["(snapshot)"]],
+	[["2020-09-15"]],
 	[PHOEBE release date])
 
 # Define the default installation directory:
