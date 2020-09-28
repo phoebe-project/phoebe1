@@ -9,7 +9,7 @@
     <property name="program_name">PHOEBE</property>
     <property name="version">0.31</property>
     <property name="comments" translatable="yes">PHysics Of Eclipsing BinariEs</property>
-    <property name="website">http://phoebe.fiz.uni-lj.si/</property>
+    <property name="website">http://phoebe-project.org/</property>
     <property name="website_label" translatable="yes">PHOEBE web site</property>
     <property name="license" translatable="yes">PHOEBE is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -9,7 +9,6 @@
 #include "phoebe_gui_treeviews.h"
 
 #include "phoebe_gui_build_config.h"
-#include "version.h"
 
 gchar *PHOEBE_GLADE_XML_DIR;
 gchar *PHOEBE_GLADE_PIXMAP_DIR;
@@ -85,14 +84,11 @@ int phoebe_gui_init ()
     gui_init_angle_widgets ();
     gui_update_angle_values ();
 
-    /* Add SVN version to the window title: */
-    if (strcmp (PACKAGE_VERSION, "svn") == 0) {
-        phoebe_window = gui_widget_lookup("phoebe_window")->gtk;
+    /* Add version to the window title: */
+    phoebe_window = gui_widget_lookup("phoebe_window")->gtk;
 
-        sprintf(title, "PHOEBE -- SVN %s", SVN_DATE+1);
-        title[strlen(title)-1] = '\0';
-        gtk_window_set_title (GTK_WINDOW(phoebe_window), title);
-    }
+    sprintf(title, "PHOEBE %s (%s)", PACKAGE_VERSION, PHOEBE_GUI_RELEASE_DATE);
+    gtk_window_set_title (GTK_WINDOW(phoebe_window), title);
     
     return SUCCESS;
 }

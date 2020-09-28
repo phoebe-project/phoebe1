@@ -1,4 +1,4 @@
-PHEOEBE-GUI 0.30 TOPLEVEL DOCUMENTATION                      November 15, 2007
+PHEOEBE-GUI 1.0 TOPLEVEL DOCUMENTATION                      September 15, 2020
 ------------------------------------------------------------------------------
 
 Hello, and thanks for your interest in PHOEBE!
@@ -6,11 +6,9 @@ Hello, and thanks for your interest in PHOEBE!
 THINGS YOU NEED TO KNOW
 -----------------------
 
-This is the first release in the new 0.3x series of PHOEBE's Graphical User
-Interface (GUI). As such, this version of the software may exhibit some
-instability, and possibly some missing features. We encourage you to give us
-feedback about any unexpected behavior through the mailing lists and the
-issue tracker on PHOEBE's homepage.
+This is the stable release of the PHOEBE's Graphical User Interface (GUI).
+We encourage you to provide us with feedback about any unexpected behavior
+through the mailing lists and the issue tracker on PHOEBE's github page.
 
 You may share, distribute and modify PHOEBE to your liking. For more
 information on PHOEBE licensing please read the GNU/GPL license in PHOEBE
@@ -26,24 +24,12 @@ REQUIREMENTS
 To successfully setup PHOEBE-GUI, you need:
 
 - A Linux machine
-
-  PHOEBE-GUI has been successfully tested on the following platforms:
-
-	* Ubuntu 7.10 (Gutsy) no issues (development platform)
-	* Ubuntu 7.04 (Feisty) no issues
-
 - ANSI C compliant compiler (e. g. gcc)
-
 - GTK+ library (version 2.4 or later)
-
 - libglade library
-
-- Gnuplot plotting package
-
 - PHOEBE library, which also requires
-	· FORTRAN 77 compliant compiler (e. g. g77)
-	· f2c FORTRAN to C translator
-	· GNU make
+  - FORTRAN 77 compliant compiler (e. g. g77)
+  - GNU make
 
 Optionally, you can setup PHOEBE-GUI to work with:
 
@@ -54,15 +40,15 @@ OBTAINING PHOEBE
 
 The stable release can be downloaded from PHOEBE's homepage:
 
-	http://phoebe.fiz.uni-lj.si
+    http://phoebe-project.org
 
-The development files can be checked out from anonymous SVN by issuing:
+The development files can be checked out from github by issuing:
 
-	svn checkout https://phoebe.svn.sourceforge.net/svnroot/phoebe/devel
+    git clone https://github.com/phoebe-project/phoebe1
 
-Van Hamme limb darkening tables can also be obtained from SVN by issuing:
+Van Hamme limb darkening tables can also be obtained from github by issuing:
 
-	svn checkout https://phoebe.svn.sourceforge.net/svnroot/phoebe/cats
+    git clone https://github.com/phoebe-project/phoebe1/cats
 
 INSTALLATION
 ------------

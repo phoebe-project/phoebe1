@@ -1,10 +1,10 @@
 ########################################################################
 #                                                                      #
-#                            PHOEBE SVN GUI                            #
+#                            PHOEBE 1.0 GUI                            #
 #                                                                      #
 ########################################################################
 #                                                                      #
-#   Author of configure.ac: Andrej Prsa <andrej.prsa@villanova.edu>    #
+#   Author of configure.ac: Andrej Prsa <aprsa@villanova.edu>          #
 #                                                                      #
 #                               * * *                                  #
 #                                                                      #
@@ -12,7 +12,7 @@
 #                     changes to take effect!                          #
 #                                                                      #
 #                               * * *                                  #
-#                                            Last revision: 2009-05-02 #
+#                                            Last revision: 2020-09-15 #
 ########################################################################
 #                                                                      #
 # This program is free software; you can redistribute it and/or modify #
@@ -35,7 +35,7 @@
   AC_PREREQ(2.50)
 
 # Initialize configure.ac for autoconf:
-  AC_INIT([phoebe-gui],[svn],[phoebe-devel@lists.sourceforge.net])
+  AC_INIT([phoebe-gui],[1.0],[phoebe-devel@lists.sourceforge.net])
 
 # Create a dedicated header file phoebe_scripter_build_config.h that will
 # contain all #define statements that correspond to whatever ./configure
@@ -45,11 +45,11 @@
 # Define the release name, date and type:
   AC_DEFINE(
 	PHOEBE_GUI_RELEASE_NAME,
-	[["PHOEBE GUI svn"]],
+	[["PHOEBE GUI 1.0"]],
 	[PHOEBE release name])
   AC_DEFINE(
 	PHOEBE_GUI_RELEASE_DATE,
-	[["(snapshot)"]],
+	[["2020-09-15"]],
 	[PHOEBE release date])
 
 # Initialize the location of the sources:

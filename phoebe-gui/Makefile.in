@@ -16,14 +16,14 @@
 
 ########################################################################
 #                                                                      #
-#                             PHOEBE SVN GUI                           #
+#                             PHOEBE 1.0 GUI                           #
 #                                                                      #
 ########################################################################
 #                                                                      #
-#    Author of Makefile.am: Andrej Prsa <andrej.prsa@villanova.edu>    #
+#    Author of Makefile.am: Andrej Prsa <aprsa@villanova.edu>          #
 #                                                                      #
 ########################################################################
-#                                            Last revision: 2009-03-15 #
+#                                            Last revision: 2020-09-15 #
 #                                                                      #
 # This program is free software; you can redistribute it and/or modify #
 # it under the terms of the GNU General Public License as published by #
