@@ -30,6 +30,21 @@ static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
     return Py_BuildValue ("i", status);
 }
 
+static PyObject *phoebeGetConfigEntry(PyObject *self, PyObject *args)
+{
+    int status;
+    char *keyword, *value;
+    
+    PyArg_ParseTuple(args, "s", &keyword);
+    status = phoebe_config_entry_get(keyword, &value);
+    if (status != SUCCESS) {
+        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
+        return NULL;
+    }
+
+    return Py_BuildValue("s", value);
+}
+
 static PyObject *phoebeQuit(PyObject *self, PyObject *args)
 {
     int status = phoebe_quit();
@@ -1134,6 +1149,7 @@ static PyMethodDef PhoebeMethods[] = {
     {"error", (PyCFunction) phoebeError,           METH_NOARGS,   NULL},
     {"init",                phoebeInit,            METH_VARARGS,  "Initialize PHOEBE backend"},
     {"configure",           phoebeConfigure,       METH_VARARGS,  "Configure all internal PHOEBE structures"},
+    {"getconfigentry",      phoebeGetConfigEntry,  METH_VARARGS,  "Retrieve a configuration entry"},
     {"quit",                phoebeQuit,            METH_VARARGS,  "Quit PHOEBE"},
     {"open",                phoebeOpen,            METH_VARARGS,  "Open PHOEBE parameter file"},
     {"save",                phoebeSave,            METH_VARARGS,  "Save PHOEBE parameter file"},
