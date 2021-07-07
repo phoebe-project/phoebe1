@@ -22,10 +22,10 @@ static PyObject *phoebeInit(PyObject *self, PyObject *args)
 static PyObject *phoebeConfigure(PyObject *self, PyObject *args)
 {
     int status = phoebe_configure();
-    if (status != SUCCESS) {
-        PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
-        return NULL;
-    }
+    // if (status != SUCCESS) {
+    //     PyErr_SetString(PyExc_RuntimeError, phoebe_error(status));
+    //     return NULL;
+    // }
 
     return Py_BuildValue ("i", status);
 }
@@ -1216,7 +1216,7 @@ void initphoebeBackend(void)
 
     if (!backend)
         INITERROR;
-    
+
     st = GETSTATE(backend);
 
     st->error = PyErr_NewException("phoebeBackend.Error", NULL, NULL);
