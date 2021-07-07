@@ -4,7 +4,7 @@ import sys, glob, site
 from distutils.util import get_platform
 
 if 'build' in sys.argv:
-  print "In dynamic version nly install is supported."
+  print("In dynamic version nly install is supported.")
   quit()
   
 build_dir = './build/lib.%s-%d.%d' % (get_platform(), sys.version_info[0], sys.version_info[1])
