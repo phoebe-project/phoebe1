@@ -12,6 +12,8 @@
 #include "phoebe_gui_types.h"
 #include "phoebe_gui_treeviews.h"
 
+GUI_widget_table *GUI_wt;
+
 gboolean PHOEBE_WINDOW_SIDESHEET_IS_DETACHED = FALSE;
 gboolean PHOEBE_WINDOW_LC_PLOT_IS_DETACHED   = FALSE;
 gboolean PHOEBE_WINDOW_RV_PLOT_IS_DETACHED   = FALSE;

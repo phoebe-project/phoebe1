@@ -32,7 +32,7 @@
 ########################################################################
 
 # This configure.ac will work with autoconf 2.50 or later:
-  AC_PREREQ(2.50)
+  AC_PREREQ([2.71])
 
 # Initialize configure.ac for autoconf:
   AC_INIT([phoebe-lib],[1.0],[phoebe-devel@lists.sourceforge.net])
@@ -115,7 +115,7 @@
     AC_F77_LIBRARY_LDFLAGS
 
   # Libtool:
-    AC_PROG_LIBTOOL
+    LT_INIT
 
   # Make program:
     AC_PROG_MAKE_SET
@@ -124,7 +124,7 @@
     AC_PROG_INSTALL
 
   # Lexer (needed for PHOEBE constraints); we require flex 2.5.33 or later:
-    AC_PROG_LEX
+    AC_PROG_LEX(noyywrap)
     if $LEX --version | grep 2.5.[[3-9]][[0-9]] > /dev/null 2>&1; then
       flex_check_passed="yes"
     fi
@@ -194,8 +194,6 @@
     AC_CHECK_FUNCS([geteuid getegid])
     AC_CHECK_HEADERS([ftw.h])
 
-    ACX_PTHREAD([pthreadsupport="yes"],[pthreadsupport="no"])
-
   # GSL support:
     AC_ARG_ENABLE(gsl,
         [  --enable-gsl            Use GNU Scientific Library (default=yes)],
@@ -245,7 +243,6 @@ GTK_DOC_CHECK([1.0])
 
 # Check for C library features:
   AC_HEADER_DIRENT
-  AC_HEADER_STDC
   AC_CHECK_HEADERS([locale.h stddef.h stdlib.h string.h unistd.h])
   AC_HEADER_STDBOOL
   AC_C_CONST
@@ -286,7 +283,6 @@ GTK_DOC_CHECK([1.0])
   echo "Fortran compiler used:            $F77"
   echo "PHOEBE library directory:         $prefix/lib"
   echo "PHOEBE include directory:         $prefix/include/phoebe"
-  echo "POSIX threading support:          $pthreadsupport"
   echo "GNU Scientific Library support:   $gslsupport"
   echo "Build API documentation:          $gtkdocstate"
   echo "Maintainer mode (build sources):  $USE_MAINTAINER_MODE"

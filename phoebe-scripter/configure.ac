@@ -32,10 +32,10 @@
 ########################################################################
 
 # This configure.ac will work with autoconf 2.50 or later:
-  AC_PREREQ(2.50)
+  AC_PREREQ([2.71])
 
 # Initialize configure.ac for autoconf:
-  AC_INIT(phoebe-scripter, [svn], http://phoebe.fiz.uni-lj.si)
+  AC_INIT([phoebe-scripter],[dev],[http://phoebe-project.org])
 
 # Create a dedicated header file phoebe_scripter_build_config.h that will
 # contain all #define statements that correspond to whatever ./configure
@@ -82,7 +82,7 @@
     AM_PROG_AR
 
   # Lexer (needed for PHOEBE constraints); we require flex 2.5.33 or later:
-    AC_PROG_LEX
+    AC_PROG_LEX(noyywrap)
     if $LEX --version | grep 2.5.[[3-9]][[0-9]] > /dev/null 2>&1; then
       flex_check_passed="yes"
     fi
@@ -281,13 +281,11 @@
 # AC_MSG_RESULT([$docbookstate]);
 
 # Optional plugin support:
-  AC_LIBTOOL_DLOPEN
-  AC_PROG_LIBTOOL
+  LT_INIT(dlopen)
 
 # Check for C library features:
   AC_CHECK_HEADERS([inttypes.h limits.h stdlib.h string.h unistd.h])
   AC_HEADER_STDBOOL
-  AC_HEADER_STDC
 
   AC_TYPE_SIZE_T
 

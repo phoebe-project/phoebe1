@@ -21,9 +21,6 @@
 ########################################################################
 
 lib_LTLIBRARIES = libscripter.la
-bin_PROGRAMS = phoebe-scripter
-
-phoebe_scripter_SOURCES = main.c
 
 libscripter_la_SOURCES =                                                \
     phoebe_scripter.grm.y             phoebe_scripter.lng.l             \
@@ -48,8 +45,6 @@ phoebe_scripter.lng.h:
 AM_YFLAGS = -d
 AM_CFLAGS = -Wall $(EXTRA_WARNING_COMPILER_FLAG)
 
-phoebe_scripter_LDADD = -lscripter
-
 library_includedir=$(includedir)/phoebe
 library_include_HEADERS = phoebe_scripter.h                \
                           phoebe_scripter.lng.h            \
@@ -63,3 +58,7 @@ library_include_HEADERS = phoebe_scripter.h                \
                           phoebe_scripter_io.h             \
                           phoebe_scripter_plotting.h       \
                           phoebe_scripter_types.h
+
+bin_PROGRAMS = phoebe-scripter
+phoebe_scripter_SOURCES = main.c
+phoebe_scripter_LDADD = libscripter.la

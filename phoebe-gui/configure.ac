@@ -32,7 +32,7 @@
 ########################################################################
 
 # This configure.ac will work with autoconf 2.50 or later:
-  AC_PREREQ(2.50)
+  AC_PREREQ([2.71])
 
 # Initialize configure.ac for autoconf:
   AC_INIT([phoebe-gui],[1.0],[phoebe-devel@lists.sourceforge.net])
@@ -163,7 +163,7 @@
 
 # Check for C library features:
   AC_CHECK_HEADERS([stdlib.h string.h])
-  AC_HEADER_STDC
+
   AC_C_CONST
 
 # Finally, write everything to Makefiles:
