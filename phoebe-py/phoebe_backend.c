@@ -823,10 +823,12 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
 {
     int status;
     int index, i;
+    int lcno, mock = 0;
     PyObject *obj, *lc, *combo = NULL, *ts = NULL;
     char *rstr;
 
     Py_ssize_t mswitch = 0, hswitch = 0;
+    PHOEBE_parameter *par;
     PHOEBE_column_type itype;
     PHOEBE_vector *indep;
     PHOEBE_curve *curve;
@@ -851,13 +853,21 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
 
     // printf("dim=%d\n", indep->dim);
 
-    phoebe_parameter_get_value (phoebe_parameter_lookup ("phoebe_indep"), &rstr);
-    phoebe_column_get_type (&itype, rstr);
+    phoebe_parameter_get_value(phoebe_parameter_lookup("phoebe_indep"), &rstr);
+    phoebe_column_get_type(&itype, rstr);
 
     /* If mswitch is turned on, we need to store the computed meshes. */
     if (mswitch) {
         mesh1 = phoebe_mesh_new();
         mesh2 = phoebe_mesh_new();
+
+        /* If a mesh was requested but an actual light curve is not, create a mock light curve: */
+        par = phoebe_parameter_lookup("phoebe_lcno");
+        phoebe_parameter_get_value(par, &lcno);
+        if (index < 0 || index >= lcno) {
+            phoebe_parameter_set_value(par, lcno+1); // assumes default passband parameters
+            mock = 1;
+        }
     }
 
     /* If hswitch is turned on, we need to store the horizon. */
@@ -919,6 +929,9 @@ static PyObject *phoebeLC(PyObject *self, PyObject *args)
         intern_add_mesh_to_dict(dict, mesh2, "Inorm2", 14);
 
         PyTuple_SetItem(combo, 1, dict);
+
+        if (mock == 0)
+            phoebe_parameter_set_value(par, 0);
     }
 
 	if (hswitch) {
