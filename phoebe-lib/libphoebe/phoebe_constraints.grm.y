@@ -11,6 +11,7 @@
 /*#include "phoebe_constraints.lng.h"*/
 #include "phoebe_parameters.h"
 
+extern int yylex(void);
 extern int yyerror (const char *str);
 extern int intern_constraint_add_to_table (PHOEBE_ast *ast);
 %}
