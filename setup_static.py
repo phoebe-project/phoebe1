@@ -6,8 +6,7 @@ import numpy
 
 if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
-  import numpy.distutils.fcompiler as Fcompiler
-  import numpy.distutils.ccompiler as Ccompiler
+  from setuptools._distutils import ccompiler as Ccompiler
 
   """
     Making static library
@@ -19,26 +18,21 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
   print("WD library (libwd)")
 
-  c = Fcompiler.new_fcompiler()
-
+  c = Ccompiler.new_compiler()
   workdir = './phoebe_legacy/libwd'
 
-  src = glob.glob(workdir+'/*.F')
+  src = glob.glob(workdir+'/wd.c')
 
   # Optionally add include directories etc.
   c.add_include_dir(workdir)
 
-  c.customize()
-  #print c.compiler_f77
-
   # Compile into .o files
-  objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC", "-std=legacy"])
+  objects = c.compile(src, output_dir="./build", extra_preargs=["-fPIC"])
 
   # Create static library
-  c = Ccompiler.new_compiler()   # linking does not work with fcompiler
+  c = Ccompiler.new_compiler()
 
   c.create_static_lib(objects, "wd", output_dir="./build")
-
 
   #
   # PHOEBE library (libphoebe)
@@ -51,8 +45,6 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
 
   # Optionally add include directories etc.
   c.add_include_dir(workdir)
-
-  #c.set_libraries(['wd','gsl','gslcblas','m'])
 
   c.set_library_dirs("./phoebe_legacy/libwd")
 
@@ -69,7 +61,7 @@ if len(sys.argv)>1 and sys.argv[1] in ['build', 'install']:
   Making python module
 """
 
-from distutils.core import setup, Extension
+from setuptools import Extension, setup
 
 ext_modules = [
     Extension(
@@ -77,7 +69,7 @@ ext_modules = [
       sources = ['./phoebe_legacy/libphoebe_legacy.c'],
       include_dirs = ['./phoebe_legacy/libphoebe_methods', numpy.get_include()],
       extra_link_args= ["-L./build"],
-      libraries = ['phoebe_methods', 'wd', 'gfortran']
+      libraries = ['phoebe_methods', "wd", "f2c", "m"]
     )
   ]
 
